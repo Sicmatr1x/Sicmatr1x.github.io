@@ -1,5 +1,13 @@
 ---
 title: Hello World
+date: 2019-10-26 12:39:04
+categories:
+    - 杂项
+tags: 
+    - hexo
+mp3: http://domain.com/awesome.mp3
+cover: http://domain.com/awesome.jpg
+preview: 300
 ---
 Welcome to [Hexo](https://hexo.io/)! This is your very first post. Check [documentation](https://hexo.io/docs/) for more info. If you get any problems when using Hexo, you can find the answer in [troubleshooting](https://hexo.io/docs/troubleshooting.html) or you can ask me on [GitHub](https://github.com/hexojs/hexo/issues).
 
