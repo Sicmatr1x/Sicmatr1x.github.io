@@ -6,7 +6,7 @@ categories:
 tags: 
     - hexo
 mp3: http://domain.com/awesome.mp3
-cover: http://domain.com/awesome.jpg
+cover: /img/welcome-cover.jpg
 preview: 300
 ---
 Welcome to [Hexo](https://hexo.io/)! This is your very first post. Check [documentation](https://hexo.io/docs/) for more info. If you get any problems when using Hexo, you can find the answer in [troubleshooting](https://hexo.io/docs/troubleshooting.html) or you can ask me on [GitHub](https://github.com/hexojs/hexo/issues).
@@ -63,4 +63,24 @@ public class MoocSpringbootApplication {
 	}
 
 }
+```
+
+## hexo
+
+### theme: [hexo-theme-obsidian](https://github.com/TriDiamond/hexo-theme-obsidian)
+
+#### markdown head template
+
+```md
+title: My awesome title
+date: 2019-07-14 18:38:45
+categories:
+    - Category1
+    - Category2
+tags: 
+    - Tag1
+    - Tag2
+mp3: http://domain.com/awesome.mp3
+cover: statics/A Cruel Angel's Thesis Bilingual two-channel effects version.mp3
+preview: 300
 ```
