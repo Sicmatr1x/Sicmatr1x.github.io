@@ -28,7 +28,7 @@ menu:
 
 # Social media links
 socials:
-  github: "https://github.com/TriDiamond"
+  github: "https://github.com/Sicmatr1x"
   twitter: ""
   stackoverflow: ""
 
@@ -36,29 +36,29 @@ socials:
 TOC: true
 
 # Home page first post default cover image, default use cover
-welcome_cover: /img/cover.jpg
+welcome_cover: /img/welcome-cover.jpg
 
 # Article default cover image
-cover: /img/welcome-cover.jpg
+cover: /img/cover.jpg
 
 # Avatar
-avatar: https://res.cloudinary.com/tridiamond/image/upload/v1571154379/TriDiamondLogoCircleLighting_llbad2.png
+avatar: /img/ETO.png
 
 # Disable default scrollbar
 scrollbar: true
 
 # Website keywords used for SEO
-keywords: TriDiamond Obsidian
+keywords: Sicmatr1x
 
 # Website slogans
-descriptionOne: "Think like an artist, develop like an artisan"
-descriptionTwo: "艺术家思维去思考问题，工匠创造精神去开发"
+descriptionOne: "Reason is a tiny spark in the dark night, a precious exception in the crazy world."
+descriptionTwo: "理智是慢慢黑夜里的一个微小的火花，是疯狂的世界里的一个珍贵的例外"
 
 # If you use google analytics, please fill in the ID
 google_analytics: ''
 
 # Website favicon
-favicon: /img/favicon.png
+favicon: /img/ETO.png
 
 # rss file
 rss: atom.xml
@@ -72,7 +72,7 @@ autoplay: false
 
 # default mp3 file
 mp3:
-  - statics/chengdu.mp3
+  - statics/A Cruel Angel's Thesis Bilingual two-channel effects version.mp3
 
 # ---------------------------------------------------------------
 # Plugins
@@ -81,13 +81,13 @@ mp3:
 # Gitalk comment plugin
 # see https://github.com/gitalk/gitalk
 gitalk:
-  enable: false
+  enable: true
   autoExpand: true
-  clientID: 'ec894e2b66f752e8b7fb'
-  clientSecret: '3ccc2e92bb350688fe2c2dc2930189b62622bfb1'
+  clientID: 'db290dc011893521d885'
+  clientSecret: '4cbc64d2114f4963d8090a55b508568b2f26075b'
   repo: 'blog-comments'
-  owner: 'TriDiamond'
-  admin: ['TriDiamond']
+  owner: 'Sicmatr1x'
+  admin: ['Sicmatr1x']
   # Ensure uniqueness and length less than 50
   id: location.pathname
   # Facebook-like distraction
@@ -96,8 +96,8 @@ gitalk:
 # see https://valine.js.org/quickstart.html
 valine:
   enable: false
-  app_id: QHCOIEBlyjBUMAjaE5ilzafk-gzGzoHsz
-  app_key: ggeGwz8ypB9uiAIYSRH5T0PF
+  app_id:
+  app_key:
   notify: false
   verify: false
   avatar: 'mp'
@@ -137,5 +137,5 @@ busuanzi:
 
 #Enable social media sharing
 sharejs:
-  enable: false
+  enable: true
   disabled: 'facebook,douban,linkedin,diandian,tencent,google'
