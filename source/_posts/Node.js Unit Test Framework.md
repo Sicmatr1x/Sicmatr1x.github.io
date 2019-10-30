@@ -2,8 +2,8 @@
 title: Node.js Unit Test Framework
 date: 2019-10-28 17:13:04
 categories:
-    - Node.js
     - 后端
+    - Node.js
 tags: 
     - Node.js
     - Unit test
@@ -282,100 +282,17 @@ afterEach(function() {
   })
 ```
 
-#### 使用
+#### 使用 Istanbul.js来统计 Unit Test的代码覆盖率
 
-
-## 本文中用到的代码
-
-```js
-const userRepo = require('../db/oraRepo/UserRepo.js')
-const commonQuery = require('../db/oraRepo/commonQuery')
-const log4jsHelper = require('../common/log4jsHelper')
-const responseHelper = require('../common/response')
-const errorCode = require('../common/errorCode')
-
-module.exports = {
-  findUserByPaging: async(searchCriteria) => {
-    try {
-      const result = await userRepo.findUserByPaging(searchCriteria)
-      const userArray = commonQuery.generateRelativeObjectArray(result.data, 'userId', ['roleId', 'roleName'], 'role')
-      return await responseHelper.responsePageSuccess({ rows: userArray, count: result.totalCount }, searchCriteria.offset, searchCriteria.limit)
-    } catch (error) {
-      log4jsHelper.loggerError(error)
-      return await responseHelper.responseFailed(errorCode.ERR_SEARCH_DATA, error)
-    }
-  }
+```json
+{
+ "scripts": {
+   "unit-test-cov": "istanbul cover node_modules/mocha/bin/_mocha -- test/controller test/routes test/common test/service"
+ }
 }
 ```
 
-```js
-const userController = require('../../bin/controller/userController')
-const UserRepo = require('../../bin/db/oraRepo/UserRepo')
-const log4jsHelper = require('../../bin/common/log4jsHelper')
+只需要在`istanbul cover`命令后面加上mocha的命令即可
 
-const assert = require('chai').assert
-const sinon = require('sinon')
-
-describe('userController', function() {
-  describe('#findUserByPaging()', function() {
-    let sandbox;
-    const searchCriteria = {
-      userDomain: 'TESTUSER',
-      offset: 0,
-      limit: 10
-    }
-    const searchResult = {
-      "totalCount": 1,
-      "data": [
-        {
-          "userId": 1,
-          "userDomain": "TESTUSER",
-          "userEmail": "test.user@outlook.com",
-          "userTel": "1234567890",
-          "userTeam": "MBC",
-          "roleId": 1,
-          "roleName": "Super Admin"
-        }
-      ]
-    }
-    const expectData = {
-      "data": [
-        {
-          "role": [
-            {
-              "roleId": 1,
-              "roleName": "Super Admin"
-            }
-          ],
-          "userDomain": "TESTUSER",
-          "userEmail": "test.user@outlook.com",
-          "userId": 1,
-          "userTeam": "MBC",
-          "userTel": "1234567890"
-        }
-      ],
-      "limit": 10,
-      "offset": 0,
-      "totalCount": 1
-    }
-    beforeEach(function() {
-      sandbox = sinon.createSandbox();
-      sandbox.stub(UserRepo, "findUserByPaging").withArgs(sinon.match.any).returns(searchResult)
-    });
-    afterEach(function() {
-      sandbox.restore()
-    });
-    it('should return limit user list when given offset limit', (done) => {
-      userController.findUserByPaging(searchCriteria).then((result) => {
-        // Then
-        assert.equal(result.success, true)
-        assert.deepEqual(result.data, expectData)
-        done()
-      }).catch((err) => {
-        done(err)
-      })
-    })
-  })
-})
-```
+若有不想统计的代码可以使用`/* istanbul ignore next */`注释来忽略掉，但是istanbul不支持文件忽略，只支持函数、选择条件级别的忽略。
 
