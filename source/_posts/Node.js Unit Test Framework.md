@@ -13,6 +13,7 @@ tags:
     - chai.js
     - supertest
     - istanbul.js
+cover: /img/article-cover/nodejs.png
 ---
 
 基于Node.js的 Unit Test Framework，用到了如下几个工具：

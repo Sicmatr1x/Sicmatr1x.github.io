@@ -5,6 +5,7 @@ categories:
     - 后端
 tags: 
     - Java
+cover: /img/article-cover/building_blocks_hires.jpg
 ---
 
 ## 整洁代码
