@@ -1,6 +1,6 @@
 ---
 title: Hive
-date: 2018-08-30 14:31:47
+date: 2017-08-17 20:09:47
 categories:
     - Hadoop
 tags: 
