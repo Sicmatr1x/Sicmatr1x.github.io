@@ -625,7 +625,7 @@ end;
 
 ## **Tips**
 
-1. 使用序列来代替需要自增的属性
+### 使用序列来代替需要自增的属性
 
 ```sql
 -- 创建序列
@@ -648,9 +648,7 @@ values(seq_empid.nextval,'辑','罗','12345678@qq.com','123456789',to_date('2017
 update employee set commission_pct=nvl(commission_pct,0)+0.1
 ```
 
---------------------------------------------------------------
-
-2. 使用虚拟表dual来进行查询
+### 使用虚拟表dual来进行查询
 
 ```sql
 -- 查询当前系统时间
@@ -658,9 +656,7 @@ update employee set commission_pct=nvl(commission_pct,0)+0.1
 select sysdate from dual; 
 ```
 
---------------------------------------------------------------
-
-3. 以指定格式获取当前日期
+### 以指定格式获取当前日期
 
 ```sql
 select to_char(sysdate,'yyyy-mm-dd') from dual;
@@ -668,9 +664,7 @@ select to_char(sysdate,'yyyy"年"mm"月"dd"日"') from dual;
 select to_char(sysdate,'yyyy-mm-dd hh:mi:ss') from dual;
 ```
 
---------------------------------------------------------------
-
-4. 日期计算
+### 日期计算
 
 ```sql
 -- 在获取30天后的日期
@@ -683,9 +677,7 @@ select trunc(sysdate-to_date('2014-09-07', 'yyyy-mm-dd')) 入学天数 from dual
 select trunc(months_between(sysdate-to_date('2014-09-07', 'yyyy-mm-dd'))) 入学月份 from dual;
 ```
 
---------------------------------------------------------------
-
-5. 绑定变量
+### 绑定变量
 
 ```sql
 select * from employees
@@ -695,9 +687,7 @@ select * from employees
 where first_name like '%&名称%';
 ```
 
---------------------------------------------------------------
-
-6. 显示指定条数的数据
+### 显示指定条数的数据
 
 在查询结果后系统会自动增加一个rownum行号
 
@@ -714,13 +704,10 @@ from(
 where rownum<10;
 ```
 
---------------------------------------------------------------
+### null处理函数nvl2(被判断的属性,若不为空的值,若为空的值)
 
-7. null处理函数nvl2(被判断的属性,若不为空的值,若为空的值)
 
---------------------------------------------------------------
-
-8. null处理函数coalesece()
+### null处理函数coalesece()
 
 ```sql
 -- 以此从参数里面找非空的作为值
@@ -730,17 +717,13 @@ coalesece(msal,bsal,tsal) sal
 from test;
 ```
 
---------------------------------------------------------------
-
-9. 函数decode()
+### 函数decode()
 
 decode(temp,'1','经理'，'2','业务员','3','临时工','其他')
 
 若temp的值为1则整个值为经理
 
---------------------------------------------------------------
-
-10.如何将Excel表数据导入Oracle数据库
+### 如何将Excel表数据导入Oracle数据库
 
 步骤：
 1. 将excel另存为由制表符分割的txt
