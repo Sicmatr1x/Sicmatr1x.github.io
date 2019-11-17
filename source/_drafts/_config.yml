@@ -1,7 +1,26 @@
 #! ---------------------------------------------------------------
-#! Obsidian theme use manual highlight.js
-#! To maintain the code block css display properly
-#! please change your default highlight setting as off!!
+#! ▄▀▄ █▀▄ ▄▀▀ ▀ █▀▄ ▀ ▄▀▄ █▄░█ 
+#! █░█ █▀█ ░▀▄ █ █░█ █ █▀█ █░▀█ 
+#! ░▀░ ▀▀░ ▀▀░ ▀ ▀▀░ ▀ ▀░▀ ▀░░▀ 
+#! ᴅᴇsɪɢɴᴇᴅ & ᴄᴏᴅᴇᴅ ʙʏ ᴛʀɪᴅɪᴀᴍᴏɴᴅ
+#! ---------------------------------------------------------------
+#! Theme Obsidian - A dark Hexo theme, it's responsive, simple but elegant.
+#! Thanks to and inspirated by CSS-Tricks
+#! @author: TriDiamond
+#! @github: https://github.com/TriDiamond
+#! @changelogs: https://github.com/TriDiamond/hexo-theme-obsidian/blob/master/CHANGELOG.md
+#! @feedbacks: https://github.com/TriDiamond/hexo-theme-obsidian/issues/new
+#! ---------------------------------------------------------------
+
+#! ---------------------------------------------------------------
+#! █▄░█ ▄▀▄ ▀█▀ █▀▀ ▄▀▀
+#! █░▀█ █░█ ░█░ █▀▀ ░▀▄ 
+#! ▀░░▀ ░▀░ ░▀░ ▀▀▀ ▀▀░ v1.x
+#! ---------------------------------------------------------------
+#! Since version `v1.3.5` code block highlight has changed from `highlight.js` to
+#! `codemirror`, but the Hexo default highlight still need to be disabled to take affect.
+#! !! So Please make sure you disabled Hexo's default highlight setting !!
+#! ---------------------------------------------------------------
 #! Rebuild files after you changed the config:
 #! `hexo clean && hexo g`
 #! ---------------------------------------------------------------
@@ -13,7 +32,7 @@
 #! ---------------------------------------------------------------
 
 # Theme version
-version: "1.3.4"
+version: "1.4.3"
 
 # ---------------------------------------------------------------
 # Theme default settings
@@ -25,6 +44,12 @@ menu:
   CATEGORIES: /categories
   TAGS: /tags
   ARCHIVES: /archives
+
+# Page custom titles
+page_titles:
+  categories: "Categories"
+  tags: "Tags"
+  archives: "Archived"
 
 # Social media links
 socials:
@@ -72,7 +97,7 @@ autoplay: false
 
 # default mp3 file
 mp3:
-  - statics/A Cruel Angel's Thesis Bilingual two-channel effects version.mp3
+  - statics/ACruelAngelsThesisBilingual.mp3
 
 # ---------------------------------------------------------------
 # Plugins
@@ -139,3 +164,13 @@ busuanzi:
 sharejs:
   enable: true
   disabled: 'facebook,douban,linkedin,diandian,tencent,google'
+
+# Use codemirror instead of highlight js for better colors
+# if you want more language support check the modes list at official website
+# modes see: https://codemirror.net/mode/
+# see https://codemirror.net/
+codemirror:
+  modes: ['javascript', 'css', 'xml', 'htmlmixed', 'clike', 'php', 'shell', 'python']
+
+# Enabling mathjax support
+mathjax: true
