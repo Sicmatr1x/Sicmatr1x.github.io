@@ -46,11 +46,11 @@ spring:
 
 #### `java.sql.SQLException: Unable to load authentication plugin 'caching_sha2_password'.`
 
-出错原因：
+*出错原因*：
 
 mysql 8.0 默认使用 caching_sha2_password 身份验证机制，而之前的版本默认使用 mysql_native_password 身份验证机制
 
-解决办法：
+*解决办法*：
 
 修改加密规则 ：
 ```
@@ -72,9 +72,11 @@ ALTER USER 'root'@'localhost' IDENTIFIED BY 'Friday13';
 
 #### `Unknown system variable 'query_cache_size'`
 
+*出错原因*：
+
 mysql-connecter-java的版本过低，很显然是数据库驱动程序与数据库版本不对应
 
-解决办法：
+*解决办法*：
 
 如 mybatis使用 mysql-5.1.14的驱动程序，而mybatis配置的数据源连接的是 mysql-8.0.11 ，修改 pom文件即可
 
@@ -119,4 +121,115 @@ Caused by: org.springframework.beans.factory.BeanCreationException: Error creati
 	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1628)
 ```
 
+*出错原因*：
+
 有bean没有加上jpa注解
+
+#### SpringBoot无法访问/static下静态资源
+
+*出错原因*：
+
+`@EnableWebMvc`注解导致了`WebMvcAutoConfiguration`类没有生效
+
+*原因分析*：
+
+SpringBoot 访问静态资源的规则，都在`WebMvcAutoConfiguration`自动配置类中
+
+`WebMvcAutoConfiguration.java`:
+
+```java
+    @Override
+		public void addResourceHandlers(ResourceHandlerRegistry registry) {
+			if (!this.resourceProperties.isAddMappings()) {
+				logger.debug("Default resource handling disabled");
+				return;
+			}
+			Duration cachePeriod = this.resourceProperties.getCache().getPeriod();
+			CacheControl cacheControl = this.resourceProperties.getCache().getCachecontrol().toHttpCacheControl();
+			if (!registry.hasMappingForPattern("/webjars/**")) {
+				customizeResourceHandlerRegistration(registry.addResourceHandler("/webjars/**")
+						.addResourceLocations("classpath:/META-INF/resources/webjars/")
+						.setCachePeriod(getSeconds(cachePeriod)).setCacheControl(cacheControl));
+			}
+			String staticPathPattern = this.mvcProperties.getStaticPathPattern();
+			if (!registry.hasMappingForPattern(staticPathPattern)) {
+				customizeResourceHandlerRegistration(registry.addResourceHandler(staticPathPattern)
+						.addResourceLocations(getResourceLocations(this.resourceProperties.getStaticLocations()))
+						.setCachePeriod(getSeconds(cachePeriod)).setCacheControl(cacheControl));
+			}
+		}
+```
+
+`ResourceProperties.java`:
+
+```java
+	private static final String[] CLASSPATH_RESOURCE_LOCATIONS = { "classpath:/META-INF/resources/",
+			"classpath:/resources/", "classpath:/static/", "classpath:/public/" };
+
+	/**
+	 * Locations of static resources. Defaults to classpath:[/META-INF/resources/,
+	 * /resources/, /static/, /public/].
+	 */
+	private String[] staticLocations = CLASSPATH_RESOURCE_LOCATIONS;
+
+  //...
+
+	public String[] getStaticLocations() {
+		return this.staticLocations;
+	}
+```
+
+默认按照该(`CLASSPATH_RESOURCE_LOCATIONS`)加载顺序，加载静态资源文件
+
+继续看`WebMvcAutoConfiguration.java`:
+
+```java
+@Configuration(proxyBeanMethods = false)
+@ConditionalOnWebApplication(type = Type.SERVLET)
+@ConditionalOnClass({ Servlet.class, DispatcherServlet.class, WebMvcConfigurer.class })
+@ConditionalOnMissingBean(WebMvcConfigurationSupport.class)
+@AutoConfigureOrder(Ordered.HIGHEST_PRECEDENCE + 10)
+@AutoConfigureAfter({ DispatcherServletAutoConfiguration.class, TaskExecutionAutoConfiguration.class,
+		ValidationAutoConfiguration.class })
+public class WebMvcAutoConfiguration {
+  //...
+}
+```
+
+发现有以下注解`@ConditionalOnMissingBean(WebMvcConfigurationSupport.class)`: 在WebMvcConfigurationSupport.class这个类没有的情况下，才会走SpringBoot的Web自动配置
+
+`@EnableWebMvc.java`:
+
+```java
+@Retention(RetentionPolicy.RUNTIME)
+@Target(ElementType.TYPE)
+@Documented
+@Import(DelegatingWebMvcConfiguration.class)
+public @interface EnableWebMvc {
+}
+```
+
+`DelegatingWebMvcConfiguration.java`:
+
+```java
+@Configuration(proxyBeanMethods = false)
+public class DelegatingWebMvcConfiguration extends WebMvcConfigurationSupport {
+  //...
+}
+```
+
+可以看到`@EnableWebMvc`注解加载了`DelegatingWebMvcConfiguration.class`类，而这个类又继承了`WebMvcConfigurationSupport`类
+
+*解决办法*：去掉`@EnableWebMvc`注解
+
+<blockquote>
+
+If you want to keep Spring Boot MVC features and you want to add additional [MVC configuration](https://docs.spring.io/spring/docs/5.1.9.RELEASE/spring-framework-reference/web.html#mvc) (interceptors, formatters, view controllers, and other features), you can add your own `@Configuration` class of type WebMvcConfigurer but without `@EnableWebMvc`. If you wish to provide custom instances of `RequestMappingHandlerMapping`, `RequestMappingHandlerAdapter`, or `ExceptionHandlerExceptionResolver`, you can declare a `WebMvcRegistrationsAdapter` instance to provide such components.
+
+If you want to take complete control of Spring MVC, you can add your own `@Configuration` annotated with `@EnableWebMvc`.
+
+</blockquote>
+
+*官方解释*：https://docs.spring.io/spring-boot/docs/2.1.7.RELEASE/reference/html/boot-features-developing-web-applications.html#boot-features-spring-mvc-auto-configuration
+
+

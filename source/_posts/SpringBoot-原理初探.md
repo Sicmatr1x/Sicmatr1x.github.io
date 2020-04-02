@@ -4,7 +4,6 @@ date: 2020-03-23 15:37:04
 categories:
     - Spring Boot
 tags: 
-    - 踩坑
     - 后端
 ---
 
@@ -219,6 +218,113 @@ application.properties
 
 ```properties
 spring.mvc.static-path-pattern=/hello,classpath:/test/
+```
+
+## 国际化
+
+`WebMvcAutoConfiguration.java`:
+
+```java
+		@Bean
+		@ConditionalOnMissingBean
+		@ConditionalOnProperty(prefix = "spring.mvc", name = "locale")
+		public LocaleResolver localeResolver() {
+			// 用户配了就用用户配置，否则使用默认配置
+			if (this.mvcProperties.getLocaleResolver() == WebMvcProperties.LocaleResolver.FIXED) {
+				return new FixedLocaleResolver(this.mvcProperties.getLocale());
+			}
+			AcceptHeaderLocaleResolver localeResolver = new AcceptHeaderLocaleResolver();
+			localeResolver.setDefaultLocale(this.mvcProperties.getLocale());
+			return localeResolver;
+		}
+```
+
+可以看到这里使用到了`AcceptHeaderLocaleResolver`这个类来进行国际化解析
+
+```java
+public class AcceptHeaderLocaleResolver implements LocaleResolver {
+	//...
+	@Override
+	public Locale resolveLocale(HttpServletRequest request) {
+		Locale defaultLocale = getDefaultLocale();
+		if (defaultLocale != null && request.getHeader("Accept-Language") == null) {
+			return defaultLocale;
+		}
+		Locale requestLocale = request.getLocale();
+		List<Locale> supportedLocales = getSupportedLocales();
+		if (supportedLocales.isEmpty() || supportedLocales.contains(requestLocale)) {
+			return requestLocale;
+		}
+		Locale supportedLocale = findSupportedLocale(request, supportedLocales);
+		if (supportedLocale != null) {
+			return supportedLocale;
+		}
+		return (defaultLocale != null ? defaultLocale : requestLocale);
+	}
+	//...
+}
+```
+
+### 配置自己的国际化解析器
+
+和`AcceptHeaderLocaleResolver`一样需要继承`LocaleResolver`类，并实现`resolveLocale`和`setLocale`这两个方法
+
+`com/sicmatr1x/config/MyLocaleResolver.java`:
+
+```java
+package com.sicmatr1x.config;
+
+import java.util.Locale;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import org.springframework.util.StringUtils;
+import org.springframework.web.servlet.LocaleResolver;
+
+public class MyLocaleResolver implements LocaleResolver {
+
+  // 解析请求
+  @Override
+  public Locale resolveLocale(HttpServletRequest request) {
+    // 获取请求中的语言参数
+    String language = request.getParameter("l");
+    Locale locale = Locale.getDefault(); // 如果没有就使用默认的
+
+    // 若请求链接携带了国际化参数
+    if (!StringUtils.isEmpty(language)) {
+      String[] split = language.split("_"); // zh_CN
+      // 国家，地区
+      locale = new Locale(split[0], split[1]);
+    }
+    return locale;
+  }
+
+  @Override
+  public void setLocale(HttpServletRequest request, HttpServletResponse response, Locale locale) {
+
+  }
+}
+```
+
+然后需要到`MyMvcConfig`中去注册即可
+
+`com/sicmatr1x/config/MyMvcConfig.java`:
+
+```java
+@Configuration
+public class MyMvcConfig implements WebMvcConfigurer {
+
+  @Override
+  public void addViewControllers(ViewControllerRegistry registry) {
+    registry.addViewController("/").setViewName("index");
+    registry.addViewController("/index.html").setViewName("index");
+
+  }
+
+  @Bean
+  public LocaleResolver localeResolver() {
+    return new MyLocaleResolver();
+  }
+}
 ```
 
 
