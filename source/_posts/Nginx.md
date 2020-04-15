@@ -364,7 +364,7 @@ server {
 ```conf
 
 #user  nobody;
-worker_processes  1;
+worker_processes  1; # nginx服务器并发处理关键配置，worker_processes值越大，可以支持的并发处理量越多，但是受硬件、软件等设备制约
 
 #error_log  logs/error.log;
 #error_log  logs/error.log  notice;
@@ -374,7 +374,7 @@ worker_processes  1;
 
 
 events {
-    worker_connections  1024;
+    worker_connections  1024; # 表示每个worker processes支持的最大连接数为1024
 }
 
 
@@ -399,7 +399,11 @@ http {
 
     #gzip  on;
     
+    # The ngx_http_upstream_module module is used to define groups of servers that can be referenced by the proxy_pass, fastcgi_pass, uwsgi_pass, scgi_pass, memcached_pass, and grpc_pass directives.
+    # 定义server用于给后面的proxy_pass使用
+    # 参考：https://blog.csdn.net/caijunsen/article/details/83002219
     upstream www-pixiv-net { 
+        # 每个请求按时间顺序逐一分配到不同的后端服务器，如果后端服务器down掉，能自动剔除
         server 210.140.131.223:443;
         server 210.140.131.225:443;
         server 210.140.131.220:443;
@@ -439,13 +443,27 @@ http {
     }
     
     server {
-        listen 80 default_server;  
-        rewrite ^(.*) https://$host$1 permanent;
+        listen 80 default_server; # default_server 指令可以定义默认的 server 去处理一些没有匹配到 server_name 的请求，如果没有显式定义，则会选取第一个定义的 server 作为 default_server
+        rewrite ^(.*) https://$host$1 permanent; # 网站添加了https证书后，当http方式访问网站时就会报404错误，所以需要做http到https的强制跳转设置
+        # rewrite语法：
+        # rewrite    <regex>    <replacement>    [flag];
+        # 关键字      正则        替代内容          flag标记
+        # 关键字：其中关键字error_log不能改变
+        # 正则：perl兼容正则表达式语句进行规则匹配
+        # 替代内容：将正则匹配的内容替换成replacement
+        # flag标记：rewrite支持的flag标记
+        # flag标记说明：
+        # last: 本条规则匹配完成后，继续向下匹配新的location URI规则
+        # break: 本条规则匹配完成即终止，不再匹配后面的任何规则
+        # redirect: 返回302临时重定向，浏览器地址会显示跳转后的URL地址
+        # permanent: 返回301永久重定向，浏览器地址栏会显示跳转后的URL地址
+
+        # rewrite的组要功能是实现URL地址的重定向。Nginx的rewrite功能需要PCRE软件的支持，即通过perl兼容正则表达式语句进行规则匹配的。默认参数编译nginx就会支持rewrite的模块，但是也必须要PCRE的支持
     }
 
     server {
-        listen 443 ssl;
-        server_name pixiv.net;
+        listen 443 ssl; # 443是https的默认端口
+        server_name pixiv.net; # server name 为虚拟服务器的识别路径。因此不同的域名会通过请求头中的HOST字段，匹配到特定的server块，转发到对应的应用服务器中去
         server_name www.pixiv.net;
         server_name ssl.pixiv.net;
         server_name accounts.pixiv.net;
@@ -691,3 +709,7 @@ http {
 
 ```
 
+## 链接
+
+- [The easiest way to configure a performant, secure,
+and stable NGINX server.](https://www.digitalocean.com/community/tools/nginx)
