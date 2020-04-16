@@ -357,7 +357,245 @@ server {
 
 ### 负载均衡实例
 
+实现效果：通过浏览器的地址栏输入地址(http://localhost/edu/a.html)，使得请求平均分配到8080与8081端口中
+
+关键配置：
+
+```conf
+http {
+    #.....
+    upstream myserver {
+        ip_hash;
+        server 192.168.17.129:8080 weight=1;
+        server 192.168.17.129:8081 weight=1;
+    }
+    #.....
+    server {
+        location / {
+            #.....
+            proxy_pass http://myserver;
+            proxy_connect_timeout 10;
+        }
+    }
+}
+```
+
+配置案例：
+
+```conf
+
+worker_processes  1;
+
+
+events {
+    worker_connections  1024;
+}
+
+http {
+    include       mime.types;
+    default_type  application/octet-stream;
+
+    sendfile        on;
+
+    keepalive_timeout  65;
+
+    upstream myserver {
+        ip_hash;
+        server 192.168.17.129:8080 weight=1;
+        server 192.168.17.129:8081 weight=1;
+    }
+
+    server {
+        listen       80;
+        server_name  192.168.17.129;
+
+        location / {
+            proxy_pass http://myserver;
+            proxy_connect_timeout 10;
+            root   html
+            index index.html index.htm
+        }
+    }
+}
+
+```
+
+### 负载均衡的分配方式
+
+1. 轮询(默认)：每个请求按时间顺序逐一分配到不同的后端服务器，如果后端服务器down掉，能自动剔除。
+2. weight：权重，weight和访问比率成正比，用于后端服务器性能不均的情况，例如：
+   - A服务器`weight=5`，B服务器`weight=10`，则B会收到的流量为A的一倍，即A会收到全部流量的1/3，B为2/3
+3. ip_hash：每个请求按IP的hash结果分配，每个访客固定访问一个后端服务器，可以解决session的问题
+4. fair: 按照后端服务器的访问时间来分配，时间短的优先分配
+
+```conf
+upstream myserver {
+    server 192.168.17.129:8080;
+    server 192.168.17.129:8081;
+}
+```
+
+```conf
+upstream myserver {
+    server 192.168.17.129:8080 weight=5;
+    server 192.168.17.129:8081 weight=10;
+}
+```
+
+```conf
+upstream myserver {
+    ip_hash;
+    server 192.168.17.129:8080;
+    server 192.168.17.129:8081;
+}
+```
+
+```conf
+upstream myserver {
+    server 192.168.17.129:8080;
+    server 192.168.17.129:8081;
+    fair;
+}
+```
+
 ### 动静分离实例
+
+通过`location`指定不同的后缀名实现不同的请求转发。通过`expires`参数设置，可以使浏览器缓存过期时间，减少与服务器之前的请求和流量。
+
+`Expores`：给一个资源设定一个过期时间，无需服务器端验证，而是由浏览器去确认该资源是否过期，不会产生额外的流量。适用于不经常变动的资源。比如设置为`3d`表示3天之内访问这个URL，浏览器会发送一个请求来对比服务器该文件最后更新时间有无变化，若无则不会从服务器抓取，返回状态码`304`，如果有修改则直接从服务器下载，返回状态码`200`
+
+实现效果：
+1. 浏览器中输入地址http://192.168.17.129/image/01.jpg
+2. 浏览器中输入地址http://192.168.17.129/www/a.html
+
+文件结构：
+- data
+  - image
+    - 01.jpg
+  - www
+    - a.html
+
+```conf
+worker_processes  1;
+
+
+events {
+    worker_connections  1024;
+}
+
+http {
+    include       mime.types;
+    default_type  application/octet-stream;
+
+    sendfile        on;
+
+    keepalive_timeout  65;
+
+    server {
+        listen       80;
+        server_name  192.168.17.129;
+
+        location /www/ {
+            root /data/;
+            index index.html index.htm
+        }
+
+        location /image/ {
+            root /data/;
+            autoindex on; # 在浏览器中列出当前文件夹中的内容
+        }
+    }
+}
+```
+
+## 高可用集群
+
+多台Nginx同时工作，若其中一台宕机服务不会中断。
+
+需要：
+1. 2台服务器192.168.17.129, 192.168.17.131
+2. 两台服务器安装Nginx
+3. 两台服务器安装keepalived
+
+```
+yum install keepalived -y
+```
+
+配置文件`/etc/keepalive.conf`：
+
+```conf
+#全局配置
+global_defs { 
+    notification_email {
+        acassen@firewall.loc
+        failover@firewall.loc
+        sysadmin@firewall.loc
+    }
+    notification_email from Alexandre.Cassen@firewall.loc
+    smtp_server 192.168.17.129
+    smtp_connect timeout 30
+    router_id LVS_DEVEL # 唯一取值，可写服务器名字(配置在hosts里的domian)也可写IP
+}
+
+# 脚本配置
+vrrp_script chk_http_port {
+    script "/usr/local/src/nginx_check.sh" # 检测脚本路径
+    interval 2 # 检测脚本执行间隔
+    weight 2 # 权重参数
+}
+
+vrrp_instance VI_1 {
+    state BACKUP # 备份服务器上将MASTER改为BACKUP
+    interface ens33 # 网卡
+    virtual_router_id 51 # 主、备机的virtual_router_id 必须相同
+    priority 100 # 主、备机取不同的优先级，主机值较大，备份机值较小
+    advert_int 1 # 时间间隔，每隔多久发送一个心跳，单位秒
+    authentication { # 权限校验方式
+        auth_type PASS # 类型：密码
+        auth_pass 1111 # 密码值
+    }
+    virtual_ipaddress {
+        192.168.17.50 # VRRP H虚拟地址
+    }
+}
+```
+
+检测脚本`/usr/local/src/nginx_check.sh`：
+
+```sh
+#!/bin/bash
+A=`ps -C nginx -no-header |wc -l`
+if [ $A -eq 0 ]; then
+    /usr/local/nginx/sbin/nginx
+    sleep 2
+    if [ `ps -C nginx -no-header |wc -l` -eq 0 ]; then
+        killall keepalived
+    fi
+fi
+```
+
+查看网卡名：
+
+```
+ifconfig
+```
+
+## Nginx原理分析
+
+### master 和 worker
+
+Nginx启动之后在Linux系统中其实有两个进程，分别叫`nginx: master`, `nginx: worker`
+
+当客户端发送一条请求给master之后，然后由worker来争抢该条请求，当worker抢到之后变进行请求转发或反向代理给Tomcat来响应请求
+
+一个master和多个worker的好处：
+1. 可以使用`nginx -s reload`热部署。在进行热部署时，已经在执行任务的worker继续执行，没有任务的worker重新加载，有任务的worker任务执行完毕后再加载新配置文件。
+2. 对于每个worker进程来说，独立的进程，不需要加锁，所以省掉了锁带来的开销。
+3. 独立的进程互相之间不会相互影响，一个进程退出后，其它的进程还在工作，服务不会中断。若单个worker进程遇到异常退出了，会导致当前worker上的所有请求失败，不会影响到其它worker在处理的请求。
+
+#### 需要设置多少个worker
+
+Nginx和redis类似都采用了io多路复用机制，每个worker都是一个独立的进程，但每个进程只有一个主线程，通过异步非阻塞的方式来处理请求。每个worker的线程可以把一个cpu的性能发挥到极致。所以worker数和服务器的cpu核数相等是最为适宜的。设少了浪费cpu，设多了会造成cpu频繁切换上下文带来的损耗。
 
 ## 反向代理配置文件案例
 
@@ -399,6 +637,7 @@ http {
 
     #gzip  on;
     
+    # upstream 负载均衡关键配置
     # The ngx_http_upstream_module module is used to define groups of servers that can be referenced by the proxy_pass, fastcgi_pass, uwsgi_pass, scgi_pass, memcached_pass, and grpc_pass directives.
     # 定义server用于给后面的proxy_pass使用
     # 参考：https://blog.csdn.net/caijunsen/article/details/83002219
