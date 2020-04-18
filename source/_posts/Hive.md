@@ -2,7 +2,7 @@
 title: Hive
 date: 2017-08-17 20:09:47
 categories:
-    - Hadoop
+    - 大数据
 tags: 
     - Hive
 ---

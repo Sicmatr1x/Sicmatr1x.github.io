@@ -5,6 +5,7 @@ categories:
     - 后端
 tags: 
     - OracleDB
+    - 数据库
 ---
 
 ## Oracle 服务器配置

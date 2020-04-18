@@ -5,6 +5,7 @@ categories:
     - 后端
 tags: 
     - Redis
+    - 高并发
 ---
 
 Redis is an open source (BSD licensed), in-memory data structure store, used as a database, cache and message broker.

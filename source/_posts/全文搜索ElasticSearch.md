@@ -2,9 +2,9 @@
 title: 全文搜索ElasticSearch
 date: 2020-03-15 11:52:04
 categories:
-    - 杂项
-tags: 
     - 后端
+tags: 
+    - 搜索
 ---
 
 ElasticSearch是高度可扩展的开源全文搜索和分析引擎，可以快速的、近实时的对大数据进行存储、搜索和分析。
