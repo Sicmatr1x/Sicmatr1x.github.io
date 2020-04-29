@@ -709,11 +709,11 @@ http {
         server_name touch.pixiv.net;
         server_name oauth.secure.pixiv.net;
 
-        ssl on;
+        ssl on; # 使用HTTPS，需要安装OpenSSL
         ssl_certificate ca/pixiv.net.crt;
-        ssl_certificate_key ca/pixiv.net.key;
+        ssl_certificate_key ca/pixiv.net.key; # HTTPS私钥
         
-        client_max_body_size 50M;
+        client_max_body_size 50M; # 用nginx作代理服务器，上传大文件的大小有限制(限制请求体的大小，若超过所设定的大小，返回413错误)
         
     	location / {
             proxy_pass https://www-pixiv-net;
@@ -722,7 +722,12 @@ http {
             proxy_set_header X-Real_IP $remote_addr;
             proxy_set_header User-Agent $http_user_agent;
             proxy_set_header Accept-Encoding ''; 
-            proxy_buffering off;
+            proxy_buffering off; # 主要是实现被代理服务器的数据和客户端的请求异步
+            # A为客户端，B为代理服务器，C为被代理服务器。
+            # 当proxy_buffering开启，A发起请求到B，B再到C，C反馈的数据先到B的buffer上，
+            # 然后B会根据proxy_busy_buffer_size来决定什么时候开始把数据传输给A。
+            # 在此过程中，如果所有的buffer被写满，数据将会写入到temp_file中。
+            # 相反，如果proxy_buffering关闭，C反馈的数据实时地通过B传输给A。
         }
 	}
     
@@ -950,5 +955,9 @@ http {
 
 ## 链接
 
-- [The easiest way to configure a performant, secure,
-and stable NGINX server.](https://www.digitalocean.com/community/tools/nginx)
+- [The easiest way to configure a performant, secure, and stable NGINX server.](https://www.digitalocean.com/community/tools/nginx)
+- [PIXIV网页版及客户端访问恢复指南](https://2heng.xin/2017/09/19/pixiv/)
+- [MAC本地nginx反向代理访问Pixiv指北](http://idayer.com/nginx-reverse-proxy-for-pixiv/)
+- [Nginx 真·反代P站 恢复直接访问](https://moe.best/technology/pixiv-proxy.html)
+- [NGINX Config The easiest way to configure a performant, secure, and stable NGINX server.](https://www.digitalocean.com/community/tools/nginx)
+- 
