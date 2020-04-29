@@ -2,7 +2,7 @@
 title: HDFS
 date: 2017-08-13 17:19:43
 categories:
-    - Hadoop
+    - 大数据
 tags: 
     - HDFS
 ---
