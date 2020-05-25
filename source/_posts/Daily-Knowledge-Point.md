@@ -269,3 +269,57 @@ A: 该警告是因为jdk版本太高（我用的是10.0，据说9.0的也会这�
 
 解决方案是把项目jdk降低到1.8及以下，建议1.8
 
+### 2020-05-25
+
+#### Q: SpringBoot抛出`Overriding bean definition for bean 'person' with a different definition`
+
+```
+May 25, 2020 5:20:16 PM org.springframework.beans.factory.support.DefaultListableBeanFactory registerBeanDefinition
+INFO: Overriding bean definition for bean 'person' with a different definition: replacing [Root bean: class [null]; scope=; abstract=false; lazyInit=true; autowireMode=3; dependencyCheck=0; autowireCandidate=true; primary=false; factoryBeanName=mainConfig2; factoryMethodName=person; initMethodName=null; destroyMethodName=(inferred); defined in class path resource [com/sicmatr1x/config/MainConfig2.class]] with [Root bean: class [null]; scope=; abstract=false; lazyInit=false; autowireMode=3; dependencyCheck=0; autowireCandidate=true; primary=false; factoryBeanName=mainConfig; factoryMethodName=person; initMethodName=null; destroyMethodName=(inferred); defined in com.sicmatr1x.config.MainConfig]
+```
+
+意思是有一个叫`person`的bean被重复注入到IOT容器了
+
+A: 导致的原因是：
+
+启动的时候用的是`MainConfig.class`这个配置类
+
+```java
+AnnotationConfigApplicationContext annotationConfigApplicationContext = new AnnotationConfigApplicationContext(MainConfig.class);
+```
+
+我在该类中注册了`person`，然后启用了包扫描
+
+```java
+@Configuration
+@ComponentScan(value = "com.sicmatr1x", excludeFilters = {
+        @Filter(type = FilterType.CUSTOM, classes = {MyTypeFilter.class})
+})
+public class MainConfig {
+    @Bean("person")
+    public Person person(){
+        return new Person("Abby", 20);
+    }
+}
+```
+
+然后扫描到了另外一个配置类，我在另外的这个配置类里面又注册了`person`
+
+```java
+package com.sicmatr1x.config;
+
+
+import com.sicmatr1x.bean.Person;
+import org.springframework.context.annotation.*;
+
+@Configuration
+public class MainConfig2 {
+//    @Scope("prototype")
+    @Lazy
+    @Bean("person")
+    public Person person(){
+        return new Person("Bob", 30);
+    }
+}
+```
+
