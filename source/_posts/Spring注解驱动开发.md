@@ -217,6 +217,7 @@ public class MyTypeFilter implements TypeFilter {
      * @return true: 匹配成功; false: 匹配失败
      * @throws IOException
      */
+    @Override
     public boolean match(MetadataReader metadataReader, MetadataReaderFactory metadataReaderFactory) throws IOException {
         // 获取当前类注解的信息
         AnnotationMetadata annotationMetadata = metadataReader.getAnnotationMetadata();
@@ -305,6 +306,7 @@ public class MyTypeFilter implements TypeFilter {
      * @return true: 匹配成功; false: 匹配失败
      * @throws IOException
      */
+    @Override
     public boolean match(MetadataReader metadataReader, MetadataReaderFactory metadataReaderFactory) throws IOException {
         // 获取当前类注解的信息
         AnnotationMetadata annotationMetadata = metadataReader.getAnnotationMetadata();
@@ -634,6 +636,7 @@ public class LinuxCondition implements Condition {
      * @param metadata 注解信息
      * @return
      */
+    @Override
     public boolean matches(ConditionContext context, AnnotatedTypeMetadata metadata) {
         // 能获取到IOC使用的beanFactory
         ConfigurableListableBeanFactory beanFactory = context.getBeanFactory();
@@ -662,7 +665,7 @@ import org.springframework.core.env.Environment;
 import org.springframework.core.type.AnnotatedTypeMetadata;
 
 public class WindowsCondition implements Condition {
-
+    @Override
     public boolean matches(ConditionContext context, AnnotatedTypeMetadata metadata) {
         // 能获取到当前环境信息
         Environment environment = context.getEnvironment();
@@ -773,6 +776,1299 @@ public class MainConfig2 {
 
 }
 ```
+
+#### `@Import` 使用ImportSelector
+
+这种方法在spring源码用用到的较多
+
+查看`@Import`的源码发现除了通常的组件类(regular component classes)作为参数传入以外还可以传入`Configuration`, `ImportSelector`, `ImportBeanDefinitionRegistrar`
+
+```java
+@Target(ElementType.TYPE)
+@Retention(RetentionPolicy.RUNTIME)
+@Documented
+public @interface Import {
+
+	/**
+	 * {@link Configuration}, {@link ImportSelector}, {@link ImportBeanDefinitionRegistrar}
+	 * or regular component classes to import.
+	 */
+	Class<?>[] value();
+
+}
+```
+
+查看`ImportSelector`源码: 
+
+```java
+public interface ImportSelector {
+
+	/**
+	 * Select and return the names of which class(es) should be imported based on
+	 * the {@link AnnotationMetadata} of the importing @{@link Configuration} class.
+	 */
+	String[] selectImports(AnnotationMetadata importingClassMetadata);
+
+}
+```
+
+> Select and return the names of which class(es) should be imported
+
+显然`selectImports`方法会返回需要导入的类的全类名组成的数组
+
+在本项目中只有`MainConfig2`类里面使用到了`@Import`注解
+
+```java
+@Configuration
+@Import({Color.class, MyImportSelector.class})
+public class MainConfig2 {
+    //...
+}
+```
+
+我们打个断点到`selectImports`方法上看看传入的参数：
+
+<img src="./2020-05-26 11_41_57-spring-annotation – MainConfig2.java IntelliJ IDEA Administrator.png">
+
+可以看到`importingClassMetadata`对象包含的：
+- `annotations`对象数组里面获取到了`MainConfig2`类上面的2个注解
+- `introspectedClass`对象则获取到了`MainConfig2`类的类信息
+
+继续debug就可发现：若返回为null则会抛出空指针异常
+
+```java
+	/**
+	 * Factory method to obtain {@link SourceClass}s from class names.
+	 */
+	private Collection<SourceClass> asSourceClasses(String[] classNames) throws IOException {
+		List<SourceClass> annotatedClasses = new ArrayList<SourceClass>(classNames.length); // 这里调到了classNames.length，若返回为空，显然null没有length属性
+		for (String className : classNames) {
+			annotatedClasses.add(asSourceClass(className));
+		}
+		return annotatedClasses;
+	}
+```
+
+推荐在没有class返回的情况下返回一个空数组
+
+实践一下：
+
+```java
+package com.sicmatr1x.condition;
+
+import org.springframework.context.annotation.ImportSelector;
+import org.springframework.core.type.AnnotationMetadata;
+
+public class MyImportSelector implements ImportSelector {
+    /**
+     *
+     * @param importingClassMetadata 当前标注@Import注解的类的所有的类的信息
+     * @return 返回需要导入的类的全类名
+     */
+    @Override
+    public String[] selectImports(AnnotationMetadata importingClassMetadata) {
+
+        return new String[]{"com.sicmatr1x.bean.Blue", "com.sicmatr1x.bean.Yellow"};
+    }
+}
+
+```
+
+运行unit test，可以看到已经注册进来了
+
+```
+mainConfig2
+com.sicmatr1x.bean.Color
+com.sicmatr1x.bean.Blue
+com.sicmatr1x.bean.Yellow
+person
+bill
+```
+
+#### `@Import` 使用ImportBeanDefinitionRegistrar
+
+从`@Import`源码里面继续点进去看`ImportBeanDefinitionRegistrar`的源码：
+
+```java
+public interface ImportBeanDefinitionRegistrar {
+
+	/**
+	 * Register bean definitions as necessary based on the given annotation metadata of
+	 * the importing {@code @Configuration} class.
+	 * <p>Note that {@link BeanDefinitionRegistryPostProcessor} types may <em>not</em> be
+	 * registered here, due to lifecycle constraints related to {@code @Configuration}
+	 * class processing.
+	 * @param importingClassMetadata annotation metadata of the importing class
+	 * @param registry current bean definition registry
+	 */
+	public void registerBeanDefinitions(
+			AnnotationMetadata importingClassMetadata, BeanDefinitionRegistry registry);
+
+}
+```
+
+- `importingClassMetadata`: 当前类的一些注解信息
+- `registry`: bean定义的注册类，可用于给程序中注册bean
+
+现在实现一下这个接口：
+
+```java
+package com.sicmatr1x.condition;
+
+import com.sicmatr1x.bean.RainBow;
+import org.springframework.beans.factory.support.BeanDefinitionRegistry;
+import org.springframework.beans.factory.support.RootBeanDefinition;
+import org.springframework.context.annotation.ImportBeanDefinitionRegistrar;
+import org.springframework.core.type.AnnotationMetadata;
+
+public class MyImportBeanDefinitionRegistrar implements ImportBeanDefinitionRegistrar {
+    /**
+     * 把所有需要添加到容器中的bean，可以通过BeanDefinition注册类的registerBeanDefinition方法注册进IOT容器
+     * @param importingClassMetadata 当前类的注解信息
+     * @param registry BeanDefinition注册类，可用于给程序中注册bean
+     */
+    @Override
+    public void registerBeanDefinitions(AnnotationMetadata importingClassMetadata, BeanDefinitionRegistry registry) {
+        // 判断IOT容器中是否已经注册了red和blue
+        boolean isRegisteredYellowClass = registry.containsBeanDefinition("com.sicmatr1x.bean.Yellow");
+        boolean isRegisteredBlueClass = registry.containsBeanDefinition("com.sicmatr1x.bean.Blue");
+        if(isRegisteredYellowClass && isRegisteredBlueClass) {
+            // 指定Bean定义信息(如Bean的类型、作用域等)
+            RootBeanDefinition beanDefinition = new RootBeanDefinition(RainBow.class);
+            // 注册bean，同时指定bean名
+            registry.registerBeanDefinition("rainBow", beanDefinition);
+        }
+    }
+}
+
+```
+
+使用方法同前面的`MyImportSelector`类：
+
+```java
+@Configuration
+@Import({Color.class, MyImportSelector.class, MyImportBeanDefinitionRegistrar.class})
+public class MainConfig2 {
+    //...
+}
+```
+
+运行unit test：
+
+```
+mainConfig2
+com.sicmatr1x.bean.Color
+com.sicmatr1x.bean.Blue
+com.sicmatr1x.bean.Yellow
+person
+bill
+rainBow
+```
+
+#### 使用FactoryBean注册组件
+
+使用前先看`FactoryBean`源码：
+
+```java
+public interface FactoryBean<T> {
+
+	/**
+	 * Return an instance (possibly shared or independent) of the object
+	 * managed by this factory.
+	 * <p>As with a {@link BeanFactory}, this allows support for both the
+	 * Singleton and Prototype design pattern.
+	 * <p>If this FactoryBean is not fully initialized yet at the time of
+	 * the call (for example because it is involved in a circular reference),
+	 * throw a corresponding {@link FactoryBeanNotInitializedException}.
+	 * <p>As of Spring 2.0, FactoryBeans are allowed to return {@code null}
+	 * objects. The factory will consider this as normal value to be used; it
+	 * will not throw a FactoryBeanNotInitializedException in this case anymore.
+	 * FactoryBean implementations are encouraged to throw
+	 * FactoryBeanNotInitializedException themselves now, as appropriate.
+	 * @return an instance of the bean (can be {@code null})
+	 * @throws Exception in case of creation errors
+	 * @see FactoryBeanNotInitializedException
+	 */
+	T getObject() throws Exception;
+
+	/**
+	 * Return the type of object that this FactoryBean creates,
+	 * or {@code null} if not known in advance.
+	 * <p>This allows one to check for specific types of beans without
+	 * instantiating objects, for example on autowiring.
+	 * <p>In the case of implementations that are creating a singleton object,
+	 * this method should try to avoid singleton creation as far as possible;
+	 * it should rather estimate the type in advance.
+	 * For prototypes, returning a meaningful type here is advisable too.
+	 * <p>This method can be called <i>before</i> this FactoryBean has
+	 * been fully initialized. It must not rely on state created during
+	 * initialization; of course, it can still use such state if available.
+	 * <p><b>NOTE:</b> Autowiring will simply ignore FactoryBeans that return
+	 * {@code null} here. Therefore it is highly recommended to implement
+	 * this method properly, using the current state of the FactoryBean.
+	 * @return the type of object that this FactoryBean creates,
+	 * or {@code null} if not known at the time of the call
+	 * @see ListableBeanFactory#getBeansOfType
+	 */
+	Class<?> getObjectType();
+
+	/**
+	 * Is the object managed by this factory a singleton? That is,
+	 * will {@link #getObject()} always return the same object
+	 * (a reference that can be cached)?
+	 * <p><b>NOTE:</b> If a FactoryBean indicates to hold a singleton object,
+	 * the object returned from {@code getObject()} might get cached
+	 * by the owning BeanFactory. Hence, do not return {@code true}
+	 * unless the FactoryBean always exposes the same reference.
+	 * <p>The singleton status of the FactoryBean itself will generally
+	 * be provided by the owning BeanFactory; usually, it has to be
+	 * defined as singleton there.
+	 * <p><b>NOTE:</b> This method returning {@code false} does not
+	 * necessarily indicate that returned objects are independent instances.
+	 * An implementation of the extended {@link SmartFactoryBean} interface
+	 * may explicitly indicate independent instances through its
+	 * {@link SmartFactoryBean#isPrototype()} method. Plain {@link FactoryBean}
+	 * implementations which do not implement this extended interface are
+	 * simply assumed to always return independent instances if the
+	 * {@code isSingleton()} implementation returns {@code false}.
+	 * @return whether the exposed object is a singleton
+	 * @see #getObject()
+	 * @see SmartFactoryBean#isPrototype()
+	 */
+	boolean isSingleton();
+
+}
+```
+
+可以看到有三个方法：
+1. `T getObject() throws Exception`: 返回需要放到容器中的对象，这里是泛型也就是说工厂接口在实现时就已经确定了其只能返回某种类型的对象了
+2. `Class<?> getObjectType()`: 返回对象类型
+3. `boolean isSingleton();`: 是否为单例模式
+
+我们实现一下这个接口：
+
+```java
+package com.sicmatr1x.bean;
+
+import org.springframework.beans.factory.FactoryBean;
+
+/**
+ * 实现一个spring定义的工厂Bean
+ */
+public class ColorFactoryBean implements FactoryBean<Color> {
+    /**
+     *
+     * @return 返回Color对象，并添加到容器中
+     * @throws Exception
+     */
+    @Override
+    public Color getObject() throws Exception {
+        System.out.println("ColorFactoryBean:getObject()");
+        return new Color();
+    }
+
+    @Override
+    public Class<?> getObjectType() {
+        return Color.class;
+    }
+
+    /**
+     * true表明为单例，容器中只保存一份
+     * @return
+     */
+    @Override
+    public boolean isSingleton() {
+        return true;
+    }
+}
+
+```
+
+配置类里注册一下`ColorFactoryBean`工厂
+
+```java
+@Configuration
+public class MainConfig2 {
+    //...
+    @Bean
+    public ColorFactoryBean colorFactoryBean(){
+        return new ColorFactoryBean();
+    }
+}
+```
+
+unit test里从IOT容器中获取并打印一下我们的工厂的类型：
+
+```java
+        // 工厂Bean获取的是调用getObject创建的对象
+        Object factoryBean = annotationConfigApplicationContext.getBean("colorFactoryBean");
+        Object factoryBean2 = annotationConfigApplicationContext.getBean("colorFactoryBean");
+        System.out.println("ColorFactoryBean class is " + factoryBean.getClass());
+        System.out.println(factoryBean == factoryBean2);
+```
+
+输出：
+
+```
+ColorFactoryBean:getObject()
+ColorFactoryBean class is class com.sicmatr1x.bean.Color
+true
+```
+
+可以发现我们的工厂Bean的类型居然是`Color`，说明我们从IOT容器中getBean结果其实get到的是调用`ColorFactoryBean.getObject()`返回的对象，再用getBean获取一下发现两次获取到的对象是一样的，这表明我们重写`isSingleton()`方法的返回值被spring用于判断是否为单例模式了
+
+如果想获取到`ColorFactoryBean`本身的话可以通过在bean的id前增加一个`&`字符来实现：
+
+```java
+Object factoryBean = annotationConfigApplicationContext.getBean("&colorFactoryBean");
+```
+
+至于为什么是这个字符，可以去`BeanFactory`接口里面定义了`&`字符
+
+```java
+public interface BeanFactory {
+
+	/**
+	 * Used to dereference a {@link FactoryBean} instance and distinguish it from
+	 * beans <i>created</i> by the FactoryBean. For example, if the bean named
+	 * {@code myJndiObject} is a FactoryBean, getting {@code &myJndiObject}
+	 * will return the factory, not the instance returned by the factory.
+	 */
+	String FACTORY_BEAN_PREFIX = "&";
+    //...
+}
+```
+
+---
+
+### 生命周期
+
+#### `@Bean`指定初始化和销毁方法
+
+Bean的生命周期：
+- bean创建
+- 初始化
+- 销毁
+
+Bean的生命周期现在是由容器来管理的，我们可以自定义初始化和销毁方法，容器在bean进行到当前生命周期的时候会调用我们自定义的初始化或销毁方法
+
+以下会讲4种实现方式：
+
+1. 指定初始化和销毁方法
+
+以前是在`beans.xml`文件中指定初始化和销毁方法`init-method="" destroy-method=""`
+
+```java
+package com.sicmatr1x.bean;
+
+public class Car {
+    public Car(){
+        System.out.println("Car:constructor");
+    }
+
+    public void init() {
+        System.out.println("Car:init()");
+    }
+
+    public void destroy() {
+        System.out.println("Car:destroy()");
+    }
+}
+
+```
+
+现在可以通过`@Bean`注解配置对应的方法
+- 初始化：对象创建完成并赋值好，调用初始化方法
+- 销毁：容器关闭的时候，进行销毁
+
+写一个配置类：
+
+```java
+package com.sicmatr1x.condition;
+
+import com.sicmatr1x.bean.Car;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+
+@Configuration
+public class MainConfigLifeCycle {
+
+    @Bean(initMethod = "init", destroyMethod = "destroy")
+    public Car car() {
+        return new Car();
+    }
+}
+
+
+```
+
+unit test：
+
+```java
+    @Test
+    public void test01(){
+        // 创建IOC容器
+        AnnotationConfigApplicationContext annotationConfigApplicationContext = new AnnotationConfigApplicationContext(MainConfigLifeCycle.class);
+        System.out.println("容器创建完成");
+        annotationConfigApplicationContext.close();
+        System.out.println("容器销毁完成");
+    }
+```
+
+输出：
+
+```
+Car:constructor
+Car:init()
+容器创建完成
+Car:destroy()
+容器销毁完成
+```
+
+在单实例模式下对象的初始化在容器创建完之后进行，销毁在容器销毁前完成
+
+在多实例模式下对象的初始化在你获取时进行，容器不会管理这个bean，容器不会调用其销毁方法
+
+#### `InitializingBean` & `DisposableBean`
+
+2. 实现`InitializingBean` & `DisposableBean`接口
+
+用于在bean初始化时执行自定义初始化逻辑的接口
+
+当`BeanFactory`创建好对象并且给bean里所有的属性设置完成后会调用`InitializingBean.afterPropertiesSet()`
+
+```java
+public interface InitializingBean {
+
+	/**
+	 * Invoked by a BeanFactory after it has set all bean properties supplied
+	 * (and satisfied BeanFactoryAware and ApplicationContextAware).
+	 * <p>This method allows the bean instance to perform initialization only
+	 * possible when all bean properties have been set and to throw an
+	 * exception in the event of misconfiguration.
+	 * @throws Exception in the event of misconfiguration (such
+	 * as failure to set an essential property) or if initialization fails.
+	 */
+	void afterPropertiesSet() throws Exception;
+
+}
+```
+
+与之相对的在bean销毁时也有对应的接口：
+
+```java
+public interface DisposableBean {
+
+	/**
+	 * Invoked by a BeanFactory on destruction of a singleton.
+	 * @throws Exception in case of shutdown errors.
+	 * Exceptions will get logged but not rethrown to allow
+	 * other beans to release their resources too.
+	 */
+	void destroy() throws Exception;
+
+}
+```
+
+给bean实现一下对应接口：
+
+```java
+package com.sicmatr1x.bean;
+
+import org.springframework.beans.factory.DisposableBean;
+import org.springframework.beans.factory.InitializingBean;
+import org.springframework.stereotype.Component;
+
+@Component
+public class Cat implements InitializingBean, DisposableBean {
+    public Cat() {
+        System.out.println("Cat:constructor()");
+    }
+
+    @Override
+    public void destroy() throws Exception {
+        System.out.println("Cat:destroy()");
+    }
+
+    @Override
+    public void afterPropertiesSet() throws Exception {
+        System.out.println("Cat:afterPropertiesSet()");
+    }
+}
+
+```
+
+运行一下unit test：
+
+```
+Cat:constructor()
+Cat:afterPropertiesSet()
+Car:constructor
+Car:init()
+容器创建完成
+Car:destroy()
+Cat:destroy()
+容器销毁完成
+```
+
+#### `@PostConstruct` & `@PreDestroy`
+
+3. 实现`@PostConstruct` & `@PreDestroy`注解
+
+`@PostConstruct` & `@PreDestroy`注解在JSR250规范中被定义
+
+话不多说，先看源码：
+
+```java
+package javax.annotation;
+
+import java.lang.annotation.*;
+import static java.lang.annotation.ElementType.*;
+import static java.lang.annotation.RetentionPolicy.*;
+
+/**
+ * The PostConstruct annotation is used on a method that needs to be executed
+ * after dependency injection is done to perform any initialization. This
+ * method MUST be invoked before the class is put into service. This
+ * annotation MUST be supported on all classes that support dependency
+ * injection. The method annotated with PostConstruct MUST be invoked even
+ * if the class does not request any resources to be injected. Only one
+ * method can be annotated with this annotation. The method on which the
+ * PostConstruct annotation is applied MUST fulfill all of the following
+ * criteria:
+ * <p>
+ * <ul>
+ * <li>The method MUST NOT have any parameters except in the case of
+ * interceptors in which case it takes an InvocationContext object as
+ * defined by the Interceptors specification.</li>
+ * <li>The method defined on an interceptor class MUST HAVE one of the
+ * following signatures:
+ * <p>
+ * void &#060;METHOD&#062;(InvocationContext)
+ * <p>
+ * Object &#060;METHOD&#062;(InvocationContext) throws Exception
+ * <p>
+ * <i>Note: A PostConstruct interceptor method must not throw application
+ * exceptions, but it may be declared to throw checked exceptions including
+ * the java.lang.Exception if the same interceptor method interposes on
+ * business or timeout methods in addition to lifecycle events. If a
+ * PostConstruct interceptor method returns a value, it is ignored by
+ * the container.</i>
+ * </li>
+ * <li>The method defined on a non-interceptor class MUST HAVE the
+ * following signature:
+ * <p>
+ * void &#060;METHOD&#062;()
+ * </li>
+ * <li>The method on which PostConstruct is applied MAY be public, protected,
+ * package private or private.</li>
+ * <li>The method MUST NOT be static except for the application client.</li>
+ * <li>The method MAY be final.</li>
+ * <li>If the method throws an unchecked exception the class MUST NOT be put into
+ * service except in the case of EJBs where the EJB can handle exceptions and
+ * even recover from them.</li></ul>
+ * @since Common Annotations 1.0
+ * @see javax.annotation.PreDestroy
+ * @see javax.annotation.Resource
+ */
+@Documented
+@Retention (RUNTIME)
+@Target(METHOD)
+public @interface PostConstruct {
+}
+
+```
+
+> The PostConstruct annotation is used on a method that needs to be executed after dependency injection is done to perform any initialization.
+
+显然这个注解的作用是用于在dependency injection(也就是bean创建完成且属性赋值完成)之后运行一个初始化方法
+
+```java
+package javax.annotation;
+
+import java.lang.annotation.*;
+import static java.lang.annotation.ElementType.*;
+import static java.lang.annotation.RetentionPolicy.*;
+
+/**
+ * The PreDestroy annotation is used on methods as a callback notification to
+ * signal that the instance is in the process of being removed by the
+ * container. The method annotated with PreDestroy is typically used to
+ * release resources that it has been holding. This annotation MUST be
+ * supported by all container managed objects that support PostConstruct
+ * except the application client container in Java EE 5. The method on which
+ * the PreDestroy annotation is applied MUST fulfill all of the following
+ * criteria:
+ * <p>
+ * <ul>
+ * <li>The method MUST NOT have any parameters except in the case of
+ * interceptors in which case it takes an InvocationContext object as
+ * defined by the Interceptors specification.</li>
+ * <li>The method defined on an interceptor class MUST HAVE one of the
+ * following signatures:
+ * <p>
+ * void &#060;METHOD&#062;(InvocationContext)
+ * <p>
+ * Object &#060;METHOD&#062;(InvocationContext) throws Exception
+ * <p>
+ * <i>Note: A PreDestroy interceptor method must not throw application
+ * exceptions, but it may be declared to throw checked exceptions including
+ * the java.lang.Exception if the same interceptor method interposes on
+ * business or timeout methods in addition to lifecycle events. If a
+ * PreDestroy interceptor method returns a value, it is ignored by
+ * the container.</i>
+ * </li>
+ * <li>The method defined on a non-interceptor class MUST HAVE the
+ * following signature:
+ * <p>
+ * void &#060;METHOD&#062;()
+ * </li>
+ * <li>The method on which PreDestroy is applied MAY be public, protected,
+ * package private or private.</li>
+ * <li>The method MUST NOT be static.</li>
+ * <li>The method MAY be final.</li>
+ * <li>If the method throws an unchecked exception it is ignored except in the
+ * case of EJBs where the EJB can handle exceptions.</li>
+ * </ul>
+ *
+ * @see javax.annotation.PostConstruct
+ * @see javax.annotation.Resource
+ * @since Common Annotations 1.0
+ */
+
+@Documented
+@Retention (RUNTIME)
+@Target(METHOD)
+public @interface PreDestroy {
+}
+
+```
+
+> The PreDestroy annotation is used on methods as a callback notification to signal that the instance is in the process of being removed by the container.
+
+显然被注解方法会在 being removed by the container之前做为callback notification to signal被调用，即容器销毁bean之前调用该方法
+
+创建一个bean来试验一下：
+
+```java
+package com.sicmatr1x.bean;
+
+import org.springframework.stereotype.Component;
+
+import javax.annotation.PostConstruct;
+import javax.annotation.PreDestroy;
+
+@Component
+public class Dog {
+    public Dog() {
+        System.out.println("Dog:constructor()");
+    }
+
+    /**
+     * 对象创建并赋值之后调用
+     */
+    @PostConstruct
+    public void init() {
+        System.out.println("Dog:init() by @PostConstruct");
+    }
+
+    /**
+     * 容器移除对象之前调用
+     */
+    @PreDestroy
+    public void destroy() {
+        System.out.println("Dog:destroy() by @PreDestroy");
+    }
+}
+
+```
+
+run unit test看一下输出：
+
+```
+Cat:constructor()
+Cat:afterPropertiesSet()
+Dog:constructor()
+Dog:init() by @PostConstruct
+Car:constructor
+Car:init()
+容器创建完成
+Car:destroy()
+Dog:destroy() by @PreDestroy
+Cat:destroy()
+容器销毁完成
+```
+
+#### `BeanPostProcessor` bean的后置处理器
+
+4. `BeanPostProcessor` bean的后置处理器
+
+在bean初始化前后进行处理
+
+按照惯例，看源码先：
+
+```java
+public interface BeanPostProcessor {
+
+	/**
+	 * Apply this BeanPostProcessor to the given new bean instance <i>before</i> any bean
+	 * initialization callbacks (like InitializingBean's {@code afterPropertiesSet}
+	 * or a custom init-method). The bean will already be populated with property values.
+	 * The returned bean instance may be a wrapper around the original.
+	 * @param bean the new bean instance
+	 * @param beanName the name of the bean
+	 * @return the bean instance to use, either the original or a wrapped one;
+	 * if {@code null}, no subsequent BeanPostProcessors will be invoked
+	 * @throws org.springframework.beans.BeansException in case of errors
+	 * @see org.springframework.beans.factory.InitializingBean#afterPropertiesSet
+	 */
+	Object postProcessBeforeInitialization(Object bean, String beanName) throws BeansException;
+
+	/**
+	 * Apply this BeanPostProcessor to the given new bean instance <i>after</i> any bean
+	 * initialization callbacks (like InitializingBean's {@code afterPropertiesSet}
+	 * or a custom init-method). The bean will already be populated with property values.
+	 * The returned bean instance may be a wrapper around the original.
+	 * <p>In case of a FactoryBean, this callback will be invoked for both the FactoryBean
+	 * instance and the objects created by the FactoryBean (as of Spring 2.0). The
+	 * post-processor can decide whether to apply to either the FactoryBean or created
+	 * objects or both through corresponding {@code bean instanceof FactoryBean} checks.
+	 * <p>This callback will also be invoked after a short-circuiting triggered by a
+	 * {@link InstantiationAwareBeanPostProcessor#postProcessBeforeInstantiation} method,
+	 * in contrast to all other BeanPostProcessor callbacks.
+	 * @param bean the new bean instance
+	 * @param beanName the name of the bean
+	 * @return the bean instance to use, either the original or a wrapped one;
+	 * if {@code null}, no subsequent BeanPostProcessors will be invoked
+	 * @throws org.springframework.beans.BeansException in case of errors
+	 * @see org.springframework.beans.factory.InitializingBean#afterPropertiesSet
+	 * @see org.springframework.beans.factory.FactoryBean
+	 */
+	Object postProcessAfterInitialization(Object bean, String beanName) throws BeansException;
+
+}
+```
+
+> Apply this BeanPostProcessor to the given new bean instance before any bean initialization callbacks.
+
+运行这个BeanPostProcessor在一个新的bean的实例调用任何initialization callbacks之前，也就是说会在一个bean的实例初始化时的所有的初始化调用方法之前调用该方法，相当于最早调用的bean的实例的初始化方法
+
+- `postProcessBeforeInitialization`: 在任何初始化方法之前进行处理工作
+- `postProcessAfterInitialization`: 在任何初始化方法之后进行处理工作
+
+> @return the bean instance to use, either the original or a wrapped one;
+
+你可以返回一个原本的bean(通过参数传进来的)，也可以包装一下再返回
+
+我们实现一下这个接口来做一个自己的BeanPostProcessor：
+
+```java
+package com.sicmatr1x.bean;
+
+import org.springframework.beans.BeansException;
+import org.springframework.beans.factory.config.BeanPostProcessor;
+import org.springframework.stereotype.Component;
+
+/**
+ * 后置处理器，初始化前后进行处理
+ * 讲后置处理器假如到容器
+ */
+@Component
+public class MyBeanPostProcessor implements BeanPostProcessor {
+    @Override
+    public Object postProcessBeforeInitialization(Object bean, String beanName) throws BeansException {
+        System.out.println("MyBeanPostProcessor:postProcessBeforeInitialization():bean=" + bean + ", beanName=" + beanName);
+        return bean;
+    }
+
+    @Override
+    public Object postProcessAfterInitialization(Object bean, String beanName) throws BeansException {
+        System.out.println("MyBeanPostProcessor:postProcessAfterInitialization():bean=" + bean + ", beanName=" + beanName);
+        return bean;
+    }
+}
+
+```
+
+运行一下unit test：
+
+```
+MyBeanPostProcessor:postProcessBeforeInitialization():bean=org.springframework.context.event.EventListenerMethodProcessor@c8e4bb0, beanName=org.springframework.context.event.internalEventListenerProcessor
+MyBeanPostProcessor:postProcessAfterInitialization():bean=org.springframework.context.event.EventListenerMethodProcessor@c8e4bb0, beanName=org.springframework.context.event.internalEventListenerProcessor
+MyBeanPostProcessor:postProcessBeforeInitialization():bean=org.springframework.context.event.DefaultEventListenerFactory@4206a205, beanName=org.springframework.context.event.internalEventListenerFactory
+MyBeanPostProcessor:postProcessAfterInitialization():bean=org.springframework.context.event.DefaultEventListenerFactory@4206a205, beanName=org.springframework.context.event.internalEventListenerFactory
+MyBeanPostProcessor:postProcessBeforeInitialization():bean=com.sicmatr1x.condition.MainConfigLifeCycle$$EnhancerBySpringCGLIB$$883e25cf@57175e74, beanName=mainConfigLifeCycle
+MyBeanPostProcessor:postProcessAfterInitialization():bean=com.sicmatr1x.condition.MainConfigLifeCycle$$EnhancerBySpringCGLIB$$883e25cf@57175e74, beanName=mainConfigLifeCycle
+Cat:constructor()
+MyBeanPostProcessor:postProcessBeforeInitialization():bean=com.sicmatr1x.bean.Cat@770c2e6b, beanName=cat
+Cat:afterPropertiesSet()
+MyBeanPostProcessor:postProcessAfterInitialization():bean=com.sicmatr1x.bean.Cat@770c2e6b, beanName=cat
+Dog:constructor()
+MyBeanPostProcessor:postProcessBeforeInitialization():bean=com.sicmatr1x.bean.Dog@1a38c59b, beanName=dog
+Dog:init() by @PostConstruct
+MyBeanPostProcessor:postProcessAfterInitialization():bean=com.sicmatr1x.bean.Dog@1a38c59b, beanName=dog
+Car:constructor
+MyBeanPostProcessor:postProcessBeforeInitialization():bean=com.sicmatr1x.bean.Car@105fece7, beanName=car
+Car:init()
+MyBeanPostProcessor:postProcessAfterInitialization():bean=com.sicmatr1x.bean.Car@105fece7, beanName=car
+容器创建完成
+Car:destroy()
+Dog:destroy() by @PreDestroy
+Cat:destroy()
+容器销毁完成
+
+```
+
+可以看到我们之前的`Cat`, `Dog`类的init方法被夹在`MyBeanPostProcessor`的两个方法之间运行了
+
+```
+MyBeanPostProcessor:postProcessBeforeInitialization():bean=com.sicmatr1x.bean.Cat@770c2e6b, beanName=cat
+Cat:afterPropertiesSet()
+MyBeanPostProcessor:postProcessAfterInitialization():bean=com.sicmatr1x.bean.Cat@770c2e6b, beanName=cat
+```
+
+```
+MyBeanPostProcessor:postProcessBeforeInitialization():bean=com.sicmatr1x.bean.Dog@1a38c59b, beanName=dog
+Dog:init() by @PostConstruct
+MyBeanPostProcessor:postProcessAfterInitialization():bean=com.sicmatr1x.bean.Dog@1a38c59b, beanName=dog
+```
+
+再看`BeanPostProcessor`的注释，里面举例子提到了`afterPropertiesSet`和`custom init-method`就正好对应我们的`Cat.afterPropertiesSet()`和`Car.init()`
+
+> Apply this BeanPostProcessor to the given new bean instance before any bean initialization callbacks (like InitializingBean's {@code afterPropertiesSet} or a custom init-method)
+
+#### `BeanPostProcessor` 原理
+
+我们还是用上个例子来看，在`MyBeanPostProcessor.postProcessBeforeInitialization`方法里面打个断点
+
+<img src="./idea-debug-MyBeanPostProcessor.postProcessBeforeInitialization.png">
+
+看一下上图的方法调用栈，我们从创建IOC容器开始按照上面那个调用栈一个一个往上看：
+
+用`// <=========`来表明断点的位置
+
+```java
+public class IOCTest_LifeCycle {
+
+    @Test
+    public void test01(){
+        // 创建IOC容器
+        AnnotationConfigApplicationContext annotationConfigApplicationContext = new AnnotationConfigApplicationContext(MainConfigLifeCycle.class);// <=========
+        System.out.println("容器创建完成");
+        annotationConfigApplicationContext.close();
+        System.out.println("容器销毁完成");
+    }
+
+}
+```
+
+使用`AnnotationConfigApplicationContext`构造方法创建IOC容器
+
+```java
+	public AnnotationConfigApplicationContext(Class<?>... annotatedClasses) {
+		this();
+		register(annotatedClasses);
+		refresh();// <=========
+	}
+```
+
+`AnnotationConfigApplicationContext`构造方法调用了`refresh()`方法来刷新容器
+
+```java
+				// Instantiate all remaining (non-lazy-init) singletons.
+				finishBeanFactoryInitialization(beanFactory);// <=========
+```
+
+显然从注释可以看出`refresh()`方法里面调用了`finishBeanFactoryInitialization`来初始化所有的单例对象
+
+```java
+		// Instantiate all remaining (non-lazy-init) singletons.
+		beanFactory.preInstantiateSingletons();// <=========
+```
+
+```java
+		// Trigger initialization of all non-lazy singleton beans...
+		for (String beanName : beanNames) { // 这个beanNames数组里面装的就是我们之前所有的bean id，比如car, cat, dog
+			RootBeanDefinition bd = getMergedLocalBeanDefinition(beanName);
+			if (!bd.isAbstract() && bd.isSingleton() && !bd.isLazyInit()) {
+				if (isFactoryBean(beanName)) {
+					final FactoryBean<?> factory = (FactoryBean<?>) getBean(FACTORY_BEAN_PREFIX + beanName);
+					boolean isEagerInit;
+					if (System.getSecurityManager() != null && factory instanceof SmartFactoryBean) {
+						isEagerInit = AccessController.doPrivileged(new PrivilegedAction<Boolean>() {
+							@Override
+							public Boolean run() {
+								return ((SmartFactoryBean<?>) factory).isEagerInit();
+							}
+						}, getAccessControlContext());
+					}
+					else {
+						isEagerInit = (factory instanceof SmartFactoryBean &&
+								((SmartFactoryBean<?>) factory).isEagerInit());
+					}
+					if (isEagerInit) {
+						getBean(beanName);
+					}
+				}
+				else {
+					getBean(beanName);// <=========
+				}
+			}
+		}
+```
+
+初始化所有的非懒加载的单例bean
+
+```java
+	@Override
+	public Object getBean(String name) throws BeansException {
+		return doGetBean(name, null, null, false);// <=========
+	}
+```
+
+
+```java
+				// Create bean instance.
+				if (mbd.isSingleton()) {
+					sharedInstance = getSingleton(beanName, new ObjectFactory<Object>() {// <=========
+						@Override
+						public Object getObject() throws BeansException {
+							try {
+								return createBean(beanName, mbd, args);
+							}
+							catch (BeansException ex) {
+								// Explicitly remove instance from singleton cache: It might have been put there
+								// eagerly by the creation process, to allow for circular reference resolution.
+								// Also remove any beans that received a temporary reference to the bean.
+								destroySingleton(beanName);
+								throw ex;
+							}
+						}
+					});
+					bean = getObjectForBeanInstance(sharedInstance, name, beanName, mbd);
+				}
+```
+
+调用`getSingleton`获取单实例，若获取不到则会调用`createBean`创建对象
+
+```java
+				try {
+					singletonObject = singletonFactory.getObject();// <=========
+					newSingleton = true;
+				}
+```
+
+```java
+				// Create bean instance.
+				if (mbd.isSingleton()) {
+					sharedInstance = getSingleton(beanName, new ObjectFactory<Object>() {
+						@Override
+						public Object getObject() throws BeansException {
+							try {
+								return createBean(beanName, mbd, args);// <=========
+							}
+							catch (BeansException ex) {
+								// Explicitly remove instance from singleton cache: It might have been put there
+								// eagerly by the creation process, to allow for circular reference resolution.
+								// Also remove any beans that received a temporary reference to the bean.
+								destroySingleton(beanName);
+								throw ex;
+							}
+						}
+					});
+```
+
+调用`createBean`创建对象
+
+```java
+		Object beanInstance = doCreateBean(beanName, mbdToUse, args);// <=========
+		if (logger.isDebugEnabled()) {
+			logger.debug("Finished creating instance of bean '" + beanName + "'");
+		}
+```
+
+`createBean`方法调完就会创建出来实例，`beanInstance`就是创建出来的实例，进去看下怎么创建的
+
+```java
+		try {
+			populateBean(beanName, mbd, instanceWrapper); // 为bean的属性赋值
+			if (exposedObject != null) {
+				exposedObject = initializeBean(beanName, exposedObject, mbd);// <=========
+			}
+		}
+```
+
+这里调了一个叫`initializeBean`的方法
+
+```java
+	/**
+	 * Initialize the given bean instance, applying factory callbacks
+	 * as well as init methods and bean post processors.
+	 * <p>Called from {@link #createBean} for traditionally defined beans,
+	 * and from {@link #initializeBean} for existing bean instances.
+	 * @param beanName the bean name in the factory (for debugging purposes)
+	 * @param bean the new bean instance we may need to initialize
+	 * @param mbd the bean definition that the bean was created with
+	 * (can also be {@code null}, if given an existing bean instance)
+	 * @return the initialized bean instance (potentially wrapped)
+	 * @see BeanNameAware
+	 * @see BeanClassLoaderAware
+	 * @see BeanFactoryAware
+	 * @see #applyBeanPostProcessorsBeforeInitialization
+	 * @see #invokeInitMethods
+	 * @see #applyBeanPostProcessorsAfterInitialization
+	 */
+	protected Object initializeBean(final String beanName, final Object bean, RootBeanDefinition mbd) {
+		if (System.getSecurityManager() != null) {
+			AccessController.doPrivileged(new PrivilegedAction<Object>() {
+				@Override
+				public Object run() {
+					invokeAwareMethods(beanName, bean);
+					return null;
+				}
+			}, getAccessControlContext());
+		}
+		else {
+			invokeAwareMethods(beanName, bean);
+		}
+
+		Object wrappedBean = bean;
+		if (mbd == null || !mbd.isSynthetic()) {
+			wrappedBean = applyBeanPostProcessorsBeforeInitialization(wrappedBean, beanName);// <=========
+		}
+
+		try {
+			invokeInitMethods(beanName, wrappedBean, mbd); // 执行初始化方法
+		}
+		catch (Throwable ex) {
+			throw new BeanCreationException(
+					(mbd != null ? mbd.getResourceDescription() : null),
+					beanName, "Invocation of init method failed", ex);
+		}
+
+		if (mbd == null || !mbd.isSynthetic()) {
+			wrappedBean = applyBeanPostProcessorsAfterInitialization(wrappedBean, beanName);
+		}
+		return wrappedBean;
+	}
+```
+
+看到这里的`applyBeanPostProcessorsBeforeInitialization`熟悉不，长的像啥，就是在`initializeBean`的方法里面调到了我们定义的处理器`MyBeanPostProcessor`，
+可知是先为bean的属性赋值之后再调的处理器
+
+看到了没有，断点在`invokeInitMethods(beanName, wrappedBean, mbd);`这句话上面，表明先执行我们之前实现的`postProcessBeforeInitialization`方法里面的内容再来运行之前提到的那些初始化bean的方法
+
+再往下看，`applyBeanPostProcessorsAfterInitialization`眼熟不，长的像啥，表明先执行之前提到的那些初始化bean的方法之后再来运行我们之前实现的`postProcessAfterInitialization`方法里面的内容
+
+```java
+	@Override
+	public Object applyBeanPostProcessorsBeforeInitialization(Object existingBean, String beanName)
+			throws BeansException {
+
+		Object result = existingBean;
+		for (BeanPostProcessor beanProcessor : getBeanPostProcessors()) {
+			result = beanProcessor.postProcessBeforeInitialization(result, beanName);// <=========
+			if (result == null) {
+				return result;
+			}
+		}
+		return result;
+	}
+```
+
+这里逐个遍历了`BeanPostProcessor`，当前断点里面的这个`beanProcessor`变量里面的值就是我们之前定义的`MyBeanPostProcessor`类的对象。这里调用到了`postProcessBeforeInitialization`方法就是我们实现的那个。
+
+我们还知道了一旦我们实现的`postProcessBeforeInitialization`方法返回null之后，整个BeanPostProcessor就不会执行后面的其它的beanProcessor了，跳出for循环，直接就返回了
+
+```java
+@Component
+public class MyBeanPostProcessor implements BeanPostProcessor {
+    @Override
+    public Object postProcessBeforeInitialization(Object bean, String beanName) throws BeansException {
+        System.out.println("MyBeanPostProcessor:postProcessBeforeInitialization():bean=" + bean + ", beanName=" + beanName);// <=========
+        return bean;
+    }
+```
+
+最后就进到我打断点的地方了
+
+#### `BeanPostProcessor`在Spring底层的使用
+
+- `ApplicationContextAwareProcessor`: 组件里面注入IOC容器
+
+实现一下这个接口：
+
+```java
+package com.sicmatr1x.bean;
+
+import org.springframework.beans.BeansException;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.ApplicationContextAware;
+import org.springframework.stereotype.Component;
+
+import javax.annotation.PostConstruct;
+import javax.annotation.PreDestroy;
+
+@Component
+public class Dog implements ApplicationContextAware {
+
+    private ApplicationContext applicationContext;
+
+    public Dog() {
+        System.out.println("Dog:constructor()");
+    }
+
+    /**
+     * 对象创建并赋值之后调用
+     */
+    @PostConstruct
+    public void init() {
+        System.out.println("Dog:init() by @PostConstruct");
+    }
+
+    /**
+     * 容器移除对象之前调用
+     */
+    @PreDestroy
+    public void destroy() {
+        System.out.println("Dog:destroy() by @PreDestroy");
+    }
+
+    @Override
+    public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
+        this.applicationContext = applicationContext;
+    }
+}
+
+```
+
+在Dog这个类里面，重写了`setApplicationContext`这个方法，我们可以在这个方法里面把获取到的IOC容器对象applicationContext赋值给我们的私有属性，然后就可以在其它需要用到的方法里面调到了
+
+那么它是如何实现这个功能的呢？上源码：
+
+```java
+package org.springframework.context.support;
+
+import java.security.AccessControlContext;
+import java.security.AccessController;
+import java.security.PrivilegedAction;
+
+import org.springframework.beans.BeansException;
+import org.springframework.beans.factory.Aware;
+import org.springframework.beans.factory.config.BeanPostProcessor;
+import org.springframework.beans.factory.config.EmbeddedValueResolver;
+import org.springframework.context.ApplicationContextAware;
+import org.springframework.context.ApplicationEventPublisherAware;
+import org.springframework.context.ConfigurableApplicationContext;
+import org.springframework.context.EmbeddedValueResolverAware;
+import org.springframework.context.EnvironmentAware;
+import org.springframework.context.MessageSourceAware;
+import org.springframework.context.ResourceLoaderAware;
+import org.springframework.util.StringValueResolver;
+
+/**
+ * {@link org.springframework.beans.factory.config.BeanPostProcessor}
+ * implementation that passes the ApplicationContext to beans that
+ * implement the {@link EnvironmentAware}, {@link EmbeddedValueResolverAware},
+ * {@link ResourceLoaderAware}, {@link ApplicationEventPublisherAware},
+ * {@link MessageSourceAware} and/or {@link ApplicationContextAware} interfaces.
+ *
+ * <p>Implemented interfaces are satisfied in order of their mention above.
+ *
+ * <p>Application contexts will automatically register this with their
+ * underlying bean factory. Applications do not use this directly.
+ *
+ * @author Juergen Hoeller
+ * @author Costin Leau
+ * @author Chris Beams
+ * @since 10.10.2003
+ * @see org.springframework.context.EnvironmentAware
+ * @see org.springframework.context.EmbeddedValueResolverAware
+ * @see org.springframework.context.ResourceLoaderAware
+ * @see org.springframework.context.ApplicationEventPublisherAware
+ * @see org.springframework.context.MessageSourceAware
+ * @see org.springframework.context.ApplicationContextAware
+ * @see org.springframework.context.support.AbstractApplicationContext#refresh()
+ */
+class ApplicationContextAwareProcessor implements BeanPostProcessor {
+
+	private final ConfigurableApplicationContext applicationContext;
+
+	private final StringValueResolver embeddedValueResolver;
+
+
+	/**
+	 * Create a new ApplicationContextAwareProcessor for the given context.
+	 */
+	public ApplicationContextAwareProcessor(ConfigurableApplicationContext applicationContext) {
+		this.applicationContext = applicationContext;
+		this.embeddedValueResolver = new EmbeddedValueResolver(applicationContext.getBeanFactory());
+	}
+
+
+	@Override
+	public Object postProcessBeforeInitialization(final Object bean, String beanName) throws BeansException {
+		AccessControlContext acc = null;
+
+		if (System.getSecurityManager() != null &&
+				(bean instanceof EnvironmentAware || bean instanceof EmbeddedValueResolverAware ||
+						bean instanceof ResourceLoaderAware || bean instanceof ApplicationEventPublisherAware ||
+						bean instanceof MessageSourceAware || bean instanceof ApplicationContextAware)) {
+			acc = this.applicationContext.getBeanFactory().getAccessControlContext();
+		}
+
+		if (acc != null) {
+			AccessController.doPrivileged(new PrivilegedAction<Object>() {
+				@Override
+				public Object run() {
+					invokeAwareInterfaces(bean);
+					return null;
+				}
+			}, acc);
+		}
+		else {
+			invokeAwareInterfaces(bean);
+		}
+
+		return bean;
+	}
+
+	private void invokeAwareInterfaces(Object bean) {
+		if (bean instanceof Aware) {
+			if (bean instanceof EnvironmentAware) {
+				((EnvironmentAware) bean).setEnvironment(this.applicationContext.getEnvironment());
+			}
+			if (bean instanceof EmbeddedValueResolverAware) {
+				((EmbeddedValueResolverAware) bean).setEmbeddedValueResolver(this.embeddedValueResolver);
+			}
+			if (bean instanceof ResourceLoaderAware) {
+				((ResourceLoaderAware) bean).setResourceLoader(this.applicationContext);
+			}
+			if (bean instanceof ApplicationEventPublisherAware) {
+				((ApplicationEventPublisherAware) bean).setApplicationEventPublisher(this.applicationContext);
+			}
+			if (bean instanceof MessageSourceAware) {
+				((MessageSourceAware) bean).setMessageSource(this.applicationContext);
+			}
+			if (bean instanceof ApplicationContextAware) {
+				((ApplicationContextAware) bean).setApplicationContext(this.applicationContext);
+			}
+		}
+	}
+
+	@Override
+	public Object postProcessAfterInitialization(Object bean, String beanName) {
+		return bean;
+	}
+
+}
+
+```
+
+显然它也是一个BeanPostProcessor，我们看`postProcessBeforeInitialization`方法里面，判断了当前的bean是否实现了该接口，如果实现了就把获取到的applicationContext对象传给bean重写的`setApplicationContext`方法
+
+也可以debug验证一下，这里就不贴debug的过程了
+
 
 
 

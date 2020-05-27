@@ -323,3 +323,50 @@ public class MainConfig2 {
 }
 ```
 
+### 2020-05-26
+
+#### Q: `@Override is not allowed when implementing interface method`
+
+<img src="./Override is not allowed when implementing interface method IntelliJ IDEA.png">
+
+A:
+
+@Override从jdk1.5开始出现的，是用来标注方法重写的。通常方法重写发生在继承父类，重写父类方法，或者实现接口，实现接口方法。@Override能够保证你正确重写方法，当你重写方法出错时，比如方法名误写，或者漏掉参数，编译器会提示编译错误。
+  出现以上问题，则跟编译器版本问题有关。编译器1.5只支持@Override注释重写父类方法，不支持实现接口方法。而我的IDE默认使用jdk1.5的编译器。我这个用的是jdk1.7的，我们将language level设置高于jdk1.5版本即可
+
+File —> Project Structure —> [ 项目名称 ] —> Language level 修改成 7 - Diamonds,ARM,multi-catch etc.
+
+或者直接根据idea的提升修改配置即可
+
+### 2020-05-27
+
+#### Q: git修改已经提交的用户名
+
+A: 如果是已经push到remote仓库的则不能做到完全消除提交记录，只能追加修改提交用户名的commit，之前有几个commit需要修改的就追加几个。
+如果只是本地commit可以undo commit再重新commit
+
+1. （n）代表提交次数`git rebase -i HEAD~n`
+2. 然后按`i`编辑，把`pick` 改成 `edit`，按'Esc'退出编辑，按`:wq`保存退出
+3. `git commit --amend --author="作者 <邮箱@xxxx.com>" --no-edit`
+4. `git rebase --continue`
+5. `git push --force`
+
+这种情况只能预防，建议在配置了全局用户名的情况下再为每个project单独配置用户名
+
+git全局配置路径：
+- Windows: `C:\Users\GUOJO\.gitconfig`
+- Mac: ``
+
+git项目配置路径：`.git\config`
+
+配置格式如下：
+
+```
+[user]
+	name = Sicmatr1x
+	email = sicmatr1x@outlook.com
+```
+
+#### IDEA查找接口实现类
+
+双击选中接口名 + ctrl + alt + B
