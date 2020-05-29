@@ -2069,7 +2069,64 @@ class ApplicationContextAwareProcessor implements BeanPostProcessor {
 
 也可以debug验证一下，这里就不贴debug的过程了
 
+- `BeanValidationPostProcessor`: 做数据校验
+- `InitDestroyAnnotationBeanPostProcessor`: 处理`PostConstruct`和`PreDestroy`注解
 
+还记得之前讲的使用`PostConstruct`和`PreDestroy`注解来使spring调我们自己的方法吗，那两个注解起作用的背后就是`InitDestroyAnnotationBeanPostProcessor`在操作
+
+话不多说，来debug
+
+下面是方法调用栈
+
+<img src="./idea-debug-MyBeanPostProcessor.postProcessBeforeInitialization-2.png">
+
+这次就不从头开始看了，直接从`InitDestroyAnnotationBeanPostProcessor`的方法栈开始看
+
+```java
+	@Override
+	public Object postProcessBeforeInitialization(Object bean, String beanName) throws BeansException {
+		LifecycleMetadata metadata = findLifecycleMetadata(bean.getClass()); //找到dog bean的生命周期注解
+		try {
+			metadata.invokeInitMethods(bean, beanName);//<=========
+		}
+		catch (InvocationTargetException ex) {
+			throw new BeanCreationException(beanName, "Invocation of init method failed", ex.getTargetException());
+		}
+		catch (Throwable ex) {
+			throw new BeanCreationException(beanName, "Failed to invoke init method", ex);
+		}
+		return bean;
+	}
+```
+
+然后用`invokeInitMethods`执行指定的生命周期的方法
+
+```java
+		public void invokeInitMethods(Object target, String beanName) throws Throwable {
+			Collection<LifecycleElement> initMethodsToIterate =
+					(this.checkedInitMethods != null ? this.checkedInitMethods : this.initMethods);
+			if (!initMethodsToIterate.isEmpty()) {
+				boolean debug = logger.isDebugEnabled();
+				for (LifecycleElement element : initMethodsToIterate) {
+					if (debug) {
+						logger.debug("Invoking init method on bean '" + beanName + "': " + element.getMethod());
+					}
+					element.invoke(target);//<=========
+				}
+			}
+		}
+```
+
+进到这个invoke方法里面看：
+
+```java
+		public void invoke(Object target) throws Throwable {
+			ReflectionUtils.makeAccessible(this.method);
+			this.method.invoke(target, (Object[]) null);//<=========
+		}
+```
+
+可以看到这里调到了java反射里面的method的invoke方法来执行
 
 
 ## 扩展原理

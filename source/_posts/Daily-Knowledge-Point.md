@@ -370,3 +370,20 @@ git项目配置路径：`.git\config`
 #### IDEA查找接口实现类
 
 双击选中接口名 + ctrl + alt + B
+
+### 2020-05-29
+
+#### Oracle什么时候需要Commit
+
+SQL语言分为五大类：
+1. DDL(数据定义语言) - Create、Alter、Drop 这些语句自动提交，无需用Commit提交。
+2. DQL（数据查询语言）- Select查询语句不存在提交问题。
+3. DML(数据操纵语言) - Insert、Update、Delete 这些语句需要Commit才能提交。
+4. DTL(事务控制语言) - Commit、Rollback 事务提交与回滚语句。
+5. DCL(数据控制语言) - Grant、Revoke 授予权限与回收权限语句。
+
+执行完DML语句，若没有commit再执行DDL语句，也会自动commit未被commit的数据。
+
+DDL语句在执行前后会自动执行commit，所以你不能使用rollback去回滚它。但是在该语句执行过程中，如果由于某种原因而失败，系统会自动将其回滚，这就是语句级回滚的意思，它属于oracle的隐式回滚，我们不能进行控制。教材上说的DDL语句不能进行回滚，只是不能输入ROLLBACK去回滚DDL语句的结果而已。
+
+
