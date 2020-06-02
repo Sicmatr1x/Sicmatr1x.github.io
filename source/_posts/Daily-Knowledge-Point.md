@@ -367,6 +367,34 @@ git项目配置路径：`.git\config`
 	email = sicmatr1x@outlook.com
 ```
 
+有一种方法可以强制重写错误的commit，使用过滤器(git filter-branch)
+
+警告： 这个操作会破坏你的仓库历史， 如果你和别人在协同开发这个仓库，重写已发布的历史记录是一个不好的操作。建议只在紧急情况操作
+
+```bash
+git filter-branch -f --commit-filter '
+        if [ "$GIT_COMMITTER_NAME" = "Sic" ];
+        then
+                GIT_COMMITTER_NAME="Joe Guo";
+                GIT_AUTHOR_NAME="$GIT_COMMITTER_NAME";
+                git commit-tree "$@";
+        else
+                git commit-tree "$@";
+        fi' HEAD
+```
+
+修改完之后还需要force push
+
+```bash
+git push --force --tags origin 'refs/heads/*'
+```
+
+参考：
+- [Git 修改 commit 的作者信息](https://segmentfault.com/a/1190000008828569)
+- [Changing author info](https://help.github.com/en/github/using-git/changing-author-info)
+- [git如何修改已经提交的用户名?](https://segmentfault.com/q/1010000022758855)
+
+
 #### IDEA查找接口实现类
 
 双击选中接口名 + ctrl + alt + B
@@ -387,3 +415,75 @@ SQL语言分为五大类：
 DDL语句在执行前后会自动执行commit，所以你不能使用rollback去回滚它。但是在该语句执行过程中，如果由于某种原因而失败，系统会自动将其回滚，这就是语句级回滚的意思，它属于oracle的隐式回滚，我们不能进行控制。教材上说的DDL语句不能进行回滚，只是不能输入ROLLBACK去回滚DDL语句的结果而已。
 
 
+### 2020-06-02
+
+#### Q: Springboot读取配置文件并初始化到bean失败，无法识别`${person.nickname}`作为运行时环境
+
+```java
+    @Value("${person.nickname}")
+    private String nickname;
+```
+
+A: 查了一下发现是@PropertySource注解配错位置了，本来应该配在Configuration类上的结果配到bean上面去了
+
+```java
+@PropertySource(value = {"classpath:/person.properties"}, encoding = "UTF-8")
+@Configuration
+public class MainConfigOfPropertyValues {
+    @Bean
+    public Person person(){
+        return new Person();
+    }
+}
+```
+
+### 2020-06-03
+
+#### Q: 如何在git上删除误提交的大文件
+
+A: 
+
+首先使用下面查询git中前5名最大的文件:
+
+```
+git verify-pack -v .git/objects/pack/pack-*.idx | sort -k 3 -g | tail -5
+```
+
+记下上面的文件id使用下面命令查看对应文件的路径
+
+```
+git rev-list --objects --all | grep ed9253b5bbaaa6b0eb04db1dd9840121657b68f3
+```
+
+从当前激活的分支最近30次提交中删除指定文件
+
+```
+git filter-branch --force --prune-empty  --tree-filter 'git rm -f --cached --ignore-unmatch 文件路径' HEAD~30..HEAD
+```
+
+如果出现不能创建新的备份的话，就加上强制覆盖覆盖参数 --force
+
+如果操作完成后没出现没有改变的情况,如下
+
+WARNING: Ref 'refs/heads/master' is unchanged
+
+可以尝试把上面命令中的--tree-filter换成 --index-filter再次运行命令
+
+操作完成后,查看日志就会发现已经没有提交这个文件的日志记录啦,但是还有一个问题 .git 这个文件夹还是原来的大小，想减小它的大小就要对这个仓库进行分析重新打包,也就是清理垃圾
+
+```
+git rm -rf --ignore-unmatch .git/refs/original/
+git reflog expire --expire=now --all
+git fsck --full --unreachable
+git repack -A -d
+git gc --aggressive --prune=now
+```
+
+最后强制推送到远端
+
+```
+git push origin master --force
+```
+
+参考: 
+- [git filter-branch 命令修改删除提示记录,删除误提交的大文件.减小.git的大小](https://www.zhaokeli.com/article/8332.html)
