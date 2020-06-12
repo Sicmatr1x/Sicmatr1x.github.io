@@ -2462,6 +2462,277 @@ Person{name='张三', age=18, nickname='法外狂徒'}
         System.out.println(property);
 ```
 
+### 自动装配
+
+自动装配：Spring利用依赖注入(DI)来完成对IOC容器中各个组件的依赖关系的赋值
+
+#### `@Autowired` & `@Qualifier` & `@Primary`
+
+- `@Autowired`: 自动注入
+  1. 优先按照容器类型去容器中找对应的组件：等价于`applicationContext.getBean(BookService.class)`，找到就赋值
+  2. 如果找到多个相同类型的组件，则将属性名作为组件的id去容器中查找，等价于`applicationContext.getBean("bookDao")`
+  3. 这里若不想将属性名作为组件的id去容器中查找的话可以使用`@Qualifier("bookDao")`注解在属性上来手动指定组件的id
+  4. 自动装配默认一定要将属性赋值好，没有就报错，除非设置为非必须`@Autowired(required = false)`
+  5. `@Primary`让Spring进行自动装配的时候默认使用首选的bean，注：该优先级低于@Qualifier明确指定的优先级
+
+`@Autowired`注解大家都用的比较多这里就不贴代码了，简单的测试一下将bookDao注入bookService里，然后从IOT容器中取出bookDao和bookService，通过比较发现bookService里的bookDao对象和IOT容器中的bookDao对象是同一个
+
+```
+BookService{bookDao=com.sicmatr1x.dao.BookDao@25b485ba}
+com.sicmatr1x.dao.BookDao@25b485ba
+```
+
+#### `@Resource` & `@Inject`
+
+Spring还支持`@Resource`(定义在JSR250) 和 `@Inject`(定义在JSR330)，注意这两个注解是java规范里面的注解
+
+- `@Resource`注解与`@Autowired`注解类似，可以用于实现自动装配的功能，默认按照组件名称装配
+- `@Inject`使用此注解需要导入依赖，不支持修改为require=false也不支持@Primary
+
+```xml
+<!-- https://mvnrepository.com/artifact/javax.inject/javax.inject -->
+<dependency>
+    <groupId>javax.inject</groupId>
+    <artifactId>javax.inject</artifactId>
+    <version>1</version>
+</dependency>
+
+```
+
+使用`@Inject`注解可能会在日志中输出下面这句话，这句话表面`@Inject`也支持许多自动装配的特性
+
+```
+INFO: JSR-330 'javax.inject.Inject' annotation found and supported for autowiring
+```
+
+#### 方法、构造器位置的自动装配
+
+`@Autowired`可以用在构造器、参数、方法、属性上面，并且注入的bean均是从IOT容器中获取已经托管的bean，以下将会试验并证明这一点
+
+1. 将`@Autowired`标注在set方法上
+
+```java
+package com.sicmatr1x.bean;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
+@Component
+public class Boss {
+
+    private Car car;
+
+    public Car getCar() {
+        return car;
+    }
+
+    /**
+     * 标注在方法上时，spring容器创建当前对象会调用该方法完成赋值
+     * 方法使用的参数，自定义类型的值从IOC容器中获取
+     * @param car
+     */
+    @Autowired
+    public void setCar(Car car) {
+        this.car = car;
+    }
+
+    @Override
+    public String toString() {
+        return "Boss{" +
+                "car=" + car +
+                '}';
+    }
+}
+```
+
+从IOC容器中get出来看一下是否boss对象里面set进去的car对象就是从IOT容器中获取的那个car对象
+
+```java
+        Boss boss = applicationContext.getBean(Boss.class);
+        Car car = applicationContext.getBean(Car.class);
+        System.out.println(boss);
+        System.out.println(car);
+```
+
+输出：
+
+```
+Boss{car=com.sicmatr1x.bean.Car@5b0abc94}
+com.sicmatr1x.bean.Car@5b0abc94
+```
+
+可以看到是同一个car对象
+
+2. 将`@Autowired`标注在构造器上
+
+默认加入到IOC容器中的组件，容器在启动时会调用其无参构造器创建对象，再进行初始化赋值等操作
+
+如果组件只有一个有参构造器，这个有参构造器的@Autowired可以省略，参数位置的组件还是可以自动从容器中获取
+
+```java
+package com.sicmatr1x.bean;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
+@Component
+public class Boss {
+    private Car car;
+
+    @Autowired
+    public Boss(Car car) {
+        this.car = car;
+        System.out.println("Boss:constructor()");
+    }
+
+    public Car getCar() {
+        return car;
+    }
+
+    public void setCar(Car car) {
+        this.car = car;
+    }
+
+    @Override
+    public String toString() {
+        return "Boss{" +
+                "car=" + car +
+                '}';
+    }
+}
+
+```
+
+输出：
+
+```
+Car:constructor
+Boss:constructor()
+Boss{car=com.sicmatr1x.bean.Car@214b199c}
+com.sicmatr1x.bean.Car@214b199c
+```
+
+说明构造器用到的组件也都是从容器中获取
+
+下面这种用法也定价于上面的用法：
+
+```java
+    public Boss(@Autowired Car car) {
+        this.car = car;
+        System.out.println("Boss:constructor()");
+    }
+```
+
+也可以在构造器上面使用`@Bean`注解，效果是一样的
+
+如果你的自定义组件想要使用Spring容器底层的一些组件，例如：ApplicationContext, BeanFactory...可以通过自定义组件实现xxxAware的方法
+
+比如之前讲过的Dog类通过实现`ApplicationContextAware`接口来获取到ApplicationContext对象
+
+这里再看一下`ApplicationContextAware`接口
+
+```java
+public interface ApplicationContextAware extends Aware {
+	//...
+}
+```
+
+可以看到该类实现了`Aware`接口，点进去看一下Aware：
+
+```java
+package org.springframework.beans.factory;
+
+/**
+ * Marker superinterface indicating that a bean is eligible to be
+ * notified by the Spring container of a particular framework object
+ * through a callback-style method. Actual method signature is
+ * determined by individual subinterfaces, but should typically
+ * consist of just one void-returning method that accepts a single
+ * argument.
+ *
+ * <p>Note that merely implementing {@link Aware} provides no default
+ * functionality. Rather, processing must be done explicitly, for example
+ * in a {@link org.springframework.beans.factory.config.BeanPostProcessor BeanPostProcessor}.
+ * Refer to {@link org.springframework.context.support.ApplicationContextAwareProcessor}
+ * and {@link org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory}
+ * for examples of processing {@code *Aware} interface callbacks.
+ *
+ * @author Chris Beams
+ * @since 3.1
+ */
+public interface Aware {
+
+}
+```
+
+> Marker superinterface indicating that a bean is eligible to be notified by the Spring container of a particular framework object through a callback-style method.
+
+显然这个接口是一个标记接口，其提供了一个回调风格的方法来让你获取到一个特定的 framework object
+
+这里演示几个常用的Aware接口的实现接口：
+
+```java
+package com.sicmatr1x.bean;
+
+import org.springframework.beans.BeansException;
+import org.springframework.beans.factory.BeanNameAware;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.ApplicationContextAware;
+import org.springframework.context.EmbeddedValueResolverAware;
+import org.springframework.stereotype.Component;
+import org.springframework.util.StringValueResolver;
+
+@Component
+public class Red implements ApplicationContextAware, BeanNameAware, EmbeddedValueResolverAware {
+
+    private ApplicationContext applicationContext;
+
+    /**
+     * BeanNameAware
+     * @param name 获取IOC容器创建该对象时给这个对象生成的id
+     */
+    @Override
+    public void setBeanName(String name) {
+        System.out.println("Red:setBeanName():Current bean name=" + name);
+    }
+
+    /**
+     * ApplicationContextAware
+     * @param applicationContext 获取IOC容器对象
+     * @throws BeansException
+     */
+    @Override
+    public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
+        System.out.println("Red:setApplicationContext():applicationContext=" + applicationContext);
+        this.applicationContext = applicationContext;
+    }
+
+    /**
+     * EmbeddedValueResolverAware
+     * Set the StringValueResolver to use for resolving embedded definition values.
+     * 获取字符串解析器
+     * @param resolver
+     */
+    @Override
+    public void setEmbeddedValueResolver(StringValueResolver resolver) {
+        String result = resolver.resolveStringValue("Hello, ${os.name}. #{15*10}");
+        System.out.println("Red:setEmbeddedValueResolver():result=" + result);
+    }
+}
+
+```
+
+输出：
+
+```
+Red:setBeanName():Current bean name=red
+Red:setEmbeddedValueResolver():result=Hello, Windows 10. 150
+Red:setApplicationContext():applicationContext=org.springframework.context.annotation.
+```
+
+#### `@Profile`环境搭建
+
+
 
 
 ## 扩展原理
