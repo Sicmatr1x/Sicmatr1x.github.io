@@ -487,3 +487,16 @@ git push origin master --force
 
 参考: 
 - [git filter-branch 命令修改删除提示记录,删除误提交的大文件.减小.git的大小](https://www.zhaokeli.com/article/8332.html)
+
+### 2020-06-17
+
+#### Q: Postman访问自签名证书服务器
+
+访问不可信任的证书签发机构签发的证书的服务器时，Chrome浏览器会提示：您与网站之间建立的连接不安全
+
+你可以在高级选项里面选择继续访问该网站
+
+但是使用Postman call就会提示：Error: Protocol "https:" not supported. Expected "http:"
+
+A: Postman Settings -> REQUEST -> SSL certificate verification 关闭该选项
+
