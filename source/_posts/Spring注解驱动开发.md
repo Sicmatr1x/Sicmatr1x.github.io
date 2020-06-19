@@ -2732,6 +2732,133 @@ Red:setApplicationContext():applicationContext=org.springframework.context.annot
 
 #### `@Profile`环境搭建
 
+Spring提供的可以根据当前环境动态激活一系列组件的功能
+
+这里我们拟真一下有3个场的mysql数据源管理：
+
+先在pom.xml中引入数据源包
+
+```xml
+<!-- https://mvnrepository.com/artifact/com.mchange/c3p0 -->
+<dependency>
+    <groupId>com.mchange</groupId>
+    <artifactId>c3p0</artifactId>
+    <version>0.9.2</version>
+</dependency>
+
+```
+
+创建数据源配置文件dbconfig.properties：
+
+```properties
+db.user=root
+db.password=123456
+db.driverClass=com.mysql.jdbc.Driver
+```
+
+创建数据源配置类：
+
+```java
+package com.sicmatr1x.config;
+
+import com.mchange.v2.c3p0.ComboPooledDataSource;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.EmbeddedValueResolverAware;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.PropertySource;
+import org.springframework.util.StringValueResolver;
+
+import javax.sql.DataSource;
+import java.beans.PropertyVetoException;
+
+@PropertySource("classpath:/dbconfig.properties")
+@Configuration
+public class MainConfigOfProfile implements EmbeddedValueResolverAware {
+
+    @Value("${db.user}")
+    private String user;
+
+    private StringValueResolver valueResolver;
+
+    @Bean("devDataSource")
+    public DataSource dataSourceDev(@Value("${db.password}") String pwd) throws PropertyVetoException {
+        ComboPooledDataSource dataSource = new ComboPooledDataSource();
+        dataSource.setUser(user);
+        dataSource.setPassword(pwd);
+        dataSource.setJdbcUrl("jdbc:mysql://localhost:3306/");
+        dataSource.setDriverClass("com.mysql.jdbc.Driver");
+        return dataSource;
+    }
+
+    @Bean("testDataSource")
+    public DataSource dataSourceTest(@Value("${db.password}") String pwd) throws PropertyVetoException {
+        ComboPooledDataSource dataSource = new ComboPooledDataSource();
+        dataSource.setUser(user);
+        dataSource.setPassword(pwd);
+        dataSource.setJdbcUrl("jdbc:mysql://localhost:3306/test");
+        dataSource.setDriverClass("com.mysql.jdbc.Driver");
+        return dataSource;
+    }
+
+    @Bean("prodDataSource")
+    public DataSource dataSourceProd(@Value("${db.password}") String pwd) throws PropertyVetoException {
+        ComboPooledDataSource dataSource = new ComboPooledDataSource();
+        dataSource.setUser(user);
+        dataSource.setPassword(pwd);
+        dataSource.setJdbcUrl("jdbc:mysql://localhost:3306/");
+        String driverName = this.valueResolver.resolveStringValue("${db.driverClass}");
+        dataSource.setDriverClass(driverName);
+        return dataSource;
+    }
+
+    @Override
+    public void setEmbeddedValueResolver(StringValueResolver resolver) {
+        this.valueResolver = resolver;
+    }
+}
+
+```
+
+这里用到了`@PropertySource`读取配置文件，以及el表达式从配置文件里读取配置项
+
+还用到了EmbeddedValueResolverAware来获取`StringValueResolver`
+
+写测试类run一下：
+
+```java
+import com.sicmatr1x.bean.Boss;
+import com.sicmatr1x.bean.Car;
+import com.sicmatr1x.config.MainConfigOfAutowired;
+import com.sicmatr1x.config.MainConfigOfProfile;
+import com.sicmatr1x.dao.BookDao;
+import org.junit.Test;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Primary;
+
+public class IOCTest_Profile {
+
+    @Primary
+    @Bean
+    public BookDao bookDao() {
+        return new BookDao();
+    }
+
+    @Test
+    public void test01(){
+        AnnotationConfigApplicationContext applicationContext = new AnnotationConfigApplicationContext(MainConfigOfProfile.class);
+        String[] beanNames = applicationContext.getBeanDefinitionNames();
+        for (String beanName : beanNames) {
+            System.out.println(beanName);
+        }
+        applicationContext.close();
+    }
+
+}
+
+```
+
 
 
 
