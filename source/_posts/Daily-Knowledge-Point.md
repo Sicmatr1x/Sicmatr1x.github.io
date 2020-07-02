@@ -500,3 +500,11 @@ git push origin master --force
 
 A: Postman Settings -> REQUEST -> SSL certificate verification 关闭该选项
 
+### 2020-06-26
+
+#### Q: org.bson.BsonSerializationException: Document size of 44088405 is larger than maximum of 16777216.
+
+mongodb中的大小限制, 即单个文档大小不能超过16M. 基于性能的考虑，这个限制无法取消。
+
+[Understanding MongoDB BSON Document size limit](https://stackoverflow.com/questions/4667597/understanding-mongodb-bson-document-size-limit)
+

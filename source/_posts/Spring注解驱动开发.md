@@ -2859,10 +2859,406 @@ public class IOCTest_Profile {
 
 ```
 
+输出：
+
 ```
+mainConfigOfProfile
+devDataSource
+testDataSource
+prodDataSource
+```
+
+可以看到几个数据源已经正确的添加进来了
+
+### AOP
+
+指在程序运行期间将某段代码切入到指定方法指定位置的进行运行的编程方式。其底层实现是动态代理
+
+#### AOP功能测试
+
+1. 导入AOP模块
+
+```xml
+<dependency>
+	<groupId>org.springframework</groupId>
+	<artifactId>spring-aspects</artifactId>
+	<version>4.3.12.RELEASE</version>
+</dependency>
+```
+
+2. 创建业务逻辑类(MathCalculator)
+
+```java
+package com.sicmatr1x.aop;
+
+public class MathCalculator {
+    public int div(int i, int j) {
+        return i/j;
+    }
+}
 
 ```
 
+我们希望在业务逻辑运行的时候将日志进行打印
+
+若我们直接在`div(int i, int j)`方法里面添加打印语句则是一个高耦合的做法
+
+3. 定义一个日志切面类(LogAspects), 切面类里面的方法需要可以动态感知`div(int i, int j)`方法运行状态
+
+相当于通知方法：
+- 前置通知(@Before)：在目标方法运行之前运行
+- 后置通知(@After)：在目标方法运行之后运行
+- 返回通知(@AfterReturning)：在目标方法正常返回之后运行
+- 异常通知(@AfterThrowing)：在目标方法运行出现异常后运行
+- 环绕通知(@Around)：动态代理，手动推进目标方法运行(`joinPoint.procced()`)
+
+4. 给切面类(LogAspects)的目标方法标注何时运行
+
+- @Before("com.sicmatr1x.aop.MathCalculator.div(int, int)")：指定具体的需要切入的方法
+- @Before("com.sicmatr1x.aop.MathCalculator.*(int, int)")：切入MathCalculator的所有形参表的方法
+- @Before("com.sicmatr1x.aop.MathCalculator.*(..)")：切入MathCalculator类的所有方法
+
+```java
+    @Before("com.sicmatr1x.aop.MathCalculator.*(..)")
+//    @Before("com.sicmatr1x.aop.MathCalculator.div(int, int)")
+    public void logStart() {
+        System.out.println("div is starting, args:");
+    }
+```
+
+如果多个切入点表达式一样的话可以抽取出来：
+
+```java
+package com.sicmatr1x.aop;
+
+import org.aspectj.lang.annotation.*;
+
+/**
+ * 切面类
+ */
+@Aspect
+public class LogAspects {
+
+    /**
+     * 抽取公共的切入点表达式
+     * 1. 本类引用 @Before("pointCut()")
+     * 2. 其它类引用 @Before("com.sicmatr1x.aop.LogAspects.pointCut()")
+     */
+    @Pointcut("execution(public int com.sicmatr1x.aop.MathCalculator.*(..))")
+    private void pointCut(){}
+
+    @Before("pointCut()")
+    public void logStart() {
+        System.out.println("div is starting, args:");
+    }
+
+    @After("pointCut()")
+    public void logEnd() {
+        System.out.println("div is ending");
+    }
+
+    @AfterReturning("pointCut()")
+    public void logReturn() {
+        System.out.println("div is return, value:");
+    }
+
+    @AfterThrowing("pointCut()")
+    public void logException() {
+        System.out.println("div throws exception, error message:");
+    }
+}
+
+```
+
+5. 将切面类LogAspects和业务逻辑类MathCalculator都加入到容器中
+
+并使用@EnableAspectJAutoProxy注解开启Spring 基于注解的AOP功能
+
+```java
+package com.sicmatr1x.config;
+
+import com.sicmatr1x.aop.LogAspects;
+import com.sicmatr1x.aop.MathCalculator;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.EnableAspectJAutoProxy;
+
+@EnableAspectJAutoProxy
+@Configuration
+public class MainConfigOfAOP {
+    @Bean
+    public MathCalculator mathCalculator(){
+        return new MathCalculator();
+    }
+
+    @Bean
+    public LogAspects logAspects(){
+        return new LogAspects();
+    }
+}
+
+```
+
+6. 告诉Spring哪个类是切面类
+
+给切面类加上@Aspect注解即可
+
+```java
+@Aspect
+public class LogAspects {
+	//...
+}
+```
+
+编写测试类进行测试：
+
+```java
+import com.sicmatr1x.aop.MathCalculator;
+import com.sicmatr1x.config.MainConfigOfAOP;
+import org.junit.Test;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+
+public class IOCTest_AOP {
+    @Test
+    public void test01(){
+        // 创建IOC容器
+        AnnotationConfigApplicationContext applicationContext = new AnnotationConfigApplicationContext(MainConfigOfAOP.class);
+
+        MathCalculator mathCalculator = new MathCalculator();
+        mathCalculator.div(1,1);
+        
+        applicationContext.close();
+    }
+}
+
+```
+
+输出结果中并没有输出任何东西，为什么呢，如果你是这样写测试类的话是不会有效果的，因为你使用的是自己new出来的一个MathCalculator对象而不是用脱光到IOT容器中的那个对象
+
+```java
+import com.sicmatr1x.aop.MathCalculator;
+import com.sicmatr1x.config.MainConfigOfAOP;
+import org.junit.Test;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+
+public class IOCTest_AOP {
+    @Test
+    public void test01(){
+        // 创建IOC容器
+        AnnotationConfigApplicationContext applicationContext = new AnnotationConfigApplicationContext(MainConfigOfAOP.class);
+        // 自己new的对象没有AOP功能
+//        MathCalculator mathCalculator = new MathCalculator();
+//        mathCalculator.div(1,1);
+
+        // 从Spring容器中的对象才有AOP功能
+        MathCalculator mathCalculator = applicationContext.getBean(MathCalculator.class);
+        mathCalculator.div(1,1);
+
+        applicationContext.close();
+    }
+}
+
+```
+
+输出结果：
+
+```
+div is starting, args:
+div is ending
+div is return, value:
+```
+
+可以看到切面执行顺序是@Before, @After, @AfterReturning
+
+刚刚忘记写输出args:的代码了，我们再来升级一下切面类
+
+```java
+package com.sicmatr1x.aop;
+
+import org.aspectj.lang.JoinPoint;
+import org.aspectj.lang.annotation.*;
+
+/**
+ * 切面类
+ */
+@Aspect
+public class LogAspects {
+
+    /**
+     * 抽取公共的切入点表达式
+     * 1. 本类引用 @Before("pointCut()")
+     * 2. 其它类引用 @Before("com.sicmatr1x.aop.LogAspects.pointCut()")
+     */
+    @Pointcut("execution(public int com.sicmatr1x.aop.MathCalculator.*(..))")
+    private void pointCut(){}
+
+    @Before("pointCut()")
+    public void logStart(JoinPoint joinPoint) {
+        Object[] args = joinPoint.getArgs();
+        System.out.print(joinPoint.getSignature().getName() + " div is starting, args:");
+        for(Object arg: args) {
+            System.out.print(arg + ",");
+        }
+        System.out.println();
+    }
+
+    @After("pointCut()")
+    public void logEnd(JoinPoint joinPoint) {
+        System.out.println(joinPoint.getSignature().getName() + " div is ending");
+    }
+
+    @AfterReturning(value = "pointCut()", returning = "result")
+    public void logReturn(Object result) {
+        System.out.println("div is return, value:" + result);
+    }
+
+    @AfterThrowing(value = "pointCut()", throwing = "exception")
+    public void logException(Exception exception) {
+        System.out.println("div throws exception, error message:");
+    }
+}
+
+```
+
+输出：
+
+```
+div div is starting, args:1,1,
+div div is ending
+div is return, value:1
+```
+
+#### AOP原理解析 `@EnableAspectJAutoProxy`
+
+从上述AOP demo可以看出关键的一步是给spring开启AOP功能，所以我们先从这里开始看
+
+点进@EnableAspectJAutoProxy注解看源码：
+
+```java
+@Target(ElementType.TYPE)
+@Retention(RetentionPolicy.RUNTIME)
+@Documented
+@Import(AspectJAutoProxyRegistrar.class)
+public @interface EnableAspectJAutoProxy {
+
+	/**
+	 * Indicate whether subclass-based (CGLIB) proxies are to be created as opposed
+	 * to standard Java interface-based proxies. The default is {@code false}.
+	 */
+	boolean proxyTargetClass() default false;
+
+	/**
+	 * Indicate that the proxy should be exposed by the AOP framework as a {@code ThreadLocal}
+	 * for retrieval via the {@link org.springframework.aop.framework.AopContext} class.
+	 * Off by default, i.e. no guarantees that {@code AopContext} access will work.
+	 * @since 4.3.1
+	 */
+	boolean exposeProxy() default false;
+
+}
+```
+
+可以看到这里用到了一个叫AspectJAutoProxyRegistrar的类：
+
+```java
+/**
+ * Registers an {@link org.springframework.aop.aspectj.annotation.AnnotationAwareAspectJAutoProxyCreator
+ * AnnotationAwareAspectJAutoProxyCreator} against the current {@link BeanDefinitionRegistry}
+ * as appropriate based on a given @{@link EnableAspectJAutoProxy} annotation.
+ *
+ * @author Chris Beams
+ * @author Juergen Hoeller
+ * @since 3.1
+ * @see EnableAspectJAutoProxy
+ */
+class AspectJAutoProxyRegistrar implements ImportBeanDefinitionRegistrar {
+
+	/**
+	 * Register, escalate, and configure the AspectJ auto proxy creator based on the value
+	 * of the @{@link EnableAspectJAutoProxy#proxyTargetClass()} attribute on the importing
+	 * {@code @Configuration} class.
+	 */
+	@Override
+	public void registerBeanDefinitions(
+			AnnotationMetadata importingClassMetadata, BeanDefinitionRegistry registry) {
+
+		AopConfigUtils.registerAspectJAnnotationAutoProxyCreatorIfNecessary(registry);
+
+		AnnotationAttributes enableAspectJAutoProxy =
+				AnnotationConfigUtils.attributesFor(importingClassMetadata, EnableAspectJAutoProxy.class);
+		if (enableAspectJAutoProxy.getBoolean("proxyTargetClass")) {
+			AopConfigUtils.forceAutoProxyCreatorToUseClassProxying(registry);
+		}
+		if (enableAspectJAutoProxy.getBoolean("exposeProxy")) {
+			AopConfigUtils.forceAutoProxyCreatorToExposeProxy(registry);
+		}
+	}
+
+}
+```
+
+可以看到AspectJAutoProxyRegistrar这个类是一个ImportBeanDefinitionRegistrar接口的实现
+
+我们之前也实现过这个接口，实现类`MyImportBeanDefinitionRegistrar`，我们当时使用的功能是判断容器中有没有指定的bean，若有则再注册一个给定的bean到容器中
+
+打个断点从`AopConfigUtils.registerAspectJAnnotationAutoProxyCreatorIfNecessary(registry);`这里进入，看下注册了啥
+
+```java
+	private static BeanDefinition registerOrEscalateApcAsRequired(Class<?> cls, BeanDefinitionRegistry registry, Object source) {
+		Assert.notNull(registry, "BeanDefinitionRegistry must not be null");
+		if (registry.containsBeanDefinition(AUTO_PROXY_CREATOR_BEAN_NAME)) {
+			BeanDefinition apcDefinition = registry.getBeanDefinition(AUTO_PROXY_CREATOR_BEAN_NAME);
+			if (!cls.getName().equals(apcDefinition.getBeanClassName())) {
+				int currentPriority = findPriorityForClass(apcDefinition.getBeanClassName());
+				int requiredPriority = findPriorityForClass(cls);
+				if (currentPriority < requiredPriority) {
+					apcDefinition.setBeanClassName(cls.getName());
+				}
+			}
+			return null;
+		}
+		RootBeanDefinition beanDefinition = new RootBeanDefinition(cls);
+		beanDefinition.setSource(source);
+		beanDefinition.getPropertyValues().add("order", Ordered.HIGHEST_PRECEDENCE);
+		beanDefinition.setRole(BeanDefinition.ROLE_INFRASTRUCTURE);
+		registry.registerBeanDefinition(AUTO_PROXY_CREATOR_BEAN_NAME, beanDefinition);
+		return beanDefinition;
+	}
+```
+
+显然这里向容器中注册了一个ID为`AUTO_PROXY_CREATOR_BEAN_NAME=org.springframework.aop.config.internalAutoProxyCreator`的bean
+
+```java
+		AnnotationAttributes enableAspectJAutoProxy =
+				AnnotationConfigUtils.attributesFor(importingClassMetadata, EnableAspectJAutoProxy.class);
+		if (enableAspectJAutoProxy.getBoolean("proxyTargetClass")) {
+			AopConfigUtils.forceAutoProxyCreatorToUseClassProxying(registry);
+		}
+		if (enableAspectJAutoProxy.getBoolean("exposeProxy")) {
+			AopConfigUtils.forceAutoProxyCreatorToExposeProxy(registry);
+		}
+```
+
+然后它拿了@EnableAspectJAutoProxy注解的信息并判断其属性proxyTargetClass, exposeProxy的值，并做相应的操作
+
+总结：在使用了@EnableAspectJAutoProxy注解之后发生了以下的事情
+1. `@Import(AspectJAutoProxyRegistrar.class)`给容器中导入了AspectJAutoProxyRegistrar
+2. 利用AspectJAutoProxyRegistrar类自定义给容器中注册bean
+3. internalAutoProxyCreator=AnnotationAwareAspectJAutoProxyCreator
+4. 给容器中注册一个AnnotationAwareAspectJAutoProxyCreator
+5. AnnotationAwareAspectJAutoProxyCreator：
+   - AnnotationAwareAspectJAutoProxyCreator extends AspectJAwareAdvisorAutoProxyCreator
+     - AspectJAwareAdvisorAutoProxyCreator extends AbstractAdvisorAutoProxyCreator
+       - AspectJAwareAdvisorAutoProxyCreator extends AbstractAdvisorAutoProxyCreator
+         - AbstractAdvisorAutoProxyCreator extends AbstractAutoProxyCreator
+           - AbstractAutoProxyCreator extends ProxyProcessorSupport implements SmartInstantiationAwareBeanPostProcessor, BeanFactoryAware
+           - 关注后置处理器(在bean初始化完成前后做的事情)；自动装配BeanFactoryAware
+
+```java
+ 
+```
+
+---
 
 ## 扩展原理
 
