@@ -3128,7 +3128,7 @@ div div is ending
 div is return, value:1
 ```
 
-#### AOP原理解析 `@EnableAspectJAutoProxy`
+#### AOP原理解析 `@EnableAspectJAutoProxyCreator`
 
 从上述AOP demo可以看出关键的一步是给spring开启AOP功能，所以我们先从这里开始看
 
@@ -3254,9 +3254,58 @@ class AspectJAutoProxyRegistrar implements ImportBeanDefinitionRegistrar {
            - AbstractAutoProxyCreator extends ProxyProcessorSupport implements SmartInstantiationAwareBeanPostProcessor, BeanFactoryAware
            - 关注后置处理器(在bean初始化完成前后做的事情)；自动装配BeanFactoryAware
 
+还是从测试类开始走断点：
+
 ```java
- 
+import com.sicmatr1x.aop.MathCalculator;
+import com.sicmatr1x.config.MainConfigOfAOP;
+import org.junit.Test;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+
+public class IOCTest_AOP {
+    @Test
+    public void test01(){
+        // 创建IOC容器
+        AnnotationConfigApplicationContext applicationContext = new AnnotationConfigApplicationContext(MainConfigOfAOP.class); // <========= 传入配置类，创建IOC容器
+        // 从Spring容器中的对象才有AOP功能
+        MathCalculator mathCalculator = applicationContext.getBean(MathCalculator.class);
+        mathCalculator.div(1,1);
+
+        applicationContext.close();
+    }
+}
 ```
+
+```java
+	public AnnotationConfigApplicationContext(Class<?>... annotatedClasses) {
+		this();
+		register(annotatedClasses);
+		refresh(); // <========= 调用refresh()刷新容器
+	}
+```
+
+```java
+				// Register bean processors that intercept bean creation.
+				registerBeanPostProcessors(beanFactory); // <========= 注册bean的后置处理器来方便拦截bean的创建
+```
+
+1. 传入配置类，创建IOC容器
+2. 调用`refresh()`刷新容器
+3. `registerBeanPostProcessors(beanFactory)`注册bean的后置处理器来方便拦截bean的创建
+  1. 先获取IOC容器已经定义了的需要创建对象的所有的BeanPostProcessor
+  2. 给容器中加别的BeanPostProcessor
+  3. 优先注册实现了PriorityOrdered接口的BeanPostProcessor
+  4. 再给容器中注册实现了Ordered接口的BeanPostProcessor
+  5. 注册没实现优先级接口的BeanPostProcessor
+  6. 注册BeanPostProcessor，实际上就是创建BeanPostProcessor对象，并保存到容器中：创建internalAutoProxyCreator的BeanPostProcessor
+    1. 创建Bean的实例
+    2. populateBean：给bean的各种属性赋值
+    3. initializeBean：初始化bean：
+      1. invokeAwareMethods()：处理各种Aware接口的方法回调
+      2. applyBeanPostProcessorsBeforeInitialization()：应用后置处理器的postProcessorsBeforeInitialization()方法
+      3. invokeInitMethods()：执行自定义的初始化方法
+      4. applyBeanPostProcessorsAfterInitialization()：执行后置处理器的postProcessorsAfterInitialization()方法
+    4. BeanPostProcessor(AnnotationAwareAspectJAutoProxyCreator)创建成功
 
 ---
 
