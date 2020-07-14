@@ -508,3 +508,115 @@ mongodb中的大小限制, 即单个文档大小不能超过16M. 基于性能的
 
 [Understanding MongoDB BSON Document size limit](https://stackoverflow.com/questions/4667597/understanding-mongodb-bson-document-size-limit)
 
+### 2020-07-10
+
+#### Q: npm install 时 node-sass安装出现问题
+
+```
+“D:\Repositories\bilibili\renren-fast-vue\node_modules\node-sass\build\binding.sln”(默认目标) (1) ->
+“D:\Repositories\bilibili\renren-fast-vue\node_modules\node-sass\build\binding.vcxproj.metaproj”(默认目标) (2) ->
+“D:\Repositories\bilibili\renren-fast-vue\node_modules\node-sass\build\binding.vcxproj”(默认目标) (4) ->
+(ClCompile 目标) -> 
+  d:\repositories\bilibili\renren-fast-vue\node_modules\node-sass\src\create_string.cpp(17): error C2664: “v8::String::Utf8Value::Utf8Value(const v8::String::Utf8Value &)”: 无法将参数 1 从“v8::Local<v8::Value>”转换为“const v8::Strin
+g::Utf8Value 
+&” [D:\Repositories\bilibili\renren-fast-vue\node_modules\node-sass\build\binding.vcxproj]
+gyp ERR! cwd D:\Repositories\bilibili\renren-fast-vue\node_modules\node-sass
+gyp ERR! node -v v12.15.0
+gyp ERR! node-gyp -v v3.8.0
+gyp ERR! not ok
+```
+
+A: 老版本的SASS调用到的`v8::String::Utf8Value string(value);`函数在node12版本的V8引擎里面出现了修改
+
+解决方案：
+1. 降级node版本
+2. 或者升级SASS版本
+
+- [support for node.js 12.x #2632](https://github.com/sass/node-sass/issues/2632)
+
+
+### 2020-07-13
+
+#### maven install -source 1.5 中不支持 diamond 运算符
+
+A: idea File->Project Struct->Modules->Sources->Language level这里改成>=8的级别，如果多次反复maven install之后这个选项还是会弹回6及以下的级别的话就直接pom文件里面强制设置成package时为1.8的
+
+```xml
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>1.8</source>
+                    <target>1.8</target>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+```
+
+#### Error:(8,14) java: 程序包lombok不存在
+
+背景：common的module里面导入了lombok包，然后product的module里依赖了common的module，根据maven的依赖传递性，product应该引入了lombok包这个依赖
+
+common module的pom.xml
+
+```xml
+        <!-- https://mvnrepository.com/artifact/org.projectlombok/lombok -->
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>1.18.8</version>
+			<scope>provided</scope>
+        </dependency>
+```
+
+product module的pom.xml
+
+```xml
+        <dependency>
+            <groupId>com.sicmatr1x.gulimall</groupId>
+            <artifactId>gulimall-common</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
+```
+
+A: 在涉及到maven的依赖传递性时，若存在间接依赖的情况时，主工程对间接依赖的jar可以访问吗？这需要看间接依赖的jar包引入时的依赖范围——只有依赖范围为compile时可以访问(若不写scope则默认值为compile)
+
+所以这里修改pom.xml文件删去`<scope>provided</scope>`或者改为`<scope>compile</scope>`即可
+
+```xml
+        <!-- https://mvnrepository.com/artifact/org.projectlombok/lombok -->
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>1.18.8</version>
+        </dependency>
+```
+
+操作完之后记得重新对common module做maven install，重新生成jar文件
+
+#### Caused by: java.lang.RuntimeException: Driver com.mysql.jdbc.Driver claims to not accept jdbcUrl, jdbc:mysql://192.168.33.10:3306/gulimall_pms
+
+A:  JDBC驱动程序的5.2版本与UTC时区配合使用，必须在连接字符串中明确指定serverTimezone。
+
+```yml
+spring:
+  datasource:
+    username: root
+    password: root
+    url: jdbc:mysql://192.168.33.10:3306/gulimall_pms
+    driver-class-name: com.mysql.jdbc.Driver
+```
+
+改成
+
+```yml
+spring:
+  datasource:
+    username: root
+    password: root
+    url: jdbc:mysql://192.168.33.10:3306/gulimall_pms?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai
+    driver-class-name: com.mysql.jdbc.Driver
+```
