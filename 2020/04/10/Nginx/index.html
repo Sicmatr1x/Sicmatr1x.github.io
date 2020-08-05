@@ -1,0 +1,1312 @@
+<!DOCTYPE html>
+
+
+<html lang="en">
+
+
+<head>
+  <meta charset="utf-8" />
+    
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+  <title>
+    Nginx |  
+  </title>
+  <meta name="generator" content="hexo-theme-ayer">
+  
+  <link rel="shortcut icon" href="/favicon.ico" />
+  
+  <link rel="stylesheet" href="/dist/main.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Shen-Yu/cdn/css/remixicon.min.css">
+  <link rel="stylesheet" href="/css/custom.css">
+  
+  <script src="https://cdn.jsdelivr.net/npm/pace-js@1.0.2/pace.min.js"></script>
+  
+  
+
+  
+
+</head>
+
+</html>
+
+<body>
+  <div id="app">
+    
+      
+    <main class="content on">
+      <section class="outer">
+  <article
+  id="post-Nginx"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h1 class="article-title sea-center" style="border-left:0" itemprop="name">
+  Nginx
+</h1>
+ 
+
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2020/04/10/Nginx/" class="article-date">
+  <time datetime="2020-04-10T01:43:00.000Z" itemprop="datePublished">2020-04-10</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E5%90%8E%E7%AB%AF/">后端</a>
+  </div>
+  
+<div class="word_count">
+    <span class="post-time">
+        <span class="post-meta-item-icon">
+            <i class="ri-quill-pen-line"></i>
+            <span class="post-meta-item-text"> Word count:</span>
+            <span class="post-count">4.6k</span>
+        </span>
+    </span>
+
+    <span class="post-time">
+        &nbsp; | &nbsp;
+        <span class="post-meta-item-icon">
+            <i class="ri-book-open-line"></i>
+            <span class="post-meta-item-text"> Reading time≈</span>
+            <span class="post-count">20 min</span>
+        </span>
+    </span>
+</div>
+ 
+    </div>
+      
+    <div class="tocbot"></div>
+
+
+
+
+  
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>Nginx (engine x) 是一个高性能的HTTP和反向代理web服务器，同时也提供了IMAP/POP3/SMTP服务。Nginx是由伊戈尔·赛索耶夫为俄罗斯访问量第二的Rambler.ru站点（俄文：Рамблер）开发的。</p>
+<h2 id="基本概念"><a href="#基本概念" class="headerlink" title="基本概念"></a>基本概念</h2><h3 id="反向代理"><a href="#反向代理" class="headerlink" title="反向代理"></a>反向代理</h3><h4 id="正向代理"><a href="#正向代理" class="headerlink" title="正向代理"></a>正向代理</h4><p>在客户端(浏览器)中配置代理服务器，通过代理服务器进行互联网访问。</p>
+<h4 id="反向代理-1"><a href="#反向代理-1" class="headerlink" title="反向代理"></a>反向代理</h4><h3 id="负载均衡"><a href="#负载均衡" class="headerlink" title="负载均衡"></a>负载均衡</h3><h3 id="动静分离"><a href="#动静分离" class="headerlink" title="动静分离"></a>动静分离</h3><h3 id="高可用"><a href="#高可用" class="headerlink" title="高可用"></a>高可用</h3><h2 id="install"><a href="#install" class="headerlink" title="install"></a>install</h2><p><a href="http://nginx.org/en/download.html" target="_blank" rel="noopener">http://nginx.org/en/download.html</a></p>
+<h3 id="安装依赖"><a href="#安装依赖" class="headerlink" title="安装依赖"></a>安装依赖</h3><h4 id="pcre"><a href="#pcre" class="headerlink" title="pcre"></a>pcre</h4><p>解压pcre压缩包，进入目录执行</p>
+<pre><code>./configure
+
+make &amp;&amp; make install</code></pre><p>查看版本号</p>
+<pre><code>pcre-config --version</code></pre><h4 id="zlib与openssl"><a href="#zlib与openssl" class="headerlink" title="zlib与openssl"></a>zlib与openssl</h4><pre><code>yum -y install make zlib zlib-devel gcc-c++ libtool openssl openssl-devel</code></pre><h4 id="或者使用yum一键安装上述3个依赖"><a href="#或者使用yum一键安装上述3个依赖" class="headerlink" title="或者使用yum一键安装上述3个依赖"></a>或者使用<code>yum</code>一键安装上述3个依赖</h4><pre><code>yum -y install gcc zlib zlib-devel pcre-devel openssl openssl-devel</code></pre><h4 id="安装-nginx"><a href="#安装-nginx" class="headerlink" title="安装 nginx"></a>安装 nginx</h4><p>解压nginx压缩包，进入目录执行</p>
+<pre><code>./configure
+
+make &amp;&amp; make install</code></pre><h2 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h2><pre><code>cd /usr/local/nginx</code></pre><p>nginx的启动脚本在<code>nginx/sbin</code>文件夹下面</p>
+<h3 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h3><pre><code>cd /usr/local/nginx/sbin
+./nginx
+
+ps -ef | grep nginx</code></pre><h3 id="配置防火墙"><a href="#配置防火墙" class="headerlink" title="配置防火墙"></a>配置防火墙</h3><p>查看防火墙规则：</p>
+<pre><code>firewall-cmd --list-all</code></pre><p>添加规则：</p>
+<pre><code>firewall-cmd --add-service=http =permanent
+sudo firewall-cmd --add-port=80/tcp --permanent</code></pre><p>重启防火墙：</p>
+<pre><code>firewall-cmd -reload</code></pre><h2 id="nginx-常用命令"><a href="#nginx-常用命令" class="headerlink" title="nginx 常用命令"></a>nginx 常用命令</h2><p>进入nginx根目录或者将其添加到<code>PATH</code></p>
+<pre><code>cd /usr/local/nginx/sbin</code></pre><h4 id="查看nginx版本号"><a href="#查看nginx版本号" class="headerlink" title="查看nginx版本号"></a>查看nginx版本号</h4><pre><code>./nginx -v</code></pre><h4 id="启动nginx"><a href="#启动nginx" class="headerlink" title="启动nginx"></a>启动nginx</h4><pre><code>./nginx</code></pre><h4 id="关闭nginx"><a href="#关闭nginx" class="headerlink" title="关闭nginx"></a>关闭nginx</h4><pre><code>./nginx -s stop</code></pre><h4 id="重新加载nginx"><a href="#重新加载nginx" class="headerlink" title="重新加载nginx"></a>重新加载nginx</h4><p><code>nginx.conf</code>文件内容修改后需要重新加载才能生效，此命令可以使得在不重启nginx情况下应用修改</p>
+<pre><code>./nginx -s reload</code></pre><h2 id="配置文件nginx-conf"><a href="#配置文件nginx-conf" class="headerlink" title="配置文件nginx.conf"></a>配置文件<code>nginx.conf</code></h2><pre><code>cd /usr/local/nginx/conf</code></pre><p>配置文件由3部分组成：</p>
+<ol>
+<li>全局块：从配置文件开始到events块之间的内容，主要会设置一些影响nginx服务器整体运行的配置指令</li>
+<li>events块：主要影响nginx服务器与用户的网络连接，常用的设置包括是否开启对多worker processes下的网络连接进行序列化，是否允许同时接受多个网络连接，选取暗中事件驱动模型来处理连接请求，每个word process可以同时支持的最大连接数等</li>
+<li>http块：包含http全局块和server块，代理、缓存和日志等绝大多数功能和第三方模块的配置都在这里<ul>
+<li>http全局块：包括文件引入、MIME-TYPE协议、日志自定义、连接超时时间、单链接请求数上限等</li>
+<li>server块：包含全局server块和location块，和虚拟主机有密切关系，虚拟主机从用户角度看和一台独立的硬件主机完全一样，该技术主要用于节省互联网服务器硬件成本<ul>
+<li>全局server块：最常见的配置是虚拟主机的监听配置和本虚拟主机的名称或IP配置</li>
+<li>location块：一个server块可以配置多个location块，这个块的主要作用是基于nginx服务器收到的请求字符串(例如：server_name/uri-string)，对虚拟主机名称(或IP别名)之外的字符串(例如：/uri-string)进行匹配，对特定的请求进行处理。地址定向、数据缓存和应答控制等功能，还有许多第三方模块的配置也在这里。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+<h3 id="全局块"><a href="#全局块" class="headerlink" title="全局块"></a>全局块</h3><pre><code class="conf">#user  nobody;
+worker_processes  1; #nginx服务器并发处理关键配置，worker_processes值越大，可以支持的并发处理量越多，但是受硬件、软件等设备制约
+
+#error_log  logs/error.log;
+#error_log  logs/error.log  notice;
+#error_log  logs/error.log  info;
+
+#pid        logs/nginx.pid;</code></pre>
+<h3 id="events块"><a href="#events块" class="headerlink" title="events块"></a>events块</h3><pre><code class="conf">events {
+    worker_connections  1024; #表示每个worker processes支持的最大连接数为1024
+}</code></pre>
+<h3 id="http块"><a href="#http块" class="headerlink" title="http块"></a>http块</h3><pre><code class="conf">http {
+    # http全局块
+    include       mime.types;
+    default_type  application/octet-stream;
+
+    #log_format  main  &#39;$remote_addr - $remote_user [$time_local] &quot;$request&quot; &#39;
+    #                  &#39;$status $body_bytes_sent &quot;$http_referer&quot; &#39;
+    #                  &#39;&quot;$http_user_agent&quot; &quot;$http_x_forwarded_for&quot;&#39;;
+
+    #access_log  logs/access.log  main;
+
+    sendfile        on;
+    #tcp_nopush     on;
+
+    #keepalive_timeout  0;
+    keepalive_timeout  65;
+
+    #gzip  on;
+
+    server { # server块
+        listen       80; # 目前监听端口号
+        server_name  localhost; # 主机名称
+
+        #charset koi8-r;
+
+        #access_log  logs/host.access.log  main;
+
+        location / {
+            root   html;
+            index  index.html index.htm;
+        }
+
+        #error_page  404              /404.html;
+
+        # redirect server error pages to the static page /50x.html
+        #
+        error_page   500 502 503 504  /50x.html;
+        location = /50x.html {
+            root   html;
+        }
+
+        # proxy the PHP scripts to Apache listening on 127.0.0.1:80
+        #
+        #location ~ \.php$ {
+        #    proxy_pass   http://127.0.0.1;
+        #}
+
+        # pass the PHP scripts to FastCGI server listening on 127.0.0.1:9000
+        #
+        #location ~ \.php$ {
+        #    root           html;
+        #    fastcgi_pass   127.0.0.1:9000;
+        #    fastcgi_index  index.php;
+        #    fastcgi_param  SCRIPT_FILENAME  /scripts$fastcgi_script_name;
+        #    include        fastcgi_params;
+        #}
+
+        # deny access to .htaccess files, if Apache&#39;s document root
+        # concurs with nginx&#39;s one
+        #
+        #location ~ /\.ht {
+        #    deny  all;
+        #}
+    }
+
+
+    # another virtual host using mix of IP-, name-, and port-based configuration
+    #
+    #server {
+    #    listen       8000;
+    #    listen       somename:8080;
+    #    server_name  somename  alias  another.alias;
+
+    #    location / {
+    #        root   html;
+    #        index  index.html index.htm;
+    #    }
+    #}
+
+
+    # HTTPS server
+    #
+    #server {
+    #    listen       443 ssl;
+    #    server_name  localhost;
+
+    #    ssl_certificate      cert.pem;
+    #    ssl_certificate_key  cert.key;
+
+    #    ssl_session_cache    shared:SSL:1m;
+    #    ssl_session_timeout  5m;
+
+    #    ssl_ciphers  HIGH:!aNULL:!MD5;
+    #    ssl_prefer_server_ciphers  on;
+
+    #    location / {
+    #        root   html;
+    #        index  index.html index.htm;
+    #    }
+    #}
+
+}</code></pre>
+<h4 id="location指令说明"><a href="#location指令说明" class="headerlink" title="location指令说明"></a>location指令说明</h4><p>该指令用于匹配URL</p>
+<p>语法如下：</p>
+<ol>
+<li><code>=</code>: 用于不含正则表达式的URI前，要求请求字符串与URI严格匹配，如果匹配成功，就停止继续向下搜索并立即处理该请求</li>
+<li><code>~</code>: 用于表示URI包含正则表达式，并且区分大小写</li>
+<li><code>~*</code>: 用于表示URI包含正则表达式，并且不区分大小写</li>
+<li><code>^~</code>: 用于不含正则表达式的URI前，要求Nginx服务器找到标识URI和请求字符串匹配度最高的location后，立即使用此location处理请求，而不再使用location块中的正则URI和请求字符串做匹配</li>
+</ol>
+<h2 id="操作实例"><a href="#操作实例" class="headerlink" title="操作实例"></a>操作实例</h2><h3 id="反向代理实例"><a href="#反向代理实例" class="headerlink" title="反向代理实例"></a>反向代理实例</h3><h4 id="实例一"><a href="#实例一" class="headerlink" title="实例一"></a>实例一</h4><p>实现效果：浏览器输入网址<a href="http://www.123.com跳转到本地Tomcat页面" target="_blank" rel="noopener">www.123.com跳转到本地Tomcat页面</a></p>
+<p>下载并解压Tomcat，进入bin目录启动Tomcat</p>
+<pre><code>./startup.sh</code></pre><p>开放端口</p>
+<pre><code>sudo firewall-cmd --add-port=8080/tcp --permanent
+firewall-cmd -reload
+firewall-cmd --list-all</code></pre><p>修改配置文件</p>
+<pre><code class="conf">server {
+    listen 80;
+    server_name www.123.com;
+
+    location / {
+        proxy_pass http://www.123.com:8080;
+        index index.html index.htm index.jsp;
+    }
+}</code></pre>
+<h4 id="实例二"><a href="#实例二" class="headerlink" title="实例二"></a>实例二</h4><p>实现效果：根据访问的路径跳转到不同端口的服务中</p>
+<ul>
+<li>访问<a href="http://127.0.0.1:9001/edu" target="_blank" rel="noopener">http://127.0.0.1:9001/edu</a> 直接跳转到127.0.0.1:8080</li>
+<li>访问<a href="http://127.0.0.1:9001/vod" target="_blank" rel="noopener">http://127.0.0.1:9001/vod</a> 直接跳转到127.0.0.1:8081</li>
+</ul>
+<pre><code class="conf">server {
+    listen 9001;
+    server_name localhost;
+
+    location ~ /edu/ { # ~符号表示后接正则表达式，表示访问的路径中包含edu字符串就跳转到8080
+        proxy_pass http://localhost:8080;
+    }
+    location ~ /vod/ {
+        proxy_pass http://localhost:8081;
+    }
+}</code></pre>
+<h3 id="负载均衡实例"><a href="#负载均衡实例" class="headerlink" title="负载均衡实例"></a>负载均衡实例</h3><p>实现效果：通过浏览器的地址栏输入地址(<a href="http://localhost/edu/a.html)，使得请求平均分配到8080与8081端口中" target="_blank" rel="noopener">http://localhost/edu/a.html)，使得请求平均分配到8080与8081端口中</a></p>
+<p>关键配置：</p>
+<pre><code class="conf">http {
+    #.....
+    upstream myserver {
+        ip_hash;
+        server 192.168.17.129:8080 weight=1;
+        server 192.168.17.129:8081 weight=1;
+    }
+    #.....
+    server {
+        location / {
+            #.....
+            proxy_pass http://myserver;
+            proxy_connect_timeout 10;
+        }
+    }
+}</code></pre>
+<p>配置案例：</p>
+<pre><code class="conf">
+worker_processes  1;
+
+
+events {
+    worker_connections  1024;
+}
+
+http {
+    include       mime.types;
+    default_type  application/octet-stream;
+
+    sendfile        on;
+
+    keepalive_timeout  65;
+
+    upstream myserver {
+        ip_hash;
+        server 192.168.17.129:8080 weight=1;
+        server 192.168.17.129:8081 weight=1;
+    }
+
+    server {
+        listen       80;
+        server_name  192.168.17.129;
+
+        location / {
+            proxy_pass http://myserver;
+            proxy_connect_timeout 10;
+            root   html
+            index index.html index.htm
+        }
+    }
+}
+</code></pre>
+<h3 id="负载均衡的分配方式"><a href="#负载均衡的分配方式" class="headerlink" title="负载均衡的分配方式"></a>负载均衡的分配方式</h3><ol>
+<li>轮询(默认)：每个请求按时间顺序逐一分配到不同的后端服务器，如果后端服务器down掉，能自动剔除。</li>
+<li>weight：权重，weight和访问比率成正比，用于后端服务器性能不均的情况，例如：<ul>
+<li>A服务器<code>weight=5</code>，B服务器<code>weight=10</code>，则B会收到的流量为A的一倍，即A会收到全部流量的1/3，B为2/3</li>
+</ul>
+</li>
+<li>ip_hash：每个请求按IP的hash结果分配，每个访客固定访问一个后端服务器，可以解决session的问题</li>
+<li>fair: 按照后端服务器的访问时间来分配，时间短的优先分配</li>
+</ol>
+<pre><code class="conf">upstream myserver {
+    server 192.168.17.129:8080;
+    server 192.168.17.129:8081;
+}</code></pre>
+<pre><code class="conf">upstream myserver {
+    server 192.168.17.129:8080 weight=5;
+    server 192.168.17.129:8081 weight=10;
+}</code></pre>
+<pre><code class="conf">upstream myserver {
+    ip_hash;
+    server 192.168.17.129:8080;
+    server 192.168.17.129:8081;
+}</code></pre>
+<pre><code class="conf">upstream myserver {
+    server 192.168.17.129:8080;
+    server 192.168.17.129:8081;
+    fair;
+}</code></pre>
+<h3 id="动静分离实例"><a href="#动静分离实例" class="headerlink" title="动静分离实例"></a>动静分离实例</h3><p>通过<code>location</code>指定不同的后缀名实现不同的请求转发。通过<code>expires</code>参数设置，可以使浏览器缓存过期时间，减少与服务器之前的请求和流量。</p>
+<p><code>Expores</code>：给一个资源设定一个过期时间，无需服务器端验证，而是由浏览器去确认该资源是否过期，不会产生额外的流量。适用于不经常变动的资源。比如设置为<code>3d</code>表示3天之内访问这个URL，浏览器会发送一个请求来对比服务器该文件最后更新时间有无变化，若无则不会从服务器抓取，返回状态码<code>304</code>，如果有修改则直接从服务器下载，返回状态码<code>200</code></p>
+<p>实现效果：</p>
+<ol>
+<li>浏览器中输入地址<a href="http://192.168.17.129/image/01.jpg" target="_blank" rel="noopener">http://192.168.17.129/image/01.jpg</a></li>
+<li>浏览器中输入地址<a href="http://192.168.17.129/www/a.html" target="_blank" rel="noopener">http://192.168.17.129/www/a.html</a></li>
+</ol>
+<p>文件结构：</p>
+<ul>
+<li>data<ul>
+<li>image<ul>
+<li>01.jpg</li>
+</ul>
+</li>
+<li>www<ul>
+<li>a.html</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<pre><code class="conf">worker_processes  1;
+
+
+events {
+    worker_connections  1024;
+}
+
+http {
+    include       mime.types;
+    default_type  application/octet-stream;
+
+    sendfile        on;
+
+    keepalive_timeout  65;
+
+    server {
+        listen       80;
+        server_name  192.168.17.129;
+
+        location /www/ {
+            root /data/;
+            index index.html index.htm
+        }
+
+        location /image/ {
+            root /data/;
+            autoindex on; # 在浏览器中列出当前文件夹中的内容
+        }
+    }
+}</code></pre>
+<h2 id="高可用集群"><a href="#高可用集群" class="headerlink" title="高可用集群"></a>高可用集群</h2><p>多台Nginx同时工作，若其中一台宕机服务不会中断。</p>
+<p>需要：</p>
+<ol>
+<li>2台服务器192.168.17.129, 192.168.17.131</li>
+<li>两台服务器安装Nginx</li>
+<li>两台服务器安装keepalived</li>
+</ol>
+<pre><code>yum install keepalived -y</code></pre><p>配置文件<code>/etc/keepalive.conf</code>：</p>
+<pre><code class="conf">#全局配置
+global_defs { 
+    notification_email {
+        acassen@firewall.loc
+        failover@firewall.loc
+        sysadmin@firewall.loc
+    }
+    notification_email from Alexandre.Cassen@firewall.loc
+    smtp_server 192.168.17.129
+    smtp_connect timeout 30
+    router_id LVS_DEVEL # 唯一取值，可写服务器名字(配置在hosts里的domian)也可写IP
+}
+
+# 脚本配置
+vrrp_script chk_http_port {
+    script &quot;/usr/local/src/nginx_check.sh&quot; # 检测脚本路径
+    interval 2 # 检测脚本执行间隔
+    weight 2 # 权重参数
+}
+
+vrrp_instance VI_1 {
+    state BACKUP # 备份服务器上将MASTER改为BACKUP
+    interface ens33 # 网卡
+    virtual_router_id 51 # 主、备机的virtual_router_id 必须相同
+    priority 100 # 主、备机取不同的优先级，主机值较大，备份机值较小
+    advert_int 1 # 时间间隔，每隔多久发送一个心跳，单位秒
+    authentication { # 权限校验方式
+        auth_type PASS # 类型：密码
+        auth_pass 1111 # 密码值
+    }
+    virtual_ipaddress {
+        192.168.17.50 # VRRP H虚拟地址
+    }
+}</code></pre>
+<p>检测脚本<code>/usr/local/src/nginx_check.sh</code>：</p>
+<pre><code class="sh">#!/bin/bash
+A=`ps -C nginx -no-header |wc -l`
+if [ $A -eq 0 ]; then
+    /usr/local/nginx/sbin/nginx
+    sleep 2
+    if [ `ps -C nginx -no-header |wc -l` -eq 0 ]; then
+        killall keepalived
+    fi
+fi</code></pre>
+<p>查看网卡名：</p>
+<pre><code>ifconfig</code></pre><h2 id="Nginx原理分析"><a href="#Nginx原理分析" class="headerlink" title="Nginx原理分析"></a>Nginx原理分析</h2><h3 id="master-和-worker"><a href="#master-和-worker" class="headerlink" title="master 和 worker"></a>master 和 worker</h3><p>Nginx启动之后在Linux系统中其实有两个进程，分别叫<code>nginx: master</code>, <code>nginx: worker</code></p>
+<p>当客户端发送一条请求给master之后，然后由worker来争抢该条请求，当worker抢到之后变进行请求转发或反向代理给Tomcat来响应请求</p>
+<p>一个master和多个worker的好处：</p>
+<ol>
+<li>可以使用<code>nginx -s reload</code>热部署。在进行热部署时，已经在执行任务的worker继续执行，没有任务的worker重新加载，有任务的worker任务执行完毕后再加载新配置文件。</li>
+<li>对于每个worker进程来说，独立的进程，不需要加锁，所以省掉了锁带来的开销。</li>
+<li>独立的进程互相之间不会相互影响，一个进程退出后，其它的进程还在工作，服务不会中断。若单个worker进程遇到异常退出了，会导致当前worker上的所有请求失败，不会影响到其它worker在处理的请求。</li>
+</ol>
+<h4 id="需要设置多少个worker"><a href="#需要设置多少个worker" class="headerlink" title="需要设置多少个worker"></a>需要设置多少个worker</h4><p>Nginx和redis类似都采用了io多路复用机制，每个worker都是一个独立的进程，但每个进程只有一个主线程，通过异步非阻塞的方式来处理请求。每个worker的线程可以把一个cpu的性能发挥到极致。所以worker数和服务器的cpu核数相等是最为适宜的。设少了浪费cpu，设多了会造成cpu频繁切换上下文带来的损耗。</p>
+<h2 id="反向代理配置文件案例"><a href="#反向代理配置文件案例" class="headerlink" title="反向代理配置文件案例"></a>反向代理配置文件案例</h2><pre><code class="conf">
+#user  nobody;
+worker_processes  1; # nginx服务器并发处理关键配置，worker_processes值越大，可以支持的并发处理量越多，但是受硬件、软件等设备制约
+
+#error_log  logs/error.log;
+#error_log  logs/error.log  notice;
+#error_log  logs/error.log  info;
+
+#pid        logs/nginx.pid;
+
+
+events {
+    worker_connections  1024; # 表示每个worker processes支持的最大连接数为1024
+}
+
+
+http {
+    include       mime.types;
+    default_type  application/octet-stream;
+
+    #log_format  main  &#39;$remote_addr - $remote_user [$time_local] &quot;$request&quot; &#39;
+    #                  &#39;$status $body_bytes_sent &quot;$http_referer&quot; &#39;
+    #                  &#39;&quot;$http_user_agent&quot; &quot;$http_x_forwarded_for&quot;&#39;;
+
+    #access_log  logs/access.log  main;
+
+    sendfile        on;
+    #tcp_nopush     on;
+
+    #keepalive_timeout  0;
+    keepalive_timeout  65;
+
+    server_names_hash_max_size 512;
+    server_names_hash_bucket_size 1024;
+
+    #gzip  on;
+
+    # upstream 负载均衡关键配置
+    # The ngx_http_upstream_module module is used to define groups of servers that can be referenced by the proxy_pass, fastcgi_pass, uwsgi_pass, scgi_pass, memcached_pass, and grpc_pass directives.
+    # 定义server用于给后面的proxy_pass使用
+    # 参考：https://blog.csdn.net/caijunsen/article/details/83002219
+    upstream www-pixiv-net { 
+        # 每个请求按时间顺序逐一分配到不同的后端服务器，如果后端服务器down掉，能自动剔除
+        server 210.140.131.223:443;
+        server 210.140.131.225:443;
+        server 210.140.131.220:443;
+    }
+
+    upstream sketch-pixiv-net { 
+        server 210.140.174.37:443;
+        server 210.140.170.179:443;
+        server 210.140.175.130:443;
+    }
+
+    upstream sketch-hls-server {
+        server 210.140.214.211:443;
+        server 210.140.214.212:443;
+        server 210.140.214.213:443;
+    }
+
+    upstream imgaz-pixiv-net { 
+        server 210.140.131.145:443;
+        server 210.140.131.144:443;
+        server 210.140.131.147:443;
+        server 210.140.131.153:443;
+    }
+
+    upstream i-pximg-net { 
+        server 210.140.92.140:443;
+        server 210.140.92.137:443;
+        server 210.140.92.139:443;
+        server 210.140.92.142:443;
+        server 210.140.92.134:443;
+        server 210.140.92.141:443;
+        server 210.140.92.143:443;
+        server 210.140.92.136:443; 
+        server 210.140.92.138:443;
+        server 210.140.92.144:443;
+        server 210.140.92.145:443;
+    }
+
+    server {
+        listen 80 default_server; # default_server 指令可以定义默认的 server 去处理一些没有匹配到 server_name 的请求，如果没有显式定义，则会选取第一个定义的 server 作为 default_server
+        rewrite ^(.*) https://$host$1 permanent; # 网站添加了https证书后，当http方式访问网站时就会报404错误，所以需要做http到https的强制跳转设置
+        # rewrite语法：
+        # rewrite    &lt;regex&gt;    &lt;replacement&gt;    [flag];
+        # 关键字      正则        替代内容          flag标记
+        # 关键字：其中关键字error_log不能改变
+        # 正则：perl兼容正则表达式语句进行规则匹配
+        # 替代内容：将正则匹配的内容替换成replacement
+        # flag标记：rewrite支持的flag标记
+        # flag标记说明：
+        # last: 本条规则匹配完成后，继续向下匹配新的location URI规则
+        # break: 本条规则匹配完成即终止，不再匹配后面的任何规则
+        # redirect: 返回302临时重定向，浏览器地址会显示跳转后的URL地址
+        # permanent: 返回301永久重定向，浏览器地址栏会显示跳转后的URL地址
+
+        # rewrite的组要功能是实现URL地址的重定向。Nginx的rewrite功能需要PCRE软件的支持，即通过perl兼容正则表达式语句进行规则匹配的。默认参数编译nginx就会支持rewrite的模块，但是也必须要PCRE的支持
+    }
+
+    server {
+        listen 443 ssl; # 443是https的默认端口
+        server_name pixiv.net; # server name 为虚拟服务器的识别路径。因此不同的域名会通过请求头中的HOST字段，匹配到特定的server块，转发到对应的应用服务器中去
+        server_name www.pixiv.net;
+        server_name ssl.pixiv.net;
+        server_name accounts.pixiv.net;
+        server_name touch.pixiv.net;
+        server_name oauth.secure.pixiv.net;
+
+        ssl on; # 使用HTTPS，需要安装OpenSSL
+        ssl_certificate ca/pixiv.net.crt;
+        ssl_certificate_key ca/pixiv.net.key; # HTTPS私钥
+
+        client_max_body_size 50M; # 用nginx作代理服务器，上传大文件的大小有限制(限制请求体的大小，若超过所设定的大小，返回413错误)
+
+        location / {
+            proxy_pass https://www-pixiv-net;
+            proxy_set_header Host $http_host;
+            proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+            proxy_set_header X-Real_IP $remote_addr;
+            proxy_set_header User-Agent $http_user_agent;
+            proxy_set_header Accept-Encoding &#39;&#39;; 
+            proxy_buffering off; # 主要是实现被代理服务器的数据和客户端的请求异步
+            # A为客户端，B为代理服务器，C为被代理服务器。
+            # 当proxy_buffering开启，A发起请求到B，B再到C，C反馈的数据先到B的buffer上，
+            # 然后B会根据proxy_busy_buffer_size来决定什么时候开始把数据传输给A。
+            # 在此过程中，如果所有的buffer被写满，数据将会写入到temp_file中。
+            # 相反，如果proxy_buffering关闭，C反馈的数据实时地通过B传输给A。
+        }
+    }
+
+    server {
+        listen 443 ssl;
+        server_name i.pximg.net;
+
+        ssl on;
+        ssl_certificate ca/pixiv.net.crt;
+        ssl_certificate_key ca/pixiv.net.key;
+
+        location / {
+            proxy_pass https://i-pximg-net;
+            proxy_set_header Host $http_host;
+            proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+            proxy_set_header X-Real_IP $remote_addr;
+            proxy_set_header User-Agent $http_user_agent;
+            proxy_set_header Accept-Encoding &#39;&#39;; 
+            proxy_buffering off;
+        }
+    }
+
+    server {
+        listen 443 ssl;
+        server_name sketch.pixiv.net;
+
+        ssl on;
+        ssl_certificate ca/pixiv.net.crt;
+        ssl_certificate_key ca/pixiv.net.key;
+
+        location / {
+            proxy_pass https://sketch-pixiv-net;
+            proxy_set_header Host $http_host;
+            proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+            proxy_set_header X-Real_IP $remote_addr;
+            proxy_set_header User-Agent $http_user_agent;
+            proxy_set_header Accept-Encoding &#39;&#39;; 
+            proxy_buffering off;
+        }
+
+        # Proxying WebSockets
+        location /ws/ {
+            proxy_pass https://sketch-pixiv-net;
+            proxy_http_version 1.1;
+            proxy_set_header Upgrade $http_upgrade;
+            proxy_set_header Connection &quot;upgrade&quot;;
+            proxy_set_header Host $host;
+        }
+    }
+
+    server {
+        listen 443 ssl;
+        server_name *.pixivsketch.net;
+
+        ssl on;
+        ssl_certificate ca/pixiv.net.crt;
+        ssl_certificate_key ca/pixiv.net.key;
+
+        location / {
+            proxy_pass https://sketch-hls-server;
+            proxy_set_header Host $http_host;
+            proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+            proxy_set_header X-Real_IP $remote_addr;
+            proxy_set_header User-Agent $http_user_agent;
+            proxy_set_header Accept-Encoding &#39;&#39;; 
+            proxy_buffering off;
+        }
+    }
+
+    server {
+        listen 443 ssl;
+        server_name factory.pixiv.net;
+
+        ssl on;
+        ssl_certificate ca/pixiv.net.crt;
+        ssl_certificate_key ca/pixiv.net.key;
+
+        location / {
+            proxy_pass https://210.140.131.180/;
+            proxy_set_header Host $http_host;
+            proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+            proxy_set_header X-Real_IP $remote_addr;
+            proxy_set_header User-Agent $http_user_agent;
+            proxy_set_header Accept-Encoding &#39;&#39;; 
+            proxy_buffering off;
+        }
+    }
+
+    server {
+        listen 443 ssl;
+        server_name dic.pixiv.net;
+        server_name en-dic.pixiv.net;
+        server_name sensei.pixiv.net;
+        server_name fanbox.pixiv.net;
+        server_name payment.pixiv.net.pixiv.net;
+
+        ssl on;
+        ssl_certificate ca/pixiv.net.crt;
+        ssl_certificate_key ca/pixiv.net.key;
+
+        location / {
+            proxy_pass https://210.140.131.222/;
+            proxy_set_header Host $http_host;
+            proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+            proxy_set_header X-Real_IP $remote_addr;
+            proxy_set_header User-Agent $http_user_agent;
+            proxy_set_header Accept-Encoding &#39;&#39;; 
+            proxy_buffering off;
+        }
+    }
+
+    server {
+        listen 443 ssl;
+        server_name imgaz.pixiv.net;
+        server_name comic.pixiv.net;
+        server_name novel.pixiv.net;
+        server_name source.pixiv.net;
+        server_name i1.pixiv.net;
+        server_name i2.pixiv.net;
+        server_name i3.pixiv.net;
+        server_name i4.pixiv.net;
+
+        ssl on;
+        ssl_certificate ca/pixiv.net.crt;
+        ssl_certificate_key ca/pixiv.net.key;
+
+        location / {
+            proxy_pass https://imgaz-pixiv-net;
+            proxy_set_header Host $http_host;
+            proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+            proxy_set_header X-Real_IP $remote_addr;
+            proxy_set_header User-Agent $http_user_agent;
+            proxy_set_header Accept-Encoding &#39;&#39;; 
+            proxy_buffering off;
+        }
+    }
+
+    upstream wikipedia-server { 
+        server 198.35.26.96:443;
+        server 103.102.166.224:443;
+    }
+
+    server {
+        listen 443 ssl;
+        server_name *.wikipedia.org;
+        server_name *.m.wikipedia.org;
+
+        ssl on;
+        ssl_certificate ca/pixiv.net.crt;
+        ssl_certificate_key ca/pixiv.net.key;
+
+        location / {
+            proxy_pass https://wikipedia-server/;
+            proxy_set_header Host $http_host;
+            proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+            proxy_set_header X-Real_IP $remote_addr;
+            proxy_set_header User-Agent $http_user_agent;
+            proxy_set_header Accept-Encoding &#39;&#39;; 
+            proxy_buffering off;
+        }
+    }
+
+    server {
+        listen 443 ssl;
+        server_name *.steamcommunity.com;
+        server_name steamcommunity.com;
+
+        ssl on;
+        ssl_certificate ca/pixiv.net.crt;
+        ssl_certificate_key ca/pixiv.net.key;
+
+        location / {
+            proxy_pass https://23.61.176.149/;
+            proxy_set_header Host $http_host;
+            proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+            proxy_set_header X-Real_IP $remote_addr;
+            proxy_set_header User-Agent $http_user_agent;
+            proxy_set_header Accept-Encoding &#39;&#39;; 
+            proxy_buffering off;
+        }
+    }
+
+    server {
+        listen 443 ssl;
+        server_name *.steampowered.com;
+        server_name steampowered.com;
+
+        ssl on;
+        ssl_certificate ca/pixiv.net.crt;
+        ssl_certificate_key ca/pixiv.net.key;
+
+        location / {
+            proxy_pass https://104.112.84.145/;
+            proxy_set_header Host $http_host;
+            proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+            proxy_set_header X-Real_IP $remote_addr;
+            proxy_set_header User-Agent $http_user_agent;
+            proxy_set_header Accept-Encoding &#39;&#39;; 
+            proxy_buffering off;
+        }
+    }
+        server {
+        listen 443 ssl;
+        server_name *.archiveofourown.org;
+        server_name archiveofourown.org;
+
+        ssl on;
+        ssl_certificate ca/pixiv.net.crt;
+        ssl_certificate_key ca/pixiv.net.key;
+
+        location / {
+            proxy_pass https://104.153.64.122/;
+            proxy_set_header Host $http_host;
+            proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+            proxy_set_header X-Real_IP $remote_addr;
+            proxy_set_header User-Agent $http_user_agent;
+            proxy_set_header Accept-Encoding &#39;&#39;; 
+            proxy_buffering off;
+        }
+    }
+
+}
+</code></pre>
+<h2 id="链接"><a href="#链接" class="headerlink" title="链接"></a>链接</h2><ul>
+<li><a href="https://www.digitalocean.com/community/tools/nginx" target="_blank" rel="noopener">The easiest way to configure a performant, secure, and stable NGINX server.</a></li>
+<li><a href="https://2heng.xin/2017/09/19/pixiv/" target="_blank" rel="noopener">PIXIV网页版及客户端访问恢复指南</a></li>
+<li><a href="http://idayer.com/nginx-reverse-proxy-for-pixiv/" target="_blank" rel="noopener">MAC本地nginx反向代理访问Pixiv指北</a></li>
+<li><a href="https://moe.best/technology/pixiv-proxy.html" target="_blank" rel="noopener">Nginx 真·反代P站 恢复直接访问</a></li>
+<li><a href="https://www.digitalocean.com/community/tools/nginx" target="_blank" rel="noopener">NGINX Config The easiest way to configure a performant, secure, and stable NGINX server.</a></li>
+<li></li>
+</ul>
+ 
+      <!-- reward -->
+      
+      <div id="reword-out">
+        <div id="reward-btn">
+          Donate
+        </div>
+      </div>
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <div class="declare">
+      <ul class="post-copyright">
+        <li>
+          <i class="ri-copyright-line"></i>
+          <strong>Copyright： </strong>
+          Copyright is owned by the author. For commercial reprints, please contact the author for authorization. For non-commercial reprints, please indicate the source.
+        </li>
+      </ul>
+    </div>
+    
+    <footer class="article-footer">
+       
+<div class="share-btn">
+      <span class="share-sns share-outer">
+        <i class="ri-share-forward-line"></i>
+        分享
+      </span>
+      <div class="share-wrap">
+        <i class="arrow"></i>
+        <div class="share-icons">
+          
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="ri-weibo-fill"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="ri-wechat-fill"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="ri-qq-fill"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="ri-douban-line"></i>
+          </a>
+          <!-- <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a> -->
+          
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="ri-facebook-circle-fill"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="ri-twitter-fill"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="ri-google-fill"></i>
+          </a>
+        </div>
+      </div>
+</div>
+
+<div class="wx-share-modal">
+    <a class="modal-close" href="javascript:;"><i class="ri-close-circle-line"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data=http://yoursite.com/2020/04/10/Nginx/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div id="share-mask"></div>  
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Nginx/" rel="tag">Nginx</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E9%AB%98%E5%B9%B6%E5%8F%91/" rel="tag">高并发</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+  <nav class="article-nav">
+    
+      <a href="/2020/05/12/Spring%E6%B3%A8%E8%A7%A3%E9%A9%B1%E5%8A%A8%E5%BC%80%E5%8F%91/" class="article-nav-link">
+        <strong class="article-nav-caption">上一篇</strong>
+        <div class="article-nav-title">
+          
+            Spring注解驱动开发
+          
+        </div>
+      </a>
+    
+    
+      <a href="/2020/03/23/SpringBoot-%E5%8E%9F%E7%90%86%E5%88%9D%E6%8E%A2/" class="article-nav-link">
+        <strong class="article-nav-caption">下一篇</strong>
+        <div class="article-nav-title">SpringBoot-原理初探</div>
+      </a>
+    
+  </nav>
+
+   
+ 
+   
+<div class="gitalk" id="gitalk-container"></div>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.6.2/dist/gitalk.css">
+<script src="https://cdn.jsdelivr.net/npm/gitalk@1.6.2/dist/gitalk.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/blueimp-md5@2.10.0/js/md5.min.js"></script>
+<script type="text/javascript">
+  var gitalk = new Gitalk({
+    clientID: 'db290dc011893521d885',
+    clientSecret: '4cbc64d2114f4963d8090a55b508568b2f26075b',
+    repo: 'blog-comments',
+    owner: 'Sicmatr1x',
+    admin: ['Sicmatr1x'],
+    // id: location.pathname,      // Ensure uniqueness and length less than 50
+    id: md5(location.pathname),
+    distractionFreeMode: false,  // Facebook-like distraction free mode
+    pagerDirection: 'last'
+  })
+
+  gitalk.render('gitalk-container')
+</script>
+  
+</article>
+
+</section>
+      <footer class="footer">
+  <div class="outer">
+    <ul>
+      <li>
+        Copyrights &copy;
+        2015-2020
+        <i class="ri-heart-fill heart_icon"></i> Sicmatr1x
+      </li>
+    </ul>
+    <ul>
+      <li>
+        
+        
+        
+        Powered by <a href="https://hexo.io" target="_blank">Hexo</a>
+        <span class="division">|</span>
+        Theme - <a href="https://github.com/Shen-Yu/hexo-theme-ayer" target="_blank">Ayer</a>
+        
+      </li>
+    </ul>
+    <ul>
+      <li>
+        
+        
+        <span>
+  <span><i class="ri-user-3-fill"></i>Visitors:<span id="busuanzi_value_site_uv"></span></s>
+  <span class="division">|</span>
+  <span><i class="ri-eye-fill"></i>Views:<span id="busuanzi_value_page_pv"></span></span>
+</span>
+        
+      </li>
+    </ul>
+    <ul>
+      
+    </ul>
+    <ul>
+      <li>
+        <!-- cnzz统计 -->
+        
+      </li>
+    </ul>
+  </div>
+</footer>
+      <div class="float_btns">
+        <div class="totop" id="totop">
+  <i class="ri-arrow-up-line"></i>
+</div>
+
+<div class="todark" id="todark">
+  <i class="ri-moon-line"></i>
+</div>
+
+      </div>
+    </main>
+    <aside class="sidebar on">
+      <button class="navbar-toggle"></button>
+<nav class="navbar">
+  
+  <div class="logo">
+    <a href="/"><img src="/images/ayer-side.svg" alt="Sicmatr1x"></a>
+  </div>
+  
+  <ul class="nav nav-main">
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/">主页</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/archives">归档</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/categories">分类</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/tags">标签</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/tags/%E6%97%85%E8%A1%8C/">旅行</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="http://shenyu-vip.lofter.com" target="_blank" rel="noopener">摄影</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/2019/about">关于我</a>
+    </li>
+    
+  </ul>
+</nav>
+<nav class="navbar navbar-bottom">
+  <ul class="nav">
+    <li class="nav-item">
+      
+      <a class="nav-item-link nav-item-search"  title="Search">
+        <i class="ri-search-line"></i>
+      </a>
+      
+      
+      <a class="nav-item-link" target="_blank" href="/atom.xml" title="RSS Feed">
+        <i class="ri-rss-line"></i>
+      </a>
+      
+    </li>
+  </ul>
+</nav>
+<div class="search-form-wrap">
+  <div class="local-search local-search-plugin">
+  <input type="search" id="local-search-input" class="local-search-input" placeholder="Search...">
+  <div id="local-search-result" class="local-search-result"></div>
+</div>
+</div>
+    </aside>
+    <script>
+      if (window.matchMedia("(max-width: 768px)").matches) {
+        document.querySelector('.content').classList.remove('on');
+        document.querySelector('.sidebar').classList.remove('on');
+      }
+    </script>
+    <div id="mask"></div>
+
+<!-- #reward -->
+<div id="reward">
+  <span class="close"><i class="ri-close-line"></i></span>
+  <p class="reward-p"><i class="ri-cup-line"></i>请我喝杯咖啡吧~</p>
+  <div class="reward-box">
+    
+    <div class="reward-item">
+      <img class="reward-img" src="https://cdn.jsdelivr.net/gh/Shen-Yu/cdn/img/alipay.jpg">
+      <span class="reward-type">支付宝</span>
+    </div>
+    
+    
+    <div class="reward-item">
+      <img class="reward-img" src="https://cdn.jsdelivr.net/gh/Shen-Yu/cdn/img/wechat.jpg">
+      <span class="reward-type">微信</span>
+    </div>
+    
+  </div>
+</div>
+    <script src="/js/jquery-2.0.3.min.js"></script>
+<script src="/js/lazyload.min.js"></script>
+<!-- Tocbot -->
+
+<script src="/js/tocbot.min.js"></script>
+<script>
+  tocbot.init({
+    tocSelector: '.tocbot',
+    contentSelector: '.article-entry',
+    headingSelector: 'h1, h2, h3, h4, h5, h6',
+    hasInnerContainers: true,
+    scrollSmooth: true,
+    scrollContainer: 'main',
+    positionFixedSelector: '.tocbot',
+    positionFixedClass: 'is-position-fixed',
+    fixedSidebarOffset: 'auto'
+  });
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/jquery-modal@0.9.2/jquery.modal.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/jquery-modal@0.9.2/jquery.modal.min.css">
+<script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/js/jquery.justifiedGallery.min.js"></script>
+<script src="/dist/main.js"></script>
+<!-- ImageViewer -->
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                <!--  Controls are self-explanatory. Order can be changed. -->
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" style="display:none" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css">
+<script src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"></script>
+
+<script>
+    function viewer_init() {
+        let pswpElement = document.querySelectorAll('.pswp')[0];
+        let $imgArr = document.querySelectorAll(('.article-entry img:not(.reward-img)'))
+
+        $imgArr.forEach(($em, i) => {
+            $em.onclick = () => {
+                // slider展开状态
+                // todo: 这样不好，后面改成状态
+                if (document.querySelector('.left-col.show')) return
+                let items = []
+                $imgArr.forEach(($em2, i2) => {
+                    let img = $em2.getAttribute('data-idx', i2)
+                    let src = $em2.getAttribute('data-target') || $em2.getAttribute('src')
+                    let title = $em2.getAttribute('alt')
+                    // 获得原图尺寸
+                    const image = new Image()
+                    image.src = src
+                    items.push({
+                        src: src,
+                        w: image.width || $em2.width,
+                        h: image.height || $em2.height,
+                        title: title
+                    })
+                })
+                var gallery = new PhotoSwipe(pswpElement, PhotoSwipeUI_Default, items, {
+                    index: parseInt(i)
+                });
+                gallery.init()
+            }
+        })
+    }
+    viewer_init()
+</script>
+
+<!-- MathJax -->
+
+<!-- Katex -->
+
+<!-- busuanzi  -->
+
+<script src="/js/busuanzi-2.3.pure.min.js"></script>
+
+<!-- ClickLove -->
+
+<!-- ClickBoom1 -->
+
+<!-- ClickBoom2 -->
+
+<!-- CodeCopy -->
+
+<link rel="stylesheet" href="/css/clipboard.css">
+<script src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js"></script>
+<script>
+  function wait(callback, seconds) {
+    var timelag = null;
+    timelag = window.setTimeout(callback, seconds);
+  }
+  !function (e, t, a) {
+    var initCopyCode = function(){
+      var copyHtml = '';
+      copyHtml += '<button class="btn-copy" data-clipboard-snippet="">';
+      copyHtml += '<i class="ri-file-copy-2-line"></i><span>COPY</span>';
+      copyHtml += '</button>';
+      $(".highlight .code pre").before(copyHtml);
+      $(".article pre code").before(copyHtml);
+      var clipboard = new ClipboardJS('.btn-copy', {
+        target: function(trigger) {
+          return trigger.nextElementSibling;
+        }
+      });
+      clipboard.on('success', function(e) {
+        let $btn = $(e.trigger);
+        $btn.addClass('copied');
+        let $icon = $($btn.find('i'));
+        $icon.removeClass('ri-file-copy-2-line');
+        $icon.addClass('ri-checkbox-circle-line');
+        let $span = $($btn.find('span'));
+        $span[0].innerText = 'COPIED';
+        
+        wait(function () { // 等待两秒钟后恢复
+          $icon.removeClass('ri-checkbox-circle-line');
+          $icon.addClass('ri-file-copy-2-line');
+          $span[0].innerText = 'COPY';
+        }, 2000);
+      });
+      clipboard.on('error', function(e) {
+        e.clearSelection();
+        let $btn = $(e.trigger);
+        $btn.addClass('copy-failed');
+        let $icon = $($btn.find('i'));
+        $icon.removeClass('ri-file-copy-2-line');
+        $icon.addClass('ri-time-line');
+        let $span = $($btn.find('span'));
+        $span[0].innerText = 'COPY FAILED';
+        
+        wait(function () { // 等待两秒钟后恢复
+          $icon.removeClass('ri-time-line');
+          $icon.addClass('ri-file-copy-2-line');
+          $span[0].innerText = 'COPY';
+        }, 2000);
+      });
+    }
+    initCopyCode();
+  }(window, document);
+</script>
+
+
+<!-- CanvasBackground -->
+
+
+    
+  </div>
+</body>
+
+</html>

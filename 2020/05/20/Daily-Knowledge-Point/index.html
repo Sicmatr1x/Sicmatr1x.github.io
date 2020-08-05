@@ -1,0 +1,980 @@
+<!DOCTYPE html>
+
+
+<html lang="en">
+
+
+<head>
+  <meta charset="utf-8" />
+    
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+  <title>
+    Daily Knowledge Point |  
+  </title>
+  <meta name="generator" content="hexo-theme-ayer">
+  
+  <link rel="shortcut icon" href="/favicon.ico" />
+  
+  <link rel="stylesheet" href="/dist/main.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Shen-Yu/cdn/css/remixicon.min.css">
+  <link rel="stylesheet" href="/css/custom.css">
+  
+  <script src="https://cdn.jsdelivr.net/npm/pace-js@1.0.2/pace.min.js"></script>
+  
+  
+
+  
+
+</head>
+
+</html>
+
+<body>
+  <div id="app">
+    
+      
+    <main class="content on">
+      <section class="outer">
+  <article
+  id="post-Daily-Knowledge-Point"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h1 class="article-title sea-center" style="border-left:0" itemprop="name">
+  Daily Knowledge Point
+</h1>
+ 
+
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2020/05/20/Daily-Knowledge-Point/" class="article-date">
+  <time datetime="2020-05-20T00:45:37.000Z" itemprop="datePublished">2020-05-20</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E6%9D%82%E9%A1%B9/">杂项</a>
+  </div>
+  
+<div class="word_count">
+    <span class="post-time">
+        <span class="post-meta-item-icon">
+            <i class="ri-quill-pen-line"></i>
+            <span class="post-meta-item-text"> Word count:</span>
+            <span class="post-count">4k</span>
+        </span>
+    </span>
+
+    <span class="post-time">
+        &nbsp; | &nbsp;
+        <span class="post-meta-item-icon">
+            <i class="ri-book-open-line"></i>
+            <span class="post-meta-item-text"> Reading time≈</span>
+            <span class="post-count">19 min</span>
+        </span>
+    </span>
+</div>
+ 
+    </div>
+      
+    <div class="tocbot"></div>
+
+
+
+
+  
+    <div class="article-entry" itemprop="articleBody">
+       
+  <h3 id="2020-05-19"><a href="#2020-05-19" class="headerlink" title="2020-05-19"></a>2020-05-19</h3><h4 id="Q-SpringBoot-无法自动织入-mongoTemplate-对象"><a href="#Q-SpringBoot-无法自动织入-mongoTemplate-对象" class="headerlink" title="Q: SpringBoot 无法自动织入 mongoTemplate 对象"></a>Q: SpringBoot 无法自动织入 <code>mongoTemplate</code> 对象</h4><p>A: 原因为引入的MongoDB版本问题。</p>
+<p>尝试以下两种写法均会出现此问题，固排除写法的原因</p>
+<pre><code class="java">@Repository
+public class ArticleDaoImpl implements ArticleDao {
+
+    @Autowired
+    private MongoTemplate mongoTemplate;
+
+    @Override
+    public void saveArticle(Article article)  {
+        mongoTemplate.save(article);
+    }
+}</code></pre>
+<pre><code class="java">@Component
+public class ArticleDaoImpl implements ArticleDao {
+
+    @Resource
+    private MongoTemplate mongoTemplate;
+
+    @Override
+    public void saveArticle(Article article)  {
+        mongoTemplate.save(article);
+    }
+}</code></pre>
+<p>从GitHub上找同类型demo项目<a href="https://github.com/souyunku/SpringBootExamples" target="_blank" rel="noopener">souyunku/SpringBootExamples</a>，使用其springboot版本和MongoDB版本成功排除此问题</p>
+<p>原pom.xml文件：</p>
+<pre><code class="xml">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;project xmlns=&quot;http://maven.apache.org/POM/4.0.0&quot; xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;
+    xsi:schemaLocation=&quot;http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd&quot;&gt;
+    &lt;modelVersion&gt;4.0.0&lt;/modelVersion&gt;
+    &lt;parent&gt;
+        &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
+        &lt;artifactId&gt;spring-boot-starter-parent&lt;/artifactId&gt;
+        &lt;version&gt;2.3.0.RELEASE&lt;/version&gt;
+        &lt;relativePath/&gt; &lt;!-- lookup parent from repository --&gt;
+    &lt;/parent&gt;
+    &lt;groupId&gt;com.sicmatr1x&lt;/groupId&gt;
+    &lt;artifactId&gt;NoteBookServer&lt;/artifactId&gt;
+    &lt;version&gt;0.0.1-SNAPSHOT&lt;/version&gt;
+    &lt;name&gt;NoteBookServer&lt;/name&gt;
+    &lt;description&gt;Demo project for Spring Boot&lt;/description&gt;
+
+    &lt;properties&gt;
+        &lt;java.version&gt;1.8&lt;/java.version&gt;
+    &lt;/properties&gt;
+
+    &lt;dependencies&gt;
+        &lt;dependency&gt;
+            &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
+            &lt;artifactId&gt;spring-boot-starter-data-mongodb-reactive&lt;/artifactId&gt;
+        &lt;/dependency&gt;
+        &lt;dependency&gt;
+            &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
+            &lt;artifactId&gt;spring-boot-starter-web&lt;/artifactId&gt;
+        &lt;/dependency&gt;
+
+        &lt;dependency&gt;
+            &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
+            &lt;artifactId&gt;spring-boot-starter-test&lt;/artifactId&gt;
+            &lt;scope&gt;test&lt;/scope&gt;
+            &lt;exclusions&gt;
+                &lt;exclusion&gt;
+                    &lt;groupId&gt;org.junit.vintage&lt;/groupId&gt;
+                    &lt;artifactId&gt;junit-vintage-engine&lt;/artifactId&gt;
+                &lt;/exclusion&gt;
+            &lt;/exclusions&gt;
+        &lt;/dependency&gt;
+        &lt;dependency&gt;
+            &lt;groupId&gt;io.projectreactor&lt;/groupId&gt;
+            &lt;artifactId&gt;reactor-test&lt;/artifactId&gt;
+            &lt;scope&gt;test&lt;/scope&gt;
+        &lt;/dependency&gt;
+
+        &lt;!-- https://mvnrepository.com/artifact/org.jsoup/jsoup --&gt;
+        &lt;dependency&gt;
+            &lt;groupId&gt;org.jsoup&lt;/groupId&gt;
+            &lt;artifactId&gt;jsoup&lt;/artifactId&gt;
+            &lt;version&gt;1.11.3&lt;/version&gt;
+        &lt;/dependency&gt;
+
+        &lt;!-- https://mvnrepository.com/artifact/org.apache.httpcomponents/httpclient --&gt;
+        &lt;dependency&gt;
+            &lt;groupId&gt;org.apache.httpcomponents&lt;/groupId&gt;
+            &lt;artifactId&gt;httpclient&lt;/artifactId&gt;
+            &lt;version&gt;4.5.2&lt;/version&gt;
+        &lt;/dependency&gt;
+
+        &lt;dependency&gt;
+            &lt;groupId&gt;org.codehaus.jackson&lt;/groupId&gt;
+            &lt;artifactId&gt;jackson-mapper-asl&lt;/artifactId&gt;
+            &lt;version&gt;1.9.13&lt;/version&gt;
+        &lt;/dependency&gt;
+    &lt;/dependencies&gt;
+
+    &lt;build&gt;
+        &lt;plugins&gt;
+            &lt;plugin&gt;
+                &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
+                &lt;artifactId&gt;spring-boot-maven-plugin&lt;/artifactId&gt;
+            &lt;/plugin&gt;
+        &lt;/plugins&gt;
+    &lt;/build&gt;
+
+&lt;/project&gt;
+</code></pre>
+<p>修改后pom.xml文件：</p>
+<pre><code class="xml">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;project xmlns=&quot;http://maven.apache.org/POM/4.0.0&quot; xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;
+    xsi:schemaLocation=&quot;http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd&quot;&gt;
+    &lt;modelVersion&gt;4.0.0&lt;/modelVersion&gt;
+    &lt;parent&gt;
+        &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
+        &lt;artifactId&gt;spring-boot-starter-parent&lt;/artifactId&gt;
+        &lt;version&gt;1.5.10.RELEASE&lt;/version&gt;
+        &lt;relativePath/&gt; &lt;!-- lookup parent from repository --&gt;
+    &lt;/parent&gt;
+    &lt;groupId&gt;com.sicmatr1x&lt;/groupId&gt;
+    &lt;artifactId&gt;NoteBookServer&lt;/artifactId&gt;
+    &lt;version&gt;0.0.1-SNAPSHOT&lt;/version&gt;
+    &lt;name&gt;NoteBookServer&lt;/name&gt;
+    &lt;description&gt;Demo project for Spring Boot&lt;/description&gt;
+
+    &lt;properties&gt;
+        &lt;project.build.sourceEncoding&gt;UTF-8&lt;/project.build.sourceEncoding&gt;
+        &lt;project.reporting.outputEncoding&gt;UTF-8&lt;/project.reporting.outputEncoding&gt;
+        &lt;java.version&gt;1.8&lt;/java.version&gt;
+    &lt;/properties&gt;
+
+    &lt;dependencies&gt;
+        &lt;dependency&gt;
+            &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
+            &lt;artifactId&gt;spring-boot-starter&lt;/artifactId&gt;
+        &lt;/dependency&gt;
+
+        &lt;dependency&gt;
+            &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
+            &lt;artifactId&gt;spring-boot-starter-web&lt;/artifactId&gt;
+        &lt;/dependency&gt;
+
+        &lt;dependency&gt;
+            &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
+            &lt;artifactId&gt;spring-boot-starter-data-mongodb&lt;/artifactId&gt;
+        &lt;/dependency&gt;
+
+        &lt;dependency&gt;
+            &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
+            &lt;artifactId&gt;spring-boot-starter-test&lt;/artifactId&gt;
+            &lt;scope&gt;test&lt;/scope&gt;
+            &lt;exclusions&gt;
+                &lt;exclusion&gt;
+                    &lt;groupId&gt;org.junit.vintage&lt;/groupId&gt;
+                    &lt;artifactId&gt;junit-vintage-engine&lt;/artifactId&gt;
+                &lt;/exclusion&gt;
+            &lt;/exclusions&gt;
+        &lt;/dependency&gt;
+&lt;!--        &lt;dependency&gt;--&gt;
+&lt;!--            &lt;groupId&gt;io.projectreactor&lt;/groupId&gt;--&gt;
+&lt;!--            &lt;artifactId&gt;reactor-test&lt;/artifactId&gt;--&gt;
+&lt;!--            &lt;scope&gt;test&lt;/scope&gt;--&gt;
+&lt;!--        &lt;/dependency&gt;--&gt;
+
+        &lt;!-- https://mvnrepository.com/artifact/org.jsoup/jsoup --&gt;
+        &lt;dependency&gt;
+            &lt;groupId&gt;org.jsoup&lt;/groupId&gt;
+            &lt;artifactId&gt;jsoup&lt;/artifactId&gt;
+            &lt;version&gt;1.11.3&lt;/version&gt;
+        &lt;/dependency&gt;
+
+        &lt;!-- https://mvnrepository.com/artifact/org.apache.httpcomponents/httpclient --&gt;
+        &lt;dependency&gt;
+            &lt;groupId&gt;org.apache.httpcomponents&lt;/groupId&gt;
+            &lt;artifactId&gt;httpclient&lt;/artifactId&gt;
+            &lt;version&gt;4.5.2&lt;/version&gt;
+        &lt;/dependency&gt;
+
+        &lt;dependency&gt;
+            &lt;groupId&gt;org.codehaus.jackson&lt;/groupId&gt;
+            &lt;artifactId&gt;jackson-mapper-asl&lt;/artifactId&gt;
+            &lt;version&gt;1.9.13&lt;/version&gt;
+        &lt;/dependency&gt;
+    &lt;/dependencies&gt;
+
+    &lt;build&gt;
+        &lt;plugins&gt;
+            &lt;plugin&gt;
+                &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
+                &lt;artifactId&gt;spring-boot-maven-plugin&lt;/artifactId&gt;
+            &lt;/plugin&gt;
+        &lt;/plugins&gt;
+    &lt;/build&gt;
+
+&lt;/project&gt;
+</code></pre>
+<h3 id="2020-05-23"><a href="#2020-05-23" class="headerlink" title="2020-05-23"></a>2020-05-23</h3><h4 id="Q-Cannot-resolve-symbol-‘BASE64Encoder’"><a href="#Q-Cannot-resolve-symbol-‘BASE64Encoder’" class="headerlink" title="Q: Cannot resolve symbol ‘BASE64Encoder’"></a>Q: Cannot resolve symbol ‘BASE64Encoder’</h4><pre><code class="java">import sun.misc.BASE64Encoder;
+//...
+
+            // 对字节数组Base64编码
+            BASE64Encoder encoder = new BASE64Encoder();
+            return encoder.encode(dataByte);
+//...</code></pre>
+<pre><code>Error:(74, 13) java: 找不到符号
+  符号:   类 BASE64Encoder
+  位置: 类 com.sicmatr1x.spider.translator.Img2Base64Translator</code></pre><p>A: sun.misc.BASE64Encoder 不建议使用java.sun自带包中的内容</p>
+<p>在项目中，设计到64位编码的。有时开发会用到JDK中自带的BASE64工具。但sun公司是建议不这样做的。尤其是更新了JDK版本，项目甚至还存在保存的信息。<br>可引用 import org.apache.commons.codec.binary.Base64;进行替换</p>
+<pre><code class="java">import org.apache.commons.codec.binary.Base64;
+//...
+            // 对字节数组Base64编码
+            Base64 encoder = new Base64();
+            return encoder.encodeToString(dataByte);
+//...</code></pre>
+<h4 id="Q-SpringBoot抛出WARNING-An-illegal-reflective-access-operation-has-occurred"><a href="#Q-SpringBoot抛出WARNING-An-illegal-reflective-access-operation-has-occurred" class="headerlink" title="Q: SpringBoot抛出WARNING: An illegal reflective access operation has occurred"></a>Q: SpringBoot抛出<code>WARNING: An illegal reflective access operation has occurred</code></h4><pre><code>WARNING: An illegal reflective access operation has occurred
+WARNING: Illegal reflective access by org.springframework.cglib.core.ReflectUtils$1 (file:/C:/Users/Sicmatr1x/.m2/repository/org/springframework/spring-core/4.3.14.RELEASE/spring-core-4.3.14.RELEASE.jar) to method java.lang.ClassLoader.defineClass(java.lang.String,byte[],int,int,java.security.ProtectionDomain)
+WARNING: Please consider reporting this to the maintainers of org.springframework.cglib.core.ReflectUtils$1
+WARNING: Use --illegal-access=warn to enable warnings of further illegal reflective access operations
+WARNING: All illegal access operations will be denied in a future release</code></pre><p>A: 该警告是因为jdk版本太高（我用的是10.0，据说9.0的也会这样），具体的原理还没有研究</p>
+<p>解决方案是把项目jdk降低到1.8及以下，建议1.8</p>
+<h3 id="2020-05-25"><a href="#2020-05-25" class="headerlink" title="2020-05-25"></a>2020-05-25</h3><h4 id="Q-SpringBoot抛出Overriding-bean-definition-for-bean-39-person-39-with-a-different-definition"><a href="#Q-SpringBoot抛出Overriding-bean-definition-for-bean-39-person-39-with-a-different-definition" class="headerlink" title="Q: SpringBoot抛出Overriding bean definition for bean &#39;person&#39; with a different definition"></a>Q: SpringBoot抛出<code>Overriding bean definition for bean &#39;person&#39; with a different definition</code></h4><pre><code>May 25, 2020 5:20:16 PM org.springframework.beans.factory.support.DefaultListableBeanFactory registerBeanDefinition
+INFO: Overriding bean definition for bean &#39;person&#39; with a different definition: replacing [Root bean: class [null]; scope=; abstract=false; lazyInit=true; autowireMode=3; dependencyCheck=0; autowireCandidate=true; primary=false; factoryBeanName=mainConfig2; factoryMethodName=person; initMethodName=null; destroyMethodName=(inferred); defined in class path resource [com/sicmatr1x/config/MainConfig2.class]] with [Root bean: class [null]; scope=; abstract=false; lazyInit=false; autowireMode=3; dependencyCheck=0; autowireCandidate=true; primary=false; factoryBeanName=mainConfig; factoryMethodName=person; initMethodName=null; destroyMethodName=(inferred); defined in com.sicmatr1x.config.MainConfig]</code></pre><p>意思是有一个叫<code>person</code>的bean被重复注入到IOT容器了</p>
+<p>A: 导致的原因是：</p>
+<p>启动的时候用的是<code>MainConfig.class</code>这个配置类</p>
+<pre><code class="java">AnnotationConfigApplicationContext annotationConfigApplicationContext = new AnnotationConfigApplicationContext(MainConfig.class);</code></pre>
+<p>我在该类中注册了<code>person</code>，然后启用了包扫描</p>
+<pre><code class="java">@Configuration
+@ComponentScan(value = &quot;com.sicmatr1x&quot;, excludeFilters = {
+        @Filter(type = FilterType.CUSTOM, classes = {MyTypeFilter.class})
+})
+public class MainConfig {
+    @Bean(&quot;person&quot;)
+    public Person person(){
+        return new Person(&quot;Abby&quot;, 20);
+    }
+}</code></pre>
+<p>然后扫描到了另外一个配置类，我在另外的这个配置类里面又注册了<code>person</code></p>
+<pre><code class="java">package com.sicmatr1x.config;
+
+
+import com.sicmatr1x.bean.Person;
+import org.springframework.context.annotation.*;
+
+@Configuration
+public class MainConfig2 {
+//    @Scope(&quot;prototype&quot;)
+    @Lazy
+    @Bean(&quot;person&quot;)
+    public Person person(){
+        return new Person(&quot;Bob&quot;, 30);
+    }
+}</code></pre>
+<h3 id="2020-05-26"><a href="#2020-05-26" class="headerlink" title="2020-05-26"></a>2020-05-26</h3><h4 id="Q-Override-is-not-allowed-when-implementing-interface-method"><a href="#Q-Override-is-not-allowed-when-implementing-interface-method" class="headerlink" title="Q: @Override is not allowed when implementing interface method"></a>Q: <code>@Override is not allowed when implementing interface method</code></h4><img src="./Override is not allowed when implementing interface method IntelliJ IDEA.png">
+
+<p>A:</p>
+<p>@Override从jdk1.5开始出现的，是用来标注方法重写的。通常方法重写发生在继承父类，重写父类方法，或者实现接口，实现接口方法。@Override能够保证你正确重写方法，当你重写方法出错时，比如方法名误写，或者漏掉参数，编译器会提示编译错误。<br>  出现以上问题，则跟编译器版本问题有关。编译器1.5只支持@Override注释重写父类方法，不支持实现接口方法。而我的IDE默认使用jdk1.5的编译器。我这个用的是jdk1.7的，我们将language level设置高于jdk1.5版本即可</p>
+<p>File —&gt; Project Structure —&gt; [ 项目名称 ] —&gt; Language level 修改成 7 - Diamonds,ARM,multi-catch etc.</p>
+<p>或者直接根据idea的提升修改配置即可</p>
+<h3 id="2020-05-27"><a href="#2020-05-27" class="headerlink" title="2020-05-27"></a>2020-05-27</h3><h4 id="Q-git修改已经提交的用户名"><a href="#Q-git修改已经提交的用户名" class="headerlink" title="Q: git修改已经提交的用户名"></a>Q: git修改已经提交的用户名</h4><p>A: 如果是已经push到remote仓库的则不能做到完全消除提交记录，只能追加修改提交用户名的commit，之前有几个commit需要修改的就追加几个。<br>如果只是本地commit可以undo commit再重新commit</p>
+<ol>
+<li>（n）代表提交次数<code>git rebase -i HEAD~n</code></li>
+<li>然后按<code>i</code>编辑，把<code>pick</code> 改成 <code>edit</code>，按’Esc’退出编辑，按<code>:wq</code>保存退出</li>
+<li><code>git commit --amend --author=&quot;作者 &lt;邮箱@xxxx.com&gt;&quot; --no-edit</code></li>
+<li><code>git rebase --continue</code></li>
+<li><code>git push --force</code></li>
+</ol>
+<p>这种情况只能预防，建议在配置了全局用户名的情况下再为每个project单独配置用户名</p>
+<p>git全局配置路径：</p>
+<ul>
+<li>Windows: <code>C:\Users\GUOJO\.gitconfig</code></li>
+<li>Mac: ``</li>
+</ul>
+<p>git项目配置路径：<code>.git\config</code></p>
+<p>配置格式如下：</p>
+<pre><code>[user]
+    name = Sicmatr1x
+    email = sicmatr1x@outlook.com</code></pre><p>有一种方法可以强制重写错误的commit，使用过滤器(git filter-branch)</p>
+<p>警告： 这个操作会破坏你的仓库历史， 如果你和别人在协同开发这个仓库，重写已发布的历史记录是一个不好的操作。建议只在紧急情况操作</p>
+<pre><code class="bash">git filter-branch -f --commit-filter &#39;
+        if [ &quot;$GIT_COMMITTER_NAME&quot; = &quot;Sic&quot; ];
+        then
+                GIT_COMMITTER_NAME=&quot;Joe Guo&quot;;
+                GIT_AUTHOR_NAME=&quot;$GIT_COMMITTER_NAME&quot;;
+                git commit-tree &quot;$@&quot;;
+        else
+                git commit-tree &quot;$@&quot;;
+        fi&#39; HEAD</code></pre>
+<p>修改完之后还需要force push</p>
+<pre><code class="bash">git push --force --tags origin &#39;refs/heads/*&#39;</code></pre>
+<p>参考：</p>
+<ul>
+<li><a href="https://segmentfault.com/a/1190000008828569" target="_blank" rel="noopener">Git 修改 commit 的作者信息</a></li>
+<li><a href="https://help.github.com/en/github/using-git/changing-author-info" target="_blank" rel="noopener">Changing author info</a></li>
+<li><a href="https://segmentfault.com/q/1010000022758855" target="_blank" rel="noopener">git如何修改已经提交的用户名?</a></li>
+</ul>
+<h4 id="IDEA查找接口实现类"><a href="#IDEA查找接口实现类" class="headerlink" title="IDEA查找接口实现类"></a>IDEA查找接口实现类</h4><p>双击选中接口名 + ctrl + alt + B</p>
+<h3 id="2020-05-29"><a href="#2020-05-29" class="headerlink" title="2020-05-29"></a>2020-05-29</h3><h4 id="Oracle什么时候需要Commit"><a href="#Oracle什么时候需要Commit" class="headerlink" title="Oracle什么时候需要Commit"></a>Oracle什么时候需要Commit</h4><p>SQL语言分为五大类：</p>
+<ol>
+<li>DDL(数据定义语言) - Create、Alter、Drop 这些语句自动提交，无需用Commit提交。</li>
+<li>DQL（数据查询语言）- Select查询语句不存在提交问题。</li>
+<li>DML(数据操纵语言) - Insert、Update、Delete 这些语句需要Commit才能提交。</li>
+<li>DTL(事务控制语言) - Commit、Rollback 事务提交与回滚语句。</li>
+<li>DCL(数据控制语言) - Grant、Revoke 授予权限与回收权限语句。</li>
+</ol>
+<p>执行完DML语句，若没有commit再执行DDL语句，也会自动commit未被commit的数据。</p>
+<p>DDL语句在执行前后会自动执行commit，所以你不能使用rollback去回滚它。但是在该语句执行过程中，如果由于某种原因而失败，系统会自动将其回滚，这就是语句级回滚的意思，它属于oracle的隐式回滚，我们不能进行控制。教材上说的DDL语句不能进行回滚，只是不能输入ROLLBACK去回滚DDL语句的结果而已。</p>
+<h3 id="2020-06-02"><a href="#2020-06-02" class="headerlink" title="2020-06-02"></a>2020-06-02</h3><h4 id="Q-Springboot读取配置文件并初始化到bean失败，无法识别-person-nickname-作为运行时环境"><a href="#Q-Springboot读取配置文件并初始化到bean失败，无法识别-person-nickname-作为运行时环境" class="headerlink" title="Q: Springboot读取配置文件并初始化到bean失败，无法识别${person.nickname}作为运行时环境"></a>Q: Springboot读取配置文件并初始化到bean失败，无法识别<code>${person.nickname}</code>作为运行时环境</h4><pre><code class="java">    @Value(&quot;${person.nickname}&quot;)
+    private String nickname;</code></pre>
+<p>A: 查了一下发现是@PropertySource注解配错位置了，本来应该配在Configuration类上的结果配到bean上面去了</p>
+<pre><code class="java">@PropertySource(value = {&quot;classpath:/person.properties&quot;}, encoding = &quot;UTF-8&quot;)
+@Configuration
+public class MainConfigOfPropertyValues {
+    @Bean
+    public Person person(){
+        return new Person();
+    }
+}</code></pre>
+<h3 id="2020-06-03"><a href="#2020-06-03" class="headerlink" title="2020-06-03"></a>2020-06-03</h3><h4 id="Q-如何在git上删除误提交的大文件"><a href="#Q-如何在git上删除误提交的大文件" class="headerlink" title="Q: 如何在git上删除误提交的大文件"></a>Q: 如何在git上删除误提交的大文件</h4><p>A: </p>
+<p>首先使用下面查询git中前5名最大的文件:</p>
+<pre><code>git verify-pack -v .git/objects/pack/pack-*.idx | sort -k 3 -g | tail -5</code></pre><p>记下上面的文件id使用下面命令查看对应文件的路径</p>
+<pre><code>git rev-list --objects --all | grep ed9253b5bbaaa6b0eb04db1dd9840121657b68f3</code></pre><p>从当前激活的分支最近30次提交中删除指定文件</p>
+<pre><code>git filter-branch --force --prune-empty  --tree-filter &#39;git rm -f --cached --ignore-unmatch 文件路径&#39; HEAD~30..HEAD</code></pre><p>如果出现不能创建新的备份的话，就加上强制覆盖覆盖参数 –force</p>
+<p>如果操作完成后没出现没有改变的情况,如下</p>
+<p>WARNING: Ref ‘refs/heads/master’ is unchanged</p>
+<p>可以尝试把上面命令中的–tree-filter换成 –index-filter再次运行命令</p>
+<p>操作完成后,查看日志就会发现已经没有提交这个文件的日志记录啦,但是还有一个问题 .git 这个文件夹还是原来的大小，想减小它的大小就要对这个仓库进行分析重新打包,也就是清理垃圾</p>
+<pre><code>git rm -rf --ignore-unmatch .git/refs/original/
+git reflog expire --expire=now --all
+git fsck --full --unreachable
+git repack -A -d
+git gc --aggressive --prune=now</code></pre><p>最后强制推送到远端</p>
+<pre><code>git push origin master --force</code></pre><p>参考: </p>
+<ul>
+<li><a href="https://www.zhaokeli.com/article/8332.html" target="_blank" rel="noopener">git filter-branch 命令修改删除提示记录,删除误提交的大文件.减小.git的大小</a></li>
+</ul>
+<h3 id="2020-06-17"><a href="#2020-06-17" class="headerlink" title="2020-06-17"></a>2020-06-17</h3><h4 id="Q-Postman访问自签名证书服务器"><a href="#Q-Postman访问自签名证书服务器" class="headerlink" title="Q: Postman访问自签名证书服务器"></a>Q: Postman访问自签名证书服务器</h4><p>访问不可信任的证书签发机构签发的证书的服务器时，Chrome浏览器会提示：您与网站之间建立的连接不安全</p>
+<p>你可以在高级选项里面选择继续访问该网站</p>
+<p>但是使用Postman call就会提示：Error: Protocol “https:” not supported. Expected “http:”</p>
+<p>A: Postman Settings -&gt; REQUEST -&gt; SSL certificate verification 关闭该选项</p>
+<h3 id="2020-06-26"><a href="#2020-06-26" class="headerlink" title="2020-06-26"></a>2020-06-26</h3><h4 id="Q-org-bson-BsonSerializationException-Document-size-of-44088405-is-larger-than-maximum-of-16777216"><a href="#Q-org-bson-BsonSerializationException-Document-size-of-44088405-is-larger-than-maximum-of-16777216" class="headerlink" title="Q: org.bson.BsonSerializationException: Document size of 44088405 is larger than maximum of 16777216."></a>Q: org.bson.BsonSerializationException: Document size of 44088405 is larger than maximum of 16777216.</h4><p>mongodb中的大小限制, 即单个文档大小不能超过16M. 基于性能的考虑，这个限制无法取消。</p>
+<p><a href="https://stackoverflow.com/questions/4667597/understanding-mongodb-bson-document-size-limit" target="_blank" rel="noopener">Understanding MongoDB BSON Document size limit</a></p>
+<h3 id="2020-07-10"><a href="#2020-07-10" class="headerlink" title="2020-07-10"></a>2020-07-10</h3><h4 id="Q-npm-install-时-node-sass安装出现问题"><a href="#Q-npm-install-时-node-sass安装出现问题" class="headerlink" title="Q: npm install 时 node-sass安装出现问题"></a>Q: npm install 时 node-sass安装出现问题</h4><pre><code>“D:\Repositories\bilibili\renren-fast-vue\node_modules\node-sass\build\binding.sln”(默认目标) (1) -&gt;
+“D:\Repositories\bilibili\renren-fast-vue\node_modules\node-sass\build\binding.vcxproj.metaproj”(默认目标) (2) -&gt;
+“D:\Repositories\bilibili\renren-fast-vue\node_modules\node-sass\build\binding.vcxproj”(默认目标) (4) -&gt;
+(ClCompile 目标) -&gt; 
+  d:\repositories\bilibili\renren-fast-vue\node_modules\node-sass\src\create_string.cpp(17): error C2664: “v8::String::Utf8Value::Utf8Value(const v8::String::Utf8Value &amp;)”: 无法将参数 1 从“v8::Local&lt;v8::Value&gt;”转换为“const v8::Strin
+g::Utf8Value 
+&amp;” [D:\Repositories\bilibili\renren-fast-vue\node_modules\node-sass\build\binding.vcxproj]
+gyp ERR! cwd D:\Repositories\bilibili\renren-fast-vue\node_modules\node-sass
+gyp ERR! node -v v12.15.0
+gyp ERR! node-gyp -v v3.8.0
+gyp ERR! not ok</code></pre><p>A: 老版本的SASS调用到的<code>v8::String::Utf8Value string(value);</code>函数在node12版本的V8引擎里面出现了修改</p>
+<p>解决方案：</p>
+<ol>
+<li>降级node版本</li>
+<li>或者升级SASS版本</li>
+</ol>
+<ul>
+<li><a href="https://github.com/sass/node-sass/issues/2632" target="_blank" rel="noopener">support for node.js 12.x #2632</a></li>
+</ul>
+<h3 id="2020-07-13"><a href="#2020-07-13" class="headerlink" title="2020-07-13"></a>2020-07-13</h3><h4 id="maven-install-source-1-5-中不支持-diamond-运算符"><a href="#maven-install-source-1-5-中不支持-diamond-运算符" class="headerlink" title="maven install -source 1.5 中不支持 diamond 运算符"></a>maven install -source 1.5 中不支持 diamond 运算符</h4><p>A: idea File-&gt;Project Struct-&gt;Modules-&gt;Sources-&gt;Language level这里改成&gt;=8的级别，如果多次反复maven install之后这个选项还是会弹回6及以下的级别的话就直接pom文件里面强制设置成package时为1.8的</p>
+<pre><code class="xml">    &lt;build&gt;
+        &lt;plugins&gt;
+            &lt;plugin&gt;
+                &lt;groupId&gt;org.apache.maven.plugins&lt;/groupId&gt;
+                &lt;artifactId&gt;maven-compiler-plugin&lt;/artifactId&gt;
+                &lt;configuration&gt;
+                    &lt;source&gt;1.8&lt;/source&gt;
+                    &lt;target&gt;1.8&lt;/target&gt;
+                &lt;/configuration&gt;
+            &lt;/plugin&gt;
+        &lt;/plugins&gt;
+    &lt;/build&gt;</code></pre>
+<h4 id="Error-8-14-java-程序包lombok不存在"><a href="#Error-8-14-java-程序包lombok不存在" class="headerlink" title="Error:(8,14) java: 程序包lombok不存在"></a>Error:(8,14) java: 程序包lombok不存在</h4><p>背景：common的module里面导入了lombok包，然后product的module里依赖了common的module，根据maven的依赖传递性，product应该引入了lombok包这个依赖</p>
+<p>common module的pom.xml</p>
+<pre><code class="xml">        &lt;!-- https://mvnrepository.com/artifact/org.projectlombok/lombok --&gt;
+        &lt;dependency&gt;
+            &lt;groupId&gt;org.projectlombok&lt;/groupId&gt;
+            &lt;artifactId&gt;lombok&lt;/artifactId&gt;
+            &lt;version&gt;1.18.8&lt;/version&gt;
+            &lt;scope&gt;provided&lt;/scope&gt;
+        &lt;/dependency&gt;</code></pre>
+<p>product module的pom.xml</p>
+<pre><code class="xml">        &lt;dependency&gt;
+            &lt;groupId&gt;com.sicmatr1x.gulimall&lt;/groupId&gt;
+            &lt;artifactId&gt;gulimall-common&lt;/artifactId&gt;
+            &lt;version&gt;0.0.1-SNAPSHOT&lt;/version&gt;
+        &lt;/dependency&gt;</code></pre>
+<p>A: 在涉及到maven的依赖传递性时，若存在间接依赖的情况时，主工程对间接依赖的jar可以访问吗？这需要看间接依赖的jar包引入时的依赖范围——只有依赖范围为compile时可以访问(若不写scope则默认值为compile)</p>
+<p>所以这里修改pom.xml文件删去<code>&lt;scope&gt;provided&lt;/scope&gt;</code>或者改为<code>&lt;scope&gt;compile&lt;/scope&gt;</code>即可</p>
+<pre><code class="xml">        &lt;!-- https://mvnrepository.com/artifact/org.projectlombok/lombok --&gt;
+        &lt;dependency&gt;
+            &lt;groupId&gt;org.projectlombok&lt;/groupId&gt;
+            &lt;artifactId&gt;lombok&lt;/artifactId&gt;
+            &lt;version&gt;1.18.8&lt;/version&gt;
+        &lt;/dependency&gt;</code></pre>
+<p>操作完之后记得重新对common module做maven install，重新生成jar文件</p>
+<h4 id="Caused-by-java-lang-RuntimeException-Driver-com-mysql-jdbc-Driver-claims-to-not-accept-jdbcUrl-jdbc-mysql-192-168-33-10-3306-gulimall-pms"><a href="#Caused-by-java-lang-RuntimeException-Driver-com-mysql-jdbc-Driver-claims-to-not-accept-jdbcUrl-jdbc-mysql-192-168-33-10-3306-gulimall-pms" class="headerlink" title="Caused by: java.lang.RuntimeException: Driver com.mysql.jdbc.Driver claims to not accept jdbcUrl, jdbc:mysql://192.168.33.10:3306/gulimall_pms"></a>Caused by: java.lang.RuntimeException: Driver com.mysql.jdbc.Driver claims to not accept jdbcUrl, jdbc:mysql://192.168.33.10:3306/gulimall_pms</h4><p>A:  JDBC驱动程序的5.2版本与UTC时区配合使用，必须在连接字符串中明确指定serverTimezone。</p>
+<pre><code class="yml">spring:
+  datasource:
+    username: root
+    password: root
+    url: jdbc:mysql://192.168.33.10:3306/gulimall_pms
+    driver-class-name: com.mysql.jdbc.Driver</code></pre>
+<p>改成</p>
+<pre><code class="yml">spring:
+  datasource:
+    username: root
+    password: root
+    url: jdbc:mysql://192.168.33.10:3306/gulimall_pms?useUnicode=true&amp;characterEncoding=UTF-8&amp;serverTimezone=Asia/Shanghai
+    driver-class-name: com.mysql.jdbc.Driver</code></pre>
+ 
+      <!-- reward -->
+      
+      <div id="reword-out">
+        <div id="reward-btn">
+          Donate
+        </div>
+      </div>
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <div class="declare">
+      <ul class="post-copyright">
+        <li>
+          <i class="ri-copyright-line"></i>
+          <strong>Copyright： </strong>
+          Copyright is owned by the author. For commercial reprints, please contact the author for authorization. For non-commercial reprints, please indicate the source.
+        </li>
+      </ul>
+    </div>
+    
+    <footer class="article-footer">
+       
+<div class="share-btn">
+      <span class="share-sns share-outer">
+        <i class="ri-share-forward-line"></i>
+        分享
+      </span>
+      <div class="share-wrap">
+        <i class="arrow"></i>
+        <div class="share-icons">
+          
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="ri-weibo-fill"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="ri-wechat-fill"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="ri-qq-fill"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="ri-douban-line"></i>
+          </a>
+          <!-- <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a> -->
+          
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="ri-facebook-circle-fill"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="ri-twitter-fill"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="ri-google-fill"></i>
+          </a>
+        </div>
+      </div>
+</div>
+
+<div class="wx-share-modal">
+    <a class="modal-close" href="javascript:;"><i class="ri-close-circle-line"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data=http://yoursite.com/2020/05/20/Daily-Knowledge-Point/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div id="share-mask"></div>  
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E6%8A%80%E6%9C%AF/" rel="tag">技术</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+  <nav class="article-nav">
+    
+      <a href="/2020/06/08/%E6%88%91%E6%98%AF%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8frp%E5%86%85%E7%BD%91%E7%A9%BF%E9%80%8F%E6%9D%A5%E8%AE%BF%E9%97%AE%E5%B1%80%E5%9F%9F%E7%BD%91web%E6%9C%8D%E5%8A%A1%E7%9A%84/" class="article-nav-link">
+        <strong class="article-nav-caption">上一篇</strong>
+        <div class="article-nav-title">
+          
+            我是如何使用frp内网穿透来访问局域网web服务的
+          
+        </div>
+      </a>
+    
+    
+      <a href="/2020/05/13/Java%E5%A4%8D%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%9A%E6%B3%A8%E8%A7%A3/" class="article-nav-link">
+        <strong class="article-nav-caption">下一篇</strong>
+        <div class="article-nav-title">Java复习笔记：注解</div>
+      </a>
+    
+  </nav>
+
+   
+ 
+   
+<div class="gitalk" id="gitalk-container"></div>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.6.2/dist/gitalk.css">
+<script src="https://cdn.jsdelivr.net/npm/gitalk@1.6.2/dist/gitalk.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/blueimp-md5@2.10.0/js/md5.min.js"></script>
+<script type="text/javascript">
+  var gitalk = new Gitalk({
+    clientID: 'db290dc011893521d885',
+    clientSecret: '4cbc64d2114f4963d8090a55b508568b2f26075b',
+    repo: 'blog-comments',
+    owner: 'Sicmatr1x',
+    admin: ['Sicmatr1x'],
+    // id: location.pathname,      // Ensure uniqueness and length less than 50
+    id: md5(location.pathname),
+    distractionFreeMode: false,  // Facebook-like distraction free mode
+    pagerDirection: 'last'
+  })
+
+  gitalk.render('gitalk-container')
+</script>
+  
+</article>
+
+</section>
+      <footer class="footer">
+  <div class="outer">
+    <ul>
+      <li>
+        Copyrights &copy;
+        2015-2020
+        <i class="ri-heart-fill heart_icon"></i> Sicmatr1x
+      </li>
+    </ul>
+    <ul>
+      <li>
+        
+        
+        
+        Powered by <a href="https://hexo.io" target="_blank">Hexo</a>
+        <span class="division">|</span>
+        Theme - <a href="https://github.com/Shen-Yu/hexo-theme-ayer" target="_blank">Ayer</a>
+        
+      </li>
+    </ul>
+    <ul>
+      <li>
+        
+        
+        <span>
+  <span><i class="ri-user-3-fill"></i>Visitors:<span id="busuanzi_value_site_uv"></span></s>
+  <span class="division">|</span>
+  <span><i class="ri-eye-fill"></i>Views:<span id="busuanzi_value_page_pv"></span></span>
+</span>
+        
+      </li>
+    </ul>
+    <ul>
+      
+    </ul>
+    <ul>
+      <li>
+        <!-- cnzz统计 -->
+        
+      </li>
+    </ul>
+  </div>
+</footer>
+      <div class="float_btns">
+        <div class="totop" id="totop">
+  <i class="ri-arrow-up-line"></i>
+</div>
+
+<div class="todark" id="todark">
+  <i class="ri-moon-line"></i>
+</div>
+
+      </div>
+    </main>
+    <aside class="sidebar on">
+      <button class="navbar-toggle"></button>
+<nav class="navbar">
+  
+  <div class="logo">
+    <a href="/"><img src="/images/ayer-side.svg" alt="Sicmatr1x"></a>
+  </div>
+  
+  <ul class="nav nav-main">
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/">主页</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/archives">归档</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/categories">分类</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/tags">标签</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/tags/%E6%97%85%E8%A1%8C/">旅行</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="http://shenyu-vip.lofter.com" target="_blank" rel="noopener">摄影</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/2019/about">关于我</a>
+    </li>
+    
+  </ul>
+</nav>
+<nav class="navbar navbar-bottom">
+  <ul class="nav">
+    <li class="nav-item">
+      
+      <a class="nav-item-link nav-item-search"  title="Search">
+        <i class="ri-search-line"></i>
+      </a>
+      
+      
+      <a class="nav-item-link" target="_blank" href="/atom.xml" title="RSS Feed">
+        <i class="ri-rss-line"></i>
+      </a>
+      
+    </li>
+  </ul>
+</nav>
+<div class="search-form-wrap">
+  <div class="local-search local-search-plugin">
+  <input type="search" id="local-search-input" class="local-search-input" placeholder="Search...">
+  <div id="local-search-result" class="local-search-result"></div>
+</div>
+</div>
+    </aside>
+    <script>
+      if (window.matchMedia("(max-width: 768px)").matches) {
+        document.querySelector('.content').classList.remove('on');
+        document.querySelector('.sidebar').classList.remove('on');
+      }
+    </script>
+    <div id="mask"></div>
+
+<!-- #reward -->
+<div id="reward">
+  <span class="close"><i class="ri-close-line"></i></span>
+  <p class="reward-p"><i class="ri-cup-line"></i>请我喝杯咖啡吧~</p>
+  <div class="reward-box">
+    
+    <div class="reward-item">
+      <img class="reward-img" src="https://cdn.jsdelivr.net/gh/Shen-Yu/cdn/img/alipay.jpg">
+      <span class="reward-type">支付宝</span>
+    </div>
+    
+    
+    <div class="reward-item">
+      <img class="reward-img" src="https://cdn.jsdelivr.net/gh/Shen-Yu/cdn/img/wechat.jpg">
+      <span class="reward-type">微信</span>
+    </div>
+    
+  </div>
+</div>
+    <script src="/js/jquery-2.0.3.min.js"></script>
+<script src="/js/lazyload.min.js"></script>
+<!-- Tocbot -->
+
+<script src="/js/tocbot.min.js"></script>
+<script>
+  tocbot.init({
+    tocSelector: '.tocbot',
+    contentSelector: '.article-entry',
+    headingSelector: 'h1, h2, h3, h4, h5, h6',
+    hasInnerContainers: true,
+    scrollSmooth: true,
+    scrollContainer: 'main',
+    positionFixedSelector: '.tocbot',
+    positionFixedClass: 'is-position-fixed',
+    fixedSidebarOffset: 'auto'
+  });
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/jquery-modal@0.9.2/jquery.modal.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/jquery-modal@0.9.2/jquery.modal.min.css">
+<script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/js/jquery.justifiedGallery.min.js"></script>
+<script src="/dist/main.js"></script>
+<!-- ImageViewer -->
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                <!--  Controls are self-explanatory. Order can be changed. -->
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" style="display:none" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css">
+<script src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"></script>
+
+<script>
+    function viewer_init() {
+        let pswpElement = document.querySelectorAll('.pswp')[0];
+        let $imgArr = document.querySelectorAll(('.article-entry img:not(.reward-img)'))
+
+        $imgArr.forEach(($em, i) => {
+            $em.onclick = () => {
+                // slider展开状态
+                // todo: 这样不好，后面改成状态
+                if (document.querySelector('.left-col.show')) return
+                let items = []
+                $imgArr.forEach(($em2, i2) => {
+                    let img = $em2.getAttribute('data-idx', i2)
+                    let src = $em2.getAttribute('data-target') || $em2.getAttribute('src')
+                    let title = $em2.getAttribute('alt')
+                    // 获得原图尺寸
+                    const image = new Image()
+                    image.src = src
+                    items.push({
+                        src: src,
+                        w: image.width || $em2.width,
+                        h: image.height || $em2.height,
+                        title: title
+                    })
+                })
+                var gallery = new PhotoSwipe(pswpElement, PhotoSwipeUI_Default, items, {
+                    index: parseInt(i)
+                });
+                gallery.init()
+            }
+        })
+    }
+    viewer_init()
+</script>
+
+<!-- MathJax -->
+
+<!-- Katex -->
+
+<!-- busuanzi  -->
+
+<script src="/js/busuanzi-2.3.pure.min.js"></script>
+
+<!-- ClickLove -->
+
+<!-- ClickBoom1 -->
+
+<!-- ClickBoom2 -->
+
+<!-- CodeCopy -->
+
+<link rel="stylesheet" href="/css/clipboard.css">
+<script src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js"></script>
+<script>
+  function wait(callback, seconds) {
+    var timelag = null;
+    timelag = window.setTimeout(callback, seconds);
+  }
+  !function (e, t, a) {
+    var initCopyCode = function(){
+      var copyHtml = '';
+      copyHtml += '<button class="btn-copy" data-clipboard-snippet="">';
+      copyHtml += '<i class="ri-file-copy-2-line"></i><span>COPY</span>';
+      copyHtml += '</button>';
+      $(".highlight .code pre").before(copyHtml);
+      $(".article pre code").before(copyHtml);
+      var clipboard = new ClipboardJS('.btn-copy', {
+        target: function(trigger) {
+          return trigger.nextElementSibling;
+        }
+      });
+      clipboard.on('success', function(e) {
+        let $btn = $(e.trigger);
+        $btn.addClass('copied');
+        let $icon = $($btn.find('i'));
+        $icon.removeClass('ri-file-copy-2-line');
+        $icon.addClass('ri-checkbox-circle-line');
+        let $span = $($btn.find('span'));
+        $span[0].innerText = 'COPIED';
+        
+        wait(function () { // 等待两秒钟后恢复
+          $icon.removeClass('ri-checkbox-circle-line');
+          $icon.addClass('ri-file-copy-2-line');
+          $span[0].innerText = 'COPY';
+        }, 2000);
+      });
+      clipboard.on('error', function(e) {
+        e.clearSelection();
+        let $btn = $(e.trigger);
+        $btn.addClass('copy-failed');
+        let $icon = $($btn.find('i'));
+        $icon.removeClass('ri-file-copy-2-line');
+        $icon.addClass('ri-time-line');
+        let $span = $($btn.find('span'));
+        $span[0].innerText = 'COPY FAILED';
+        
+        wait(function () { // 等待两秒钟后恢复
+          $icon.removeClass('ri-time-line');
+          $icon.addClass('ri-file-copy-2-line');
+          $span[0].innerText = 'COPY';
+        }, 2000);
+      });
+    }
+    initCopyCode();
+  }(window, document);
+</script>
+
+
+<!-- CanvasBackground -->
+
+
+    
+  </div>
+</body>
+
+</html>

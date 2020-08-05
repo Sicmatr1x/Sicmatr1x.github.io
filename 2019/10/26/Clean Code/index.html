@@ -1,0 +1,1282 @@
+<!DOCTYPE html>
+
+
+<html lang="en">
+
+
+<head>
+  <meta charset="utf-8" />
+    
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+  <title>
+    Clean Code |  
+  </title>
+  <meta name="generator" content="hexo-theme-ayer">
+  
+  <link rel="shortcut icon" href="/favicon.ico" />
+  
+  <link rel="stylesheet" href="/dist/main.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Shen-Yu/cdn/css/remixicon.min.css">
+  <link rel="stylesheet" href="/css/custom.css">
+  
+  <script src="https://cdn.jsdelivr.net/npm/pace-js@1.0.2/pace.min.js"></script>
+  
+  
+
+  
+
+</head>
+
+</html>
+
+<body>
+  <div id="app">
+    
+      
+    <main class="content on">
+      <section class="outer">
+  <article
+  id="post-Clean Code"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h1 class="article-title sea-center" style="border-left:0" itemprop="name">
+  Clean Code
+</h1>
+ 
+
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2019/10/26/Clean%20Code/" class="article-date">
+  <time datetime="2019-10-26T03:49:04.000Z" itemprop="datePublished">2019-10-26</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E5%90%8E%E7%AB%AF/">后端</a>
+  </div>
+  
+<div class="word_count">
+    <span class="post-time">
+        <span class="post-meta-item-icon">
+            <i class="ri-quill-pen-line"></i>
+            <span class="post-meta-item-text"> Word count:</span>
+            <span class="post-count">6k</span>
+        </span>
+    </span>
+
+    <span class="post-time">
+        &nbsp; | &nbsp;
+        <span class="post-meta-item-icon">
+            <i class="ri-book-open-line"></i>
+            <span class="post-meta-item-text"> Reading time≈</span>
+            <span class="post-count">22 min</span>
+        </span>
+    </span>
+</div>
+ 
+    </div>
+      
+    <div class="tocbot"></div>
+
+
+
+
+  
+    <div class="article-entry" itemprop="articleBody">
+       
+  <h2 id="整洁代码"><a href="#整洁代码" class="headerlink" title="整洁代码"></a>整洁代码</h2><h3 id="单一权责原则-Single-Responsibility-SRP"><a href="#单一权责原则-Single-Responsibility-SRP" class="headerlink" title="单一权责原则(Single Responsibility ,SRP)"></a>单一权责原则(Single Responsibility ,SRP)</h3><p>一个类只负责一功能领域中的相应职，或者可以定义为：就一个类而言,应该只有一个引起它变化的原因.</p>
+<p>修改前:</p>
+<pre><code class="java">public class CustomerDataChart{
+    public Connection getConnection(){
+
+    }
+    public List&lt;Customers&gt; findCustomers(){
+
+    }
+    public void createChart(){
+
+    }
+    public void displayChart(){
+
+    }
+}</code></pre>
+<p>修改后:</p>
+<pre><code class="java">public class DBUtil{
+    public Connection getConnection(){
+
+    }
+}
+
+public class CustomerDAO{
+    private DBUtil util;
+    public List&lt;Customers&gt; findCustomers(){
+
+    }
+}
+
+public class CustomerDataChart{
+    private CustomerDAO dao;
+    public void createChart(){
+
+    }
+    public void displayChart(){
+
+    }
+}</code></pre>
+<hr>
+<h3 id="开放闭合原则-Open-Closed-Principle-OCP"><a href="#开放闭合原则-Open-Closed-Principle-OCP" class="headerlink" title="开放闭合原则(Open Closed Principle,OCP)"></a>开放闭合原则(Open Closed Principle,OCP)</h3><p>一个软件实体应当对扩展开放，对修改关闭。即软件实体应尽量在不修改原有代码<br>的情况下进行扩展。</p>
+<p>修改前:</p>
+<pre><code class="java">public class PieChart{
+    public void display(){
+        System.out.println(&quot;PieChart:&quot; + type);
+    }
+}
+
+public class BarChart{
+    public void display(){
+        System.out.println(&quot;BarChart:&quot; + type);
+    }
+}
+
+public class ChartDisplay {
+    public void display(String type){
+        switch(type){
+            case &quot;PieChart&quot;:
+                PieChart pie = new PieChart();
+                pie.display();
+                break;
+            case &quot;BarChart&quot;:
+                BarChart bar = new BarChart();
+                bar.display();
+                break;
+        }
+    }
+}</code></pre>
+<p>修改后:</p>
+<pre><code class="java">public abstract class AbstractChart{
+    public void display();
+}
+
+public class PieChart extends AbstractChart{
+    @Override
+    public void display(){
+        System.out.println(&quot;PieChart&quot;);
+    }
+}
+
+public class BarChart extends AbstractChart{
+    @Override
+    public void display(){
+        System.out.println(&quot;BarChart&quot;);
+    }
+}
+
+public class ChartDisplay{
+    private AbstractChart chart;
+    public setChart(AbstractChart chart){
+        this.chart = chart;
+    }
+
+    public void display(){
+        chart.display();
+    }
+}</code></pre>
+<hr>
+<h3 id="LSP里氏代换原则-Liskov-Substitution-Principle"><a href="#LSP里氏代换原则-Liskov-Substitution-Principle" class="headerlink" title="LSP里氏代换原则(Liskov Substitution Principle)"></a>LSP里氏代换原则(Liskov Substitution Principle)</h3><p>所有引用基类（父类）的地方必须能透明地使用其子类的对象。</p>
+<p>修改前:</p>
+<pre><code class="java">public class CommonCustomer {
+    private String name;
+    private String email;
+    public getName(){
+        return this.name;
+    }
+    public setName(String name){
+        this.name = name;
+    }
+    public getEmail(){
+        return this.email;
+    }
+    public setEmail(String email){
+        this.email = email;
+    }
+}
+
+public class VIPCustomer {
+    private String name;
+    private String email;
+    public getName(){
+        return this.name;
+    }
+    public setName(String name){
+        this.name = name;
+    }
+    public getEmail(){
+        return this.email;
+    }
+    public setEmail(String email){
+        this.email = email;
+    }
+}
+
+public class EmailSender {
+    public send(CommonCustomer customer){
+        //send
+    }
+    public send(VIPCustomer customer){
+        //send
+    }
+}</code></pre>
+<p>修改后:</p>
+<pre><code class="java">public class Customer {
+    private String name;
+    private String email;
+    public getName(){
+        return this.name;
+    }
+    public setName(String name){
+        this.name = name;
+    }
+    public getEmail(){
+        return this.email;
+    }
+    public setEmail(String email){
+        this.email = email;
+    }
+}
+
+public class CommonCustomer extends Customer{
+
+}
+
+public class VIPCustomer extends Customer{
+
+}
+
+public class EmailSender {
+    public send(Customer customer){
+        //send
+    }
+}</code></pre>
+<hr>
+<h3 id="接口隔离原则-Interface-Segregation-Principle-ISP"><a href="#接口隔离原则-Interface-Segregation-Principle-ISP" class="headerlink" title="接口隔离原则(Interface Segregation Principle, ISP)"></a>接口隔离原则(Interface Segregation Principle, ISP)</h3><p>使用多个专门的接口，而不使用单一的总接口，即客户端不应该依赖那些它不需要<br>的接口。</p>
+<p>修改前:</p>
+<pre><code class="java">public interface CustomerDataDisplay {
+    public void dataRead();
+    public void transformToXML();
+    public void createChart();
+    public void displayChart();
+    public void createReport();
+    public void displayReport();
+}
+
+public class ConcreteClass implements CustomerDataDisplay{
+
+}</code></pre>
+<p>修改后:</p>
+<pre><code class="java">public interface DataHandler {
+    public void dataRead();
+}
+
+public interface XMLTransformer {
+    public void transformToXML();
+}
+
+public interface ChartHandler {
+    public void createChart();
+    public void displayChart();
+}
+
+public interface ReportHandler {
+    public void createReport();
+    public void displayReport();
+}
+
+public class ConcreteClass implements DataHandler, ChartHandler{
+
+}</code></pre>
+<hr>
+<h3 id="依赖倒置原则-Dependency-Inversion-Principle-DIP"><a href="#依赖倒置原则-Dependency-Inversion-Principle-DIP" class="headerlink" title="依赖倒置原则(Dependency Inversion Principle,DIP)"></a>依赖倒置原则(Dependency Inversion Principle,DIP)</h3><p>抽象不应该依赖于细节，细节应当依赖于抽象。换言之，要针对接口编程，而不是<br>针对实现编程。</p>
+<p>修改前:</p>
+<pre><code class="java">public interface TXTDataConvertor {
+    public void addCustomer();
+}
+
+public interface ExcelDataConvertor {
+    public void addCustomer();
+}
+
+public class CustomerDAO implements TXTDataConvertor, ExcelDataConvertor{
+    public void addCustomer(){
+
+    }
+}</code></pre>
+<p>修改后:</p>
+<pre><code class="java">public interface TXTDataConvertor {
+    public void readFile();
+}
+
+public interface ExcelDataConvertor {
+    public void readFile();
+}
+
+public abstract class DataConvertor implements TXTDataConvertor, ExcelDataConvertor{
+    public void readFile(){
+
+    }
+}
+
+public class CustomerDAO extends DataConvertor{
+    public void addCustomer(){
+
+    }
+}</code></pre>
+<pre><code class="xml">...
+&lt;className&gt;TX TDataConvertor&lt;/className&gt;
+...</code></pre>
+<hr>
+<h2 id="有意义的命名"><a href="#有意义的命名" class="headerlink" title="有意义的命名"></a>有意义的命名</h2><h3 id="名副其实"><a href="#名副其实" class="headerlink" title="名副其实"></a>名副其实</h3><p>如果名称需要注释来补充，那就不算是名副其实。</p>
+<h3 id="避免误导-amp-做有意义的区分"><a href="#避免误导-amp-做有意义的区分" class="headerlink" title="避免误导 &amp; 做有意义的区分"></a>避免误导 &amp; 做有意义的区分</h3><p>避免误导：避免留下掩藏代码本意的错误线索。应当避免使用与本意相悖的词。</p>
+<p>e.g:</p>
+<ul>
+<li>以数字系列命名</li>
+<li>错误的拼写</li>
+<li>命名一组账号：accountGroup、bunchOfAccounts和accounts 好于 accountList(List对程序员有特殊意义)</li>
+<li>废话都是冗余。Variable一词永远不应当出现在变量名中。Table一词永远不应当出现在表名中。</li>
+</ul>
+<h3 id="使用读得出来的名称-amp-使用可搜索的名称"><a href="#使用读得出来的名称-amp-使用可搜索的名称" class="headerlink" title="使用读得出来的名称 &amp; 使用可搜索的名称"></a>使用读得出来的名称 &amp; 使用可搜索的名称</h3><p>使用读的出来的名称：</p>
+<ul>
+<li>genymdhms(生成日期，年、月、日、时、分、秒)，他们一般读作“gen why emm dee aich emm ess”或“gen-yah-mudda-hims”</li>
+</ul>
+<p>使用可搜索的名称：</p>
+<ul>
+<li>WORK_DAYS_PER_WEEK 要比数字 5 好找</li>
+<li>长名称胜于短名称，搜得到的名称胜于用自造编码代写就的名称</li>
+<li>若变量或常量可能在代码中多处使用，则应赋其以便于搜索的名称</li>
+</ul>
+<h3 id="避免使用编码"><a href="#避免使用编码" class="headerlink" title="避免使用编码"></a>避免使用编码</h3><ul>
+<li>如果编译器不做类型检查或动态类型语言，程序员需要匈牙利语标记法来帮助自己记住类型</li>
+<li>不推荐接口采用IShapeFactory，可以考虑接口ShapeFactory,实现采用ShapeFactoryImp或者丑陋的CShapeFactory，比对接口名称编码好</li>
+</ul>
+<h3 id="常见误区"><a href="#常见误区" class="headerlink" title="常见误区"></a>常见误区</h3><ul>
+<li>避免思维映射:不应当让读者在脑中把你的名称翻译为他们熟知的名称。这种问题经常出现在选择是使用问题领域术语还是解决方案领域术语时。</li>
+<li>类名或对象名应该是名词或名词短语</li>
+<li>方法名应当是动词或者动词短语</li>
+<li>重构构造器，使用描述了参数的静态工厂方法名<pre><code class="java">  Complex fulcrumPoint = Complex.FromRealNumber(23.0); </code></pre>
+</li>
+<li>给每个抽象概念选一个词，并且一以贯之</li>
+<li>别用双关语</li>
+<li>使用解决方案领域名称</li>
+<li>采用从所涉问题领域而来的名称</li>
+<li>你需要用有良好命名的类、函数或名称空间来放置名称，给读者提供语境,如果没这么做，给名称添加前就是最后一招了</li>
+</ul>
+<hr>
+<h2 id="函数"><a href="#函数" class="headerlink" title="函数"></a>函数</h2><p>Function should do one thing. They should do it well. They should do it only.</p>
+<h3 id="函数的原则"><a href="#函数的原则" class="headerlink" title="函数的原则"></a>函数的原则</h3><ol>
+<li>短小:<ul>
+<li>if语句、else语句、while语句等，其中的代码块只能有一行</li>
+<li>函数的缩进层级不该多于一层或两层</li>
+</ul>
+</li>
+<li>函数应该做一件事。做好这件事。只做这一件事。</li>
+<li>每个函数一个抽象层级:要让每个函数后面都跟着位于下一抽象层级的函数，这样一来，在查看函数列表时，就能偱抽象层级向下阅读了。我把这叫做向下规则。</li>
+<li>swith语句。</li>
+</ol>
+<pre><code class="java">public Money calculatePay(Empoyee e) throws InvalidEmployeeType{
+    switch (e.type) {
+        case COMMISSIONED:
+            return calculateCommissionedPay(e);
+        case HOURLY:
+            return calculateHourlyPay(e);
+        case SELARIED:
+            return calculateSalariedPay(e);
+        default:
+          throw new InvalidEmployeeType(e.type);
+    }
+}</code></pre>
+<pre><code>- 太长，当出现新的雇员类型时，还会变得更长。
+- 明显做了不止一件事。
+- 违反了单以权责原则，有好几个修改的理由。
+- 违反了开放闭合原则，每当添加新类型时，就必须修改之。
+- 可能会到处出现类似的结构函数</code></pre><p>可以改成:</p>
+<pre><code class="java">public abstract class Employee {
+    public abstract boolean isPayday();
+    public abstract Money calculatePay();
+    public abstract void deliverPay();
+}
+
+public interface EmployeeFactory {
+    public Employee makeEmployee(EmployeeRecord r) throws InvalidEmployeeType;
+}
+
+public class EmployeeFactoryImpl implements EmployeeFactory {
+    public Employee makeEmployee(EmployeeRecord r) throws InvalidEmployeeType{
+        switch (e.type) {
+            case COMMISSIONED:
+              return CommissionedEmployee(r);
+            case HOURLY:
+              return HourlyPayEmployee(r);
+            case SELARIED:
+              return SalariedPayEmployee(r);
+            default:
+              throw new InvalidEmployeeType(e.type);
+        }
+    }
+}</code></pre>
+<p>将swith语句埋到抽象工厂下，该工厂使用 switch 语句为 Employee 的派生物创建适当的实体，而不同的函数，如 calculatePay、isPayday 和 deliverPay等，则藉由 Employee 接口多态地接受派遣。对于 switch 语句，我的规矩是如果只出现一次，用于创建多态对象，而且隐藏在某个继承关系中。</p>
+<ol start="5">
+<li>使用描述性的名称。</li>
+<li>函数参数个数 &lt;= 3。</li>
+<li>无副作用</li>
+<li>分割指令与询问。函数要么做什么事，要么回答什么事，但二者不可得兼。函数应该修改某对象的状态或是返回该对象的有关信息。两样都干常会导致混乱。</li>
+<li>使用异常替代返回错误码。从指令式函数返回错误码轻微违反了指令与询问分隔的规则。它鼓励了在if 语句判断中把指令当作表达式使用。这不会引起动词/形容词混淆，但却导致更深层次的嵌套结构。当返回误码时，就是在要求调用者立刻处理错误。另一方面，如果使用异常替代返回错误码，错误处理代码就能从主路径代码中分离出来。</li>
+<li>别重复自己。</li>
+<li>结构化编程。每个函数、函数中的每个代码块都应该有一个入口、一个出口。每个函数中之该有一个return语句。</li>
+</ol>
+<h3 id="函数修改的策略"><a href="#函数修改的策略" class="headerlink" title="函数修改的策略"></a>函数修改的策略</h3><p>大师级程序员把系统当作故事来讲，而不是当作程序来写。他们使用选定编程语言提供的工具构建一种更为丰富且更具表达力的语言，用来讲那个故事。那种领域特定语言的一个部分，就是描述在系统中发生的各种行为的函数层级。在一种狡猾的递归操作中，这些行为使用它们定义的与领域紧密相关的语言讲述自己那个小故事。</p>
+<hr>
+<h2 id="注释"><a href="#注释" class="headerlink" title="注释"></a>注释</h2><p>注释不能美化糟糕的代码</p>
+<p>好注释:</p>
+<ul>
+<li>唯一真正好的注释是你想办法不去写的注释</li>
+<li>法律信息:公司代码规范要求编写与法律有关的注释，只写引用即可</li>
+<li>阐释:注释把某些晦涩难明的参数或返回值的意义翻译为某种可读形式</li>
+<li>警示:警告其他程序员会出现某种后果的注释。</li>
+<li>TODO注释:有理由在源代码中放置要做的工作列表。定期查看，删除不再需要的。</li>
+<li>放大:注释可以用来放大某种看来不合理之物的重要性。</li>
+<li>公共API中的Javadoc,Javadoc也可能误导、不适用或者提供错误信息</li>
+</ul>
+<p>坏注释:</p>
+<ul>
+<li>喃喃自语</li>
+<li>多余的注释</li>
+<li>误导性注释</li>
+<li>循规式注释</li>
+<li>日志式注释:应由源代码控制系统来管理</li>
+<li>废话注释</li>
+<li>能用函数或变量时就别用注释</li>
+<li>位置标记</li>
+<li>括弧后面的注释:while,if等的多层嵌套，用短小的封装的函数代替</li>
+<li>归属与签名:源代码控制系统是这类信息最好的归属地</li>
+<li>注释掉的代码</li>
+<li>HTML注释</li>
+<li>非本地信息:别在本地注释的上下文环境中给出系统级的信息</li>
+<li>信息过多:有趣的历史话题或者无关的细节描述</li>
+<li>不明显的联系</li>
+<li>函数头</li>
+<li>非公共代码中的JavaDoc</li>
+</ul>
+<hr>
+<h2 id="格式"><a href="#格式" class="headerlink" title="格式"></a>格式</h2><h3 id="格式的目的"><a href="#格式的目的" class="headerlink" title="格式的目的"></a>格式的目的</h3><ul>
+<li>垂直格式</li>
+<li>横向格式<ul>
+<li>尽力保持代码行短小。无需拖动滚动条到右侧的原则。</li>
+<li>水平对齐。</li>
+<li>缩进。</li>
+</ul>
+</li>
+<li>团队风格<ul>
+<li>项目开始时制定一套编码风格，将规则编写进IDE。</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h2 id="对象和数据结构"><a href="#对象和数据结构" class="headerlink" title="对象和数据结构"></a>对象和数据结构</h2><h3 id="数据抽象"><a href="#数据抽象" class="headerlink" title="数据抽象"></a>数据抽象</h3><p>类并不简单地用取值器和赋值器将其变量推向外间，而是曝露抽象接口，以便用户无需了解数据的实现就能操作数据本体。过程式代码难以添加新数据结构，因为必须修改所有函数。面向对象代码难以添加新函数，因为必须修改所有类。</p>
+<h3 id="得墨忒耳律"><a href="#得墨忒耳律" class="headerlink" title="得墨忒耳律"></a>得墨忒耳律</h3><p>模块不应了解所操作对象的内部情形。得墨忒耳律认为，类C的方法f只应该调用以下对象的方法：</p>
+<ul>
+<li>C</li>
+<li>由f创建的对象</li>
+<li>作为参数传递给f的对象</li>
+<li>由C持有的实体变量持有的对象</li>
+</ul>
+<h3 id="数据传送对象"><a href="#数据传送对象" class="headerlink" title="数据传送对象"></a>数据传送对象</h3><p>DTO（Data Transfer Objects）经常用作与数据库通信、或解析套接字传递的消息之类场景中。</p>
+<hr>
+<h2 id="错误处理"><a href="#错误处理" class="headerlink" title="错误处理"></a>错误处理</h2><ol>
+<li>使用异常而非返回码</li>
+<li>先写Try-Catch-Finally语句</li>
+</ol>
+<h3 id="异常的使用"><a href="#异常的使用" class="headerlink" title="异常的使用"></a>异常的使用</h3><ul>
+<li>使用不可控异常：可控异常的代价就是违反开放/闭合原则。//TODO:?</li>
+<li>给出异常发生的环境说明,都应当提供足够的环境说明，以便判断错误的来源和处所。</li>
+<li>定义常规流程：采用特例模式。创建一个类或配置一个对象，用来处理特例.</li>
+<li>别返回null值：在方法中返回null值，不如抛出异常，或是返回特例对象</li>
+</ul>
+<hr>
+<h2 id="边界"><a href="#边界" class="headerlink" title="边界"></a>边界</h2><h3 id="整洁的边界"><a href="#整洁的边界" class="headerlink" title="整洁的边界"></a>整洁的边界</h3><p>应该避免我们的代码过多地了解第三方代码中的特定信息。在这种场景下，适配器模式是非常好的设计，它不仅能将不兼容的接口改写成兼容的接口，还能够对通过对第三方工具重新封装来避免边界的变化对系统的影响。</p>
+<hr>
+<h2 id="单元测试"><a href="#单元测试" class="headerlink" title="单元测试"></a>单元测试</h2><h3 id="TDD三定律"><a href="#TDD三定律" class="headerlink" title="TDD三定律"></a>TDD三定律</h3><ol>
+<li>在编写不能通过的单元测试前，不可编写生产代码。</li>
+<li>只可编写刚好无法通过的单元测试，不能编译也算不通过。</li>
+<li>只可编写刚好足以通过当前失败测试的生产代码。</li>
+</ol>
+<h3 id="整洁的测试"><a href="#整洁的测试" class="headerlink" title="整洁的测试"></a>整洁的测试</h3><ul>
+<li>测试与生产代码一起编写，这样可以保证：测试将覆盖所有生产代码。</li>
+<li>整洁测试的三个要素：可读性、可读性、可读性。要明确，简洁，有足够的表达力。</li>
+<li>测试呈现构造-操作-检验（BUILD-OPERATE-CHECK）模式。</li>
+<li>生产环境和测试环境可以用双重标准。</li>
+<li>每个测试一个断言。每个测试一个概念。</li>
+<li>Given-when-then：Given在某种场景下 When发生了事件 Then导致了什么结果。</li>
+</ul>
+<h3 id="F-I-R-S-T"><a href="#F-I-R-S-T" class="headerlink" title="F.I.R.S.T"></a>F.I.R.S.T</h3><p>整洁的测试环境遵循以下5条规则：</p>
+<ol>
+<li>快速(Fast)<ul>
+<li>测试应该快速，因为需要不断的运行测试得到反馈，我们需要的快速反馈，错误的快速定位。所以你的测试就不能依赖太多的外部资源，数据库，硬件环境等等，对于这些外部资源应该采用伪对象模式来隔离。</li>
+</ul>
+</li>
+<li>独立(Independent)<ul>
+<li>测试应该是相互独立的，独立于测试用例之间，独立于特定的环境，独立于测试的运行顺利。</li>
+<li>数据的独立方式:<ol>
+<li>每个测试环境的独立</li>
+<li>数据的隔离</li>
+</ol>
+</li>
+</ul>
+</li>
+<li>可重复(Repeatable)<ul>
+<li>测试应该可以在任何环境中重复通过，可运行，因为测试独立于环境外部资源。</li>
+</ul>
+</li>
+<li>自足验证(Self-Validation)<ul>
+<li>测试应该有通过失败的标示，从每一个测试上能得到一处代码逻辑的通过失败。</li>
+</ul>
+</li>
+<li>及时(Timely)<ul>
+<li>测试应该是及时编写的。TDD要求测试必须在实现代码之前，提前以使用者的角度定义使用接口方式。</li>
+</ul>
+</li>
+</ol>
+<hr>
+<h2 id="类"><a href="#类" class="headerlink" title="类"></a>类</h2><h3 id="类的组织"><a href="#类的组织" class="headerlink" title="类的组织"></a>类的组织</h3><p>类应该从一组变量列表开始。如果有公共静态常量，应该先出现。然后是私有静态变量，以及私有实体变量。很少会有公共变量。公共函数应更在变量列表之后，把由某个公共函数调用的私有工具函数紧随在该公共函数后面。符合自定向下的原则。</p>
+<p>内聚：类应该只有少量实体变量。</p>
+<h3 id="为了修改而组织"><a href="#为了修改而组织" class="headerlink" title="为了修改而组织"></a>为了修改而组织</h3><ul>
+<li>开放-闭合原则（OCP）：类应当对扩展开放，对修改封闭。</li>
+<li>隔离修改：具体类包含实现细节，而抽象类只呈现概念。可以借助接口和抽象类来隔离细节修改带来的风险。</li>
+<li>依赖倒置原则（Dependency Inversion Principle,DIP）:类应该依赖于抽象而不是依赖于具体细节。</li>
+</ul>
+<hr>
+<h2 id="系统"><a href="#系统" class="headerlink" title="系统"></a>系统</h2><h3 id="将系统的构造与使用分开"><a href="#将系统的构造与使用分开" class="headerlink" title="将系统的构造与使用分开"></a>将系统的构造与使用分开</h3><p>软件系统应将启始过程和启始过程之后的运行时逻辑分离开，在启始过程中构建应用对象，也会存在相互缠结的依赖关系。依赖注入（Dependency Injection,DI）机制,可以实现分离构造与使用。控制反转（Inversion of Control,IoC）将第二权责从对象中拿出来，转移到另一个专注于此的对象中，从而遵循了单一权责原则。</p>
+<h3 id="扩容"><a href="#扩容" class="headerlink" title="扩容"></a>扩容</h3><p>我们应该只去实现今天的用户故事，然后重构，明天再扩展系统、实现新的用户故事。这就是迭代和增量敏捷的精髓所在。测试驱动开发、重构以及他们打造出的整洁代码，在代码层面保证了这个过程的实现。</p>
+<h3 id="横切关注点"><a href="#横切关注点" class="headerlink" title="横切关注点"></a>横切关注点</h3><p>横切关注点（Cross-Cutting Concerns）：在AOP中，被称为方面（aspect）的模块构造指明了系统中哪些点的行为会以某种一致的方式被修改，从而支持某种特定的场景。</p>
+<p>Java代理：适用于简单的情况，例如在单独的对象或类中包装方法调用。</p>
+<p>纯Java AOP框架：如Spring AOP和Jboss AOP等，在概念上更简单、更易于测试驱动。</p>
+<h3 id="测试驱动系统架构"><a href="#测试驱动系统架构" class="headerlink" title="测试驱动系统架构"></a>测试驱动系统架构</h3><p>用POJO编写应用程序的领域逻辑，在代码层面与架构关注面分离开，就有可能真正地用测试来驱动架构。</p>
+<p>没必要先做大设计（Big Design Up Front，DBUF）。实际上，它阻碍改进，架构上的方案选择影响到后续的设计思路</p>
+<h3 id="系统需要领域特定语言"><a href="#系统需要领域特定语言" class="headerlink" title="系统需要领域特定语言"></a>系统需要领域特定语言</h3><p>领域特定语言（Domain-Specific Language,DSL）：在有效使用时能提升代码惯用法和设计模式之上的抽象层次。允许所有抽象层级和应用程序中的所有领域，从高级策略到底层细节，使用POJO来表达。</p>
+<hr>
+<h2 id="迭代"><a href="#迭代" class="headerlink" title="迭代"></a>迭代</h2><p>关于简单设计的四条规则：</p>
+<ol>
+<li>运行所有测试；</li>
+<li>不可重复；</li>
+<li>表达了程序员的意图；</li>
+<li>尽可能减少类和方法的数量；</li>
+<li>以上规则按其重要程度排列。</li>
+</ol>
+<hr>
+<h2 id="并发编程"><a href="#并发编程" class="headerlink" title="并发编程"></a>并发编程</h2><p>并发是一种解耦策略，帮助把做什么（目的）和何时（时机）做分解开。</p>
+<p>解耦目的与时机能明显地改进应用程序的吞吐量和结构。</p>
+<h3 id="挑战与并发防御原则"><a href="#挑战与并发防御原则" class="headerlink" title="挑战与并发防御原则"></a>挑战与并发防御原则</h3><p>单一权责原则</p>
+<p>限制数据作用域（采用<code>synchronized</code>保护临界区）</p>
+<p>建议：谨记数据封装，严格限制对可能被共享的数据的访问。</p>
+<p>推论：使用数据副本：假使使用对象复本能避免代码同步执行，则因避免了锁定而省下的价值有可能补偿得上额外的创建陈本和垃圾收集开销。</p>
+<p>推论：线程应尽可能地独立</p>
+<p>建议：尝试将数据分解到可被独立线程（可能在不同处理器上）操作的独立子集。</p>
+<h3 id="了解执行模型"><a href="#了解执行模型" class="headerlink" title="了解执行模型"></a>了解执行模型</h3><h3 id="警惕同步方法之间的依赖"><a href="#警惕同步方法之间的依赖" class="headerlink" title="警惕同步方法之间的依赖"></a>警惕同步方法之间的依赖</h3><h3 id="保持同步区域微小"><a href="#保持同步区域微小" class="headerlink" title="保持同步区域微小"></a>保持同步区域微小</h3><hr>
+<h2 id="Code-Smell-List"><a href="#Code-Smell-List" class="headerlink" title="Code Smell List"></a>Code Smell List</h2><h3 id="注释-1"><a href="#注释-1" class="headerlink" title="注释"></a>注释</h3><ol>
+<li>不恰当的注释<ul>
+<li>让不恰当的注释保存到源代码控制系统。</li>
+</ul>
+</li>
+<li>废弃的注释<ul>
+<li>过时 、无关或不正确的注释就是废弃的注释不应该保留必马上删除。</li>
+</ul>
+</li>
+<li>冗余的注释<ul>
+<li>注释应该谈及代码自身没提到的东西，否则就是冗余的。</li>
+</ul>
+</li>
+<li>糟糕的注释<ul>
+<li>值得编写的注释必须正确写出最好的注释，如果不是就不写 。</li>
+</ul>
+</li>
+<li>注释掉的代码<ul>
+<li>注释掉的代码必须删除。</li>
+</ul>
+</li>
+</ol>
+<h3 id="环境"><a href="#环境" class="headerlink" title="环境"></a>环境</h3><ol>
+<li>需要多步才能实现的构建:构建系统应该是单步的小操作 。</li>
+<li>需要多步才能实现的测试:只需要单个指令就可以运行所有单元测试。</li>
+</ol>
+<h3 id="函数-1"><a href="#函数-1" class="headerlink" title="函数"></a>函数</h3><ol>
+<li>过多的参数:函数参数应该越少越好，坚决避免有3个参数 的函数</li>
+<li>出参数:出参数违反直接，抵制出参数</li>
+<li>标识参数:布尔值参数令人迷惑，应该消灭掉</li>
+<li>死函数:永不被调用函数应该删除掉</li>
+</ol>
+<h3 id="一般性问题"><a href="#一般性问题" class="headerlink" title="一般性问题"></a>一般性问题</h3><ol>
+<li>一个源文件存在多个语言<ul>
+<li>尽量减少源文件语言的数量和范围。</li>
+</ul>
+</li>
+<li>明显的行为未被实现<ul>
+<li>遵循 “最少惊异原则 ”，函数或者类应该实现其他程序员有理由期待的行为，不要让其他程序员看代码才清楚函数的作用。</li>
+</ul>
+</li>
+<li>不正确的边界行为<ul>
+<li>代码应该有正确的行为，追索每种边界条件并进行全面 测试。</li>
+</ul>
+</li>
+<li>忽视安全<ul>
+<li>关注可能引起问题的代码，注重安全与稳定。</li>
+</ul>
+</li>
+<li>重复<ul>
+<li>消除重复代码，使用设计模式。</li>
+</ul>
+</li>
+<li>在错误的抽象层级上的代码<ul>
+<li>抽象类和派类概念模型必须完整分离，例如 ：与实现细节有关的代码不应该在基类中出现。</li>
+</ul>
+</li>
+<li>基类依赖于派类<ul>
+<li>基类应该对派类一无所知。</li>
+</ul>
+</li>
+<li>信息过多<ul>
+<li>类中的方法，变量越少越好，隐藏所有实现，公开接口越少越好。</li>
+</ul>
+</li>
+<li>死代码<ul>
+<li>找到并删除所有不被调用的代码。</li>
+</ul>
+</li>
+<li>垂直分隔<ul>
+<li>变量和函数的定义应该靠近被调用代码。</li>
+</ul>
+</li>
+<li>前后不一致<ul>
+<li>函数参数变量应该从一而终，保持一致，让代码便于阅读和修改。</li>
+</ul>
+</li>
+<li>混淆视听<ul>
+<li>没用的变量，不被调用的函数，没有信息量的注释应该清理掉。</li>
+</ul>
+</li>
+<li>人为耦合<ul>
+<li>不互相依赖的东西不该耦合。</li>
+</ul>
+</li>
+<li>特性依恋<ul>
+<li>类的方法应该只对自身的方法和变量感兴趣，不应该垂青其他类的方法和变量。</li>
+</ul>
+</li>
+<li>选择算参数<ul>
+<li>避免布尔类型参数，使用多态代替。</li>
+</ul>
+</li>
+<li>晦涩的意图<ul>
+<li>代码要尽可能具有表达力，明白的意图比高效和性能重要。</li>
+</ul>
+</li>
+<li>位置错误的权责<ul>
+<li>“最少惊异原则 ”，把代码放在读者想到的地方，而不是对自己方便的地方。</li>
+</ul>
+</li>
+<li>不恰当的静态方法<ul>
+<li>如果要使用静态方法，必须确保 没机会打算让它有多态行为。</li>
+</ul>
+</li>
+<li>使用解释性变量<ul>
+<li>把计算过程打散成一系列命名良好的中间值使程序更加可读性。</li>
+</ul>
+</li>
+<li>函数名称应该表达其行为</li>
+<li>理解算法</li>
+<li>把逻辑依赖改为物理依赖<ul>
+<li>依赖应该是明显而不应该是假设的依赖。</li>
+</ul>
+</li>
+<li>用多态替代If/Else或Switch/Case</li>
+<li>遵循标准约定</li>
+<li>用命名常量替代魔术数</li>
+<li>准确<ul>
+<li>代码中的含糊和不准确要么是意见不同的结果，要么源于懒散，都必须消除。</li>
+</ul>
+</li>
+<li>结构甚于约定</li>
+<li>封装条件<ul>
+<li>把条件封装成方法。</li>
+</ul>
+</li>
+<li>避免否定性条件<ul>
+<li>使用肯定性条件。</li>
+</ul>
+</li>
+<li>函数只该做一件事</li>
+<li>掩蔽时序耦合<ul>
+<li>创建顺序队列暴露时序耦合，每个函数都产一下函数所需参数，就可保障正确的时序。</li>
+</ul>
+</li>
+<li>别随意<ul>
+<li>代码不能随意，需要谨慎考虑。</li>
+</ul>
+</li>
+<li>封装边界条件<ul>
+<li>例如 ：+1或-1操作必须封装起来。</li>
+</ul>
+</li>
+<li>函数应该只在一个抽象层级上<ul>
+<li>封装不在一个抽象层级上的代码，保持每个函数只在一个抽象层级上。</li>
+</ul>
+</li>
+<li>在较高层级放置可配置数据<ul>
+<li>把配置数据和常量放到基类里。</li>
+</ul>
+</li>
+<li>避免传递浏览<ul>
+<li>“得墨忒耳律 ”，编写害羞代码，让直接协作者提供所需的服务，而不要逛遍整个系统。</li>
+</ul>
+</li>
+</ol>
+<h3 id="名称"><a href="#名称" class="headerlink" title="名称"></a>名称</h3><ol>
+<li>采用描述性名称<ul>
+<li>名称对应可读性有 90%的作用，必须认真命名。</li>
+</ul>
+</li>
+<li>名称应与抽象层级相符<ul>
+<li>不要取沟通实现的名称：取反映类或函数抽象层级的名称。</li>
+</ul>
+</li>
+<li>尽可能使用标准命名法</li>
+<li>无歧义的名称</li>
+<li>为较大作用范围选用较长名称</li>
+<li>避免编码<ul>
+<li>不应该在名称中包含类型或范围的信息，例如：m_，f等前缀。</li>
+</ul>
+</li>
+<li>名称应该说明副作用<ul>
+<li>名称应该说明类 、变量或函数的所有信息，不应该 隐藏副作用。</li>
+</ul>
+</li>
+</ol>
+<h3 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h3><ol>
+<li>测试不足<ul>
+<li>保证足够的测试。</li>
+</ul>
+</li>
+<li>使用覆盖率工具<ul>
+<li>覆盖率工具可以更好地找到测试不足的模块 、类、函数。</li>
+</ul>
+</li>
+<li>别略过小测试</li>
+<li>被忽略的测试就是对不确定事物的疑问<ul>
+<li>用 <code>@Ignore</code> 表达我们对需求的疑问。</li>
+</ul>
+</li>
+<li>测试边界条件<ul>
+<li>边界判读错误很常见，必须测试边界条件。</li>
+</ul>
+</li>
+<li>全面测试相近的缺陷<ul>
+<li>缺陷趋向于扎堆，如果在函数中发现一个缺陷，那么就全面测试这个函数。</li>
+</ul>
+</li>
+<li>测试失败的模式有启发性<ul>
+<li>你可以通过测试失败找到问题所在。</li>
+</ul>
+</li>
+<li>测试覆盖率的模式有启发性<ul>
+<li>通过测试覆盖率检查，往往可以找 到测试失败的线索。</li>
+</ul>
+</li>
+<li>测试应该快速<ul>
+<li>慢测试会导致时间紧时会跳过，导致可能出现问题。</li>
+</ul>
+</li>
+</ol>
+ 
+      <!-- reward -->
+      
+      <div id="reword-out">
+        <div id="reward-btn">
+          Donate
+        </div>
+      </div>
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <div class="declare">
+      <ul class="post-copyright">
+        <li>
+          <i class="ri-copyright-line"></i>
+          <strong>Copyright： </strong>
+          Copyright is owned by the author. For commercial reprints, please contact the author for authorization. For non-commercial reprints, please indicate the source.
+        </li>
+      </ul>
+    </div>
+    
+    <footer class="article-footer">
+       
+<div class="share-btn">
+      <span class="share-sns share-outer">
+        <i class="ri-share-forward-line"></i>
+        分享
+      </span>
+      <div class="share-wrap">
+        <i class="arrow"></i>
+        <div class="share-icons">
+          
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="ri-weibo-fill"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="ri-wechat-fill"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="ri-qq-fill"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="ri-douban-line"></i>
+          </a>
+          <!-- <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a> -->
+          
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="ri-facebook-circle-fill"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="ri-twitter-fill"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="ri-google-fill"></i>
+          </a>
+        </div>
+      </div>
+</div>
+
+<div class="wx-share-modal">
+    <a class="modal-close" href="javascript:;"><i class="ri-close-circle-line"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data=http://yoursite.com/2019/10/26/Clean%20Code/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div id="share-mask"></div>  
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Java/" rel="tag">Java</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+  <nav class="article-nav">
+    
+      <a href="/2019/10/26/hello-world/" class="article-nav-link">
+        <strong class="article-nav-caption">上一篇</strong>
+        <div class="article-nav-title">
+          
+            Hello World
+          
+        </div>
+      </a>
+    
+    
+      <a href="/2018/12/21/Cordova%20Plugin%20%E5%88%B6%E4%BD%9C%E4%B8%8E%E5%8F%91%E5%B8%83%E6%B5%81%E7%A8%8B/" class="article-nav-link">
+        <strong class="article-nav-caption">下一篇</strong>
+        <div class="article-nav-title">Cordova Plugin 制作与发布流程</div>
+      </a>
+    
+  </nav>
+
+   
+ 
+   
+<div class="gitalk" id="gitalk-container"></div>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.6.2/dist/gitalk.css">
+<script src="https://cdn.jsdelivr.net/npm/gitalk@1.6.2/dist/gitalk.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/blueimp-md5@2.10.0/js/md5.min.js"></script>
+<script type="text/javascript">
+  var gitalk = new Gitalk({
+    clientID: 'db290dc011893521d885',
+    clientSecret: '4cbc64d2114f4963d8090a55b508568b2f26075b',
+    repo: 'blog-comments',
+    owner: 'Sicmatr1x',
+    admin: ['Sicmatr1x'],
+    // id: location.pathname,      // Ensure uniqueness and length less than 50
+    id: md5(location.pathname),
+    distractionFreeMode: false,  // Facebook-like distraction free mode
+    pagerDirection: 'last'
+  })
+
+  gitalk.render('gitalk-container')
+</script>
+  
+</article>
+
+</section>
+      <footer class="footer">
+  <div class="outer">
+    <ul>
+      <li>
+        Copyrights &copy;
+        2015-2020
+        <i class="ri-heart-fill heart_icon"></i> Sicmatr1x
+      </li>
+    </ul>
+    <ul>
+      <li>
+        
+        
+        
+        Powered by <a href="https://hexo.io" target="_blank">Hexo</a>
+        <span class="division">|</span>
+        Theme - <a href="https://github.com/Shen-Yu/hexo-theme-ayer" target="_blank">Ayer</a>
+        
+      </li>
+    </ul>
+    <ul>
+      <li>
+        
+        
+        <span>
+  <span><i class="ri-user-3-fill"></i>Visitors:<span id="busuanzi_value_site_uv"></span></s>
+  <span class="division">|</span>
+  <span><i class="ri-eye-fill"></i>Views:<span id="busuanzi_value_page_pv"></span></span>
+</span>
+        
+      </li>
+    </ul>
+    <ul>
+      
+    </ul>
+    <ul>
+      <li>
+        <!-- cnzz统计 -->
+        
+      </li>
+    </ul>
+  </div>
+</footer>
+      <div class="float_btns">
+        <div class="totop" id="totop">
+  <i class="ri-arrow-up-line"></i>
+</div>
+
+<div class="todark" id="todark">
+  <i class="ri-moon-line"></i>
+</div>
+
+      </div>
+    </main>
+    <aside class="sidebar on">
+      <button class="navbar-toggle"></button>
+<nav class="navbar">
+  
+  <div class="logo">
+    <a href="/"><img src="/images/ayer-side.svg" alt="Sicmatr1x"></a>
+  </div>
+  
+  <ul class="nav nav-main">
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/">主页</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/archives">归档</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/categories">分类</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/tags">标签</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/tags/%E6%97%85%E8%A1%8C/">旅行</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="http://shenyu-vip.lofter.com" target="_blank" rel="noopener">摄影</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/2019/about">关于我</a>
+    </li>
+    
+  </ul>
+</nav>
+<nav class="navbar navbar-bottom">
+  <ul class="nav">
+    <li class="nav-item">
+      
+      <a class="nav-item-link nav-item-search"  title="Search">
+        <i class="ri-search-line"></i>
+      </a>
+      
+      
+      <a class="nav-item-link" target="_blank" href="/atom.xml" title="RSS Feed">
+        <i class="ri-rss-line"></i>
+      </a>
+      
+    </li>
+  </ul>
+</nav>
+<div class="search-form-wrap">
+  <div class="local-search local-search-plugin">
+  <input type="search" id="local-search-input" class="local-search-input" placeholder="Search...">
+  <div id="local-search-result" class="local-search-result"></div>
+</div>
+</div>
+    </aside>
+    <script>
+      if (window.matchMedia("(max-width: 768px)").matches) {
+        document.querySelector('.content').classList.remove('on');
+        document.querySelector('.sidebar').classList.remove('on');
+      }
+    </script>
+    <div id="mask"></div>
+
+<!-- #reward -->
+<div id="reward">
+  <span class="close"><i class="ri-close-line"></i></span>
+  <p class="reward-p"><i class="ri-cup-line"></i>请我喝杯咖啡吧~</p>
+  <div class="reward-box">
+    
+    <div class="reward-item">
+      <img class="reward-img" src="https://cdn.jsdelivr.net/gh/Shen-Yu/cdn/img/alipay.jpg">
+      <span class="reward-type">支付宝</span>
+    </div>
+    
+    
+    <div class="reward-item">
+      <img class="reward-img" src="https://cdn.jsdelivr.net/gh/Shen-Yu/cdn/img/wechat.jpg">
+      <span class="reward-type">微信</span>
+    </div>
+    
+  </div>
+</div>
+    <script src="/js/jquery-2.0.3.min.js"></script>
+<script src="/js/lazyload.min.js"></script>
+<!-- Tocbot -->
+
+<script src="/js/tocbot.min.js"></script>
+<script>
+  tocbot.init({
+    tocSelector: '.tocbot',
+    contentSelector: '.article-entry',
+    headingSelector: 'h1, h2, h3, h4, h5, h6',
+    hasInnerContainers: true,
+    scrollSmooth: true,
+    scrollContainer: 'main',
+    positionFixedSelector: '.tocbot',
+    positionFixedClass: 'is-position-fixed',
+    fixedSidebarOffset: 'auto'
+  });
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/jquery-modal@0.9.2/jquery.modal.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/jquery-modal@0.9.2/jquery.modal.min.css">
+<script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/js/jquery.justifiedGallery.min.js"></script>
+<script src="/dist/main.js"></script>
+<!-- ImageViewer -->
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                <!--  Controls are self-explanatory. Order can be changed. -->
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" style="display:none" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css">
+<script src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"></script>
+
+<script>
+    function viewer_init() {
+        let pswpElement = document.querySelectorAll('.pswp')[0];
+        let $imgArr = document.querySelectorAll(('.article-entry img:not(.reward-img)'))
+
+        $imgArr.forEach(($em, i) => {
+            $em.onclick = () => {
+                // slider展开状态
+                // todo: 这样不好，后面改成状态
+                if (document.querySelector('.left-col.show')) return
+                let items = []
+                $imgArr.forEach(($em2, i2) => {
+                    let img = $em2.getAttribute('data-idx', i2)
+                    let src = $em2.getAttribute('data-target') || $em2.getAttribute('src')
+                    let title = $em2.getAttribute('alt')
+                    // 获得原图尺寸
+                    const image = new Image()
+                    image.src = src
+                    items.push({
+                        src: src,
+                        w: image.width || $em2.width,
+                        h: image.height || $em2.height,
+                        title: title
+                    })
+                })
+                var gallery = new PhotoSwipe(pswpElement, PhotoSwipeUI_Default, items, {
+                    index: parseInt(i)
+                });
+                gallery.init()
+            }
+        })
+    }
+    viewer_init()
+</script>
+
+<!-- MathJax -->
+
+<!-- Katex -->
+
+<!-- busuanzi  -->
+
+<script src="/js/busuanzi-2.3.pure.min.js"></script>
+
+<!-- ClickLove -->
+
+<!-- ClickBoom1 -->
+
+<!-- ClickBoom2 -->
+
+<!-- CodeCopy -->
+
+<link rel="stylesheet" href="/css/clipboard.css">
+<script src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js"></script>
+<script>
+  function wait(callback, seconds) {
+    var timelag = null;
+    timelag = window.setTimeout(callback, seconds);
+  }
+  !function (e, t, a) {
+    var initCopyCode = function(){
+      var copyHtml = '';
+      copyHtml += '<button class="btn-copy" data-clipboard-snippet="">';
+      copyHtml += '<i class="ri-file-copy-2-line"></i><span>COPY</span>';
+      copyHtml += '</button>';
+      $(".highlight .code pre").before(copyHtml);
+      $(".article pre code").before(copyHtml);
+      var clipboard = new ClipboardJS('.btn-copy', {
+        target: function(trigger) {
+          return trigger.nextElementSibling;
+        }
+      });
+      clipboard.on('success', function(e) {
+        let $btn = $(e.trigger);
+        $btn.addClass('copied');
+        let $icon = $($btn.find('i'));
+        $icon.removeClass('ri-file-copy-2-line');
+        $icon.addClass('ri-checkbox-circle-line');
+        let $span = $($btn.find('span'));
+        $span[0].innerText = 'COPIED';
+        
+        wait(function () { // 等待两秒钟后恢复
+          $icon.removeClass('ri-checkbox-circle-line');
+          $icon.addClass('ri-file-copy-2-line');
+          $span[0].innerText = 'COPY';
+        }, 2000);
+      });
+      clipboard.on('error', function(e) {
+        e.clearSelection();
+        let $btn = $(e.trigger);
+        $btn.addClass('copy-failed');
+        let $icon = $($btn.find('i'));
+        $icon.removeClass('ri-file-copy-2-line');
+        $icon.addClass('ri-time-line');
+        let $span = $($btn.find('span'));
+        $span[0].innerText = 'COPY FAILED';
+        
+        wait(function () { // 等待两秒钟后恢复
+          $icon.removeClass('ri-time-line');
+          $icon.addClass('ri-file-copy-2-line');
+          $span[0].innerText = 'COPY';
+        }, 2000);
+      });
+    }
+    initCopyCode();
+  }(window, document);
+</script>
+
+
+<!-- CanvasBackground -->
+
+
+    
+  </div>
+</body>
+
+</html>
