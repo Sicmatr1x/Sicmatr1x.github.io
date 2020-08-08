@@ -98,7 +98,182 @@ jps  ->  staat -gc  进程id
 -XX:+PrintGCDetails
 ```
 
+### OutOfMemory举例
+
+```java
+package com.sicmatr1x.java;
+
+import java.util.ArrayList;
+import java.util.Random;
+
+public class OOMTest {
+    public static void main(String[] args) {
+        ArrayList<Picture> list = new ArrayList<>();
+        while(true){
+            try {
+                Thread.sleep(20);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            list.add(new Picture(new Random().nextInt(1024 * 1024)));
+        }
+    }
+}
+
+class Picture{
+    private byte[] pixels;
+
+    public Picture(int length) {
+        this.pixels = new byte[length];
+    }
+}
+
+```
+
+然后设置启动参数
+
+```
+-Xms600m -Xmx600m
+```
+
+<img src="javaw_s9VJ3r66ne.png">
+
+错误提示：
+
+```
+Exception in thread "main" java.lang.OutOfMemoryError: Java heap space
+	at com.sicmatr1x.java.Picture.<init>(OOMTest.java:24)
+	at com.sicmatr1x.java.OOMTest.main(OOMTest.java:15)
+
+Process finished with exit code 1
+```
+
+<img src="image-20200706211652779.png">
+
+## 年轻代与老年代
+
+存储在JVM中的Java对象可以被划分为两类：
+- 一类是生命周期较短的瞬时对象，这类对象的创建和消亡都非常迅速
+  - 生命周期短的，及时回收即可
+- 另外一类对象的生命周期却非常长，在某些极端的情况下还能够与JVM的生命周期保持一致
+
+Java堆区进一步细分的话，可以划分为年轻代（YoungGen）和老年代（oldGen）
+
+其中年轻代又可以划分为Eden空间、Survivor0空间和Survivor1空间（有时也叫做from区、to区）
+
+<img src="image-20200707075847954.png">
+
+下面这参数开发中一般不会调：
+
+<img src="image-20200707080154039.png">
+
+- 默认-XX:NewRatio=2，表示新生代占1，老年代占2，新生代占整个堆的1/3
+
+- 可以修改-XX:NewRatio=4，表示新生代占1，老年代占4，新生代占整个堆的1/5
+
+当发现在整个项目中，生命周期长的对象偏多，那么就可以通过调整 老年代的大小，来进行调优
+
+查看新生代区占几份：`jinfo -flag NewRatio 60636`
+
+* `-XX:NewRatio`: 设置新生代与老年代的比例。默认值是2.
+* `-XX:SurvivorRatio`: 设置新生代中Eden区与Survivor区的比例。默认值是8。在HotSpot中，Eden空间和另外两个survivor空间缺省所占的比例是8：1：1当然开发人员可以通过选项`-xx:SurvivorRatio`调整这个空间比例。比如`-xx:SurvivorRatio=8`
+* `-XX:-UseAdaptiveSizePolicy`: 关闭自适应的内存分配策略  （暂时用不到）
+* `-Xmn`: 设置新生代的空间的大小。 （一般不设置）
+
+几乎所有的Java对象都是在Eden区被new出来的。绝大部分的Java对象的销毁都在新生代进行了。（有些大的对象在Eden区无法存储时候，将直接进入老年代）
+
+>IBM公司的专门研究表明，新生代中80%的对象都是“朝生夕死”的。
+>
+>可以使用选项"-Xmn"设置新生代最大内存大小
+>
+>这个参数一般使用默认值就可以了。
+
+<img src="image-20200707084208115.png">
+
+## 图解对象分配过程
+
+为新对象分配内存是一件非常严谨和复杂的任务，JM的设计者们不仅需要考虑内存如何分配、在哪里分配等问题，并且由于内存分配算法与内存回收算法密切相关，所以还需要考虑GC执行完内存回收后是否会在内存空间中产生内存碎片。
+
+1. new的对象先放伊甸园区。此区有大小限制。
+2. 当伊甸园的空间填满时，程序又需要创建对象，JVM的垃圾回收器将对伊甸园区进行垃圾回收（MinorGC），将伊甸园区中的不再被其他对象所引用的对象进行销毁。再加载新的对象放到伊甸园区
+3. 然后将伊甸园中的剩余对象移动到幸存者0区。
+4. 如果再次触发垃圾回收，此时上次幸存下来的放到幸存者0区的，如果没有回收，就会放到幸存者1区。
+5. 如果再次经历垃圾回收，此时会重新放回幸存者0区，接着再去幸存者1区。
+6. 啥时候能去养老区呢？可以设置次数。默认是15次。
+- 在养老区，相对悠闲。当养老区内存不足时，再次触发GC：Major GC，进行养老区的内存清理
+- 若养老区执行了Major GC之后，发现依然无法进行对象的保存，就会产生OOM异常。
 
 
+### 图解过程
+
+我们创建的对象，一般都是存放在Eden区的，当我们Eden区满了后，就会触发GC操作，一般被称为 Y(oung)GC / Minor GC操作。**注意：S0或S1区满的时候是不会触发YGC的。如果Survivor区满了后，将会触发一些特殊的规则(参考下面的对象分配的特殊情况)，也就是可能直接晋升老年代**
+
+<img src="image-20200707084714886.png">
+
+1. 当我们进行一次垃圾收集后，红色的将会被回收，而绿色的还会被占用着，存放在S0(Survivor From)区。同时我们给每个对象设置了一个年龄计数器，一次回收后就是1。
+
+<img src="image-20200707085232646.png">
+
+2. 同时Eden区继续存放对象，当Eden区再次存满的时候，又会触发一个MinorGC操作，此时GC将会把 Eden和Survivor From中的对象 进行一次收集，把存活的对象放到 Survivor To区，同时让年龄 + 1
+
+<img src="image-20200707085737207.png">
+
+3. 我们继续不断的进行对象生成 和垃圾回收，当Survivor中的对象的年龄达到15的时候(可以设置参数：`-Xx:MaxTenuringThreshold=15`进行设置，默认为15)，将会触发一次 Promotion晋升的操作，也就是将年轻代中的对象晋升到老年代中
+
+
+### 总结
+
+- 针对Survivor区的总结：复制之后有交换，谁空谁是to
+- 关于垃圾回收：频繁在新生代收集，很少在老年代收集，几乎不在永久代/元空间收集
+
+### 对象分配的特殊情况
+
+<img src="image-20200707091058346.png">
+
+
+### 代码演示对象分配过程
+
+```java
+import java.util.ArrayList;
+import java.util.Random;
+
+public class HeapInstanceTest {
+    byte[] buffer = new byte[new Random().nextInt(1024 * 200)];
+
+    public static void main(String[] args) {
+        ArrayList<HeapInstanceTest> list = new ArrayList<HeapInstanceTest>();
+        while (true) {
+            list.add(new HeapInstanceTest());
+            try {
+                Thread.sleep(10);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+}
+```
+
+然后设置JVM参数
+
+```bash
+-Xms600m -Xmx600m
+```
+
+<img src="垃圾回收.gif">
+
+最终，在老年代和新生代都满了，就出现OOM
+
+
+### 常用的调优工具
+
+- JDK命令行
+- Eclipse：Memory Analyzer Tool
+- Jconsole
+- Visual VM（实时监控  推荐~）
+- Jprofiler（推荐~）
+- Java Flight Recorder（实时监控）
+- GCViewer
+- GCEasy
 
 
