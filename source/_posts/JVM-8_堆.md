@@ -2,9 +2,9 @@
 title: JVM-8_堆
 date: 2020-08-06 15:45:52
 categories:
-    - 后端
+    - Java
 tags: 
-    - 面试
+    - 后端
     - JVM
 ---
 

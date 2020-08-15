@@ -2,9 +2,9 @@
 title: JVM-6_本地方法接口
 date: 2020-08-06 14:38:49
 categories:
-    - 后端
+    - Java
 tags: 
-    - 面试
+    - 后端
     - JVM
 ---
 

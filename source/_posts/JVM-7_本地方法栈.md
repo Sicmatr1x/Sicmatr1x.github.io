@@ -2,9 +2,9 @@
 title: JVM-7_本地方法栈
 date: 2020-08-06 15:03:30
 categories:
-    - 后端
+    - Java
 tags: 
-    - 面试
+    - 后端
     - JVM
 ---
 

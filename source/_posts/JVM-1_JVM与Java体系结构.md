@@ -2,9 +2,9 @@
 title: JVM-1_JVM与Java体系结构
 date: 2020-08-06 10:04:40
 categories:
-    - 后端
+    - Java
 tags: 
-    - 面试
+    - 后端
     - JVM
 ---
 

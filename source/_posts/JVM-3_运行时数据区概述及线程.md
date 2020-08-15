@@ -2,9 +2,9 @@
 title: JVM-3_运行时数据区概述及线程
 date: 2020-08-06 10:19:23
 categories:
-    - 后端
+    - Java
 tags: 
-    - 面试
+    - 后端
     - JVM
 ---
 
@@ -18,9 +18,9 @@ tags:
 
 1. [程序计数器(Program Counter Register, 或PC寄存器)](JVM-4_程序计数器.md)
 2. [虚拟机栈(Java Virtual Machine Stack)](JVM-5_虚拟机栈.md)
-3. 本地方法栈(Native Method Stack)
-4. 堆(Heap)
-5. 方法区(Method Area)
+3. [本地方法栈(Native Method Stack)](JVM-6_本地方法接口.md)
+4. [堆(Heap)](JVM-8_堆.md)
+5. [方法区(Method Area)](JVM-9_方法区.md)
 
 <img src="image-20200705112416101.png">
 

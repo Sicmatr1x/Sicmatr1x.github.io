@@ -2,9 +2,9 @@
 title: JVM-4_程序计数器
 date: 2020-08-06 10:23:57
 categories:
-    - 后端
+    - Java
 tags: 
-    - 面试
+    - 后端
     - JVM
 ---
 

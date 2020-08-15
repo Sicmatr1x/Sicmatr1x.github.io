@@ -2,9 +2,9 @@
 title: JVM-2_类加载子系统
 date: 2020-08-06 10:06:24
 categories:
-    - 后端
+    - Java
 tags: 
-    - 面试
+    - 后端
     - JVM
 ---
 
