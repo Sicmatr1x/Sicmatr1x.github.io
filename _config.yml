@@ -49,6 +49,7 @@ highlight:
   auto_detect: false
   tab_replace:
 
+
 # Home page setting
 # path: Root path for your blogs index page. (default = '')
 # per_page: Posts displayed per page. (0 = disable pagination)
@@ -83,8 +84,8 @@ pagination_dir: page
 
 # Extensions
 ## Plugins: https://hexo.io/plugins/
-## Themes: https://hexo.io/themes/
-theme: obsidian
+## Themes: https://github.com/Shen-Yu/hexo-theme-ayer
+theme: ayer
 
 # Deployment
 ## Docs: https://hexo.io/docs/deployment.html
@@ -93,3 +94,24 @@ deploy:
   repo:
     github: https://github.com/Sicmatr1x/Sicmatr1x.github.io.git
   branch: master
+
+# hexo-helper-live2d
+## Docs: https://github.com/EYHN/hexo-helper-live2d/blob/master/README.zh-CN.md
+live2d:
+  enable: false
+  scriptFrom: local # 默认
+  pluginRootPath: live2dw/ # 插件在站点上的根目录(相对路径)
+  pluginJsPath: lib/ # 脚本文件相对与插件根目录路径
+  pluginModelPath: assets/ # 模型文件相对与插件根目录路径
+  tagMode: false # 标签模式, 是否仅替换 live2d tag标签而非插入到所有页面中
+  debug: true # 调试, 是否在控制台输出日志
+  model:
+    use: live2d-widget-model-miku # npm-module package name
+  display:
+    position: right
+    width: 150
+    height: 300
+  mobile:
+    show: true
+  react:
+    opacity: 0.7
