@@ -1,0 +1,655 @@
+<!DOCTYPE html>
+
+
+<html lang="en">
+
+
+<head>
+  <meta charset="utf-8" />
+    
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+  <title>
+    (Tor) Set up an obfs4 bridge |  
+  </title>
+  <meta name="generator" content="hexo-theme-ayer">
+  
+  <link rel="shortcut icon" href="/favicon.ico" />
+  
+  <link rel="stylesheet" href="/dist/main.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Shen-Yu/cdn/css/remixicon.min.css">
+  <link rel="stylesheet" href="/css/custom.css">
+  
+  <script src="https://cdn.jsdelivr.net/npm/pace-js@1.0.2/pace.min.js"></script>
+  
+  
+
+  
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@latest/build/styles/vs2015.min.css"><!- highlight.js ->
+  <script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@latest/build/highlight.min.js"></script>
+  <script>
+    hljs.initHighlightingOnLoad();
+  </script>
+</head>
+
+</html>
+
+
+<body>
+  <div id="app">
+    
+      
+    <main class="content on">
+      <section class="outer">
+  <article
+  id="post-(Tor)-Set-up-an-obfs4-bridge"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h1 class="article-title sea-center" style="border-left:0" itemprop="name">
+  (Tor) Set up an obfs4 bridge
+</h1>
+ 
+
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2020/08/16/(Tor)-Set-up-an-obfs4-bridge/" class="article-date">
+  <time datetime="2020-08-16T02:39:13.000Z" itemprop="datePublished">2020-08-16</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E5%B7%A5%E5%85%B7/">工具</a>
+  </div>
+
+  
+<div class="word_count">
+    <span class="post-time">
+        <span class="post-meta-item-icon">
+            <i class="ri-quill-pen-line"></i>
+            <span class="post-meta-item-text"> Word count:</span>
+            <span class="post-count">1.1k</span>
+        </span>
+    </span>
+
+    <span class="post-time">
+        &nbsp; | &nbsp;
+        <span class="post-meta-item-icon">
+            <i class="ri-book-open-line"></i>
+            <span class="post-meta-item-text"> Reading time≈</span>
+            <span class="post-count">6 min</span>
+        </span>
+    </span>
+</div>
+ 
+    </div>
+      
+    <div class="tocbot"></div>
+
+
+
+
+  
+    <div class="article-entry" itemprop="articleBody">
+       
+  <h2 id="Bridge-set-up-guide"><a href="#Bridge-set-up-guide" class="headerlink" title="Bridge set up guide"></a><a href="community.torproject.org/relay/setup/bridge/">Bridge set up guide</a></h2><p>This guide will help you set up an obfs4 bridge to help censored users connect to the Tor network. The requirements are:</p>
+<pre><code>24/7 Internet connectivity
+The ability to expose TCP ports to the Internet (make sure that NAT doesn&#39;t get in the way)</code></pre><p>Note: If you’re running a platform that is not listed on this page, you can <a href="https://gitlab.com/yawning/obfs4#installation" target="_blank" rel="noopener">compile obfs4 from source</a>.</p>
+<ul>
+<li><a href="https://community.torproject.org/relay/setup/bridge/debian-ubuntu/" target="_blank" rel="noopener">Debian / Ubuntu</a>: How to deploy an obfs4 bridge on Debian / Ubuntu</li>
+<li><a href="https://community.torproject.org/relay/setup/bridge/windows/" target="_blank" rel="noopener">Windows</a>: How to deploy an obfs4 bridge on Windows</li>
+<li><a href="https://community.torproject.org/relay/setup/bridge/fedora/" target="_blank" rel="noopener">Fedora</a>: How to deploy an obfs4 bridge on Fedora</li>
+<li><a href="https://community.torproject.org/relay/setup/bridge/centos-rhel-opensuse/" target="_blank" rel="noopener">CentOS / RHEL / OpenSUSE</a>: How to deploy an obfs4 bridge on CentOS / RHEL / OpenSUSE</li>
+<li><a href="https://community.torproject.org/relay/setup/bridge/dragonflybsd/" target="_blank" rel="noopener">DragonflyBSD</a>: How to deploy an obfs4 bridge on DragonflyBSD</li>
+<li><a href="https://community.torproject.org/relay/setup/bridge/docker/" target="_blank" rel="noopener">Docker</a>: How to deploy an obfs4 bridge using a docker container</li>
+<li><a href="https://community.torproject.org/relay/setup/bridge/post-install/" target="_blank" rel="noopener">Post-install</a>: How to find your bridge in Relay Search and connect manually</li>
+<li><a href="https://community.torproject.org/relay/setup/bridge/netbsd/" target="_blank" rel="noopener">NetBSD</a>: How to deploy an obfs4 bridge on NetBSD</li>
+</ul>
+<h2 id="Set-up-bridge-by-using-Docker"><a href="#Set-up-bridge-by-using-Docker" class="headerlink" title="Set up bridge by using Docker"></a>Set up bridge by using Docker</h2><h3 id="1-Deploy-a-container"><a href="#1-Deploy-a-container" class="headerlink" title="1. Deploy a container"></a>1. Deploy a container</h3><p>We provide a docker-compose file that helps you deploy the container. First, download docker-compose.yml: </p>
+<pre><code class="yml"># This file assists operators in (re-)deploying an obfs4 bridge Docker
+# container.  You need the tool &#39;docker-compose&#39; to use this file.  You
+# can find it in the Debian package &#39;docker-compose&#39;.
+#
+# First, you need to create a configuration file, &quot;.env&quot;, in the same directory
+# as this file, &quot;docker-compose.yml&quot;.  Add the following environment variables
+# to this configuration file.  EMAIL is your email address; OR_PORT is your
+# onion routing port; and PT_PORT is your obfs4 port:
+#
+#   EMAIL=you@example.com
+#   OR_PORT=XXX
+#   PT_PORT=XXX
+#
+# Next, pull the Docker image, by running:
+#
+#   docker-compose pull obfs4-bridge
+#
+# And finally, to (re-)deploy the container, run:
+#
+#   docker-compose up -d obfs4-bridge
+
+version: &quot;3.4&quot;
+services:
+  obfs4-bridge:
+    image: thetorproject/obfs4-bridge:latest
+    environment:
+      # Exit with an error message if OR_PORT is unset or empty.
+      - OR_PORT=${OR_PORT:?Env var OR_PORT is not set.}
+      # Exit with an error message if PT_PORT is unset or empty.
+      - PT_PORT=${PT_PORT:?Env var PT_PORT is not set.}
+      # Exit with an error message if EMAIL is unset or empty.
+      - EMAIL=${EMAIL:?Env var EMAIL is not set.}
+    volumes:
+      - data:/var/lib/tor
+    ports:
+      - ${OR_PORT}:${OR_PORT}
+      - ${PT_PORT}:${PT_PORT}
+    restart: unless-stopped
+
+volumes:
+  data:
+    name: tor-datadir-${OR_PORT}-${PT_PORT}</code></pre>
+<p>and then write your bridge configuration to a new file, <code>.env</code>, which is in the same directory as <code>docker-compose.yml</code>. Here’s a template:</p>
+<pre><code># Your bridge&#39;s Tor port.
+OR_PORT=X
+# Your bridge&#39;s obfs4 port.
+PT_PORT=Y
+# Your email address.
+EMAIL=Z</code></pre><p>Replace <code>X</code> with your desired OR port, <code>Y</code> with your obfs4 port (make sure that <strong>both</strong> ports are forwarded in your firewall), and <code>Z</code> with your email address, which allows us to get in touch with you if there are problems with your bridge. With your bridge configuration in place, you can now deploy the container by running:</p>
+<pre><code>docker-compose up -d obfs4-bridge</code></pre><p>This command will automatically load your docker-compose.yml file while considering the environment variables in <code>.env</code>.</p>
+<p>You should now see output similar to the following:</p>
+<pre><code>Starting docker-obfs4-bridge_obfs4-bridge_1 ... done</code></pre><p>That’s it! Your container is now bootstrapping your new obfs4 bridge.</p>
+<h3 id="2-Upgrade-your-container"><a href="#2-Upgrade-your-container" class="headerlink" title="2. Upgrade your container"></a>2. Upgrade your container</h3><p>Upgrading to the latest version of our image is as simple as running:</p>
+<pre><code>docker-compose up -d obfs4-bridge</code></pre><p>Note that your bridge’s data directory (which includes its key material) is stored in a docker volume, so you won’t lose your bridge’s identity when upgrading to the latest docker image. If you are running multiple bridges on your computer, you need to repeat this step for each bridge. We will announce new image versions on the <a href="https://lists.torproject.org/cgi-bin/mailman/listinfo/tor-dev" target="_blank" rel="noopener">tor-dev</a> mailing list.</p>
+<h3 id="3-Monitor-your-logs"><a href="#3-Monitor-your-logs" class="headerlink" title="3. Monitor your logs"></a>3. Monitor your logs</h3><p>You can inspect your bridge’s logs by running:</p>
+<pre><code>docker logs CONTAINER_ID</code></pre><p>To use your new bridge in Tor Browser, you need its “bridge line”. Here’s how you can get your bridge line:</p>
+<pre><code>docker exec CONTAINER_ID get-bridge-line</code></pre><p>This will return a string similar to the following:</p>
+<pre><code>obfs4 1.2.3.4:1234 B0E566C9031657EA7ED3FC9D248E8AC4F37635A4 cert=OYWq67L7MDApdJCctUAF7rX8LHvMxvIBPHOoAp0+YXzlQdsxhw6EapaMNwbbGICkpY8CPQ iat-mode=0</code></pre><p>Make sure to check out the <strong>post-install notes</strong>. If you are having troubles setting up your bridge, have a look at <strong>our help section</strong>.</p>
+<h4 id="post-install-notes"><a href="#post-install-notes" class="headerlink" title="post-install notes"></a><a href="https://community.torproject.org/relay/setup/bridge/post-install/" target="_blank" rel="noopener">post-install notes</a></h4><pre><code>Congrats!
+
+If you get to this point, it means that your obfs4 bridge is running and is being distributed by BridgeDB to censored users. Note that it can take several days or weeks until you see a consistent set of users, so don&#39;t get discouraged if you don&#39;t see user connections right away. BridgeDB uses four buckets for bridge distribution: HTTPS, Moat, Email, and manual. Some buckets are used more than others, which also affects the time until your bridge sees users. Finally, there aren&#39;t many bridge users out there, so you cannot expect your bridge to be as popular as a relay.
+
+If you want to connect to your bridge manually, you will need to know the bridge&#39;s obfs4 certificate. See the file /var/lib/tor/pt_state/obfs4_bridgeline.txt and paste the entire bridge line into Tor Browser:
+
+Bridge obfs4 &lt;IP ADDRESS&gt;:&lt;PORT&gt; &lt;FINGERPRINT&gt; cert=&lt;CERTIFICATE&gt; iat-mode=0
+You&#39;ll need to replace &lt;IP ADDRESS&gt;, &lt;PORT&gt;, and &lt;FINGERPRINT&gt; with the actual values, which you can find in the tor log. Make sure to use &lt;FINGERPRINT&gt;, not &lt;HASHED FINGERPRINT&gt;; and that &lt;PORT&gt; is the obfs4 port you chose - and not the OR port.
+
+Finally, you can monitor your obfs4 bridge&#39;s usage on Relay Search. Just enter your bridge&#39;s &lt;HASHED FINGERPRINT&gt; in the form and click &quot;Search&quot;. After having set up the bridge, it takes approximately three hours for the bridge to show up in Relay Search.</code></pre><h4 id="our-help-section"><a href="#our-help-section" class="headerlink" title="our help section"></a><a href="https://community.torproject.org/relay/getting-help/" target="_blank" rel="noopener">our help section</a></h4><p>If you run into problems while setting up your relay, you can ask your questions on the public <a href="https://lists.torproject.org/cgi-bin/mailman/listinfo/tor-relays" target="_blank" rel="noopener">tor-relays mailing list</a>. The list is a great resource for asking (and answering) questions, and for getting to know other relay operators. Make sure to check out the archives!</p>
+<p>You can also get help by joining the IRC channel #tor-relays in the network <a href="https://support.torproject.org/get-in-touch/#irc-help" target="_blank" rel="noopener">irc.oftc.net</a>.</p>
+ 
+      <!-- reward -->
+      
+      <div id="reword-out">
+        <div id="reward-btn">
+          Donate
+        </div>
+      </div>
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <div class="declare">
+      <ul class="post-copyright">
+        <li>
+          <i class="ri-copyright-line"></i>
+          <strong>Copyright： </strong>
+          Copyright is owned by the author. For commercial reprints, please contact the author for authorization. For non-commercial reprints, please indicate the source.
+        </li>
+      </ul>
+    </div>
+    
+    <footer class="article-footer">
+       
+<div class="share-btn">
+      <span class="share-sns share-outer">
+        <i class="ri-share-forward-line"></i>
+        分享
+      </span>
+      <div class="share-wrap">
+        <i class="arrow"></i>
+        <div class="share-icons">
+          
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="ri-weibo-fill"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="ri-wechat-fill"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="ri-qq-fill"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="ri-douban-line"></i>
+          </a>
+          <!-- <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a> -->
+          
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="ri-facebook-circle-fill"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="ri-twitter-fill"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="ri-google-fill"></i>
+          </a>
+        </div>
+      </div>
+</div>
+
+<div class="wx-share-modal">
+    <a class="modal-close" href="javascript:;"><i class="ri-close-circle-line"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data=http://yoursite.com/2020/08/16/(Tor)-Set-up-an-obfs4-bridge/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div id="share-mask"></div>  
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Tor/" rel="tag">Tor</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+  <nav class="article-nav">
+    
+      <a href="/2020/08/16/hexo-%E4%B8%8A%E4%BD%BF%E7%94%A8highlight-js%E4%BB%A3%E7%A0%81%E9%AB%98%E4%BA%AE/" class="article-nav-link">
+        <strong class="article-nav-caption">上一篇</strong>
+        <div class="article-nav-title">
+          
+            hexo 上使用highlight.js代码高亮
+          
+        </div>
+      </a>
+    
+    
+      <a href="/2020/08/16/JVM-11_%E7%9B%B4%E6%8E%A5%E5%86%85%E5%AD%98/" class="article-nav-link">
+        <strong class="article-nav-caption">下一篇</strong>
+        <div class="article-nav-title">JVM-11_直接内存</div>
+      </a>
+    
+  </nav>
+
+   
+ 
+   
+<div class="gitalk" id="gitalk-container"></div>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.6.2/dist/gitalk.css">
+<script src="https://cdn.jsdelivr.net/npm/gitalk@1.6.2/dist/gitalk.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/blueimp-md5@2.10.0/js/md5.min.js"></script>
+<script type="text/javascript">
+  var gitalk = new Gitalk({
+    clientID: 'db290dc011893521d885',
+    clientSecret: '4cbc64d2114f4963d8090a55b508568b2f26075b',
+    repo: 'blog-comments',
+    owner: 'Sicmatr1x',
+    admin: ['Sicmatr1x'],
+    // id: location.pathname,      // Ensure uniqueness and length less than 50
+    id: md5(location.pathname),
+    distractionFreeMode: false,  // Facebook-like distraction free mode
+    pagerDirection: 'last'
+  })
+
+  gitalk.render('gitalk-container')
+</script>
+  
+</article>
+
+</section>
+      <footer class="footer">
+  <div class="outer">
+    <ul>
+      <li>
+        Copyrights &copy;
+        2015-2020
+        <i class="ri-heart-fill heart_icon"></i> Sicmatr1x
+      </li>
+    </ul>
+    <ul>
+      <li>
+        
+        
+        
+        Powered by <a href="https://hexo.io" target="_blank">Hexo</a>
+        <span class="division">|</span>
+        Theme - <a href="https://github.com/Shen-Yu/hexo-theme-ayer" target="_blank">Ayer</a>
+        
+      </li>
+    </ul>
+    <ul>
+      <li>
+        
+        
+        <span>
+  <span><i class="ri-user-3-fill"></i>Visitors:<span id="busuanzi_value_site_uv"></span></s>
+  <span class="division">|</span>
+  <span><i class="ri-eye-fill"></i>Views:<span id="busuanzi_value_page_pv"></span></span>
+</span>
+        
+      </li>
+    </ul>
+    <ul>
+      
+    </ul>
+    <ul>
+      <li>
+        <!-- cnzz统计 -->
+        
+      </li>
+    </ul>
+  </div>
+</footer>
+      <div class="float_btns">
+        <div class="totop" id="totop">
+  <i class="ri-arrow-up-line"></i>
+</div>
+
+<div class="todark" id="todark">
+  <i class="ri-moon-line"></i>
+</div>
+
+      </div>
+    </main>
+    <aside class="sidebar on">
+      <button class="navbar-toggle"></button>
+<nav class="navbar">
+  
+  <div class="logo">
+    <a href="/"><img src="/images/ayer-side.svg" alt="Sicmatr1x"></a>
+  </div>
+  
+  <ul class="nav nav-main">
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/">主页</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/archives">归档</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/categories">分类</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/tags">标签</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/about">关于我</a>
+    </li>
+    
+  </ul>
+</nav>
+<nav class="navbar navbar-bottom">
+  <ul class="nav">
+    <li class="nav-item">
+      
+      <a class="nav-item-link nav-item-search"  title="Search">
+        <i class="ri-search-line"></i>
+      </a>
+      
+      
+      <a class="nav-item-link" target="_blank" href="/atom.xml" title="RSS Feed">
+        <i class="ri-rss-line"></i>
+      </a>
+      
+    </li>
+  </ul>
+</nav>
+<div class="search-form-wrap">
+  <div class="local-search local-search-plugin">
+  <input type="search" id="local-search-input" class="local-search-input" placeholder="Search...">
+  <div id="local-search-result" class="local-search-result"></div>
+</div>
+</div>
+    </aside>
+    <script>
+      if (window.matchMedia("(max-width: 768px)").matches) {
+        document.querySelector('.content').classList.remove('on');
+        document.querySelector('.sidebar').classList.remove('on');
+      }
+    </script>
+    <div id="mask"></div>
+
+<!-- #reward -->
+<div id="reward">
+  <span class="close"><i class="ri-close-line"></i></span>
+  <p class="reward-p"><i class="ri-cup-line"></i>请我喝杯咖啡吧~</p>
+  <div class="reward-box">
+    
+    <div class="reward-item">
+      <img class="reward-img" src="https://cdn.jsdelivr.net/gh/Shen-Yu/cdn/img/alipay.jpg">
+      <span class="reward-type">支付宝</span>
+    </div>
+    
+    
+    <div class="reward-item">
+      <img class="reward-img" src="https://cdn.jsdelivr.net/gh/Shen-Yu/cdn/img/wechat.jpg">
+      <span class="reward-type">微信</span>
+    </div>
+    
+  </div>
+</div>
+    <script src="/js/jquery-2.0.3.min.js"></script>
+<script src="/js/lazyload.min.js"></script>
+<!-- Tocbot -->
+
+<script src="/js/tocbot.min.js"></script>
+<script>
+  tocbot.init({
+    tocSelector: '.tocbot',
+    contentSelector: '.article-entry',
+    headingSelector: 'h1, h2, h3, h4, h5, h6',
+    hasInnerContainers: true,
+    scrollSmooth: true,
+    scrollContainer: 'main',
+    positionFixedSelector: '.tocbot',
+    positionFixedClass: 'is-position-fixed',
+    fixedSidebarOffset: 'auto'
+  });
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/jquery-modal@0.9.2/jquery.modal.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/jquery-modal@0.9.2/jquery.modal.min.css">
+<script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/js/jquery.justifiedGallery.min.js"></script>
+<script src="/dist/main.js"></script>
+<!-- ImageViewer -->
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                <!--  Controls are self-explanatory. Order can be changed. -->
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" style="display:none" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css">
+<script src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"></script>
+
+<script>
+    function viewer_init() {
+        let pswpElement = document.querySelectorAll('.pswp')[0];
+        let $imgArr = document.querySelectorAll(('.article-entry img:not(.reward-img)'))
+
+        $imgArr.forEach(($em, i) => {
+            $em.onclick = () => {
+                // slider展开状态
+                // todo: 这样不好，后面改成状态
+                if (document.querySelector('.left-col.show')) return
+                let items = []
+                $imgArr.forEach(($em2, i2) => {
+                    let img = $em2.getAttribute('data-idx', i2)
+                    let src = $em2.getAttribute('data-target') || $em2.getAttribute('src')
+                    let title = $em2.getAttribute('alt')
+                    // 获得原图尺寸
+                    const image = new Image()
+                    image.src = src
+                    items.push({
+                        src: src,
+                        w: image.width || $em2.width,
+                        h: image.height || $em2.height,
+                        title: title
+                    })
+                })
+                var gallery = new PhotoSwipe(pswpElement, PhotoSwipeUI_Default, items, {
+                    index: parseInt(i)
+                });
+                gallery.init()
+            }
+        })
+    }
+    viewer_init()
+</script>
+
+<!-- MathJax -->
+
+<!-- Katex -->
+
+<!-- busuanzi  -->
+
+<script src="/js/busuanzi-2.3.pure.min.js"></script>
+
+<!-- ClickLove -->
+
+<!-- ClickBoom1 -->
+
+<!-- ClickBoom2 -->
+
+<!-- CodeCopy -->
+
+<link rel="stylesheet" href="/css/clipboard.css">
+<script src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js"></script>
+<script>
+  function wait(callback, seconds) {
+    var timelag = null;
+    timelag = window.setTimeout(callback, seconds);
+  }
+  !function (e, t, a) {
+    var initCopyCode = function(){
+      var copyHtml = '';
+      copyHtml += '<button class="btn-copy" data-clipboard-snippet="">';
+      copyHtml += '<i class="ri-file-copy-2-line"></i><span>COPY</span>';
+      copyHtml += '</button>';
+      $(".highlight .code pre").before(copyHtml);
+      $(".article pre code").before(copyHtml);
+      var clipboard = new ClipboardJS('.btn-copy', {
+        target: function(trigger) {
+          return trigger.nextElementSibling;
+        }
+      });
+      clipboard.on('success', function(e) {
+        let $btn = $(e.trigger);
+        $btn.addClass('copied');
+        let $icon = $($btn.find('i'));
+        $icon.removeClass('ri-file-copy-2-line');
+        $icon.addClass('ri-checkbox-circle-line');
+        let $span = $($btn.find('span'));
+        $span[0].innerText = 'COPIED';
+        
+        wait(function () { // 等待两秒钟后恢复
+          $icon.removeClass('ri-checkbox-circle-line');
+          $icon.addClass('ri-file-copy-2-line');
+          $span[0].innerText = 'COPY';
+        }, 2000);
+      });
+      clipboard.on('error', function(e) {
+        e.clearSelection();
+        let $btn = $(e.trigger);
+        $btn.addClass('copy-failed');
+        let $icon = $($btn.find('i'));
+        $icon.removeClass('ri-file-copy-2-line');
+        $icon.addClass('ri-time-line');
+        let $span = $($btn.find('span'));
+        $span[0].innerText = 'COPY FAILED';
+        
+        wait(function () { // 等待两秒钟后恢复
+          $icon.removeClass('ri-time-line');
+          $icon.addClass('ri-file-copy-2-line');
+          $span[0].innerText = 'COPY';
+        }, 2000);
+      });
+    }
+    initCopyCode();
+  }(window, document);
+</script>
+
+
+<!-- CanvasBackground -->
+
+
+    
+  </div>
+</body>
+
+</html>

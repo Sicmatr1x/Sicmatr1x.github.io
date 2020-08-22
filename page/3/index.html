@@ -25,9 +25,15 @@
 
   
 
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@latest/build/styles/vs2015.min.css"><!- highlight.js ->
+  <script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@latest/build/highlight.min.js"></script>
+  <script>
+    hljs.initHighlightingOnLoad();
+  </script>
 </head>
 
 </html>
+
 
 <body>
   <div id="app">
@@ -93,7 +99,7 @@
     
     
     <article
-  id="post-Docker"
+  id="post-虚拟机相关"
   class="article article-type-post"
   itemscope
   itemprop="blogPost"
@@ -104,91 +110,30 @@
     <header class="article-header">
        
 <h2 itemprop="name">
-  <a class="article-title" href="/2019/10/27/Docker/"
-    >Docker</a> 
+  <a class="article-title" href="/2020/07/08/%E8%99%9A%E6%8B%9F%E6%9C%BA%E7%9B%B8%E5%85%B3/"
+    >虚拟机相关</a> 
 </h2>
  
 
     </header>
      
     <div class="article-meta">
-      <a href="/2019/10/27/Docker/" class="article-date">
-  <time datetime="2019-10-27T14:05:19.000Z" itemprop="datePublished">2019-10-27</time>
+      <a href="/2020/07/08/%E8%99%9A%E6%8B%9F%E6%9C%BA%E7%9B%B8%E5%85%B3/" class="article-date">
+  <time datetime="2020-07-08T07:50:27.000Z" itemprop="datePublished">2020-07-08</time>
 </a> 
   <div class="article-category">
     <a class="article-category-link" href="/categories/%E8%BF%90%E7%BB%B4/">运维</a>
   </div>
+
    
     </div>
-      
-    <div class="article-entry" itemprop="articleBody">
        
-  <p><a href="https://yeasy.gitbooks.io/docker_practice/" target="_blank" rel="noopener">Docker — 从入门到实践</a></p>
-<p>Docker 是一个开源项目，诞生于 2013 年初，最初是 dotCloud 公司内部的一个业余项目。它基于 Google 公司推出的 Go 语言实现。 项目后来加入了 Linux 基金会，遵从了 Apache 2.0 协议，项目代码在 GitHub上进行维护</p>
-<p>Docker 项目的目标是实现轻量级的操作系统虚拟化解决方案。 Docker 的基础是 Linux 容器（LXC）等技术。在 LXC 的基础上 Docker 进行了进一步的封装，让用户不需要去关心容器的管理，使得操作更为简便。用户操作 Docker 的容器就像操作一个快速轻量级的虚拟机一样简单。Docker，它彻底释放了虚拟化的威力，极大降低了云计算资源供应的成本，同时让应用的部署、测试和分发都变得前所未有的高效和轻松！</p>
-<img src="/2019/10/27/Docker/virtual-machines.png" class="" title="This is an image">
-
-<img src="/2019/10/27/Docker/docker.png" class="" title="This is an image">
-
-<h2 id="基础概念"><a href="#基础概念" class="headerlink" title="基础概念"></a>基础概念</h2><h3 id="Docker-镜像"><a href="#Docker-镜像" class="headerlink" title="Docker 镜像"></a>Docker 镜像</h3><p>Docker 镜像就是一个只读的模板。</p>
-<p>例如：一个镜像可以包含一个完整的 ubuntu 操作系统环境，里面仅安装了 Apache 或用户需要的其它应用程序。镜像可以用来创建 Docker 容器。Docker 提供了一个很简单的机制来创建镜像或者更新现有的镜像，用户甚至可以直接从其他人那里下载一个已经做好的镜像来直接使用。</p>
-<h3 id="Docker容器"><a href="#Docker容器" class="headerlink" title="Docker容器"></a>Docker容器</h3><p>Docker 利用容器来运行应用。</p>
-<p>容器是从镜像创建的运行实例。它可以被启动、开始、停止、删除。每个容器都是相互隔离的、保证安全的平台。可以把容器看做是一个简易版的 Linux 环境（包括root用户权限、进程空间、用户空间和网络空间等）和运行在其中的应用程序。</p>
-<p>*注：镜像是只读的，容器在启动的时候创建一层可写层作为最上层。</p>
-<h3 id="Docker-仓库"><a href="#Docker-仓库" class="headerlink" title="Docker 仓库"></a>Docker 仓库</h3><p>仓库是集中存放镜像文件的场所。有时候会把仓库和仓库注册服务器（Registry）混为一谈，并不严格区分。实际上，仓库注册服务器上往往存放着多个仓库，每个仓库中又包含了多个镜像，每个镜像有不同的标签（tag）。<br>仓库分为公开仓库（Public）和私有仓库（Private）两种形式。最大的公开仓库是 Docker Hub，存放了数量庞大的镜像供用户下载。用户也可以在本地网络内创建一个私有仓库。当用户创建了自己的镜像之后就可以使用 push 命令将它上传到公有或者私有仓库，这样下次在另外一台机器上使用这个镜像时候，只需要从仓库上 pull 下来就可以了。</p>
-<p>*注：Docker 仓库的概念跟 Git 类似，注册服务器可以理解为 GitHub 这样的托管服务。</p>
-<hr>
-<h2 id="安装-docker"><a href="#安装-docker" class="headerlink" title="安装 docker"></a>安装 docker</h2><h3 id="Linux-安装-docker"><a href="#Linux-安装-docker" class="headerlink" title="Linux 安装 docker"></a>Linux 安装 docker</h3><p>Docker 目前只能安装在 64 位平台上，并且要求内核版本不低于 3.10</p>
-<p>检查系统内核版本</p>
-<pre><code>$ uname -a
-Linux Host 3.16.0-43-generic #58~14.04.1-Ubuntu SMP Mon Jun 22 10:21:20 UTC 2015 x86_64 x86_64 x86_64 GNU/Linux
-
-$ cat /proc/version
-Linux version 3.16.0-43-generic (buildd@brownie) (gcc version 4.8.2 (Ubuntu 4.8.2-19ubuntu1) ) #58~14.04.1-Ubuntu SMP Mon Jun 22 10:21:20 UTC 2015
-</code></pre><p>添加镜像源gpg密钥</p>
-<pre><code>$ sudo apt-key adv --keyserver hkp://p80.pool.sks-keyservers.net:80 --recv-keys 58118E89F3A912897C070ADBF76221572C52609D</code></pre><p>获取当前操作系统的代号</p>
-<pre><code>$ lsb_release -c
-Codename:       trusty</code></pre><p>添加 Docker 的官方 apt 软件源</p>
-<pre><code>sudo cat &lt;&lt;EOF &gt; /etc/apt/sources.list.d/docker.list
-deb https://apt.dockerproject.org/repo ubuntu-trusty main
-EOF
-
-sudo gedit /etc/apt/sources.list.d/docker.list</code></pre><p>更新apt包缓存</p>
-<pre><code>sudo apt-get update</code></pre><p>安装Docker</p>
-<pre><code>sudo apt-get install -y docker-engine</code></pre><p>或</p>
-<pre><code>先安装curl
-sudo apt-get install curl
-
-再使用脚本自动安装
-curl -sSL https://get.docker.com/ | sh
-(若无法访问可使用国内源)
-阿里云：
-curl -sSL http://acs-public-mirror.oss-cn-hangzhou.aliyuncs.com/docker-engine/internet | sh -
-DaoCloud：
-curl -sSL https://get.daocloud.io/docker | sh</code></pre><h3 id="镜像"><a href="#镜像" class="headerlink" title="镜像"></a>镜像</h3><p>获取镜像</p>
-<pre><code>sudo docker pull ubuntu:14:04</code></pre><p>运行docker</p>
-<pre><code>sudo docker run –t –i ubuntu:14:04 /bin/bash</code></pre><h3 id="Windows-安装-docker"><a href="#Windows-安装-docker" class="headerlink" title="Windows 安装 docker"></a>Windows 安装 docker</h3><p><a href="https://download.docker.com/win/stable/Docker%20for%20Windows%20Installer.exe" target="_blank" rel="noopener"><strong>download.docker.com</strong></a></p>
-<h2 id="docker-命令"><a href="#docker-命令" class="headerlink" title="docker 命令"></a>docker 命令</h2><p>查看所有的容器</p>
-<pre><code>docker ps -a</code></pre><p>移除这个指定容器</p>
-<pre><code>docker rm a37e6ca5cdc6</code></pre><p>启动容器</p>
-<pre><code>docker start fa69d210933c
-
--i:以 交互模式启动 交互模式不懂点我 
--t:以 附加进程方式启动 附加进程不懂的点我</code></pre><p>关闭容器</p>
-<pre><code>docker stop a37e6ca5cdc6</code></pre><hr>
-<p>查看端口占用</p>
-<pre><code>netstat -aon | findstr &#39;2280&#39;
-tasklist | findstr </code></pre> 
-      <!-- reward -->
-      
-    </div>
-    
 
     <!-- copyright -->
     
     <footer class="article-footer">
        
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Docker/" rel="tag">Docker</a></li></ul>
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/" rel="tag">环境搭建</a></li></ul>
 
     </footer>
   </div>
@@ -200,7 +145,7 @@ tasklist | findstr </code></pre>
 
     
     <article
-  id="post-hello-world"
+  id="post-我是如何使用frp内网穿透来访问局域网web服务的"
   class="article article-type-post"
   itemscope
   itemprop="blogPost"
@@ -211,69 +156,76 @@ tasklist | findstr </code></pre>
     <header class="article-header">
        
 <h2 itemprop="name">
-  <a class="article-title" href="/2019/10/26/hello-world/"
-    >Hello World</a> 
+  <a class="article-title" href="/2020/06/08/%E6%88%91%E6%98%AF%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8frp%E5%86%85%E7%BD%91%E7%A9%BF%E9%80%8F%E6%9D%A5%E8%AE%BF%E9%97%AE%E5%B1%80%E5%9F%9F%E7%BD%91web%E6%9C%8D%E5%8A%A1%E7%9A%84/"
+    >我是如何使用frp内网穿透来访问局域网web服务的</a> 
 </h2>
  
 
     </header>
      
     <div class="article-meta">
-      <a href="/2019/10/26/hello-world/" class="article-date">
-  <time datetime="2019-10-26T04:39:04.000Z" itemprop="datePublished">2019-10-26</time>
+      <a href="/2020/06/08/%E6%88%91%E6%98%AF%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8frp%E5%86%85%E7%BD%91%E7%A9%BF%E9%80%8F%E6%9D%A5%E8%AE%BF%E9%97%AE%E5%B1%80%E5%9F%9F%E7%BD%91web%E6%9C%8D%E5%8A%A1%E7%9A%84/" class="article-date">
+  <time datetime="2020-06-08T02:52:03.000Z" itemprop="datePublished">2020-06-08</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E5%90%8E%E7%AB%AF/">后端</a>
+  </div>
+
+   
+    </div>
+       
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/frp/" rel="tag">frp</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%86%85%E7%BD%91%E7%A9%BF%E9%80%8F/" rel="tag">内网穿透</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E8%B8%A9%E5%9D%91/" rel="tag">踩坑</a></li></ul>
+
+    </footer>
+  </div>
+
+    
+ 
+   
+</article>
+
+    
+    <article
+  id="post-Daily-Knowledge-Point"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2020/05/20/Daily-Knowledge-Point/"
+    >Daily Knowledge Point</a> 
+</h2>
+ 
+
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2020/05/20/Daily-Knowledge-Point/" class="article-date">
+  <time datetime="2020-05-20T00:45:37.000Z" itemprop="datePublished">2020-05-20</time>
 </a> 
   <div class="article-category">
     <a class="article-category-link" href="/categories/%E6%9D%82%E9%A1%B9/">杂项</a>
   </div>
+
    
     </div>
-      
-    <div class="article-entry" itemprop="articleBody">
        
-  <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><pre><code class="bash">$ hexo new &quot;My New Post&quot;</code></pre>
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><pre><code class="bash">$ hexo server</code></pre>
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><pre><code class="bash">$ hexo generate</code></pre>
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><pre><code class="bash">$ hexo deploy</code></pre>
-<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="noopener">Deployment</a></p>
-<h2 id="Markdown-Write-Example"><a href="#Markdown-Write-Example" class="headerlink" title="Markdown Write Example"></a>Markdown Write Example</h2><h3 id="Code-Highlight"><a href="#Code-Highlight" class="headerlink" title="Code Highlight"></a>Code Highlight</h3><pre><code class="java">package com.sic.moocspringboot;
-
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
-
-@SpringBootApplication
-public class MoocSpringbootApplication {
-
-    public static void main(String[] args) {
-        SpringApplication.run(MoocSpringbootApplication.class, args);
-    }
-
-}</code></pre>
-<h2 id="hexo"><a href="#hexo" class="headerlink" title="hexo"></a>hexo</h2><h3 id="theme-hexo-theme-obsidian"><a href="#theme-hexo-theme-obsidian" class="headerlink" title="theme: hexo-theme-obsidian"></a>theme: <a href="https://github.com/TriDiamond/hexo-theme-obsidian" target="_blank" rel="noopener">hexo-theme-obsidian</a></h3><h4 id="markdown-head-template"><a href="#markdown-head-template" class="headerlink" title="markdown head template"></a>markdown head template</h4><pre><code class="md">title: My awesome title
-date: 2019-07-14 18:38:45
-categories:
-    - Category1
-    - Category2
-tags: 
-    - Tag1
-    - Tag2
-mp3: http://domain.com/awesome.mp3
-cover: statics/A Cruel Angel&#39;s Thesis Bilingual two-channel effects version.mp3
-preview: 300</code></pre>
- 
-      <!-- reward -->
-      
-    </div>
-    
 
     <!-- copyright -->
     
     <footer class="article-footer">
        
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/hexo/" rel="tag">hexo</a></li></ul>
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E6%8A%80%E6%9C%AF/" rel="tag">技术</a></li></ul>
 
     </footer>
   </div>
@@ -285,7 +237,7 @@ preview: 300</code></pre>
 
     
     <article
-  id="post-Clean Code"
+  id="post-Java复习笔记：注解"
   class="article article-type-post"
   itemscope
   itemprop="blogPost"
@@ -296,745 +248,76 @@ preview: 300</code></pre>
     <header class="article-header">
        
 <h2 itemprop="name">
-  <a class="article-title" href="/2019/10/26/Clean%20Code/"
-    >Clean Code</a> 
+  <a class="article-title" href="/2020/05/13/Java%E5%A4%8D%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%9A%E6%B3%A8%E8%A7%A3/"
+    >Java复习笔记：注解</a> 
 </h2>
  
 
     </header>
      
     <div class="article-meta">
-      <a href="/2019/10/26/Clean%20Code/" class="article-date">
-  <time datetime="2019-10-26T03:49:04.000Z" itemprop="datePublished">2019-10-26</time>
+      <a href="/2020/05/13/Java%E5%A4%8D%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%9A%E6%B3%A8%E8%A7%A3/" class="article-date">
+  <time datetime="2020-05-13T06:49:28.000Z" itemprop="datePublished">2020-05-13</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/">设计模式</a>
+  </div>
+
+   
+    </div>
+       
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JavaScript/" rel="tag">JavaScript</a></li></ul>
+
+    </footer>
+  </div>
+
+    
+ 
+   
+</article>
+
+    
+    <article
+  id="post-Spring注解驱动开发"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2020/05/12/Spring%E6%B3%A8%E8%A7%A3%E9%A9%B1%E5%8A%A8%E5%BC%80%E5%8F%91/"
+    >Spring注解驱动开发</a> 
+</h2>
+ 
+
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2020/05/12/Spring%E6%B3%A8%E8%A7%A3%E9%A9%B1%E5%8A%A8%E5%BC%80%E5%8F%91/" class="article-date">
+  <time datetime="2020-05-12T08:02:27.000Z" itemprop="datePublished">2020-05-12</time>
 </a> 
   <div class="article-category">
     <a class="article-category-link" href="/categories/%E5%90%8E%E7%AB%AF/">后端</a>
   </div>
+
    
     </div>
-      
-    <div class="article-entry" itemprop="articleBody">
        
-  <h2 id="整洁代码"><a href="#整洁代码" class="headerlink" title="整洁代码"></a>整洁代码</h2><h3 id="单一权责原则-Single-Responsibility-SRP"><a href="#单一权责原则-Single-Responsibility-SRP" class="headerlink" title="单一权责原则(Single Responsibility ,SRP)"></a>单一权责原则(Single Responsibility ,SRP)</h3><p>一个类只负责一功能领域中的相应职，或者可以定义为：就一个类而言,应该只有一个引起它变化的原因.</p>
-<p>修改前:</p>
-<pre><code class="java">public class CustomerDataChart{
-    public Connection getConnection(){
-
-    }
-    public List&lt;Customers&gt; findCustomers(){
-
-    }
-    public void createChart(){
-
-    }
-    public void displayChart(){
-
-    }
-}</code></pre>
-<p>修改后:</p>
-<pre><code class="java">public class DBUtil{
-    public Connection getConnection(){
-
-    }
-}
-
-public class CustomerDAO{
-    private DBUtil util;
-    public List&lt;Customers&gt; findCustomers(){
-
-    }
-}
-
-public class CustomerDataChart{
-    private CustomerDAO dao;
-    public void createChart(){
-
-    }
-    public void displayChart(){
-
-    }
-}</code></pre>
-<hr>
-<h3 id="开放闭合原则-Open-Closed-Principle-OCP"><a href="#开放闭合原则-Open-Closed-Principle-OCP" class="headerlink" title="开放闭合原则(Open Closed Principle,OCP)"></a>开放闭合原则(Open Closed Principle,OCP)</h3><p>一个软件实体应当对扩展开放，对修改关闭。即软件实体应尽量在不修改原有代码<br>的情况下进行扩展。</p>
-<p>修改前:</p>
-<pre><code class="java">public class PieChart{
-    public void display(){
-        System.out.println(&quot;PieChart:&quot; + type);
-    }
-}
-
-public class BarChart{
-    public void display(){
-        System.out.println(&quot;BarChart:&quot; + type);
-    }
-}
-
-public class ChartDisplay {
-    public void display(String type){
-        switch(type){
-            case &quot;PieChart&quot;:
-                PieChart pie = new PieChart();
-                pie.display();
-                break;
-            case &quot;BarChart&quot;:
-                BarChart bar = new BarChart();
-                bar.display();
-                break;
-        }
-    }
-}</code></pre>
-<p>修改后:</p>
-<pre><code class="java">public abstract class AbstractChart{
-    public void display();
-}
-
-public class PieChart extends AbstractChart{
-    @Override
-    public void display(){
-        System.out.println(&quot;PieChart&quot;);
-    }
-}
-
-public class BarChart extends AbstractChart{
-    @Override
-    public void display(){
-        System.out.println(&quot;BarChart&quot;);
-    }
-}
-
-public class ChartDisplay{
-    private AbstractChart chart;
-    public setChart(AbstractChart chart){
-        this.chart = chart;
-    }
-
-    public void display(){
-        chart.display();
-    }
-}</code></pre>
-<hr>
-<h3 id="LSP里氏代换原则-Liskov-Substitution-Principle"><a href="#LSP里氏代换原则-Liskov-Substitution-Principle" class="headerlink" title="LSP里氏代换原则(Liskov Substitution Principle)"></a>LSP里氏代换原则(Liskov Substitution Principle)</h3><p>所有引用基类（父类）的地方必须能透明地使用其子类的对象。</p>
-<p>修改前:</p>
-<pre><code class="java">public class CommonCustomer {
-    private String name;
-    private String email;
-    public getName(){
-        return this.name;
-    }
-    public setName(String name){
-        this.name = name;
-    }
-    public getEmail(){
-        return this.email;
-    }
-    public setEmail(String email){
-        this.email = email;
-    }
-}
-
-public class VIPCustomer {
-    private String name;
-    private String email;
-    public getName(){
-        return this.name;
-    }
-    public setName(String name){
-        this.name = name;
-    }
-    public getEmail(){
-        return this.email;
-    }
-    public setEmail(String email){
-        this.email = email;
-    }
-}
-
-public class EmailSender {
-    public send(CommonCustomer customer){
-        //send
-    }
-    public send(VIPCustomer customer){
-        //send
-    }
-}</code></pre>
-<p>修改后:</p>
-<pre><code class="java">public class Customer {
-    private String name;
-    private String email;
-    public getName(){
-        return this.name;
-    }
-    public setName(String name){
-        this.name = name;
-    }
-    public getEmail(){
-        return this.email;
-    }
-    public setEmail(String email){
-        this.email = email;
-    }
-}
-
-public class CommonCustomer extends Customer{
-
-}
-
-public class VIPCustomer extends Customer{
-
-}
-
-public class EmailSender {
-    public send(Customer customer){
-        //send
-    }
-}</code></pre>
-<hr>
-<h3 id="接口隔离原则-Interface-Segregation-Principle-ISP"><a href="#接口隔离原则-Interface-Segregation-Principle-ISP" class="headerlink" title="接口隔离原则(Interface Segregation Principle, ISP)"></a>接口隔离原则(Interface Segregation Principle, ISP)</h3><p>使用多个专门的接口，而不使用单一的总接口，即客户端不应该依赖那些它不需要<br>的接口。</p>
-<p>修改前:</p>
-<pre><code class="java">public interface CustomerDataDisplay {
-    public void dataRead();
-    public void transformToXML();
-    public void createChart();
-    public void displayChart();
-    public void createReport();
-    public void displayReport();
-}
-
-public class ConcreteClass implements CustomerDataDisplay{
-
-}</code></pre>
-<p>修改后:</p>
-<pre><code class="java">public interface DataHandler {
-    public void dataRead();
-}
-
-public interface XMLTransformer {
-    public void transformToXML();
-}
-
-public interface ChartHandler {
-    public void createChart();
-    public void displayChart();
-}
-
-public interface ReportHandler {
-    public void createReport();
-    public void displayReport();
-}
-
-public class ConcreteClass implements DataHandler, ChartHandler{
-
-}</code></pre>
-<hr>
-<h3 id="依赖倒置原则-Dependency-Inversion-Principle-DIP"><a href="#依赖倒置原则-Dependency-Inversion-Principle-DIP" class="headerlink" title="依赖倒置原则(Dependency Inversion Principle,DIP)"></a>依赖倒置原则(Dependency Inversion Principle,DIP)</h3><p>抽象不应该依赖于细节，细节应当依赖于抽象。换言之，要针对接口编程，而不是<br>针对实现编程。</p>
-<p>修改前:</p>
-<pre><code class="java">public interface TXTDataConvertor {
-    public void addCustomer();
-}
-
-public interface ExcelDataConvertor {
-    public void addCustomer();
-}
-
-public class CustomerDAO implements TXTDataConvertor, ExcelDataConvertor{
-    public void addCustomer(){
-
-    }
-}</code></pre>
-<p>修改后:</p>
-<pre><code class="java">public interface TXTDataConvertor {
-    public void readFile();
-}
-
-public interface ExcelDataConvertor {
-    public void readFile();
-}
-
-public abstract class DataConvertor implements TXTDataConvertor, ExcelDataConvertor{
-    public void readFile(){
-
-    }
-}
-
-public class CustomerDAO extends DataConvertor{
-    public void addCustomer(){
-
-    }
-}</code></pre>
-<pre><code class="xml">...
-&lt;className&gt;TX TDataConvertor&lt;/className&gt;
-...</code></pre>
-<hr>
-<h2 id="有意义的命名"><a href="#有意义的命名" class="headerlink" title="有意义的命名"></a>有意义的命名</h2><h3 id="名副其实"><a href="#名副其实" class="headerlink" title="名副其实"></a>名副其实</h3><p>如果名称需要注释来补充，那就不算是名副其实。</p>
-<h3 id="避免误导-amp-做有意义的区分"><a href="#避免误导-amp-做有意义的区分" class="headerlink" title="避免误导 &amp; 做有意义的区分"></a>避免误导 &amp; 做有意义的区分</h3><p>避免误导：避免留下掩藏代码本意的错误线索。应当避免使用与本意相悖的词。</p>
-<p>e.g:</p>
-<ul>
-<li>以数字系列命名</li>
-<li>错误的拼写</li>
-<li>命名一组账号：accountGroup、bunchOfAccounts和accounts 好于 accountList(List对程序员有特殊意义)</li>
-<li>废话都是冗余。Variable一词永远不应当出现在变量名中。Table一词永远不应当出现在表名中。</li>
-</ul>
-<h3 id="使用读得出来的名称-amp-使用可搜索的名称"><a href="#使用读得出来的名称-amp-使用可搜索的名称" class="headerlink" title="使用读得出来的名称 &amp; 使用可搜索的名称"></a>使用读得出来的名称 &amp; 使用可搜索的名称</h3><p>使用读的出来的名称：</p>
-<ul>
-<li>genymdhms(生成日期，年、月、日、时、分、秒)，他们一般读作“gen why emm dee aich emm ess”或“gen-yah-mudda-hims”</li>
-</ul>
-<p>使用可搜索的名称：</p>
-<ul>
-<li>WORK_DAYS_PER_WEEK 要比数字 5 好找</li>
-<li>长名称胜于短名称，搜得到的名称胜于用自造编码代写就的名称</li>
-<li>若变量或常量可能在代码中多处使用，则应赋其以便于搜索的名称</li>
-</ul>
-<h3 id="避免使用编码"><a href="#避免使用编码" class="headerlink" title="避免使用编码"></a>避免使用编码</h3><ul>
-<li>如果编译器不做类型检查或动态类型语言，程序员需要匈牙利语标记法来帮助自己记住类型</li>
-<li>不推荐接口采用IShapeFactory，可以考虑接口ShapeFactory,实现采用ShapeFactoryImp或者丑陋的CShapeFactory，比对接口名称编码好</li>
-</ul>
-<h3 id="常见误区"><a href="#常见误区" class="headerlink" title="常见误区"></a>常见误区</h3><ul>
-<li>避免思维映射:不应当让读者在脑中把你的名称翻译为他们熟知的名称。这种问题经常出现在选择是使用问题领域术语还是解决方案领域术语时。</li>
-<li>类名或对象名应该是名词或名词短语</li>
-<li>方法名应当是动词或者动词短语</li>
-<li>重构构造器，使用描述了参数的静态工厂方法名<pre><code class="java">  Complex fulcrumPoint = Complex.FromRealNumber(23.0); </code></pre>
-</li>
-<li>给每个抽象概念选一个词，并且一以贯之</li>
-<li>别用双关语</li>
-<li>使用解决方案领域名称</li>
-<li>采用从所涉问题领域而来的名称</li>
-<li>你需要用有良好命名的类、函数或名称空间来放置名称，给读者提供语境,如果没这么做，给名称添加前就是最后一招了</li>
-</ul>
-<hr>
-<h2 id="函数"><a href="#函数" class="headerlink" title="函数"></a>函数</h2><p>Function should do one thing. They should do it well. They should do it only.</p>
-<h3 id="函数的原则"><a href="#函数的原则" class="headerlink" title="函数的原则"></a>函数的原则</h3><ol>
-<li>短小:<ul>
-<li>if语句、else语句、while语句等，其中的代码块只能有一行</li>
-<li>函数的缩进层级不该多于一层或两层</li>
-</ul>
-</li>
-<li>函数应该做一件事。做好这件事。只做这一件事。</li>
-<li>每个函数一个抽象层级:要让每个函数后面都跟着位于下一抽象层级的函数，这样一来，在查看函数列表时，就能偱抽象层级向下阅读了。我把这叫做向下规则。</li>
-<li>swith语句。</li>
-</ol>
-<pre><code class="java">public Money calculatePay(Empoyee e) throws InvalidEmployeeType{
-    switch (e.type) {
-        case COMMISSIONED:
-            return calculateCommissionedPay(e);
-        case HOURLY:
-            return calculateHourlyPay(e);
-        case SELARIED:
-            return calculateSalariedPay(e);
-        default:
-          throw new InvalidEmployeeType(e.type);
-    }
-}</code></pre>
-<pre><code>- 太长，当出现新的雇员类型时，还会变得更长。
-- 明显做了不止一件事。
-- 违反了单以权责原则，有好几个修改的理由。
-- 违反了开放闭合原则，每当添加新类型时，就必须修改之。
-- 可能会到处出现类似的结构函数</code></pre><p>可以改成:</p>
-<pre><code class="java">public abstract class Employee {
-    public abstract boolean isPayday();
-    public abstract Money calculatePay();
-    public abstract void deliverPay();
-}
-
-public interface EmployeeFactory {
-    public Employee makeEmployee(EmployeeRecord r) throws InvalidEmployeeType;
-}
-
-public class EmployeeFactoryImpl implements EmployeeFactory {
-    public Employee makeEmployee(EmployeeRecord r) throws InvalidEmployeeType{
-        switch (e.type) {
-            case COMMISSIONED:
-              return CommissionedEmployee(r);
-            case HOURLY:
-              return HourlyPayEmployee(r);
-            case SELARIED:
-              return SalariedPayEmployee(r);
-            default:
-              throw new InvalidEmployeeType(e.type);
-        }
-    }
-}</code></pre>
-<p>将swith语句埋到抽象工厂下，该工厂使用 switch 语句为 Employee 的派生物创建适当的实体，而不同的函数，如 calculatePay、isPayday 和 deliverPay等，则藉由 Employee 接口多态地接受派遣。对于 switch 语句，我的规矩是如果只出现一次，用于创建多态对象，而且隐藏在某个继承关系中。</p>
-<ol start="5">
-<li>使用描述性的名称。</li>
-<li>函数参数个数 &lt;= 3。</li>
-<li>无副作用</li>
-<li>分割指令与询问。函数要么做什么事，要么回答什么事，但二者不可得兼。函数应该修改某对象的状态或是返回该对象的有关信息。两样都干常会导致混乱。</li>
-<li>使用异常替代返回错误码。从指令式函数返回错误码轻微违反了指令与询问分隔的规则。它鼓励了在if 语句判断中把指令当作表达式使用。这不会引起动词/形容词混淆，但却导致更深层次的嵌套结构。当返回误码时，就是在要求调用者立刻处理错误。另一方面，如果使用异常替代返回错误码，错误处理代码就能从主路径代码中分离出来。</li>
-<li>别重复自己。</li>
-<li>结构化编程。每个函数、函数中的每个代码块都应该有一个入口、一个出口。每个函数中之该有一个return语句。</li>
-</ol>
-<h3 id="函数修改的策略"><a href="#函数修改的策略" class="headerlink" title="函数修改的策略"></a>函数修改的策略</h3><p>大师级程序员把系统当作故事来讲，而不是当作程序来写。他们使用选定编程语言提供的工具构建一种更为丰富且更具表达力的语言，用来讲那个故事。那种领域特定语言的一个部分，就是描述在系统中发生的各种行为的函数层级。在一种狡猾的递归操作中，这些行为使用它们定义的与领域紧密相关的语言讲述自己那个小故事。</p>
-<hr>
-<h2 id="注释"><a href="#注释" class="headerlink" title="注释"></a>注释</h2><p>注释不能美化糟糕的代码</p>
-<p>好注释:</p>
-<ul>
-<li>唯一真正好的注释是你想办法不去写的注释</li>
-<li>法律信息:公司代码规范要求编写与法律有关的注释，只写引用即可</li>
-<li>阐释:注释把某些晦涩难明的参数或返回值的意义翻译为某种可读形式</li>
-<li>警示:警告其他程序员会出现某种后果的注释。</li>
-<li>TODO注释:有理由在源代码中放置要做的工作列表。定期查看，删除不再需要的。</li>
-<li>放大:注释可以用来放大某种看来不合理之物的重要性。</li>
-<li>公共API中的Javadoc,Javadoc也可能误导、不适用或者提供错误信息</li>
-</ul>
-<p>坏注释:</p>
-<ul>
-<li>喃喃自语</li>
-<li>多余的注释</li>
-<li>误导性注释</li>
-<li>循规式注释</li>
-<li>日志式注释:应由源代码控制系统来管理</li>
-<li>废话注释</li>
-<li>能用函数或变量时就别用注释</li>
-<li>位置标记</li>
-<li>括弧后面的注释:while,if等的多层嵌套，用短小的封装的函数代替</li>
-<li>归属与签名:源代码控制系统是这类信息最好的归属地</li>
-<li>注释掉的代码</li>
-<li>HTML注释</li>
-<li>非本地信息:别在本地注释的上下文环境中给出系统级的信息</li>
-<li>信息过多:有趣的历史话题或者无关的细节描述</li>
-<li>不明显的联系</li>
-<li>函数头</li>
-<li>非公共代码中的JavaDoc</li>
-</ul>
-<hr>
-<h2 id="格式"><a href="#格式" class="headerlink" title="格式"></a>格式</h2><h3 id="格式的目的"><a href="#格式的目的" class="headerlink" title="格式的目的"></a>格式的目的</h3><ul>
-<li>垂直格式</li>
-<li>横向格式<ul>
-<li>尽力保持代码行短小。无需拖动滚动条到右侧的原则。</li>
-<li>水平对齐。</li>
-<li>缩进。</li>
-</ul>
-</li>
-<li>团队风格<ul>
-<li>项目开始时制定一套编码风格，将规则编写进IDE。</li>
-</ul>
-</li>
-</ul>
-<hr>
-<h2 id="对象和数据结构"><a href="#对象和数据结构" class="headerlink" title="对象和数据结构"></a>对象和数据结构</h2><h3 id="数据抽象"><a href="#数据抽象" class="headerlink" title="数据抽象"></a>数据抽象</h3><p>类并不简单地用取值器和赋值器将其变量推向外间，而是曝露抽象接口，以便用户无需了解数据的实现就能操作数据本体。过程式代码难以添加新数据结构，因为必须修改所有函数。面向对象代码难以添加新函数，因为必须修改所有类。</p>
-<h3 id="得墨忒耳律"><a href="#得墨忒耳律" class="headerlink" title="得墨忒耳律"></a>得墨忒耳律</h3><p>模块不应了解所操作对象的内部情形。得墨忒耳律认为，类C的方法f只应该调用以下对象的方法：</p>
-<ul>
-<li>C</li>
-<li>由f创建的对象</li>
-<li>作为参数传递给f的对象</li>
-<li>由C持有的实体变量持有的对象</li>
-</ul>
-<h3 id="数据传送对象"><a href="#数据传送对象" class="headerlink" title="数据传送对象"></a>数据传送对象</h3><p>DTO（Data Transfer Objects）经常用作与数据库通信、或解析套接字传递的消息之类场景中。</p>
-<hr>
-<h2 id="错误处理"><a href="#错误处理" class="headerlink" title="错误处理"></a>错误处理</h2><ol>
-<li>使用异常而非返回码</li>
-<li>先写Try-Catch-Finally语句</li>
-</ol>
-<h3 id="异常的使用"><a href="#异常的使用" class="headerlink" title="异常的使用"></a>异常的使用</h3><ul>
-<li>使用不可控异常：可控异常的代价就是违反开放/闭合原则。//TODO:?</li>
-<li>给出异常发生的环境说明,都应当提供足够的环境说明，以便判断错误的来源和处所。</li>
-<li>定义常规流程：采用特例模式。创建一个类或配置一个对象，用来处理特例.</li>
-<li>别返回null值：在方法中返回null值，不如抛出异常，或是返回特例对象</li>
-</ul>
-<hr>
-<h2 id="边界"><a href="#边界" class="headerlink" title="边界"></a>边界</h2><h3 id="整洁的边界"><a href="#整洁的边界" class="headerlink" title="整洁的边界"></a>整洁的边界</h3><p>应该避免我们的代码过多地了解第三方代码中的特定信息。在这种场景下，适配器模式是非常好的设计，它不仅能将不兼容的接口改写成兼容的接口，还能够对通过对第三方工具重新封装来避免边界的变化对系统的影响。</p>
-<hr>
-<h2 id="单元测试"><a href="#单元测试" class="headerlink" title="单元测试"></a>单元测试</h2><h3 id="TDD三定律"><a href="#TDD三定律" class="headerlink" title="TDD三定律"></a>TDD三定律</h3><ol>
-<li>在编写不能通过的单元测试前，不可编写生产代码。</li>
-<li>只可编写刚好无法通过的单元测试，不能编译也算不通过。</li>
-<li>只可编写刚好足以通过当前失败测试的生产代码。</li>
-</ol>
-<h3 id="整洁的测试"><a href="#整洁的测试" class="headerlink" title="整洁的测试"></a>整洁的测试</h3><ul>
-<li>测试与生产代码一起编写，这样可以保证：测试将覆盖所有生产代码。</li>
-<li>整洁测试的三个要素：可读性、可读性、可读性。要明确，简洁，有足够的表达力。</li>
-<li>测试呈现构造-操作-检验（BUILD-OPERATE-CHECK）模式。</li>
-<li>生产环境和测试环境可以用双重标准。</li>
-<li>每个测试一个断言。每个测试一个概念。</li>
-<li>Given-when-then：Given在某种场景下 When发生了事件 Then导致了什么结果。</li>
-</ul>
-<h3 id="F-I-R-S-T"><a href="#F-I-R-S-T" class="headerlink" title="F.I.R.S.T"></a>F.I.R.S.T</h3><p>整洁的测试环境遵循以下5条规则：</p>
-<ol>
-<li>快速(Fast)<ul>
-<li>测试应该快速，因为需要不断的运行测试得到反馈，我们需要的快速反馈，错误的快速定位。所以你的测试就不能依赖太多的外部资源，数据库，硬件环境等等，对于这些外部资源应该采用伪对象模式来隔离。</li>
-</ul>
-</li>
-<li>独立(Independent)<ul>
-<li>测试应该是相互独立的，独立于测试用例之间，独立于特定的环境，独立于测试的运行顺利。</li>
-<li>数据的独立方式:<ol>
-<li>每个测试环境的独立</li>
-<li>数据的隔离</li>
-</ol>
-</li>
-</ul>
-</li>
-<li>可重复(Repeatable)<ul>
-<li>测试应该可以在任何环境中重复通过，可运行，因为测试独立于环境外部资源。</li>
-</ul>
-</li>
-<li>自足验证(Self-Validation)<ul>
-<li>测试应该有通过失败的标示，从每一个测试上能得到一处代码逻辑的通过失败。</li>
-</ul>
-</li>
-<li>及时(Timely)<ul>
-<li>测试应该是及时编写的。TDD要求测试必须在实现代码之前，提前以使用者的角度定义使用接口方式。</li>
-</ul>
-</li>
-</ol>
-<hr>
-<h2 id="类"><a href="#类" class="headerlink" title="类"></a>类</h2><h3 id="类的组织"><a href="#类的组织" class="headerlink" title="类的组织"></a>类的组织</h3><p>类应该从一组变量列表开始。如果有公共静态常量，应该先出现。然后是私有静态变量，以及私有实体变量。很少会有公共变量。公共函数应更在变量列表之后，把由某个公共函数调用的私有工具函数紧随在该公共函数后面。符合自定向下的原则。</p>
-<p>内聚：类应该只有少量实体变量。</p>
-<h3 id="为了修改而组织"><a href="#为了修改而组织" class="headerlink" title="为了修改而组织"></a>为了修改而组织</h3><ul>
-<li>开放-闭合原则（OCP）：类应当对扩展开放，对修改封闭。</li>
-<li>隔离修改：具体类包含实现细节，而抽象类只呈现概念。可以借助接口和抽象类来隔离细节修改带来的风险。</li>
-<li>依赖倒置原则（Dependency Inversion Principle,DIP）:类应该依赖于抽象而不是依赖于具体细节。</li>
-</ul>
-<hr>
-<h2 id="系统"><a href="#系统" class="headerlink" title="系统"></a>系统</h2><h3 id="将系统的构造与使用分开"><a href="#将系统的构造与使用分开" class="headerlink" title="将系统的构造与使用分开"></a>将系统的构造与使用分开</h3><p>软件系统应将启始过程和启始过程之后的运行时逻辑分离开，在启始过程中构建应用对象，也会存在相互缠结的依赖关系。依赖注入（Dependency Injection,DI）机制,可以实现分离构造与使用。控制反转（Inversion of Control,IoC）将第二权责从对象中拿出来，转移到另一个专注于此的对象中，从而遵循了单一权责原则。</p>
-<h3 id="扩容"><a href="#扩容" class="headerlink" title="扩容"></a>扩容</h3><p>我们应该只去实现今天的用户故事，然后重构，明天再扩展系统、实现新的用户故事。这就是迭代和增量敏捷的精髓所在。测试驱动开发、重构以及他们打造出的整洁代码，在代码层面保证了这个过程的实现。</p>
-<h3 id="横切关注点"><a href="#横切关注点" class="headerlink" title="横切关注点"></a>横切关注点</h3><p>横切关注点（Cross-Cutting Concerns）：在AOP中，被称为方面（aspect）的模块构造指明了系统中哪些点的行为会以某种一致的方式被修改，从而支持某种特定的场景。</p>
-<p>Java代理：适用于简单的情况，例如在单独的对象或类中包装方法调用。</p>
-<p>纯Java AOP框架：如Spring AOP和Jboss AOP等，在概念上更简单、更易于测试驱动。</p>
-<h3 id="测试驱动系统架构"><a href="#测试驱动系统架构" class="headerlink" title="测试驱动系统架构"></a>测试驱动系统架构</h3><p>用POJO编写应用程序的领域逻辑，在代码层面与架构关注面分离开，就有可能真正地用测试来驱动架构。</p>
-<p>没必要先做大设计（Big Design Up Front，DBUF）。实际上，它阻碍改进，架构上的方案选择影响到后续的设计思路</p>
-<h3 id="系统需要领域特定语言"><a href="#系统需要领域特定语言" class="headerlink" title="系统需要领域特定语言"></a>系统需要领域特定语言</h3><p>领域特定语言（Domain-Specific Language,DSL）：在有效使用时能提升代码惯用法和设计模式之上的抽象层次。允许所有抽象层级和应用程序中的所有领域，从高级策略到底层细节，使用POJO来表达。</p>
-<hr>
-<h2 id="迭代"><a href="#迭代" class="headerlink" title="迭代"></a>迭代</h2><p>关于简单设计的四条规则：</p>
-<ol>
-<li>运行所有测试；</li>
-<li>不可重复；</li>
-<li>表达了程序员的意图；</li>
-<li>尽可能减少类和方法的数量；</li>
-<li>以上规则按其重要程度排列。</li>
-</ol>
-<hr>
-<h2 id="并发编程"><a href="#并发编程" class="headerlink" title="并发编程"></a>并发编程</h2><p>并发是一种解耦策略，帮助把做什么（目的）和何时（时机）做分解开。</p>
-<p>解耦目的与时机能明显地改进应用程序的吞吐量和结构。</p>
-<h3 id="挑战与并发防御原则"><a href="#挑战与并发防御原则" class="headerlink" title="挑战与并发防御原则"></a>挑战与并发防御原则</h3><p>单一权责原则</p>
-<p>限制数据作用域（采用<code>synchronized</code>保护临界区）</p>
-<p>建议：谨记数据封装，严格限制对可能被共享的数据的访问。</p>
-<p>推论：使用数据副本：假使使用对象复本能避免代码同步执行，则因避免了锁定而省下的价值有可能补偿得上额外的创建陈本和垃圾收集开销。</p>
-<p>推论：线程应尽可能地独立</p>
-<p>建议：尝试将数据分解到可被独立线程（可能在不同处理器上）操作的独立子集。</p>
-<h3 id="了解执行模型"><a href="#了解执行模型" class="headerlink" title="了解执行模型"></a>了解执行模型</h3><h3 id="警惕同步方法之间的依赖"><a href="#警惕同步方法之间的依赖" class="headerlink" title="警惕同步方法之间的依赖"></a>警惕同步方法之间的依赖</h3><h3 id="保持同步区域微小"><a href="#保持同步区域微小" class="headerlink" title="保持同步区域微小"></a>保持同步区域微小</h3><hr>
-<h2 id="Code-Smell-List"><a href="#Code-Smell-List" class="headerlink" title="Code Smell List"></a>Code Smell List</h2><h3 id="注释-1"><a href="#注释-1" class="headerlink" title="注释"></a>注释</h3><ol>
-<li>不恰当的注释<ul>
-<li>让不恰当的注释保存到源代码控制系统。</li>
-</ul>
-</li>
-<li>废弃的注释<ul>
-<li>过时 、无关或不正确的注释就是废弃的注释不应该保留必马上删除。</li>
-</ul>
-</li>
-<li>冗余的注释<ul>
-<li>注释应该谈及代码自身没提到的东西，否则就是冗余的。</li>
-</ul>
-</li>
-<li>糟糕的注释<ul>
-<li>值得编写的注释必须正确写出最好的注释，如果不是就不写 。</li>
-</ul>
-</li>
-<li>注释掉的代码<ul>
-<li>注释掉的代码必须删除。</li>
-</ul>
-</li>
-</ol>
-<h3 id="环境"><a href="#环境" class="headerlink" title="环境"></a>环境</h3><ol>
-<li>需要多步才能实现的构建:构建系统应该是单步的小操作 。</li>
-<li>需要多步才能实现的测试:只需要单个指令就可以运行所有单元测试。</li>
-</ol>
-<h3 id="函数-1"><a href="#函数-1" class="headerlink" title="函数"></a>函数</h3><ol>
-<li>过多的参数:函数参数应该越少越好，坚决避免有3个参数 的函数</li>
-<li>出参数:出参数违反直接，抵制出参数</li>
-<li>标识参数:布尔值参数令人迷惑，应该消灭掉</li>
-<li>死函数:永不被调用函数应该删除掉</li>
-</ol>
-<h3 id="一般性问题"><a href="#一般性问题" class="headerlink" title="一般性问题"></a>一般性问题</h3><ol>
-<li>一个源文件存在多个语言<ul>
-<li>尽量减少源文件语言的数量和范围。</li>
-</ul>
-</li>
-<li>明显的行为未被实现<ul>
-<li>遵循 “最少惊异原则 ”，函数或者类应该实现其他程序员有理由期待的行为，不要让其他程序员看代码才清楚函数的作用。</li>
-</ul>
-</li>
-<li>不正确的边界行为<ul>
-<li>代码应该有正确的行为，追索每种边界条件并进行全面 测试。</li>
-</ul>
-</li>
-<li>忽视安全<ul>
-<li>关注可能引起问题的代码，注重安全与稳定。</li>
-</ul>
-</li>
-<li>重复<ul>
-<li>消除重复代码，使用设计模式。</li>
-</ul>
-</li>
-<li>在错误的抽象层级上的代码<ul>
-<li>抽象类和派类概念模型必须完整分离，例如 ：与实现细节有关的代码不应该在基类中出现。</li>
-</ul>
-</li>
-<li>基类依赖于派类<ul>
-<li>基类应该对派类一无所知。</li>
-</ul>
-</li>
-<li>信息过多<ul>
-<li>类中的方法，变量越少越好，隐藏所有实现，公开接口越少越好。</li>
-</ul>
-</li>
-<li>死代码<ul>
-<li>找到并删除所有不被调用的代码。</li>
-</ul>
-</li>
-<li>垂直分隔<ul>
-<li>变量和函数的定义应该靠近被调用代码。</li>
-</ul>
-</li>
-<li>前后不一致<ul>
-<li>函数参数变量应该从一而终，保持一致，让代码便于阅读和修改。</li>
-</ul>
-</li>
-<li>混淆视听<ul>
-<li>没用的变量，不被调用的函数，没有信息量的注释应该清理掉。</li>
-</ul>
-</li>
-<li>人为耦合<ul>
-<li>不互相依赖的东西不该耦合。</li>
-</ul>
-</li>
-<li>特性依恋<ul>
-<li>类的方法应该只对自身的方法和变量感兴趣，不应该垂青其他类的方法和变量。</li>
-</ul>
-</li>
-<li>选择算参数<ul>
-<li>避免布尔类型参数，使用多态代替。</li>
-</ul>
-</li>
-<li>晦涩的意图<ul>
-<li>代码要尽可能具有表达力，明白的意图比高效和性能重要。</li>
-</ul>
-</li>
-<li>位置错误的权责<ul>
-<li>“最少惊异原则 ”，把代码放在读者想到的地方，而不是对自己方便的地方。</li>
-</ul>
-</li>
-<li>不恰当的静态方法<ul>
-<li>如果要使用静态方法，必须确保 没机会打算让它有多态行为。</li>
-</ul>
-</li>
-<li>使用解释性变量<ul>
-<li>把计算过程打散成一系列命名良好的中间值使程序更加可读性。</li>
-</ul>
-</li>
-<li>函数名称应该表达其行为</li>
-<li>理解算法</li>
-<li>把逻辑依赖改为物理依赖<ul>
-<li>依赖应该是明显而不应该是假设的依赖。</li>
-</ul>
-</li>
-<li>用多态替代If/Else或Switch/Case</li>
-<li>遵循标准约定</li>
-<li>用命名常量替代魔术数</li>
-<li>准确<ul>
-<li>代码中的含糊和不准确要么是意见不同的结果，要么源于懒散，都必须消除。</li>
-</ul>
-</li>
-<li>结构甚于约定</li>
-<li>封装条件<ul>
-<li>把条件封装成方法。</li>
-</ul>
-</li>
-<li>避免否定性条件<ul>
-<li>使用肯定性条件。</li>
-</ul>
-</li>
-<li>函数只该做一件事</li>
-<li>掩蔽时序耦合<ul>
-<li>创建顺序队列暴露时序耦合，每个函数都产一下函数所需参数，就可保障正确的时序。</li>
-</ul>
-</li>
-<li>别随意<ul>
-<li>代码不能随意，需要谨慎考虑。</li>
-</ul>
-</li>
-<li>封装边界条件<ul>
-<li>例如 ：+1或-1操作必须封装起来。</li>
-</ul>
-</li>
-<li>函数应该只在一个抽象层级上<ul>
-<li>封装不在一个抽象层级上的代码，保持每个函数只在一个抽象层级上。</li>
-</ul>
-</li>
-<li>在较高层级放置可配置数据<ul>
-<li>把配置数据和常量放到基类里。</li>
-</ul>
-</li>
-<li>避免传递浏览<ul>
-<li>“得墨忒耳律 ”，编写害羞代码，让直接协作者提供所需的服务，而不要逛遍整个系统。</li>
-</ul>
-</li>
-</ol>
-<h3 id="名称"><a href="#名称" class="headerlink" title="名称"></a>名称</h3><ol>
-<li>采用描述性名称<ul>
-<li>名称对应可读性有 90%的作用，必须认真命名。</li>
-</ul>
-</li>
-<li>名称应与抽象层级相符<ul>
-<li>不要取沟通实现的名称：取反映类或函数抽象层级的名称。</li>
-</ul>
-</li>
-<li>尽可能使用标准命名法</li>
-<li>无歧义的名称</li>
-<li>为较大作用范围选用较长名称</li>
-<li>避免编码<ul>
-<li>不应该在名称中包含类型或范围的信息，例如：m_，f等前缀。</li>
-</ul>
-</li>
-<li>名称应该说明副作用<ul>
-<li>名称应该说明类 、变量或函数的所有信息，不应该 隐藏副作用。</li>
-</ul>
-</li>
-</ol>
-<h3 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h3><ol>
-<li>测试不足<ul>
-<li>保证足够的测试。</li>
-</ul>
-</li>
-<li>使用覆盖率工具<ul>
-<li>覆盖率工具可以更好地找到测试不足的模块 、类、函数。</li>
-</ul>
-</li>
-<li>别略过小测试</li>
-<li>被忽略的测试就是对不确定事物的疑问<ul>
-<li>用 <code>@Ignore</code> 表达我们对需求的疑问。</li>
-</ul>
-</li>
-<li>测试边界条件<ul>
-<li>边界判读错误很常见，必须测试边界条件。</li>
-</ul>
-</li>
-<li>全面测试相近的缺陷<ul>
-<li>缺陷趋向于扎堆，如果在函数中发现一个缺陷，那么就全面测试这个函数。</li>
-</ul>
-</li>
-<li>测试失败的模式有启发性<ul>
-<li>你可以通过测试失败找到问题所在。</li>
-</ul>
-</li>
-<li>测试覆盖率的模式有启发性<ul>
-<li>通过测试覆盖率检查，往往可以找 到测试失败的线索。</li>
-</ul>
-</li>
-<li>测试应该快速<ul>
-<li>慢测试会导致时间紧时会跳过，导致可能出现问题。</li>
-</ul>
-</li>
-</ol>
- 
-      <!-- reward -->
-      
-    </div>
-    
 
     <!-- copyright -->
     
     <footer class="article-footer">
        
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Java/" rel="tag">Java</a></li></ul>
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Spring-Boot/" rel="tag">Spring Boot</a></li></ul>
 
     </footer>
   </div>
@@ -1046,7 +329,7 @@ public class EmployeeFactoryImpl implements EmployeeFactory {
 
     
     <article
-  id="post-Cordova Plugin 制作与发布流程"
+  id="post-Nginx"
   class="article article-type-post"
   itemscope
   itemprop="blogPost"
@@ -1057,499 +340,30 @@ public class EmployeeFactoryImpl implements EmployeeFactory {
     <header class="article-header">
        
 <h2 itemprop="name">
-  <a class="article-title" href="/2018/12/21/Cordova%20Plugin%20%E5%88%B6%E4%BD%9C%E4%B8%8E%E5%8F%91%E5%B8%83%E6%B5%81%E7%A8%8B/"
-    >Cordova Plugin 制作与发布流程</a> 
+  <a class="article-title" href="/2020/04/10/Nginx/"
+    >Nginx</a> 
 </h2>
  
 
     </header>
      
     <div class="article-meta">
-      <a href="/2018/12/21/Cordova%20Plugin%20%E5%88%B6%E4%BD%9C%E4%B8%8E%E5%8F%91%E5%B8%83%E6%B5%81%E7%A8%8B/" class="article-date">
-  <time datetime="2018-12-21T09:47:04.000Z" itemprop="datePublished">2018-12-21</time>
-</a> 
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/Hybrid-App/">Hybrid App</a>
-  </div>
-   
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><ul>
-<li><a href="https://blog.csdn.net/Yoryky/article/details/78516291" target="_blank" rel="noopener">https://blog.csdn.net/Yoryky/article/details/78516291</a></li>
-<li><a href="https://cordova.apache.org/docs/en/latest/guide/hybrid/plugins/index.html" target="_blank" rel="noopener">Plugin Development Guide</a></li>
-</ul>
-<h2 id="制作-Cordova-Plugin"><a href="#制作-Cordova-Plugin" class="headerlink" title="制作 Cordova Plugin"></a>制作 Cordova Plugin</h2><ol>
-<li><a href="#createPlugin">创建一个新的插件</a></li>
-<li><a href="#editPlugin">在已有的插件上修改代码并重新打包</a></li>
-</ol>
-<h3 id="创建插件"><a href="#创建插件" class="headerlink" title="创建插件"></a><a name="createPlugin">创建插件</a></h3><h4 id="创建一个-Cordova-测试项目-hello-用于测试插件"><a href="#创建一个-Cordova-测试项目-hello-用于测试插件" class="headerlink" title="创建一个 Cordova 测试项目 hello 用于测试插件"></a>创建一个 Cordova 测试项目 hello 用于测试插件</h4><h4 id="以加法器为例-命令行创建一个名称为-Adder-id为-joe-adder-的插件-初始版本为1-0-0："><a href="#以加法器为例-命令行创建一个名称为-Adder-id为-joe-adder-的插件-初始版本为1-0-0：" class="headerlink" title="以加法器为例, 命令行创建一个名称为 Adder, id为 joe.adder 的插件, 初始版本为1.0.0："></a>以加法器为例, 命令行创建一个名称为 Adder, id为 joe.adder 的插件, 初始版本为1.0.0：</h4><pre><code class="bash">hello&gt; plugman create -name Adder -plugin_id cordova-plugin-adder -plugin_version 1.0.0</code></pre>
-<h4 id="用命令行声明这个插件是为Android平台服务的：这个命令会自动生成一个Adder-java"><a href="#用命令行声明这个插件是为Android平台服务的：这个命令会自动生成一个Adder-java" class="headerlink" title="用命令行声明这个插件是为Android平台服务的：这个命令会自动生成一个Adder.java"></a>用命令行声明这个插件是为Android平台服务的：这个命令会自动生成一个Adder.java</h4><pre><code class="bash">cd Adder
-
-hello\Adder&gt; plugman platform add --platform_name android</code></pre>
-<h4 id="重写-Adder-java-的-execute-方法"><a href="#重写-Adder-java-的-execute-方法" class="headerlink" title="重写 Adder.java 的 execute 方法"></a>重写 Adder.java 的 <code>execute</code> 方法</h4><pre><code class="java">    @Override
-    public boolean execute(String action, JSONArray args, CallbackContext callbackContext) throws JSONException {
-        if (action.equals(&quot;performAdd&quot;)) {
-            int result = args.getInt(0) + args.getInt(1);
-            callbackContext.success(&quot;result calculated in Java: &quot; + result);
-            return true;
-        }
-        return false;
-    }</code></pre>
-<h4 id="修改-Adder-js"><a href="#修改-Adder-js" class="headerlink" title="修改 Adder.js"></a>修改 Adder.js</h4><p>注入插件 js 函数到 windows 对象:</p>
-<p>修改 Adder.js</p>
-<pre><code class="js">var exec = require(&#39;cordova/exec&#39;);
-
-module.exports.add = function(arg0, success, error) {
-    exec(success, null, &quot;Adder&quot;, &quot;performAdd&quot;, arg0);
-};</code></pre>
-<h4 id="为插件添加-package-json"><a href="#为插件添加-package-json" class="headerlink" title="为插件添加 package.json"></a>为插件添加 package.json</h4><pre><code class="bash">hello\Adder&gt; plugman createpackagejson &quot;./&quot;</code></pre>
-<p>或</p>
-<pre><code class="bash">plugman createpackagejson /path/to/your/plugin</code></pre>
-<h4 id="将插件添加到混合应用中"><a href="#将插件添加到混合应用中" class="headerlink" title="将插件添加到混合应用中"></a>将插件添加到混合应用中</h4><pre><code class="bash">hello&gt; cordova plugin add Adder
-Installing &quot;joe.adder&quot; for android
-Android Studio project detected
-Installing &quot;joe.adder&quot; for ios
-Saved plugin info for &quot;joe.adder&quot; to config.xml</code></pre>
-<h4 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h4><pre><code class="js">cordova.plugins.Adder.add([1,2],function(msg){console.log(msg);},null);</code></pre>
-<p><a href="https://cordova.apache.org/docs/en/latest/guide/hybrid/plugins/index.html" target="_blank" rel="noopener">参考</a></p>
-<hr>
-<h2 id="在已有的插件上修改代码并重新打包"><a href="#在已有的插件上修改代码并重新打包" class="headerlink" title="在已有的插件上修改代码并重新打包"></a><a name="editPlugin">在已有的插件上修改代码并重新打包</a></h2><ol>
-<li>下载插件源码</li>
-<li>修改需要修改的代码</li>
-<li>若需要修改插件名称则需要修改<code>package.json</code>与<code>plugin.xml</code>中的插件<code>name</code>属性与<code>id</code>属性</li>
-</ol>
-<hr>
-<h2 id="发布-Plugin"><a href="#发布-Plugin" class="headerlink" title="发布 Plugin"></a>发布 Plugin</h2><h3 id="发布前版本号修改"><a href="#发布前版本号修改" class="headerlink" title="发布前版本号修改"></a>发布前版本号修改</h3><h4 id="根据需要修改并补全插件的-package-json-文件"><a href="#根据需要修改并补全插件的-package-json-文件" class="headerlink" title="根据需要修改并补全插件的 package.json 文件"></a>根据需要修改并补全插件的 package.json 文件</h4><p><strong>注意</strong>: <code>version</code>: 每次发布到 NPM 都需要更改</p>
-<pre><code class="json">{
-  &quot;name&quot;: &quot;cordova-plugin-adder&quot;,
-  &quot;version&quot;: &quot;1.1.4&quot;,
-  &quot;description&quot;: &quot;test cordova plugin&quot;, // 插件简介，用于NPM
-  &quot;cordova&quot;: {
-    &quot;id&quot;: &quot;cordova-plugin-adder&quot;, // 插件id，同插件名
-    &quot;platforms&quot;: [
-      &quot;android&quot;,
-      &quot;ios&quot;
-    ]
-  },
-  &quot;keywords&quot;: [ // NPM搜索关键字
-    &quot;ecosystem:cordova&quot;,
-    &quot;test&quot;,
-    &quot;android&quot;,
-    &quot;add&quot;,
-    &quot;integer&quot;
-  ],
-  &quot;author&quot;: &quot;Joe&quot;,
-  &quot;license&quot;: &quot;Apache 2.0&quot;,
-  &quot;repository&quot;: { // 仓库地址
-    &quot;type&quot;: &quot;git&quot;,
-    &quot;url&quot;: &quot;git+https://github.com/J0e9u0/cordova-plugin-adder&quot;
-  },
-  &quot;bugs&quot;: { // issue反馈地址
-    &quot;url&quot;: &quot;https://github.com/J0e9u0/cordova-plugin-adder/issues&quot;
-  },
-  &quot;homepage&quot;: &quot;https://github.com/J0e9u0/cordova-plugin-adder#readme&quot;  // 项目地址
-}</code></pre>
-<h4 id="根据需要修改-plugin-xml-文件"><a href="#根据需要修改-plugin-xml-文件" class="headerlink" title="根据需要修改 plugin.xml 文件"></a>根据需要修改 plugin.xml 文件</h4><p>plugin.xml 参数说明：</p>
-<ul>
-<li>id：插件唯一标识</li>
-<li>version：版本号</li>
-<li>js-module<ul>
-<li>src：js中间件相对文件地址（www目录下的那个js）</li>
-<li>name：模块名称</li>
-<li>clobbers/merges<ul>
-<li>target：H5通过它调用js中间件方法（ts调用方法的前缀）</li>
-</ul>
-</li>
-</ul>
-</li>
-<li>platform<ul>
-<li>name：对应平台android | ios</li>
-<li>source-file<ul>
-<li>src：类名</li>
-<li>tartget-dir：插件文件复制到到原生项目位置</li>
-<li>feature<ul>
-<li>name：js中间件通过它调用原生方法（包名）</li>
-</ul>
-</li>
-<li>uses-permission：相关原生权限</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-<p><strong>注意</strong>: <code>version</code>: 要与 package.json 保持一致</p>
-<pre><code class="xml">&lt;?xml version=&#39;1.0&#39; encoding=&#39;utf-8&#39;?&gt;
-&lt;plugin id=&quot;cordova-plugin-adder&quot; version=&quot;1.1.8&quot; 
-  xmlns=&quot;http://apache.org/cordova/ns/plugins/1.0&quot; 
-  xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;&gt;
-  &lt;name&gt;Adder&lt;/name&gt;
-  &lt;js-module name=&quot;Adder&quot; src=&quot;www/Adder.js&quot;&gt;
-    &lt;clobbers target=&quot;cordova.plugins.Adder&quot; /&gt;
-  &lt;/js-module&gt;
-  &lt;platform name=&quot;android&quot;&gt;
-    &lt;config-file parent=&quot;/*&quot; target=&quot;res/xml/config.xml&quot;&gt;
-      &lt;feature name=&quot;Adder&quot;&gt;
-        &lt;param name=&quot;android-package&quot; value=&quot;org.apache.cordova.adder.Adder&quot; /&gt;
-      &lt;/feature&gt;
-    &lt;/config-file&gt;
-    &lt;config-file parent=&quot;/*&quot; target=&quot;AndroidManifest.xml&quot;&gt;&lt;/config-file&gt;
-    &lt;source-file src=&quot;src/android/Adder.java&quot; target-dir=&quot;src/org/apache/cordova/adder&quot; /&gt;
-  &lt;/platform&gt;
-&lt;/plugin&gt;</code></pre>
-<p><a href="https://cordova.apache.org/docs/en/latest/plugin_ref/spec.html" target="_blank" rel="noopener">参考</a></p>
-<h3 id="发布到-NPM"><a href="#发布到-NPM" class="headerlink" title="发布到 NPM"></a>发布到 NPM</h3><h4 id="注册-NPM-账号"><a href="#注册-NPM-账号" class="headerlink" title="注册 NPM 账号"></a><a href="https://www.npmjs.com/" target="_blank" rel="noopener">注册 NPM 账号</a></h4><h4 id="本地登录账号"><a href="#本地登录账号" class="headerlink" title="本地登录账号"></a>本地登录账号</h4><pre><code class="bash">npm adduser
-npm login</code></pre>
-<h4 id="上传插件"><a href="#上传插件" class="headerlink" title="上传插件"></a>上传插件</h4><p>进入插件根目录</p>
-<pre><code class="bash">npm publish
-+ cordova-plugin-adder@1.1.0</code></pre>
-<p>或</p>
-<pre><code class="bash">npm publish /path/to/your/plugin</code></pre>
-<h4 id="测试是否发布成功"><a href="#测试是否发布成功" class="headerlink" title="测试是否发布成功"></a>测试是否发布成功</h4><pre><code class="bash">npm i cordova-plugin-adder</code></pre>
-<p>或者</p>
-<pre><code class="bash">cordova plugin add cordova-plugin-adder</code></pre>
-<h3 id="发布到私有-NPM"><a href="#发布到私有-NPM" class="headerlink" title="发布到私有 NPM"></a>发布到私有 NPM</h3><h4 id="安装-NRM-NPM-源切换工具"><a href="#安装-NRM-NPM-源切换工具" class="headerlink" title="安装 NRM NPM 源切换工具"></a>安装 <a href="https://www.npmjs.com/package/nrm" target="_blank" rel="noopener">NRM</a> NPM 源切换工具</h4><p>nrm can help you easy and fast switch between different npm registries.</p>
-<p>Install:</p>
-<pre><code class="bash">npm install -g nrm</code></pre>
-<h4 id="添加私有-NPM-源"><a href="#添加私有-NPM-源" class="headerlink" title="添加私有 NPM 源:"></a>添加私有 NPM 源:</h4><pre><code class="bash">nrm add &lt;registry&gt; &lt;url&gt;</code></pre>
-<p>for example:</p>
-<pre><code class="bash">nrm add mbc http://xx.xx.xx.153:10011/repository/npm-cordova/</code></pre>
-<p>查看 NPM 源列表检查是否添加成功:</p>
-<pre><code class="bash">nrm ls</code></pre>
-<h4 id="切换到私有-NPM-源"><a href="#切换到私有-NPM-源" class="headerlink" title="切换到私有 NPM 源:"></a>切换到私有 NPM 源:</h4><pre><code class="bash">nrm use &lt;registry&gt;</code></pre>
-<h4 id="添加账号"><a href="#添加账号" class="headerlink" title="添加账号"></a>添加账号</h4><pre><code class="bash">npm adduser
-npm login</code></pre>
-<h4 id="上传插件-1"><a href="#上传插件-1" class="headerlink" title="上传插件"></a>上传插件</h4><p>进入插件根目录(即包含package.json文件的目录)</p>
-<pre><code class="bash">npm publish</code></pre>
-<p>或</p>
-<pre><code class="bash">npm publish /path/to/your/plugin</code></pre>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Cordova/" rel="tag">Cordova</a></li></ul>
-
-    </footer>
-  </div>
-
-    
- 
-   
-</article>
-
-    
-    <article
-  id="post-Oracle-Database"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2018/08/15/Oracle-Database/"
-    >Oracle Database</a> 
-</h2>
- 
-
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2018/08/15/Oracle-Database/" class="article-date">
-  <time datetime="2018-08-15T14:36:46.000Z" itemprop="datePublished">2018-08-15</time>
+      <a href="/2020/04/10/Nginx/" class="article-date">
+  <time datetime="2020-04-10T01:43:00.000Z" itemprop="datePublished">2020-04-10</time>
 </a> 
   <div class="article-category">
     <a class="article-category-link" href="/categories/%E5%90%8E%E7%AB%AF/">后端</a>
   </div>
+
    
     </div>
-      
-    <div class="article-entry" itemprop="articleBody">
        
-  <h2 id="数据库文件"><a href="#数据库文件" class="headerlink" title="数据库文件"></a>数据库文件</h2><ol>
-<li>Data files</li>
-<li>Control files:记录了当前数据库的结构信息,也包含数据文件及日志文件的信息以及相关的状态,归档信息等等在参数文件中描述其位置</li>
-<li>Online redo log files(联机重做日志):记录了数据的所有变化,提供恢复机制,可以被分组管理</li>
-<li>UNDOfiles</li>
-<li>Password file:密码</li>
-<li>Archive log files(归档日志):是redo log files的copy</li>
-<li>Parameter file:数据库参数</li>
-</ol>
-<h2 id="Oracle-Memory-Structures"><a href="#Oracle-Memory-Structures" class="headerlink" title="Oracle Memory Structures"></a>Oracle Memory Structures</h2><img src="Oracle Memory Structures.png" />
-
-<img src="内存结构.PNG" />
-
-<img src="pga.png" />
-
-<ol>
-<li>SGA（System Global Area），即系统全局区，Oracle中最重要的内存区。</li>
-<li>PGA（Process Global Area），即程序全局区，一个进程的专用的内存区。</li>
-<li>UGA（User Global Area），即用户全局区，与特定的会话相关联。</li>
-<li>CGA  (CALL Global Area），即调用全剧区，如排序区，HASH JOIN区，位图合并区等</li>
-</ol>
-<p>专用服务器连接模式，UGA在PGA中分配。</p>
-<p>共享服务器连接模式，UGA在SGA中的Large Pool中分配。</p>
-<h3 id="Program-Global-Area-PGA"><a href="#Program-Global-Area-PGA" class="headerlink" title="Program Global Area(PGA)"></a>Program Global Area(PGA)</h3><p>PGA包含有关单个服务器进程或单个后台进程的数据和控制信息。PGA在创建进程时分配，并在终止进程时回收。与由若干个进程共享的SGA相比，PGA是仅供一个进程使用的区。</p>
-<p>如果采用专用服务器连接模式，PGA中包含UGA，其他区域用来排序，散列和位图合并。<br>PGA=UGA+CGA(call global area 调用全局区=排序区+散列区+位图合并区 )</p>
-<p>UGA=User session+Cursor state(即private SQL区)+SORT_AREA_RETAINED</p>
-<p>User session区：会话信息区，存放用户权限，角色，性能统计等信息</p>
-<p>CURSOR（私有SQL 区）就是一个句柄，即指针或引用，指向sql私有区（一个用户的能打开的cursor数由参数open_cursors决定）。然后sql私有区有指针指向共享sql区。私有sql区有两个部分</p>
-<p>固定部分：绑定信息，数据结构信息，指针。随session的创建而创建，结束而释放（pmon）</p>
-<p>动态部分：执行sql的中间结果集，如多表联查，排序。随sql的创建而创建，结束而释放。</p>
-<h3 id="System-Global-area-SGA-系统全局区"><a href="#System-Global-area-SGA-系统全局区" class="headerlink" title="System Global area(SGA)系统全局区"></a>System Global area(SGA)系统全局区</h3><ol>
-<li><p>共享池（Shared pool）： 共享池是内存中最关键的部分之一，是oracle缓存程序数据的地方，在共享池中，保留着每一条执行过的sql解析后的全部信息。由于分配给共享池的内存区域是有限的（分配太对会消耗过多CPU资源，分配太少会影响性能）， 所以当有新的SQL执行的时候， 原先已经加载的sql会根据LRU（最近最少使用算法）进行管理。</p>
-<ol>
-<li>library cache （库高速缓存区）：存储已经解析过的sql的信息。</li>
-<li>dictionary cache（数据字典缓存）：存放系统参数。</li>
-<li>Result Cache （结果高速缓存）：用于存储和检索高速缓存的结果。<ul>
-<li>SQL query result cache :  将SQL语句的查询结果直接存储在 SQL query result cache中，再次执行相同语句的时候会直接调用内存中的结果集，减少I/O的消耗。</li>
-<li>PL/SQL function result cache :  将PL/SQL函数的正确执行的结果存放在  PL/SQL Function Result Cache中，  再次执行相同函数时直接调用内存中的结果集 ，减少IO消耗  。</li>
-</ul>
-</li>
-</ol>
-</li>
-<li><p>Fixed SGA（固定SGA）：里面存储了内存中其他区的位置。</p>
-</li>
-<li><p>Redo buffer（重做缓冲区）：如果数据需要写到在线重做日志中，则在写至磁盘之前要在 Redo Buffer 中临时缓存这些数据。数据在重做缓冲区中停留的时间不会太长，oracle会通过以下机制，将数据通过LGWR从 Redo Buffer 中 flush 到磁盘上：</p>
-<ol>
-<li>每3秒一次</li>
-<li>请求提交 commit</li>
-<li>要求 LGWR 切换日志</li>
-<li>重做缓冲区 1/3 满，或者包含了 1MB的缓存重做日志数据</li>
-</ol>
-</li>
-<li><p>Block buffer cache（块缓冲区）：将脏数据写入磁盘之前或者从磁盘读取数据块之后，这些数据会存放在Block buffer cache 中。为了根据不同的需求保留数据，oracle把这块内存分成了三个部分</p>
-<ol>
-<li>defaul pool （默认池）：所有段块一般都在defaul pool中。在oracle 8.0 之前的版本， defaul pool 就是唯一缓冲区池。</li>
-<li>keep pool （保留池） ：频繁访问的段会存放在 keep pool 中，以此来防止数据 aging</li>
-<li>recycle pool （回收池） ：将随机大段与其他段分开保存，访问很随机的大段可以放在 recycle pool 中，因为大块会导致过量的缓存区 flush，并且如果当你在想用这个块的时候，此时的数据也许已经aging而退出缓存。</li>
-</ol>
-</li>
-<li><p>Large pool （大池） ：用于大块内存的分配。shared pool 不会处理过大的内存块，所以这部分数据就交给 large pool 进行处理， 并且处理方式与 shared pool不同，large pool 不会缓存和重用这些大块，在这些内存用完之后，会立即释放。large pool 专用以下几种情况：</p>
-<ol>
-<li>共享服务器连接，用于在SGA中分配 UGA区，当用户断开以后，UGA会被快速释放。</li>
-<li>语句并行执行，允许分配进行间的消息缓存区，这些缓冲区用于协调并行查询服务器。一旦发送了缓冲区中的消息，便立即释放</li>
-<li>备份，备份缓冲区很大，在oracle用完了这些缓冲区，就会被立即释放。</li>
-</ol>
-</li>
-<li><p>Java pool（Jave 池） ：在运行Java的时候会用到 java pool。</p>
-</li>
-<li><p>Stream pool （流池）：10G版本 引入，用于缓存流进程在数据库间复制/移动数据时使用的队列消息，是 oracle advanced queue（oracle 高级队列）技术的一种拓展应用，需要注意的是，如果stream pool 设置过小，在应用EXPDP技术时，会产生错误信息。</p>
-</li>
-</ol>
-<h3 id="共享池-shared-pool"><a href="#共享池-shared-pool" class="headerlink" title="共享池 shared pool"></a>共享池 shared pool</h3><p>解析的过程是一个相当复杂的过程，它要考虑各种可能的异常情况比如SQL语句涉及到的对象不存在、提交的用户没有权限等等而且还需要考虑如何执行SQL语句采用什么方式去获职数据等解析的最终结果是要产生oracle自己内部的执行计划从而指导SQL的执行过程。可以看到，解析的过程是一个非常消耗资源的过程。因此oracle在解析用户提交的SQL语句的过程中如果对每次出现的新的SQL语句，都按照标准过程完整的从头到尾解析一遍的话效率太低尤其随着并发用户数量的增加、数据量的增加数据库的整体性能将直线下降。</p>
-<p>shared pool = Library cache + dictionay cache</p>
-<p>共享池<br>oracle会将用户提交来的SQL语句都缓存在内存中。每次处理新的一条SQL语句时都会先在内存中查看是否有相同的SQL语句如果相同则可以减少最重要的解析工作〔也就是生成执行计划)从而节省了大量的资源：反之如果没有找到相同的SQL语句，则必须重新从头到尾进行完整的解析过程这部分存放SQL语句的内存就叫做共享池( shared pool)当然shared pool里不仅仅是SQL语句，还包括管理shared pool的内存结构以及执行计划、控制信息等等内存结构，oracle通过内存结构管理.</p>
-<h3 id="buffer-catch"><a href="#buffer-catch" class="headerlink" title="buffer catch"></a>buffer catch</h3><img src="buffer memory.png" />
-
-<p>ORACLE使用HASH算法，把buffer cache中每个buffer的buffer header串联起来，组成多条hash chain，一條hash chain由一個hash Bucket管理，hash bucket就是链的链头，从链头引出独立的双向链。一個hash buffer chains latch来保护多个hash chain</p>
-<p>根据LRU（Least Recently User）算法，对buffer cache进行分配和换出（age out）管理</p>
-<p>通常数据的访问和修改都是需要通过buffer cache来完成的,当一个server process访问数据的时候,首先需要确定的是,我们所需要的数据在buffer cache中是否存在,如果数据在buffer中存在呢,我们还需要根据data buffer的状态,来判断是否进行db block gets还是consistent gets,如果数据在buffer中不存在,则我们需要在buffer cache中寻找足够的空间来加载我们所需要的数据,如果在buffer cache中我们找不到足够的空间,那么我们就需要触发DBWn进程,去写出脏数据,用来释放我们的buffer空间.</p>
-<img src="cache buffer LRU.png" />
-
-<p>Oracle通过几个list来对buffer进行管理.其中最为突出的就是LRU List还有Dirty List,这些list上面存放的就是具体指向buffer的指针.</p>
-<p>LRU List主要就是用来维护内存中的buffer,按照我们LRU(Least Recently Used)的方式来进行管理.那么针对不同的Oracle版本呢,管理的方式也不同.但是有一点需要了解的是,当数据库初始化的时候,所有的buffer都被捕HASH到LRU List上进行管理.当我们从数据文件中读取数据的时候我们现在要在LRU List上面寻找free的buffer,然后将数据读取到我们所找到的这个free buffer中.只要数据被修改了,那么这个buffer的状态就变为了dirty,那么Oracle就会把这个buffer从LRU List移到Dirty List(Checkpoint Queue)中去.在Dirty List上的buffer都是一些候选的稍后会被DBWn写出到数据文件的buffer,那么这里还有一点需要注意的是:一个buffer要么存在于LRU List上面,要么存在于Dirty List上面,不可能同时存在于两个List上面.</p>
-<img src="http://hi.csdn.net/attachment/201011/2/0_128870089259Xl.gif" />
-
-<h2 id="Redo-log-Buffer-日志缓冲区"><a href="#Redo-log-Buffer-日志缓冲区" class="headerlink" title="Redo log Buffer 日志缓冲区"></a>Redo log Buffer 日志缓冲区</h2><p>日志中记录数据块的地址，更改的时间以及对数据块做了哪些改变。</p>
-<p>Oracle在执行任何DML和DDL操作改变数据之前，都会将恢复所需要的信息，先写入redo log buffer，然后再写入database buffer cache。</p>
-<ol>
-<li>如果数据和回滚数据不在database buffer cache中，server process会将它们从dbf文件中读取到database buffer cache中。</li>
-<li>server process会在要修改的数据行上添加行级锁。</li>
-<li>server process将数据的变化信息和回滚所需的信息都写入redo log buffer。</li>
-<li>server process将对数据所做的修改后的数据信息写入database buffer cache,然后将database buffer cache中的这些数据标记为脏数据（此时内存中的数据和磁盘上的数据是不一致的）。</li>
-<li>LGWR将重做日志缓冲区中的数据写入重做日志文件中。</li>
-<li>DBWn将database buffer cache的脏数据写入数据文件中。</li>
-</ol>
-<h2 id="Log-Writer-LGWR"><a href="#Log-Writer-LGWR" class="headerlink" title="Log Writer(LGWR)"></a>Log Writer(LGWR)</h2><p>每次 mommit 都会将 redo log buffer 写入到 redo log file</p>
-<p>LGWR的触发条件：</p>
-<ol>
-<li>事务提交时</li>
-<li>Log buffer中的数据超过1m时</li>
-<li>当log buffer中的数据超过_log_io_size隐含值时</li>
-<li>每隔3s</li>
-</ol>
-<p>当事务提交时，会产生一个提交的redo record,这个redo record写入log buffer后，服务器进程（server process)会触发LGWR进行日志写操作。</p>
-<p>有些系统中，平均每个事务的大小很大，有的为1m甚至更大，但是平均下来每秒的事务数却很小，这样通过提交来触发LGWR工作的机会很小，很有可能导致数据的积压，而数据量超过1m触发LGWR进行日志写操作正是为了解决这种情况。</p>
-<p>_log_io_size参数的默认值是log buffer的三分之一，这个参数的意义是当log buffer中的buffer占用量超过这个参数的数值时会触发LGWR进行日志写操作，从而防止log buffer空间被消耗殆尽。</p>
-<p>如果一个系统长时间没有事务提交，log buffer中的空间也很空闲，就可能导致log buffer中的数据长时间不写入redo log file中，增加数据丢失的风险，所以oralce通过每隔3s触发一次LGWR进行日志写操作大大的降低了这种风险。</p>
-<h2 id="Background-Processes"><a href="#Background-Processes" class="headerlink" title="Background Processes"></a>Background Processes</h2><h2 id="Database-Writer-DBWrn"><a href="#Database-Writer-DBWrn" class="headerlink" title="Database Writer(DBWrn)"></a>Database Writer(DBWrn)</h2><p>DBWrn:将脏数据写到 data file</p>
-<h2 id="System-monitor"><a href="#System-monitor" class="headerlink" title="System monitor"></a>System monitor</h2><h2 id="Process-monitor"><a href="#Process-monitor" class="headerlink" title="Process monitor"></a>Process monitor</h2><h2 id="Checkpoint-CKPT"><a href="#Checkpoint-CKPT" class="headerlink" title="Checkpoint(CKPT)"></a>Checkpoint(CKPT)</h2><p>出发之后就会将内存中的脏数据写入维护局文件中用于保存内存与文件的内容同步.</p>
-<p>用于降低实例崩溃后的恢复时间.</p>
-<h3 id="Read-Consistency"><a href="#Read-Consistency" class="headerlink" title="Read Consistency"></a>Read Consistency</h3><p>SCN:数据库在某一个时间的状态</p>
-<img src="Read Consistency.png" />
-
-<h2 id="Oracle-Storage-Hierarchy"><a href="#Oracle-Storage-Hierarchy" class="headerlink" title="Oracle Storage Hierarchy"></a>Oracle Storage Hierarchy</h2><h2 id="Recovery"><a href="#Recovery" class="headerlink" title="Recovery"></a>Recovery</h2><p>用 redo log files 来进行回滚.</p>
-<hr>
-<h2 id="Optimizer-优化器"><a href="#Optimizer-优化器" class="headerlink" title="Optimizer(优化器)"></a>Optimizer(优化器)</h2><img src="SQL Statement Implementation.png" />
-
-<p>自动优化查询语句.</p>
-<p>优化器（optimizer）是oracle数据库内置的一个核心子系统。优化器的目的是按照一定的判断原则来得到它认为的目标SQL在当前的情形下的最高效的执行路径，也就是为了得到目标SQL的最佳执行计划。依据所选择执行计划时所用的判断原则，oracle数据库里的优化器又分为RBO（基于原则的优化器）和CBO（基于成本的优化器，SQL的成本根据统计信息算出）两种。</p>
-<p>表上无索引:Full Table Scan<br>Rowid Scan<br>查询表的x%的数据:Sample Table Scan</p>
-<p><a href="https://www.cnblogs.com/wcwen1990/p/6656611.html" target="_blank" rel="noopener">Oracle性能优化之 Oracle里的优化器</a></p>
-<p><a href="https://blog.csdn.net/u010081710/article/details/73733214" target="_blank" rel="noopener">https://blog.csdn.net/u010081710/article/details/73733214</a></p>
-<h3 id="RBO（基于原则的优化器）"><a href="#RBO（基于原则的优化器）" class="headerlink" title="RBO（基于原则的优化器）"></a>RBO（基于原则的优化器）</h3><p>Oracle会在代码里事先为各种类型的执行路径定一个等级，一共15个等级，从等级1到等级15，oracle认为等级1的执行路径是效率最高的，等级15是执行效率最差的。对于等级相同的执行计划，oracle根据目标对象的在数据字典中缓存的顺序判断选择哪一种执行计划。RBO是一种适合于OLTP类型SQL语句的优化器。相对于CBO而言，RBO有着先天的缺陷，一旦SQL语句的执行计划出现问题，将很难调整。那么RBO执行计划出现问题，怎么调整目标SQL的执行计划呢？一般有如下方法：等价改写目标SQL，比如在where条件对number和date类型的列添加0（deptno+0&gt;100），varchar2或char类型的列可以添加一个“空字符”，例如“||”。对于多表连接的SQL，可以改变from表的连接顺序（RBO会按照从右往左的顺序决定谁是驱动表，谁是被驱动表。）来达到改变目标SQL执行计划的目的。我们也可以改变相关对象在数据字典中缓存的顺序（创建顺序），来改变执行计划。RBO最大的缺点是以oracle内置代码的规则作为判断标准，而并没有考虑到实际目标表的数据量以及数据分布情况。</p>
-<h3 id="CBO（基于成本的优化器，SQL的成本根据统计信息算出）"><a href="#CBO（基于成本的优化器，SQL的成本根据统计信息算出）" class="headerlink" title="CBO（基于成本的优化器，SQL的成本根据统计信息算出）"></a>CBO（基于成本的优化器，SQL的成本根据统计信息算出）</h3><p>CBO选择执行计划时，以目标SQL成本为判断原则，CBO会选择一条执行成本最小的执行计划作为SQL的执行计划，各条执行路径的成本通过目标SQL语句所涉及的表、索引、列等的统计信息算出。这里的成本是oracle通过相关对象的统计信息计算出来的一个值，它实际上代表目标SQL对应执行步骤所消耗的IO、CPU、网络资源（针对于dblink下的分布式数据库系统而言）的消耗量，oracle会把网络资源的消耗量计算在IO成本内，实际上你看到的成本为IO、CPU资源，另外需要注意的是，oracle在未引入系统统计信息之前，CBO所计算的成本值实际全是基于IO计算的。</p>
-<p>//TODO: Optimizer Operators(PPT43-59)</p>
-<h2 id="index-索引"><a href="#index-索引" class="headerlink" title="index 索引"></a>index 索引</h2><p>如果一个数据表中存有海量的数据记录，当对表执行指定条件的查询时。常规的查询方法会将所有的记录都读取出来，然后再把读取的每一条记录与查询条件进行对比，最后返回满足条件的记录。这样进行操作的时间开销和I/O开销都很大。对于这种情况，就可以考虑通过建立索引来减小系统开销。</p>
-<p>如果要在表中查询指定的记录，在没有索引的情况下，必须遍历整个表，而有了索引之后，只需要在索引中找到符合查询条件的索引字段值，就可以通过保存在索引中的ROWID快速找到表中对应的记录。例如，如果将表看做一本书，索引的作用类似于书中的目录。在没有目录的情况下，要在书中查找指定的内容必须阅读全文，而有了目录之后，只需要通过目录就可以快速找到包含所需内容的页码（相当于ROWID）。</p>
-<p>用户可以在Oracle中创建多种类型的索引，以适应各种表的特点。按照索引数据的存储方式可以将索引分为B树索引、位图索引、反向键索引和基于函数的索引；按照索引列的唯一性可以分为唯一索引和非唯一索引；按照索引列的个数可以分为单列索引和复合索引。</p>
-<h3 id="索引分类"><a href="#索引分类" class="headerlink" title="索引分类"></a>索引分类</h3><ul>
-<li>b*tree index：几乎所有的关系型数据库中都有b*tree类型索引，也是被最多使用的。其树结构与二叉树比较类似，根据rid快速定位所访问的行。</li>
-<li>反向索引：反转了b*tree索引码中的字节，是索引条目分配更均匀，多用于并行服务器环境下，用于减少索引叶的竞争。</li>
-<li>Descending Index 降序索引：8i中新出现的索引类型，针对逆向排序的查询。</li>
-<li>位图索引：使用位图来管理与数据行的对应关系，多用于OLAP系统。</li>
-<li>函数索引：这种索引中保存了数据列基于function返回的值，在select * from table where function(column)=value这种类型的语句中起作用。</li>
-</ul>
-<img src="b-tree index.png" />
-
-<p>逻辑上：</p>
-<ul>
-<li>Single column 单行索引</li>
-<li>Concatenated 多行索引</li>
-<li>Unique 唯一索引</li>
-<li>NonUnique 非唯一索引</li>
-<li>Function-based函数索引</li>
-<li>Domain 域索引</li>
-</ul>
-<p>物理上：</p>
-<ul>
-<li>Partitioned 分区索引</li>
-<li>NonPartitioned 非分区索引</li>
-<li>B-tree：<ul>
-<li>Normal 正常型B树</li>
-<li>Rever Key 反转型B树</li>
-<li>Bitmap 位图索引</li>
-</ul>
-</li>
-</ul>
-<p>索引结构：</p>
-<ol>
-<li><p>B-tree：</p>
-<ul>
-<li>适合与大量的增、删、改（OLTP）；</li>
-<li>不能用包含OR操作符的查询；</li>
-<li>适合高基数的列（唯一值多）</li>
-<li>典型的树状结构；</li>
-<li>每个结点都是数据块；</li>
-<li>大多都是物理上一层、两层或三层不定，逻辑上三层；</li>
-<li>叶子块数据是排序的，从左向右递增；</li>
-<li>在分支块和根块中放的是索引的范围；</li>
-</ul>
-</li>
-<li><p>Bitmap:</p>
-<ul>
-<li>适合与决策支持系统</li>
-<li>做UPDATE代价非常高</li>
-<li>非常适合OR操作符的查询</li>
-<li>基数比较少的时候才能建位图索引</li>
-</ul>
-</li>
-</ol>
-<p><a href="https://www.jianshu.com/p/ebf56728e087" target="_blank" rel="noopener">https://www.jianshu.com/p/ebf56728e087</a></p>
-<p><a href="https://www.jb51.net/article/50703.htm" target="_blank" rel="noopener">https://www.jb51.net/article/50703.htm</a></p>
-<hr>
-<h2 id="Execution-Plans-执行计划"><a href="#Execution-Plans-执行计划" class="headerlink" title="Execution Plans 执行计划"></a>Execution Plans 执行计划</h2><p>什么是Oracle执行计划？</p>
-<p>执行计划是一条查询语句在Oracle中的执行过程或访问路径的描述.</p>
-<hr>
-<h2 id="错误案例"><a href="#错误案例" class="headerlink" title="错误案例"></a>错误案例</h2><p>and 的优先级高于 or 所以导致 or 后面的语句没有做id相等的筛选操作,导致出现巨量数据</p>
-<pre><code class="sql">SELECT  SCAC,
-        CODE,
-        COUNT(*)
-FROM    SSM_VOYAGE v               ,
-        SSM_VOYAGE_STOP s          ,
-        SSM_VOYAGE_STOP_SNAPSHOT ss,
-        CMN_CRR c                  ,
-        SSM_CRR_OP_LOOP op
-WHERE   v.VOYAGE_ID              = s.VOYAGE_ID
-        AND s.LATEST_SNAPSHOT_ID = ss.VOY_STOP_SNAPSHOT_ID
-        AND v.CRR_ID             = c.CRR_ID
-        AND v.LOOP_ID            = op.LOOP_ID
-        AND
-        (
-                ss.ETA_IODT     IS NULL
-                AND ss.ATA_IODT IS NULL
-        )
-        OR
-        (
-                ss.ETD_IODT     IS NULL
-                AND ss.ATD_IODT IS NULL
-        )
-GROUP BY SCAC,
-        CODE
-ORDER BY SCAC,
-        CODE
-
-
-SQL&gt; @plan
-
-PLAN_TABLE_OUTPUT
---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-Plan hash value: 3890023033
-
---------------------------------------------------------------------------------------------------------------
-| Id  | Operation                 | Name                     | Rows  | Bytes |TempSpc| Cost (%CPU)| Time     |
---------------------------------------------------------------------------------------------------------------
-|   0 | SELECT STATEMENT          |                          | 96475 |  9044K|       |    18E  (0)|999:59:59 |
-|   1 |  SORT GROUP BY            |                          | 96475 |  9044K|       |            |          |
-|   2 |   CONCATENATION           |                          |       |       |       |            |          |
-|   3 |    MERGE JOIN CARTESIAN   |                          |    18E|    15E|       |    18E  (0)|999:59:59 |
-|   4 |     MERGE JOIN CARTESIAN  |                          |  6689T|   499P|       |    41T  (1)|999:59:59 |
-|   5 |      MERGE JOIN CARTESIAN |                          |  1463G|    97T|       |    11G  (1)|999:59:59 |
-|   6 |       MERGE JOIN CARTESIAN|                          |    10M|   585M|       |   993K  (1)| 03:18:41 |
-|   7 |        TABLE ACCESS FULL  | CMN_CRR                  |    46 |   414 |       |    15   (0)| 00:00:01 |
-|   8 |        BUFFER SORT        |                          |   226K|    10M|       |   993K  (1)| 03:18:41 |
-|*  9 |         TABLE ACCESS FULL | SSM_VOYAGE_STOP_SNAPSHOT |   226K|    10M|       | 21595   (1)| 00:04:20 |
-|  10 |       BUFFER SORT         |                          |   140K|  1923K|       |    11G  (1)|999:59:59 |
-|  11 |        TABLE ACCESS FULL  | SSM_VOYAGE               |   140K|  1923K|       |  1135   (1)| 00:00:14 |
-|  12 |      BUFFER SORT          |                          |  4570 | 50270 |       |    41T  (1)|999:59:59 |
-|  13 |       TABLE ACCESS FULL   | SSM_CRR_OP_LOOP          |  4570 | 50270 |       |    28   (0)| 00:00:01 |
-|  14 |     BUFFER SORT           |                          |   780K|  9144K|       |    18E  (0)|999:59:59 |
-|  15 |      TABLE ACCESS FULL    | SSM_VOYAGE_STOP          |   780K|  9144K|       |  4134   (1)| 00:00:50 |
-|* 16 |    HASH JOIN              |                          |   162K|    14M|       | 30114   (1)| 00:06:02 |
-|  17 |     TABLE ACCESS FULL     | CMN_CRR                  |    46 |   414 |       |    15   (0)| 00:00:01 |
-|* 18 |     HASH JOIN             |                          |   162K|    13M|       | 30097   (1)| 00:06:02 |
-|  19 |      TABLE ACCESS FULL    | SSM_CRR_OP_LOOP          |  4570 | 50270 |       |    29   (0)| 00:00:01 |
-|* 20 |      HASH JOIN            |                          |   168K|    12M|  3576K| 30067   (1)| 00:06:01 |
-|  21 |       TABLE ACCESS FULL   | SSM_VOYAGE               |   140K|  1923K|       |  1136   (1)| 00:00:14 |
-|* 22 |       HASH JOIN           |                          |   170K|    10M|    10M| 27792   (1)| 00:05:34 |
-|* 23 |        TABLE ACCESS FULL  | SSM_VOYAGE_STOP_SNAPSHOT |   170K|  8306K|       | 21597   (1)| 00:04:20 |
-|  24 |        TABLE ACCESS FULL  | SSM_VOYAGE_STOP          |   780K|  9144K|       |  4135   (1)| 00:00:50 |
---------------------------------------------------------------------------------------------------------------
-
-Predicate Information (identified by operation id):
----------------------------------------------------
-
-   9 - filter(&quot;SS&quot;.&quot;ETD_IODT&quot; IS NULL AND &quot;SS&quot;.&quot;ATD_IODT&quot; IS NULL)
-  16 - access(&quot;V&quot;.&quot;CRR_ID&quot;=&quot;C&quot;.&quot;CRR_ID&quot;)
-  18 - access(&quot;V&quot;.&quot;LOOP_ID&quot;=&quot;OP&quot;.&quot;LOOP_ID&quot;)
-  20 - access(&quot;V&quot;.&quot;VOYAGE_ID&quot;=&quot;S&quot;.&quot;VOYAGE_ID&quot;)
-  22 - access(&quot;S&quot;.&quot;LATEST_SNAPSHOT_ID&quot;=&quot;SS&quot;.&quot;VOY_STOP_SNAPSHOT_ID&quot;)
-  23 - filter(&quot;SS&quot;.&quot;ETA_IODT&quot; IS NULL AND &quot;SS&quot;.&quot;ATA_IODT&quot; IS NULL AND (LNNVL(&quot;SS&quot;.&quot;ETD_IODT&quot; IS NULL)
-              OR LNNVL(&quot;SS&quot;.&quot;ATD_IODT&quot; IS NULL)))
-
-42 rows selected.</code></pre>
- 
-      <!-- reward -->
-      
-    </div>
-    
 
     <!-- copyright -->
     
     <footer class="article-footer">
        
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/OracleDB/" rel="tag">OracleDB</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/" rel="tag">数据库</a></li></ul>
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Nginx/" rel="tag">Nginx</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E9%AB%98%E5%B9%B6%E5%8F%91/" rel="tag">高并发</a></li></ul>
 
     </footer>
   </div>
@@ -1561,7 +375,7 @@ Predicate Information (identified by operation id):
 
     
     <article
-  id="post-Java复习笔记"
+  id="post-SpringBoot-原理初探"
   class="article article-type-post"
   itemscope
   itemprop="blogPost"
@@ -1572,1227 +386,30 @@ Predicate Information (identified by operation id):
     <header class="article-header">
        
 <h2 itemprop="name">
-  <a class="article-title" href="/2017/10/10/Java%E5%A4%8D%E4%B9%A0%E7%AC%94%E8%AE%B0/"
-    >Java复习笔记</a> 
+  <a class="article-title" href="/2020/03/23/SpringBoot-%E5%8E%9F%E7%90%86%E5%88%9D%E6%8E%A2/"
+    >SpringBoot-原理初探</a> 
 </h2>
  
 
     </header>
      
     <div class="article-meta">
-      <a href="/2017/10/10/Java%E5%A4%8D%E4%B9%A0%E7%AC%94%E8%AE%B0/" class="article-date">
-  <time datetime="2017-10-10T01:54:47.000Z" itemprop="datePublished">2017-10-10</time>
+      <a href="/2020/03/23/SpringBoot-%E5%8E%9F%E7%90%86%E5%88%9D%E6%8E%A2/" class="article-date">
+  <time datetime="2020-03-23T07:37:04.000Z" itemprop="datePublished">2020-03-23</time>
 </a> 
   <div class="article-category">
     <a class="article-category-link" href="/categories/%E5%90%8E%E7%AB%AF/">后端</a>
   </div>
+
    
     </div>
-      
-    <div class="article-entry" itemprop="articleBody">
        
-  <h2 id="索引"><a href="#索引" class="headerlink" title="索引"></a>索引</h2><ol>
-<li><a href="#Java_env"> Java运行环境 </a></li>
-<li><a href="#Java_basic"> Java语言 </a></li>
-<li><a href="#Java_grammer"> Java语法 </a></li>
-<li><a href="#Java_array"> Java数组 </a></li>
-<li><a href="#Java_collections"> 集合框架 </a></li>
-<li><a href="#Java_io"> Java I/O 输入/输出流 </a></li>
-<li><a href="#Java_reflect"> 反射 </a></li>
-<li><a href="#Java_network"> Java网络编程 </a></li>
-<li><a href="#Java_web"> Java Web 开发相关技术 </a></li>
-<li><a href="#algorithm_problem"> 算法题 </a></li>
-</ol>
-<h2 id="Java运行环境"><a href="#Java运行环境" class="headerlink" title=" Java运行环境 "></a><a id="Java_env"> Java运行环境 </a></h2><h3 id="JDK和JRE的作用"><a href="#JDK和JRE的作用" class="headerlink" title="JDK和JRE的作用"></a>JDK和JRE的作用</h3><p>JRE(Java Runtime Environment)是Java程序的运行环境。包含JVM在%JRE安装目录%/bin/client/jvm.dll，所有的Java类库的class文件，在lib目录下打包成jar包。</br><br>JKD(Java Development Kit)是Java开发工具包。在%JDK安装目录%/bin/client/jvm.dll与在%JKD安装目录%/bin/server/jvm.dll下含有两个JVM虚拟机。同时只有JDK下才有javac。</br></p>
-<h3 id="配置JDK环境"><a href="#配置JDK环境" class="headerlink" title="配置JDK环境"></a>配置JDK环境</h3><ol>
-<li>我的电脑-&gt;属性-&gt;系统属性-&gt;高级-&gt;环境变量-&gt;系统环境变量，新建JAVA_HOME环境变量，值为 %jdk安装目录%，例：C:\Program Files\Java\jkd1.6.1_13</li>
-<li>配置path环境变量：在path后加上;%JAVA_HOME%\bin</li>
-<li>编译java代码：</li>
-</ol>
-<pre><code class="java">public class HelloWorld {
-    public static void main(String[] args){
-        System.out.println(&quot;Hello world!&quot;);
-    }
-}</code></pre>
-<p>保存为HelloWorld.java，命令行进入当前目录使用命令：javac HelloWorld.java编译上传HelloWorld.class文件(class文件是字节码文件，字节码需要在JVM虚拟机里面运行)</p>
-<ol start="4">
-<li>使用命令java HelloWorld 运行</li>
-</ol>
-<p>如果类指定了包名则需用命令javac -d HelloWorld.java来进行编译</br></p>
-<h3 id="class文件"><a href="#class文件" class="headerlink" title=".class文件"></a>.class文件</h3><p>.class文件是字节码文件，字节码需要在JVM虚拟机里面运行。对一个.java文件进行编译可以产生一个同名的.class文件。若对一个含有内部类的.java文件进行编译会产生 外部类名$内部类名.class的文件。</br></p>
-<h3 id="类的加载机制"><a href="#类的加载机制" class="headerlink" title="类的加载机制"></a>类的加载机制</h3><p>Java提供两种类的装载方式：</p>
-<ol>
-<li>预先装载</li>
-<li>按需装载(大部分类延迟到使用时才动态加载被称为Java的运行时动态装载机制)</li>
-</ol>
-<p>Java的运行时动态装载机制：使得Java可以在动态运行时装载软件部件，修改代码无需全盘编译，为软件系统的开发提供了极大的灵活性。</br></p>
-<ol>
-<li>预先装载</li>
-</ol>
-<p>当启动一个程序时：Java首先在JDK目录下找到并载入jvm.dll-&gt;启动虚拟机-&gt;虚拟机进行初始化操作(设置操作系统参数等)-&gt;创建Bootstrap Loader对象(启动类装载器，由C++编写)-&gt;Bootstrap Loader一次性加载JVM的所有基础类</br></p>
-<p>Bootstrap Loader还会装载定义在sun.misc命名空间下的Launcher类，Launcher类拥有两个内部类：ExtClassLoader, AppClassLoader. 其继承关系如下：<br>Bootstrap Loader&lt;-ExtClassLoader&lt;-AppClassLoader(拥有main()函数的入口类)</p>
-<ol start="2">
-<li>按需装载</li>
-</ol>
-<p>装载条件：</br><br>1)静态方法</br><br>2)静态属性</br><br>3)构造方法</br><br>除外：</br><br>1)当访问静态常量属性时，JVM加载类的过程中不会进行类的初始化工作，只会进行到解析阶段</br><br>2)构造方法没有被显示的声明为静态方法，但它仍作为内地 静态成员特例</br></p>
-<p>按需装载流程：</br><br>当需要使用一个类时JVM会检查这个类的Class对象是否已经加载，若未加载则开始装载：</p>
-<ol>
-<li>加载：查找并导入类的二进制字节码文件，根据这些字节码文件创建一个Class对象</li>
-<li>链接：分为校验、准备、解析</li>
-<li>校验：检查导入的二进制字节码的完整性、正确性、安全性</li>
-<li>准备：为静态域分配存储空间</li>
-<li>解析：将符号引用转折为直接引用</li>
-<li>初始化：初始化静态变量并执行静态域代码</li>
-</ol>
-<p>类加载器：JVM使用类加载器来加载类，Java加载器在Java核心类库和CLASSPATH环境下面的所有类中查找类，若找不到则会抛出java.lang.ClassNotFoundException异常</br></p>
-<p>从J2SE1.2开始：JVM使用了3中加载器：bootstrap、extension、system类加载器，依次为父子关系。</br></p>
-<h3 id="环境变量CLASSPATH的作用"><a href="#环境变量CLASSPATH的作用" class="headerlink" title="环境变量CLASSPATH的作用"></a>环境变量CLASSPATH的作用</h3><p>环境变量CLASSPATH是在编译Java源码和运行程序时使用的，用于为Java程序指定所依赖的接口、类等搜索路径。</br></p>
-<pre><code>.;c:\jar\log4j.jar;d:\work\java</code></pre><h3 id="如何为Java程序动态的指定类搜索路径"><a href="#如何为Java程序动态的指定类搜索路径" class="headerlink" title="如何为Java程序动态的指定类搜索路径"></a>如何为Java程序动态的指定类搜索路径</h3><p>使用-cp选项，此时JVM会把指定的jar文件作为CLASSPATH的一部分</br></p>
-<pre><code>javac -cp D:\work\java\log4j.jar HelloWorld.java</code></pre><h3 id="如何使用cmd把Java程序打包成jar文件"><a href="#如何使用cmd把Java程序打包成jar文件" class="headerlink" title="如何使用cmd把Java程序打包成jar文件"></a>如何使用cmd把Java程序打包成jar文件</h3><p>jar包一般包含class文件、配置文件和清单文件manifest.mf</br></p>
-<p>格式如下：</br></p>
-<pre><code>jar {c t x u f}[v m e 0 M i][-C 目录]文件名
-{c t x u f}四个参数必须选其一
-[v m e 0 m i]为可选参数
--c 创建一个jar包
--t 显示jar包中内容列表
--x 解压jar包
--u 添加文件到jar包
--f 指定jar包的文件名
-
--v 生成详细报告并输出到标准设备
--m 指定manifest.mf文件
--0 产生jar包时不对内容进行压缩
--M 不产生所有文件的清单文件manifest.mf
--i 为指定的jar文件创建索引文件
-
--C 表示转到相应的目录下指定jar命令</code></pre><pre><code>生成hello.jar包
-jar cf hello.jar HelloWorld.class
-显示打包过程
-jar vcf hello.jar HelloWorld.class</code></pre><h3 id="Java-Web项目生成-Build-、部署-Deploy-、配置-Configuration"><a href="#Java-Web项目生成-Build-、部署-Deploy-、配置-Configuration" class="headerlink" title="Java Web项目生成(Build)、部署(Deploy)、配置(Configuration)"></a>Java Web项目生成(Build)、部署(Deploy)、配置(Configuration)</h3><p>目录结构：</br></p>
-<pre><code>javaweb
-    |- META-INF
-    |- resource
-    |- WEB-INF
-        |- classes
-        |- lib</code></pre><p>web.xml是整个Web应用程序的配置文件，通过它来定义Servlet、过滤器、监听器等，Web容器通过该文件的配置来控制整个Web应用程序的行为方式。须放在WEB-INF目录下</br></p>
-<p>Servlet是服务器端处理HTTP请求的基本组成单元。JSP、过滤器都由其实现。Servlet存活在Web容器中，由Web容器来控制其生命周期。</br><br>JSP的脚本语言是Java，其本质是Servlet。</br></p>
-<p>打包出来的文件为.war后缀，Java Web容器是符合Java EE规范的，所以每个Java Web应用程序都可以部署到任何平台的任何Java EE容器中。</br></p>
-<hr>
-<h2 id="Java语言"><a href="#Java语言" class="headerlink" title=" Java语言 "></a><a id="Java_basic"> Java语言 </a></h2><h3 id="Java与C-程序的区别"><a href="#Java与C-程序的区别" class="headerlink" title="Java与C++程序的区别"></a>Java与C++程序的区别</h3><p>C、C++：由编译器把源码直接编译成计算机可识别的机器码(exe、dll等)，再直接运行。</br><br>Java：由javac命令把源文件编译成class文件，在Java程序启动时先启动Java虚拟机再由虚拟机去加载class文件。</br></p>
-<h3 id="简述JCM及其工作原理"><a href="#简述JCM及其工作原理" class="headerlink" title="简述JCM及其工作原理"></a>简述JCM及其工作原理</h3><p>JVM是一种用软件模拟出来的计算机，它用于执行Java程序，有一套非常严格的技术规范，是Java程序实现跨平台特性的基础。Java虚拟机有虚拟出来的计算机硬件如：处理器、寄存器、堆栈等，还具有与之配套的指令系统。它运行Java程序就行普通计算机运行C、C++程序一样。</br></p>
-<h3 id="Java程序为什么无需delete语句进行内存回收-JVM的垃圾回收机制"><a href="#Java程序为什么无需delete语句进行内存回收-JVM的垃圾回收机制" class="headerlink" title="Java程序为什么无需delete语句进行内存回收(JVM的垃圾回收机制)"></a>Java程序为什么无需delete语句进行内存回收(JVM的垃圾回收机制)</h3><p>JVM把程序创建的对象存放在堆空间中</br></p>
-<p>堆(Heap)：是一个运行时的数据存储区。分配和释放由程序中显示分配，没有垃圾自动回收机制，且须由程序代码显示释放这些实体。类似于C中的malloc()和free()。JVM会把程序创建的对象放在堆中，在Java中则由JVM自动释放(一般是垃圾回收器检测出一个对象不再被引用就就行回收)。</br><br>栈(Stack)：一般存放非static的自动变量、函数参数、表达式的临时结果和函数返回值。分配和释放均由系统自动完成。</br></p>
-<hr>
-<h2 id="Java语法"><a href="#Java语法" class="headerlink" title=" Java语法 "></a><a id="Java_grammer"> Java语法 </a></h2><h3 id="变量及其作用域"><a href="#变量及其作用域" class="headerlink" title="变量及其作用域"></a>变量及其作用域</h3><p>全局变量：可以被所有函数在任何地址使用的变量</br><br>局部变量：在某一特定的代码范围才能看见的变量</br></p>
-<p>根据生存周期来分：</br></p>
-<ol>
-<li>静态变量：类中由static修饰的变量，当类加载时就生成并初始化</br></li>
-<li>成员变量：类中没有使用static修饰的变量，当对象加载时就生成并初始化，随着垃圾回收器回收而消失</br></li>
-<li>局部变量：定义在方法中的变量或方法的参数或定义在代码块中(用大括号包括的)的变量</br></li>
-</ol>
-<h3 id="Java变量数据类型"><a href="#Java变量数据类型" class="headerlink" title="Java变量数据类型"></a>Java变量数据类型</h3><p>分为：</br></p>
-<p>基本数据类型和引用数据类型</br></p>
-<h3 id="Java包含哪些基本数据类型及其包装类"><a href="#Java包含哪些基本数据类型及其包装类" class="headerlink" title="Java包含哪些基本数据类型及其包装类"></a>Java包含哪些基本数据类型及其包装类</h3><p>基本数据类型：byte, short, int, long, float, double, boolean, char</br><br>包装类：Byte, Short, Integer, Long, Float, Double, Boolean, Character</br></p>
-<p>int取值范围：int长度为4字节，共4*8=32位，第一位为符号位，最大值为2^31-1，最小值为-2^31</br></p>
-<pre><code class="java">int otc = 0123; // 八进制
-int hex = 0x123; // 十六进制</code></pre>
-<p>long取值范围：长度为8字节，共8*8=64位，[-2^63, 2^63-1]</br></p>
-<p>float取值范围：长度为4字节，共4*8=32位，[3.4E+10^-38, 3.4E+10^38]</br></p>
-<p>double取值范围：长度为8字节，共8*8=64位，[1.7E+10^-308, 1.7E+10^308]</br></p>
-<p>类型转换：分为显示转换和隐式转换</br></p>
-<p>boolean存于栈空间，Boolean对象存放在堆空间中</br></p>
-<p>char采用Unicode编码，用2字节表示一个字符，char长度为2字节，16位，[0, 2^16-1]</br></p>
-<p>JVM启动时会实例化9个对象池，分别用来存储8种基本类型和String对象：对象池的作用是为了避免频繁的创建和销毁对象影响系统性能</br></p>
-<p>StringBuffer线程安全，StringBuilder线程不安全。</br></p>
-<p>使用指定的字符集创建String对象：String str = new String(“中午”.getBytes(), “GBK”)，可用”GBK”, “UTF-8”, “ISO-8859-1”</br></p>
-<h3 id="装箱与拆箱"><a href="#装箱与拆箱" class="headerlink" title="装箱与拆箱"></a>装箱与拆箱</h3><p>Java5.0提供的功能，用于打包基本数据类型，同时隐藏一些细节。自动装箱与拆箱是在编译阶段进行的。</br></p>
-<h3 id="转义字符"><a href="#转义字符" class="headerlink" title="转义字符"></a>转义字符</h3><pre><code>\a:响铃
-\b:退格BS
-\f:换页FF
-\n:换行LF
-\r:回车CR
-\t:水平制表HT
-\v:垂直制表VT
-\\:反斜杠
-\?:问号字符
-\&#39;:单引号字符
-\&quot;:双引号字符
-\0:空字符NULL
-\ddd:任意字符 三位八进制
-\xhh:任意字符 二位十六进制</code></pre><h3 id="Java的引用与C-的指针的区别"><a href="#Java的引用与C-的指针的区别" class="headerlink" title="Java的引用与C++的指针的区别"></a>Java的引用与C++的指针的区别</h3><p>相同：都是指向一块内存地址的，通过引用指针来完成对内存数据的操作。</br><br>区别：</br></p>
-<ol>
-<li>类型：引用的值为地址的数据元素，Java封装了的地址，可以转成字符查看，不必关心长度。C++指针是一个装地址的变量。</br></li>
-<li>所占内存：引用声明没有实体，不占空间，C++指针用到才会赋值</br></li>
-<li>初始值：java初始值为null，C++为原内存里所保存的值</br></li>
-<li>计算：引用不可计算，C++相当于int可计算</br></li>
-<li>控制：引用不可控制，C++可以使用计算来控制指针指向</br></li>
-<li>内存泄漏：java不会，C++容易产生内存泄漏</br></li>
-</ol>
-<h3 id="Java中的main-方法"><a href="#Java中的main-方法" class="headerlink" title="Java中的main()方法"></a>Java中的main()方法</h3><pre><code class="java">public static void main(String[] args){
-
-}</code></pre>
-<p>作为程序的入口函数，可以通过args接受外部参数。</br></p>
-<h3 id="equal与"><a href="#equal与" class="headerlink" title="equal与=="></a>equal与==</h3><p>==为直接比较值，若为基本数据类型则比较是否相同，若为引用则比较引用是否指向同一个对象。</br></p>
-<p>equal则是调用java.lang.Object里的equal()方法或对象里面重写的equal方法来比较</br></p>
-<h3 id="Java中的三元运算符"><a href="#Java中的三元运算符" class="headerlink" title="Java中的三元运算符"></a>Java中的三元运算符</h3><pre><code class="java">tmp = a &gt; b ? &quot;a&gt;b&quot; : &quot;a&lt;b&quot;;</code></pre>
-<h3 id="注释"><a href="#注释" class="headerlink" title="注释"></a>注释</h3><pre><code class="java">// 行注释
-
-/*
-块注释
-*/
-
-/**
-*文档注释
-*/
-public int test(String arg0){
-
-}</code></pre>
-<h3 id="静态成员的特点"><a href="#静态成员的特点" class="headerlink" title="静态成员的特点"></a>静态成员的特点</h3><p>在类中通过static关键字修饰，包括：静态成员变量、静态方法、静态代码块</br></p>
-<ol>
-<li>在类加载的时候就进行创建、初始化或执行代码</li>
-<li>一个类只有一个</li>
-<li>类的所有实例都可以访问</li>
-</ol>
-<h3 id="子类构造方法调用父类的构造方法"><a href="#子类构造方法调用父类的构造方法" class="headerlink" title="子类构造方法调用父类的构造方法"></a>子类构造方法调用父类的构造方法</h3><p>使用super()方法，且super()方法必须放在子类构造方法的第一行，若super()无参数则可省略</br></p>
-<h3 id="接口和抽象类的区别"><a href="#接口和抽象类的区别" class="headerlink" title="接口和抽象类的区别"></a>接口和抽象类的区别</h3><p>抽象类是功能不全的类，里面可以有非抽象方法</br><br>接口是抽象方法声明和静态不能被修改数据的集合</br><br>两者都不能被实例化</br><br>一个类一次只能继承一个抽象类但可以实现多个接口</p>
-<h3 id="内部类"><a href="#内部类" class="headerlink" title="内部类"></a>内部类</h3><pre><code class="java">package abc;
-class A{
-    class B{
-
-    }
-}</code></pre>
-<p>B类的全类名是abc.A.B，且B会依赖于A。</br></p>
-<p>下面分类讨论：</br></p>
-<p>根据定义结构分类：</br></p>
-<ol>
-<li>成员式：定义的方法与成员变量相似</li>
-<li>局部式：定义在方法体重</li>
-</ol>
-<p>成员内部类：</br></p>
-<ol>
-<li>静态内部类：使用static关键字修饰的内部类，当加载外部类的时候也会加载静态内部类。无法访问外部类的非静态成员。全类名：abc.A.B，class文件名：A$B.class</li>
-</ol>
-<pre><code class="java">package abc;
-class A{
-    static class B{
-
-    }
-}</code></pre>
-<ol start="2">
-<li>成员内部类：需要等外部类创建对象以后才会被加载到JVM中，属于外部类的某个实例，可访问外部类的静态与非静态成员。</li>
-</ol>
-<pre><code class="java">package abc;
-class A{
-    class B{
-
-    }
-}</code></pre>
-<p>创建成员内部类语法：</br></p>
-<pre><code class="java">public static void main(String[] args){
-    A a = new A();
-    A.B b = a.new B();
-}</code></pre>
-<p>局部式内部类：</br></p>
-<ol>
-<li>普通局部内部类：位于方法中</li>
-<li>匿名内部类：没有类名，匿名内部类的class文件命名方法按照匿名内部类的排列顺序来进行：Outter$1.class</li>
-</ol>
-<h3 id="可见性private-protected-public-default"><a href="#可见性private-protected-public-default" class="headerlink" title="可见性private, protected, public, default"></a>可见性private, protected, public, default</h3><p>public:可被所有其它类访问</br><br>private:自身所在类内可见</br><br>protected:自身，子类及同一个包中类可访问</br><br>default:自身，同一个包中类可访问</br></p>
-<h2 id="Java数组"><a href="#Java数组" class="headerlink" title=" Java数组 "></a><a id="Java_array"> Java数组 </a></h2><h3 id="Java数组的本质"><a href="#Java数组的本质" class="headerlink" title="Java数组的本质"></a>Java数组的本质</h3><p>Java数组的本质是一个特殊的类，该类好保存了数据类型的信息。该类通过成员变量的形式保存数据，并通过[]符号来访问数据。基本数据类型的数组保存的是值(初始化为0)，而应用类型的数组保存的是对象的引用(初始化为null)。</br></p>
-<h3 id="拷贝数组的数据"><a href="#拷贝数组的数据" class="headerlink" title="拷贝数组的数据"></a>拷贝数组的数据</h3><p>通过for遍历来赋值只是复制了对象的引用，若需要复制对象则可用：</br></p>
-<pre><code class="java">int[] arr = new int[][1,2,3];
-int[] arr2 = new int[3];
-System.arraycopy(arr, 0, arr, 0, arr.length);</code></pre>
-<p>–</p>
-<h2 id="集合框架"><a href="#集合框架" class="headerlink" title=" 集合框架 "></a><a id="Java_collections"> 集合框架 </a></h2><p><img src="JAVA集合框架.PNG" /></br></p>
-<p>列表List：有序，允许重复</br><br>集合Set：无序，不允许重复</br><br>SortedSet：有序的Set</br><br>映射Map：无序，不允许重复，键值对</br><br>SortedMap：有序的Map</br></p>
-<h3 id="迭代器"><a href="#迭代器" class="headerlink" title="迭代器"></a>迭代器</h3><p>迭代器(Iterator)模式，又叫游标(Cursor)模式。提供一种方法来访问一个容器对象中的各个元素。</br></p>
-<h3 id="比较器"><a href="#比较器" class="headerlink" title="比较器"></a>比较器</h3><p>用于比较元素，需要实现Comparable或Comparator接口。</br></p>
-<ol>
-<li>Comparable接口：进行比较类需要实现的接口，仅包含一个compareTo()方法，返回值大于0时表示本对象&lt;参数对象</li>
-</ol>
-<pre><code class="java">public class User implements Comparable{
-    public int age;
-    public int compareTo(Object o){
-        return this.age-(User o).age;
-    }
-}</code></pre>
-<ol start="2">
-<li>Comparator接口：实现该接口的类被称为比较器，包含compare()方法。</br></li>
-</ol>
-<pre><code class="java">public class User{
-    public int age;
-
-    public User(int age){
-        this.age = age;
-    }
-
-    public static void main(String[] args){
-        User u1 = new User(16);
-        User u2 = new User(18);
-        Comparator comp = new UserComparator();
-        int result = comp.compare(u1, u2);
-        System.out.println(result);
-    }
-}
-
-public class UserComparator implements Comparator{
-    public int compare(Object arg0, Object arg1){
-        User u1 = (User) arg0;
-        User u2 = (User) arg1;
-        return u1.age - u2.age;
-    }
-}
-</code></pre>
-<h3 id="Vector-与-ArrayList-的区别"><a href="#Vector-与-ArrayList-的区别" class="headerlink" title="Vector 与 ArrayList 的区别"></a>Vector 与 ArrayList 的区别</h3><p>Vector是线程安全的，它操作元素的方法都是同步方法。ArrayList不是，但效率更高。</br></p>
-<h3 id="HashMap-与-HashTable-的区别"><a href="#HashMap-与-HashTable-的区别" class="headerlink" title="HashMap 与 HashTable 的区别"></a>HashMap 与 HashTable 的区别</h3><p>HashTable的方法是同步的，HashMap不同步</br><br>HashTable不允许null，HashMap允许null</br><br>HashTable使用Enumeration遍历，HashMap使用Iterator遍历</br><br>HashTable直接使用对象的hashCode，HashMap会重新计算</br></p>
-<h3 id="集合使用泛型"><a href="#集合使用泛型" class="headerlink" title="集合使用泛型"></a>集合使用泛型</h3><p>可以明确集合里存储的元素的类型，避免了手动类型转换的过程</br></p>
-<h3 id="集合元素排序"><a href="#集合元素排序" class="headerlink" title="集合元素排序"></a>集合元素排序</h3><p>使用java.util.Collections类中的sort()方法对List元素进行排序</br><br>如果类中的元素全部实现了Comparable接口则可通过Collections.sort()排序</br></p>
-<pre><code class="java">//REVIEW:test this code
-public class User implements Comparable&lt;User&gt;{
-    public int age;
-
-    public User(int age){
-        this.age = age;
-    }
-
-    public int compareTo(Object o){
-        return this.age-(User o).age;
-    }
-}
-
-public class Test{
-    public static void main(String[] args){
-        List&lt;User&gt; list = new ArrayList&lt;User&gt;();
-        list.add(new User(16));
-        list.add(new User(18));
-        list.add(new User(22));
-        // 默认排序
-        Collections.sort(list);
-        // 降序排序
-        // 若没有实现Comparable接口，也可以提供比较器
-        Comparator comp = Collections.reverseOrder();
-        Collections.sort(list, comp);
-
-    }
-}</code></pre>
-<p>若没有实现Comparable接口，也可以提供比较器来进行排序</br></p>
-<h3 id="什么集合可以使用-foreach"><a href="#什么集合可以使用-foreach" class="headerlink" title="什么集合可以使用 foreach"></a>什么集合可以使用 foreach</h3><p>foreach运行步骤如下：</br></p>
-<ol>
-<li>调用指定集合对象的Iterator()方法，得到迭代器</li>
-<li>使用迭代器的hasNext()方法判断有无下一个元素进行循环</li>
-<li>每次循环都用next()方法得到元素</li>
-</ol>
-<p>数组或实现了Iterable接口的类实例，Jav集合框架中的集合大多符合第二条</br></p>
-<hr>
-<h2 id="Java-I-O-输入-输出流"><a href="#Java-I-O-输入-输出流" class="headerlink" title=" Java I/O 输入/输出流 "></a><a id="Java_io"> Java I/O 输入/输出流 </a></h2><h3 id="复制文件程序"><a href="#复制文件程序" class="headerlink" title="复制文件程序"></a>复制文件程序</h3><pre><code class="java">import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-
-public class FileCopy{
-    public static void main(String[] args){
-        // 输入文件流
-        FileInputStream fin = new FileInputStream(&quot;d:/test/a.txt&quot;);
-        // 输出文件流
-        FileOutputStream fout = new FileOutputStream(&quot;d:/test/b.txt&quot;);
-        byte[] buff = new byte[256]; // 缓冲区
-        int len = 0; // 每次读到的数据长度
-        while((len = fin.read(buff)) &gt; 0){
-            fout.write(buff, 0, len);
-        }
-        fin.close();
-        fout.close();
-    }
-}</code></pre>
-<p>如果不关闭流，会造成资源的浪费，还可能会导致文件锁住，其他程序无法操作文件。</br></p>
-<h3 id="字节流"><a href="#字节流" class="headerlink" title="字节流"></a>字节流</h3><p>字节流处理的是最基本的单位byte，它可以处理任何形式的数据，主要操作byte数组。Java中可以使用java.io.FileInputStream和java.io.FileOutputStream来进行字节流的处理。</br></p>
-<p>你也可以使用包装过的具有特定功能的字节流，基本使用思路如下：</br></p>
-<ol>
-<li>获取输入或输出的流对象，从File获得或网络等</li>
-<li>根据特定的字符格式创建InputStreamReader或InputStreamWriter</li>
-<li>使用read()或readLine()方法读取数据，write()或print()</li>
-<li>关闭流</li>
-</ol>
-<h3 id="序列化"><a href="#序列化" class="headerlink" title="序列化"></a>序列化</h3><p>把对象内存中的数据按照规则变成一系列的字节数据并写入到流中。须Serializable，必要时还需提供serialVersionUID</br></p>
-<h2 id="多线程"><a href="#多线程" class="headerlink" title="多线程"></a>多线程</h2><h3 id="线程-Thread-与进程-Process-的区别"><a href="#线程-Thread-与进程-Process-的区别" class="headerlink" title="线程(Thread)与进程(Process)的区别"></a>线程(Thread)与进程(Process)的区别</h3><p>进程包含线程，每个应用程序的执行都在操作系统内核中登记一个进程标志，操作系统根据分配的标志对应用程序的执行进行调度和系统资源分配。进程是占用系统资源的基本单位。</br><br>进程在执行过程中拥有独立的内存单元，而多个线程共享内存。</br><br>进程拥有固定的入口、执行顺序、出口，而线程会被应用程序控制。</br></p>
-<h3 id="并发-Concurrent-与并行-Parallel-的区别"><a href="#并发-Concurrent-与并行-Parallel-的区别" class="headerlink" title="并发(Concurrent)与并行(Parallel)的区别"></a>并发(Concurrent)与并行(Parallel)的区别</h3><img src="cocurrent_parallel.jpg" />
-
-<p>并发：交替使用一台咖啡机；并行同时使用两台咖啡机。</br></p>
-<p>并行是指两个或者多个事件在同一时刻发生；而并发是指两个或多个事件在同一时间间隔内发生。并行是并发的子集。</br></p>
-<p>在操作系统中，并发是指一个时间段中有几个程序都处于已启动运行到运行完毕之间，且这几个程序都是在同一个处理机上运行，但任一个时刻点上只有一个程序在处理机上运行。</br></p>
-<h3 id="让一个类成为线程类"><a href="#让一个类成为线程类" class="headerlink" title="让一个类成为线程类"></a>让一个类成为线程类</h3><ol>
-<li>实现Runnable接口</li>
-<li>继承Thread类</li>
-</ol>
-<p>继承Thread类之后就不能继承其它类了，实现Runnable接口则可以。</br><br>继承Thread类更方便。</br><br>实现Runnable接口的线程类更方便访问同一个变量，而Thread则需要使用内部类。</br></p>
-<p>继承自Thread类可以通过new创建对象再调用start()方法。</br><br>实现Runnable接口的线程类需要将其对象作为Thread构造方法的参数，然后调用Thread对象的start()方法</br></p>
-<h3 id="使用sychronized让线程同步"><a href="#使用sychronized让线程同步" class="headerlink" title="使用sychronized让线程同步"></a>使用sychronized让线程同步</h3><p>每个对象都可以有一个线程锁，sychronized可以用任何一个对象的线程锁来锁住一段代码，任何想要进入该段代码的线程必须在解锁以后才能继续执行，否则进入等待状态。只有占用锁资源的线程执行完毕后，锁资源才会被释放。</br></p>
-<p>java会为每个object对象分配一个monitor，当某个对象的同步方法（synchronized methods ）被多个线程调用时，该对象的monitor将负责处理这些访问的并发独占要求。</br><br>当一个线程调用一个对象的同步方法时，JVM会检查该对象的monitor。如果monitor没有被占用，那么这个线程就得到了monitor的占有 权，可以继续执行该对象的同步方法；如果monitor被其他线程所占用，那么该线程将被挂起，直到monitor被释放。</br><br>当线程退出同步方法调用时，该线程会释放monitor，这将允许其他等待的线程获得monitor以使对同步方法的调用执行下去。</br></p>
-<h3 id="编写一个生产者消费者模型的多线程例子"><a href="#编写一个生产者消费者模型的多线程例子" class="headerlink" title="编写一个生产者消费者模型的多线程例子"></a>编写一个生产者消费者模型的多线程例子</h3><p>每个生产者在添加货物之前检查仓库是否已满，若已满则等待并通知消费者进行消费，直到消费者消费了至少一个货物以后再继续添加；消费者在消费一个货物之前检查仓库是否为空，若为空着等待并通知生产者进行生产，直到生产者添加了至少一个货物后，再进行消费。</br></p>
-<p>sleep()函数是Thread类的静态函数，不涉及到线程间同步概念，仅仅为了让一个线程自身获得一段沉睡时间。sleep可以在任何地方使用。</br><br>wait函数是object类的函数，要解决的问题是线程间的同步，该过程包含了同步锁的获取和释放，调用wait方法将会将调用者的线程挂起，直到其他线程调用同一个对象的notify方法才会重新激活调用者。</br></p>
-<pre><code class="java">package review.thread;
-
-public class Store {
-    /**
-     * 仓库的最大容量
-     */
-    private final int MAX_SIZE;
-    /**
-     * 当前的货物数量
-     */
-    private int count;
-    /**
-     * 初始化最大容量的构造方法
-     * @param n 仓库的最大容量
-     */
-    public Store(int n){
-        MAX_SIZE = n;
-        count=0;
-    }
-
-    /**
-     * 向仓库添加货物
-     */
-    public synchronized void add(){
-        while(count &gt;= MAX_SIZE){
-            System.out.println(&quot;仓库已满&quot;);
-            try{
-                this.wait(); // 进入等待池
-            }catch(InterruptedException e){
-                e.printStackTrace();
-            }
-        }
-        count++; // 增加库存
-        System.out.println(Thread.currentThread().toString() + &quot; add &quot; + count);
-        this.notifyAll(); // 通知所有消费者线程来拿，同时唤醒所有挂起的生产者
-    }
-
-    public synchronized void remove(){
-        while(count &lt;= 0){
-            System.out.print(&quot;empty&quot;);
-            try {
-                this.wait();
-            } catch (InterruptedException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            }
-        }
-        System.out.println(Thread.currentThread().toString() + &quot; remove &quot; + count);
-        count--;
-        this.notify(); // 通知生产者添加
-    }
-
-    public static void main(String[] args){
-        Store store = new Store(5);
-
-        Thread pro1 = new Proceducer(store);
-        Thread pro2 = new Proceducer(store);
-        Thread con1 = new Consumer(store);
-        Thread con2 = new Consumer(store);
-        pro1.setName(&quot;producer1&quot;);
-        pro2.setName(&quot;producer2&quot;);
-        con1.setName(&quot;consumer1&quot;);
-        con2.setName(&quot;consumer2&quot;);
-
-        pro1.start();
-        pro2.start();
-        con1.start();
-        con2.start();
-    }
-}
-
-package review.thread;
-
-public class Proceducer extends Thread{
-    private Store store;
-    public Proceducer(Store store){
-        this.store = store;
-    }
-    public void run(){
-        while(true){
-            this.store.add();
-            try {
-                Thread.sleep(1000);
-            } catch (InterruptedException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            }
-        }
-    }
-}
-
-package review.thread;
-
-public class Consumer extends Thread{
-    private Store store;
-    public Consumer(Store store){
-        this.store = store;
-    }
-    public void run(){
-        while(true){
-            this.store.remove();
-            try {
-                Thread.sleep(1500);
-            } catch (InterruptedException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            }
-        }
-    }
-}
-</code></pre>
-<h3 id="如何使用Java线程池"><a href="#如何使用Java线程池" class="headerlink" title="如何使用Java线程池"></a>如何使用Java线程池</h3><p>线程池属于对象池，其目的在于最大限度的复用对象。还可以使线程代码与业务代码分离。</br></p>
-<pre><code class="java">java.util.concurrent.ThreadPoolExecutor(
-    int corePoolSize, // 最大核心线程数
-    int maximumPoolSize, // 允许最大线程数
-    long keepAliveTime,
-    TimeUnit unit,
-    BlokingQueue&lt;Runnable&gt; workQueue, // 缓冲队列
-    RejectedExecutionHandler handler
-);</code></pre>
-<p>一个Runnable类型的对象通过execute(Runnable)方法添加到线程池。</br><br>当一个任务通过execute(Runnable)方法添加到线程池时：</br></p>
-<ol>
-<li>如果此时线程池中线程数&lt;corePoolSize，即使线程池中的线程都处于空闲状态也要添加新线程来处理任务</li>
-<li>如果此时线程池中线程数=corePoolSize，但缓冲队列workQueue未满，那么任务被放入缓冲队列</li>
-<li>如果此时线程池中线程数&gt;corePoolSize，缓冲队列workQueue满，但线程池中线程数&lt;maximumPoolSize，创建新线程来处理任务</li>
-<li>如果此时线程池中线程数&gt;corePoolSize，缓冲队列workQueue满，但线程池中线程数=maximumPoolSize，通过handler所指定的策略来处理此任务</li>
-</ol>
-<pre><code class="java">import java.util.concurrent.ArrayBlockingQueue;
-import java.util.concurrent.ThreadPoolExecutor;
-import java.util.concurrent.TimeUnit;
-
-public class TestThreadPool {
-    private static int produceTaskSleepTime = 2000;
-    public static void main(String[] args){
-        // 创建线程池
-        ThreadPoolExecutor producerPool = new ThreadPoolExecutor(
-                1, 1, 0, TimeUnit.SECONDS, 
-                new ArrayBlockingQueue(3), 
-                new ThreadPoolExecutor.DiscardOldestPolicy());
-
-        int i = 1;
-        while(true){
-            try {
-                Thread.sleep(produceTaskSleepTime);
-                String task = &quot;task@&quot; + i;
-                System.out.println(&quot;put &quot; + task);
-                // 用execute方法启动任务
-                producerPool.execute(new ThreadPoolTask(task));
-                i++;
-            } catch (InterruptedException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            }
-        }
-    }
-}
-
-import java.io.Serializable;
-
-public class ThreadPoolTask implements Runnable, Serializable{
-
-    private static final long serialVersionUID = 0;
-
-    private static int consumeTaskSleepTime = 2000;
-
-    private String threadPoolTaskData;
-
-    public ThreadPoolTask(String tasks){
-        this.threadPoolTaskData = tasks;
-    }
-
-    public void run() {
-        System.out.println(&quot;start..&quot; + threadPoolTaskData);
-        try {
-            Thread.sleep(consumeTaskSleepTime);
-        } catch (InterruptedException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
-        threadPoolTaskData = null;
-    }
-
-}
-</code></pre>
-<hr>
-<h2 id="反射"><a href="#反射" class="headerlink" title=" 反射 "></a><a id="Java_reflect"> 反射 </a></h2><h3 id="反射原理"><a href="#反射原理" class="headerlink" title="反射原理"></a>反射原理</h3><p>反射能够动态的加载一个类，动态的调用一个方法，动态的访问一个属性。JVM会为每个类创建一个java.lang.Class类的实例，通过该对象可以获取这个类的信息，然后在通过java.lang.reflect包下的API来进行操作。</br></p>
-<h3 id="类型信息的存储"><a href="#类型信息的存储" class="headerlink" title="类型信息的存储"></a>类型信息的存储</h3><p>如果Java类文件存在内部类，那么编译这个文件时就会产生多个.class文件，命名规则为：外部类名$内部类名.class</p>
-<p>例如：</p>
-<pre><code class="java">public class Person{
-    class Tool{
-
-    }
-    interface Communication{
-        public void speak();
-    }
-}</code></pre>
-<p>会产生 Perlon.class, Person$Tool.class, Person$Communitcation.class 三个文件</p>
-<p>.class 文件结构</p>
-<table border="1">
-    <tbody>
-        <tr>
-            <td valign="top" style="background:rgb(79,129,189)">
-                <p align="left"><span style="color:white">类型</span></p>
-            </td>
-            <td valign="top" style="background:rgb(79,129,189)">
-                <p align="left"><span style="color:white">名称</span></p>
-            </td>
-            <td valign="top" style="background:rgb(79,129,189)">
-                <p align="left"><span style="color:white">数量</span></p>
-            </td>
-            <td valign="top" style="background:rgb(79,129,189)">
-                <p align="left"><span style="color:white">长度</span></p>
-            </td>
-            <td valign="top" style="background:rgb(79,129,189)">
-                <p align="left"><span style="color:white">备注</span></p>
-            </td>
-        </tr>
-        <tr>
-            <td valign="top">
-                <p align="left">u4</p>
-            </td>
-            <td valign="top">
-                <p align="left">magic</p>
-            </td>
-            <td valign="top">
-                <p align="left">1</p>
-            </td>
-            <td valign="top">
-                <p align="left">4Byte</p>
-            </td>
-            <td valign="top">
-                <p align="left">魔数：0xCAFEBABE</br>Od -x命令可以看到，保证虚拟机可以轻松分辨Java文件和非Java文件。
-                </p>
-            </td>
-        </tr>
-        <tr>
-            <td valign="top">
-                <p align="left">u2</p>
-            </td>
-            <td valign="top">
-                <p align="left">minor_version</p>
-            </td>
-            <td valign="top">
-                <p align="left">1</p>
-            </td>
-            <td valign="top">
-                <p align="left">2Byte</p>
-            </td>
-            <td valign="top">
-                <p align="left">主版本号，class文件格式变化而变化</p>
-            </td>
-        </tr>
-        <tr>
-            <td valign="top">
-                <p align="left">u2</p>
-            </td>
-            <td valign="top">
-                <p align="left">major_version</p>
-            </td>
-            <td valign="top">
-                <p align="left">1</p>
-            </td>
-            <td valign="top">
-                <p align="left">2Byte</p>
-            </td>
-            <td valign="top">
-                <p align="left">主版本号，class文件格式变化而变化</p>
-            </td>
-        </tr>
-        <tr>
-            <td valign="top">
-                <p align="left">u2</p>
-            </td>
-            <td valign="top">
-                <p align="left">constant_pool_count</p>
-            </td>
-            <td valign="top">
-                <p align="left">1</p>
-            </td>
-            <td valign="top">
-                <p align="left">?</p>
-            </td>
-            <td valign="top">
-                <p align="left">常量个数</p>
-            </td>
-        </tr>
-        <tr>
-            <td valign="top">
-                <p align="left">cp_info</p>
-            </td>
-            <td valign="top">
-                <p align="left">constant_pool</p>
-            </td>
-            <td valign="top">
-                <p align="left">constant_pool_count-1</p>
-            </td>
-            <td valign="top">
-                <p align="left">?</p>
-            </td>
-            <td valign="top">
-                <p align="left">常量池：包含文件中类和接口相关常量。文字字符串、final变量值、类名和方法名的常量。通常占整个类大小的60%</p>
-            </td>
-        </tr>
-        <tr>
-            <td valign="top">
-                <p align="left">u2</p>
-            </td>
-            <td valign="top">
-                <p align="left">access_flags</p>
-            </td>
-            <td valign="top">
-                <p align="left">1</p>
-            </td>
-            <td valign="top">
-                <p align="left">2Byte</p>
-            </td>
-            <td valign="top">
-                <p align="left">访问标志：定义了类或接口。</p>
-            </td>
-        </tr>
-        <tr>
-            <td valign="top">
-                <p align="left">u2</p>
-            </td>
-            <td valign="top">
-                <p align="left">this_class</p>
-            </td>
-            <td valign="top">
-                <p align="left">1</p>
-            </td>
-            <td valign="top">
-                <p align="left">2Byte</p>
-            </td>
-            <td valign="top">
-                <p align="left">常量池索引，指向常量池中该类全限定名的常量池入口</p>
-            </td>
-        </tr>
-        <tr>
-            <td valign="top">
-                <p align="left">u2</p>
-            </td>
-            <td valign="top">
-                <p align="left">super_class</p>
-            </td>
-            <td valign="top">
-                <p align="left">1</p>
-            </td>
-            <td valign="top">
-                <p align="left">2Byte</p>
-            </td>
-            <td valign="top">
-                <p align="left">指向父类全限定名</p>
-            </td>
-        </tr>
-        <tr>
-            <td valign="top">
-                <p align="left">u2</p>
-            </td>
-            <td valign="top">
-                <p align="left">interfaces_count</p>
-            </td>
-            <td valign="top">
-                <p align="left">1</p>
-            </td>
-            <td valign="top">
-                <p align="left">?</p>
-            </td>
-            <td valign="top">
-                <p align="left">该类实现的接口数量</p>
-            </td>
-        </tr>
-        <tr>
-            <td valign="top">
-                <p align="left">u2</p>
-            </td>
-            <td valign="top">
-                <p align="left">interfaces</p>
-            </td>
-            <td valign="top">
-                <p align="left">interfaces_count</p>
-            </td>
-            <td valign="top">
-                <p align="left">?</p>
-            </td>
-            <td valign="top">
-                <p align="left">由该类实现的接口的常量池引用</p>
-            </td>
-        </tr>
-        <tr>
-            <td valign="top">
-                <p align="left">u2</p>
-            </td>
-            <td valign="top">
-                <p align="left">fields_count</p>
-            </td>
-            <td valign="top">
-                <p align="left">1</p>
-            </td>
-            <td valign="top">
-                <p align="left">?</p>
-            </td>
-            <td valign="top">
-                <p align="left">字段数量</p>
-            </td>
-        </tr>
-        <tr>
-            <td valign="top">
-                <p align="left">field_info</p>
-            </td>
-            <td valign="top">
-                <p align="left">fields</p>
-            </td>
-            <td valign="top">
-                <p align="left">fields_count</p>
-            </td>
-            <td valign="top">
-                <p align="left">?</p>
-            </td>
-            <td valign="top">
-                <p align="left">字段信息表，描述字段的类型、描述符等</p>
-            </td>
-        </tr>
-        <tr>
-            <td valign="top">
-                <p align="left">u2</p>
-            </td>
-            <td valign="top">
-                <p align="left">methods_count</p>
-            </td>
-            <td valign="top">
-                <p align="left">1</p>
-            </td>
-            <td valign="top">
-                <p align="left">?</p>
-            </td>
-            <td valign="top">
-                <p align="left">方法数量</p>
-            </td>
-        </tr>
-        <tr>
-            <td valign="top">
-                <p align="left">method_info</p>
-            </td>
-            <td valign="top">
-                <p align="left">methods</p>
-            </td>
-            <td valign="top">
-                <p align="left">methods_count</p>
-            </td>
-            <td valign="top">
-                <p align="left">?</p>
-            </td>
-            <td valign="top">
-                <p align="left">方法本身，每个方法都有一个method_info表，记录了方法的方法名、字段类型、描述符等</p>
-            </td>
-        </tr>
-        <tr>
-            <td valign="top">
-                <p align="left">u2</p>
-            </td>
-            <td valign="top">
-                <p align="left">attributes_count</p>
-            </td>
-            <td valign="top">
-                <p align="left">1</p>
-            </td>
-            <td valign="top">
-                <p align="left">?</p>
-            </td>
-            <td valign="top">
-                <p align="left">属性数量</p>
-            </td>
-        </tr>
-        <tr>
-            <td valign="top">
-                <p align="left">attribute_info</p>
-            </td>
-            <td valign="top">
-                <p align="left">attributes</p>
-            </td>
-            <td valign="top">
-                <p align="left">attributes_count</p>
-            </td>
-            <td valign="top">
-                <p align="left">?</p>
-            </td>
-            <td valign="top">
-                <p align="left">属性本身</p>
-            </td>
-        </tr>
-    </tbody>
-</table>
-
-
-
-<p>代理</p>
-<p>静态代理</p>
-<pre><code class="java">public interface Speakable{
-    public void speak(String msg);
-}
-
-public class Person implements Speakable{
-    @Override
-    public void speak(String msg){
-        System.out.println(&quot;Speak:&quot; + msg);
-    }
-}
-
-public class PersonProxy implements Speakable{
-    private Person person;
-    public PersonProxy(Person person){
-        this.person=person;
-    }
-    @Override
-    public void speak(String msg){
-        this.person.speak(msg);
-        System.out.println(&quot;运行时间:&quot; + System.currentTimeMillis());
-    }
-}
-
-public class Boostrap{
-    public static void main(String[] args){
-        Person person = new Person();
-        PersonProxy proxy = new PersonProxy(person);
-        proxy.speak(&quot;static proxy&quot;);
-    }
-}</code></pre>
-<p>动态代理</p>
-<pre><code class="java">// 调用处理器
-public class MyProxy implements InvocationHandler{
-    private Object proxied;
-    public MyProxy(Object proxied){
-        this.proxied=proxied;
-    }
-
-    // (代理对象由java动态生成, 被执行的委托方法, 执行委托方法所需要的参数)
-    @Override
-    public Object invoke(Object proxy, Method method, Object[] args) throws Throwable{
-        method.invoke(this.proxied, args);
-        System.out.println(&quot;运行时间:&quot; + System.currentTimeMillis());
-        return null;
-    }
-}
-
-public class Bootstrap{
-    public static void main(String[] args){
-        Person person = new Person();
-        Speakable speakable = (Speakable)Proxy.newProxyInstance(
-            Speakable.class.getClassLoader(),
-            new Class[] {Speakable.class},
-            new MyProxy(person)
-        );
-        speakable.speak(&quot;dynamic proxy&quot;);
-    }
-}</code></pre>
-<hr>
-<h2 id="Java网络编程"><a href="#Java网络编程" class="headerlink" title=" Java网络编程 "></a><a id="Java_network"> Java网络编程 </a></h2><h3 id="TCP-IP协议"><a href="#TCP-IP协议" class="headerlink" title="TCP/IP协议"></a>TCP/IP协议</h3><p>TCP/IP(Transmission Control Protocel/Internet Protocol)，传输控制协议/因特网互联协议，网络通讯协议。由网络层的IP协议与传输层的TCP协议组成。</br></p>
-<ol>
-<li>应用层(Application Layer)</li>
-<li>传输层(Transport Layer)</li>
-<li>网络层(Network Layer)</li>
-<li>链接层(Link Layer)</li>
-<li>物理层(Physical Layer)</li>
-</ol>
-<p>早期的时候，每家公司都有自己的电信号分组方式。逐渐地，一种叫做”以太网”（Ethernet）的协议，占据了主导地位。<br>以太网规定，一组电信号构成一个数据包，叫做”帧”（Frame）。每一帧分成两个部分：包头（Head）和数据（Data）。</p>
-<p>“传输层”的功能，就是建立”端口到端口”的通信。相比之下，”网络层”的功能是建立”主机到主机”的通信。只要确定主机和端口，我们就能实现程序之间的交流。</p>
-<!--TODO:P173-->
-
-
-<hr>
-<h2 id="Java-Web-开发相关技术"><a href="#Java-Web-开发相关技术" class="headerlink" title=" Java Web 开发相关技术 "></a><a id="Java_web"> Java Web 开发相关技术 </a></h2><pre><code>javaweb // 应用程序名字
-    |- META-INF
-    |- resource
-    |- WEB-INF
-        |- classes // 存放class文件，类加载路径
-        |- lib // 第三方jar类库
-        |- web.xml // 整个web应用程序的描述文件，通过它配置信息资源</code></pre><p>用户发送HTTP请求，Web容器通过http://&lt;域名或IP地址&gt;/&lt;应用的名字&gt;/&lt;资源的地址&gt;去定位资源</br></p>
-<pre><code class="xml">&lt;servlet&gt;
-    &lt;servlet-name&gt;&lt;/servlet-name&gt;
-    &lt;servlet-class&gt;&lt;/servlet-class&gt;
-&lt;/servlet&gt;
-
-&lt;servlet-mapping&gt;
-    &lt;servlet-name&gt;&lt;/servlet-name&gt;
-    &lt;servlet-pattern&gt;&lt;/servlet-pattern&gt;
-&lt;/servlet-mapping&gt;</code></pre>
-<hr>
-<h2 id="算法题"><a href="#算法题" class="headerlink" title=" 算法题 "></a><a id="algorithm_problem"> 算法题 </a></h2><h3 id="反转字符串输出"><a href="#反转字符串输出" class="headerlink" title="反转字符串输出"></a>反转字符串输出</h3><pre><code class="java">package algorithm;
-
-public class BackString {
-    public static void main(String[] args){
-        String str = &quot;Hello world!&quot;;
-        StringBuffer sb = new StringBuffer();
-        for(int i = str.length() - 1; i &gt;= 0; i--){
-            sb.append(str.substring(i,i+1));
-        }
-        System.out.print(sb);
-    }
-}
-</code></pre>
-<h3 id="求素数"><a href="#求素数" class="headerlink" title="求素数"></a>求素数</h3><pre><code class="java">package algorithm.prime;
-
-
-public class Prime {
-
-    private static boolean isPrime(int num){
-        if(num &lt; 2){
-            return false;
-        }
-        for(int i = 2; i &lt; num; i++){
-            if(num % i == 0){
-                return false;
-            }
-        }
-        return true;
-    }
-
-    public static void main(String[] args){
-        int count=0;
-        for(int i = 0; i &lt; 1000000; i++){
-            boolean flag = Prime.isPrime(i);
-//            System.out.println(i + &quot;,&quot; + flag);
-            if(flag){
-                count++;
-            }
-        }
-        System.out.println(&quot;count=&quot; + count);
-    }
-}
-</code></pre>
-<p>改进版</br></p>
-<pre><code class="java">package algorithm.prime;
-
-
-public class Prime {
-
-    private static final int MaxLimit=1000000;
-
-    private static boolean[] primeList = new boolean[MaxLimit+1];
-
-    private static boolean isPrime(int num){
-        if(num &lt; 2){
-            return false;
-        }
-        if(num == 2){
-            primeList[2] = true;
-            return true;
-        }
-        if(num % 2 == 0){
-            return false;
-        }
-        for(int i = 3; i*i &lt; num; i+=2){
-            if(primeList[num]){
-                if(num % i == 0){
-                    return false;
-                }
-            }
-        }
-        for(int i = 3; i*i &lt; num; i+=2){
-            if(num % i == 0){
-                return false;
-            }
-        }
-        primeList[num] = true;
-        return true;
-    }
-
-    public static void main(String[] args){
-        int count=0;
-        for(int i = 0; i &lt; MaxLimit; i++){
-            boolean flag = Prime.isPrime(i);
-//            System.out.println(i + &quot;,&quot; + flag);
-            if(flag){
-                count++;
-            }
-        }
-        System.out.println(&quot;count=&quot; + count);
-    }
-}
-</code></pre>
-<h3 id="打印回文数字"><a href="#打印回文数字" class="headerlink" title="打印回文数字"></a>打印回文数字</h3><pre><code class="java">package algorithm;
-
-public class MirrorNum {
-    public static boolean isMirrorNumber(int num){
-        int temp = num;
-        int result = 0;
-        while(temp &gt; 0){
-            result = result*10 + temp%10;
-            temp /= 10;
-        }
-        return num == result;
-    }
-
-    public static void main(String[] args){
-        for(int i = 10; i &lt; 1000; i++){
-            if(isMirrorNumber(i)){
-                System.out.println(i);
-            }
-        }
-    }
-}
-</code></pre>
-<h3 id="冒泡排序-BubbleSort"><a href="#冒泡排序-BubbleSort" class="headerlink" title="冒泡排序 BubbleSort"></a>冒泡排序 BubbleSort</h3><pre><code class="java">package demo;
-
-public class BubbleSort {
-
-    public static void bubbleSort(int[] array){
-        for(int i = 1; i &lt; array.length; i++){
-            for(int j = 0; j &lt; array.length-i; j++){
-                if(array[j] &gt; array[j+1]){
-                    int temp = array[j];
-                    array[j] = array[j+1];
-                    array[j+1] = temp;
-                }
-            }
-        }
-    }
-
-    public static void main(String[] args){
-        int[] array = {5,3,2,1,4};
-        bubbleSort(array);
-        for(int i = 0; i &lt; array.length; i++){
-            System.out.print(array[i] + &quot;,&quot;);
-        }
-    }
-}
-</code></pre>
-<h3 id="插入排序-InsertSort"><a href="#插入排序-InsertSort" class="headerlink" title="插入排序 InsertSort"></a>插入排序 InsertSort</h3><pre><code class="java">package demo;
-
-public class InsertSort {
-
-    public static void insertSort(int[] array){
-        for(int i = 1; i &lt; array.length; i++){
-            int temp = array[i];
-            int j;
-            for(j = i; j &gt; 0; j--){
-                if(array[j-1] &gt; temp){
-                    array[j]=array[j-1];
-                }else{
-                    break;
-                }
-            }
-            array[j] = temp;
-        }
-
-    }
-
-    public static void main(String[] args){
-        int[] array = {5,3,2,1,4};
-        insertSort(array);
-        for(int i = 0; i &lt; array.length; i++){
-            System.out.print(array[i] + &quot;,&quot;);
-        }
-    }
-}
-</code></pre>
-<h3 id="快速排序-QuickSort"><a href="#快速排序-QuickSort" class="headerlink" title="快速排序 QuickSort"></a>快速排序 QuickSort</h3><pre><code class="java">package demo;
-
-public class QuickSort {
-
-    public static void quickSort(int[] a,int low,int high){
-        int i,j;
-        i=low;
-        j=high;
-
-        if(i&gt;j)
-            return;
-        int temp=a[i];
-        while(i&lt;j){
-            while(i&lt;j&amp;&amp;a[j]&gt;temp){
-                j--;
-            }
-            if(i&lt;j){
-                a[i]=a[j];
-                i++;
-            }
-
-            while(i&lt;j&amp;&amp;a[i]&lt;temp){
-                i++;
-            }
-            if(i&lt;j){
-                a[j]=a[i];
-                j--;
-            }
-        }
-        a[i]=temp;
-        quickSort(a,low,i-1);
-        quickSort(a,i+1,high);
-    }
-
-    public static void main(String[] args){
-        int[] array = {5,3,2,1,4};
-        quickSort(array, 0, 4);
-        for(int i = 0; i &lt; array.length; i++){
-            System.out.print(array[i] + &quot;,&quot;);
-        }
-    }
-}
-</code></pre>
-<h3 id="归并排序"><a href="#归并排序" class="headerlink" title="归并排序"></a>归并排序</h3><pre><code class="java">package demo;
-
-public class QuickSort {
-
-    public static void esort(int[] a,int p,int r){
-        if(p&gt;=r)
-            return;
-        int q= (p+r)/2;
-        esort(a,p,q);
-        esort(a,q+1,r);
-        msort(a,p,q,r);
-    }
-
-    public static void msort(int[] a,int p,int q,int r){
-        int n1=q-p+1;
-        int n2=r-q;
-        int i,j,k;
-        int L[]=new int[n1];
-        int R[]=new int[n2];
-        for(i=0,k=p;i&lt;n1;i++,k++)
-            L[i]=a[k];
-        for(j=0;j&lt;n2;j++,k++)
-            R[j]=a[k];
-        for(i=0,j=0,k=p;i&lt;n1&amp;&amp;j&lt;n2;k++){
-            if(L[i]&lt;R[j]){
-                a[k]=L[i];
-                i++;
-            }else {
-                a[k]=R[j];
-                j++;
-            }
-        }
-        while(i&lt;n1){
-            a[k]=L[i];
-            i++;
-            k++;
-        }
-        while(j&lt;n2){
-            a[k]=R[j];
-            j++;
-            k++;
-        }
-    }
-
-    public static void main(String[] args){
-        int[] array = {5,3,2,1,4};
-        esort(array, 0, 4);
-        for(int i = 0; i &lt; array.length; i++){
-            System.out.print(array[i] + &quot;,&quot;);
-        }
-    }
-}</code></pre>
-<!--TODO:P320-->
- 
-      <!-- reward -->
-      
-    </div>
-    
 
     <!-- copyright -->
     
     <footer class="article-footer">
        
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Java/" rel="tag">Java</a></li></ul>
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Spring-Boot/" rel="tag">Spring Boot</a></li></ul>
 
     </footer>
   </div>
@@ -2804,7 +421,7 @@ public class QuickSort {
 
     
     <article
-  id="post-Hadoop"
+  id="post-Microservices微服务学习"
   class="article article-type-post"
   itemscope
   itemprop="blogPost"
@@ -2815,1050 +432,30 @@ public class QuickSort {
     <header class="article-header">
        
 <h2 itemprop="name">
-  <a class="article-title" href="/2017/08/19/Hadoop/"
-    >Hadoop</a> 
+  <a class="article-title" href="/2020/03/23/Microservices%E5%BE%AE%E6%9C%8D%E5%8A%A1%E5%AD%A6%E4%B9%A0/"
+    >Microservices 微服务学习</a> 
 </h2>
  
 
     </header>
      
     <div class="article-meta">
-      <a href="/2017/08/19/Hadoop/" class="article-date">
-  <time datetime="2017-08-19T09:38:04.000Z" itemprop="datePublished">2017-08-19</time>
+      <a href="/2020/03/23/Microservices%E5%BE%AE%E6%9C%8D%E5%8A%A1%E5%AD%A6%E4%B9%A0/" class="article-date">
+  <time datetime="2020-03-23T02:16:04.000Z" itemprop="datePublished">2020-03-23</time>
 </a> 
   <div class="article-category">
-    <a class="article-category-link" href="/categories/%E5%A4%A7%E6%95%B0%E6%8D%AE/">大数据</a>
+    <a class="article-category-link" href="/categories/%E5%BE%AE%E6%9C%8D%E5%8A%A1/">微服务</a>
   </div>
+
    
     </div>
-      
-    <div class="article-entry" itemprop="articleBody">
        
-  <h2 id="名词解释"><a href="#名词解释" class="headerlink" title="名词解释"></a>名词解释</h2><h3 id="Hadoop："><a href="#Hadoop：" class="headerlink" title="Hadoop："></a>Hadoop：</h3><p>Hadoop是一个框架，它是由Java语言来实现的。Hadoop是处理大数据技术.Hadoop可以处理云计算产生大数据。</p>
-<p>CDH商业版：</p>
-<p>Cloudera CDH是Hadoop的一个版本，比Apache Hadoop的优点如下：</p>
-<ol>
-<li>CDH基于稳定版Apache Hadoop，并应用了最新Bug修复或者Feature的Patch。Cloudera常年坚持季度发行Update版本，年度发行Release版本，更新速度比Apache官方快，而且在实际使用过程中CDH表现无比稳定，并没有引入新的问题。</li>
-<li>Cloudera官方网站上安装、升级文档详细，省去Google时间。</li>
-<li>CDH支持Yum/Apt包，Tar包，RPM包，Cloudera Manager四种方式安装，总有一款适合您。官方网站推荐Yum/Apt方式安装，其好处如下：<ul>
-<li>联网安装、升级，非常方便。当然你也可以下载rpm包到本地，使用Local Yum方式安装。</li>
-<li>自动下载依赖软件包，比如要安装Hive，则会级联下载、安装Hadoop。</li>
-<li>Hadoop生态系统包自动匹配，不需要你寻找与当前Hadoop匹配的Hbase，Flume，Hive等软件，Yum/Apt会根据当前安装Hadoop版本自动寻找匹配版本的软件包，并保证兼容性。</li>
-<li>自动创建相关目录并软链到合适的地方（如conf和logs等目录）；自动创建hdfs, mapred用户，hdfs用户是HDFS的最高权限用户，mapred用户则负责mapreduce执行过程中相关目录的权限。</li>
-</ul>
-</li>
-</ol>
-<h3 id="大数据的4个V"><a href="#大数据的4个V" class="headerlink" title="大数据的4个V:"></a>大数据的4个V:</h3><ol>
-<li>Velocity：实现快速的数据流传</li>
-<li>Variety： 具有多样的数据类型</li>
-<li>Volume： 存有海量的数据规模（TB，PB，EB级别）</li>
-<li>Value：存在着巨大的价值</li>
-</ol>
-<hr>
-<h3 id="MapReduce"><a href="#MapReduce" class="headerlink" title="MapReduce"></a>MapReduce</h3><img src="Hadoop项目结构图.jpg" />
-
-<p>Hadoop实际上就是谷歌三宝的开源实现，</p>
-<p>Hadoop MapReduce对应Google MapReduce，</p>
-<p>HBase对应BigTable，</p>
-<p>HDFS对应GFS。HDFS（或GFS）为上层提供高效的非结构化存储服务，</p>
-<p>HBase（或BigTable）是提供结构化数据服务的分布式数据库，Hadoop MapReduce（或Google MapReduce）是一种并行计算的编程模型，用于作业调度。</p>
-<h3 id="HBase"><a href="#HBase" class="headerlink" title="HBase"></a>HBase</h3><p>HBase是一个分布式的、面向列的开源数据库，该技术来源于 Fay Chang 所撰写的Google论文“Bigtable：一个结构化数据的分布式存储系统”。就像Bigtable利用了Google文件系统（File System）所提供的分布式数据存储一样，HBase在Hadoop之上提供了类似于Bigtable的能力。HBase是Apache的Hadoop项目的子项目。</p>
-<h3 id="HDFS-Hadoop-Distributed-File-System-："><a href="#HDFS-Hadoop-Distributed-File-System-：" class="headerlink" title="HDFS(Hadoop Distributed File System)："></a>HDFS(Hadoop Distributed File System)：</h3><ul>
-<li>默认的最基本的存储单位是64M的数据块。</li>
-<li>和普通文件系统相同的是，HDFS中的文件是被分成64M一块的数据块存储的。</li>
-<li>不同于普通文件系统的是，HDFS中，如果一个文件小于一个数据块的大小，并不占用整个数据块存储空间。</li>
-</ul>
-<h3 id="hive"><a href="#hive" class="headerlink" title="hive"></a>hive</h3><p>hive是基于Hadoop的一个数据仓库工具，可以将结构化的数据文件映射为一张数据库表，并提供简单的sql查询功能，可以将sql语句转换为MapReduce任务进行运行。</p>
-<h3 id="联机事务处理OLTP-On-line-Transaction-Processing-、联机分析处理OLAP-On-Line-Analytical-Processing"><a href="#联机事务处理OLTP-On-line-Transaction-Processing-、联机分析处理OLAP-On-Line-Analytical-Processing" class="headerlink" title="联机事务处理OLTP(On-line Transaction Processing)、联机分析处理OLAP(On-Line Analytical Processing)"></a>联机事务处理OLTP(On-line Transaction Processing)、联机分析处理OLAP(On-Line Analytical Processing)</h3><p>OLTP是传统的关系型数据库的主要应用，主要是基本的、日常的事务处理，例如银行交易。OLAP是数据仓库系统的主要应用，支持复杂的分析操作，侧重决策支持，并且提供直观易懂的查询结果。 </p>
-<img src="OLTP与OLAP之间的比较.jpg" />
-
-<p>分析型数据不允许update、delete操作</p>
-<h3 id="Sqoop"><a href="#Sqoop" class="headerlink" title="Sqoop"></a>Sqoop</h3><p>Sqoop(发音：skup)是一款开源的工具，主要用于在Hadoop(Hive)与传统的数据库(mysql、postgresql…)间进行数据的传递，可以将一个关系型数据库（例如 ： MySQL ,Oracle ,Postgres等）中的数据导进到Hadoop的HDFS中，也可以将HDFS的数据导进到关系型数据库中。</p>
-<h3 id="ZooKepper"><a href="#ZooKepper" class="headerlink" title="ZooKepper"></a>ZooKepper</h3><p>ZooKeeper是一个分布式的，开放源码的分布式应用程序协调服务，是Google的Chubby一个开源的实现，是Hadoop和Hbase的重要组件。它是一个为分布式应用提供一致性服务的软件，提供的功能包括：配置维护、域名服务、分布式同步、组服务等。</p>
-<p>ZooKeeper的目标就是封装好复杂易出错的关键服务，将简单易用的接口和性能高效、功能稳定的系统提供给用户。<br>ZooKeeper包含一个简单的原语集，提供Java和C的接口。</p>
-<h3 id="Mahout"><a href="#Mahout" class="headerlink" title="Mahout"></a>Mahout</h3><img src="Mahout.PNG" />
-
-<p>Mahout 是 Apache Software Foundation（ASF） 旗下的一个开源项目，提供一些可扩展的机器学习领域经典算法的实现，旨在帮助开发人员更加方便快捷地创建智能应用程序。Mahout包含许多实现，包括聚类、分类、推荐过滤、频繁子项挖掘。此外，通过使用 Apache Hadoop 库，Mahout 可以有效地扩展到云中。</p>
-<h2 id="安装Hadoop"><a href="#安装Hadoop" class="headerlink" title="安装Hadoop"></a>安装Hadoop</h2><h3 id="支持平台"><a href="#支持平台" class="headerlink" title="支持平台"></a>支持平台</h3><ul>
-<li>GNU/Linux是产品开发和运行的平台。Hadoop已在有2000个节点的GNU/Linux主机组成的集群系统上得到验证。</li>
-<li>Win32平台是作为<code>开发平台</code>支持的。由于分布式操作尚未在Win32平台上充分测试，所以还不作为一个<code>生产平台</code>被支持。</li>
-</ul>
-<h3 id="步骤："><a href="#步骤：" class="headerlink" title="步骤："></a>步骤：</h3><h4 id="安装-VMware"><a href="#安装-VMware" class="headerlink" title="安装 VMware"></a>安装 VMware</h4><h4 id="安装-Ubuntu"><a href="#安装-Ubuntu" class="headerlink" title="安装 Ubuntu"></a>安装 Ubuntu</h4><h4 id="安装-jdk"><a href="#安装-jdk" class="headerlink" title="安装 jdk"></a>安装 jdk</h4><p>解压<code>tar -vzfx jdk-1.7.0.tar.gz</code></p>
-<p>配环境变量<code>sudo vim /etc/profile</code></p>
-<pre><code class="bash">export JAVA_HOME=/home/master0/Desktop/jkd1.7.0_80
-export CLASSPATH=.:$JAVA_HOME/lib/dt.jar:$JAVA_HOME/lib/tools.jar
-export PATH=$JAVA_HOME/bin:$PATH</code></pre>
-<p>使配置文件生效：<code>source /etc/profile</code></p>
-<h4 id="安装Hadoop-1"><a href="#安装Hadoop-1" class="headerlink" title="安装Hadoop"></a>安装Hadoop</h4><p>配环境变量<code>sudo vim /etc/profile</code></p>
-<pre><code class="bash">export JAVA_HOME=/home/master0/Desktop/jdk1.7.0_80
-export HADOOP_HOME=/home/master0/Desktop/hadoop-2.6.0
-export CLASSPATH=.:$JAVA_HOME/lib/dt.jar:$JAVA_HOME/lib/tools.jar:$HADOOP_HOME/share/hadoop/common/hadoop-common-2.6.0.jar:$HADOOP_HOME/share/hadoop/mapreduce/hadoop-mapreduce-client-core-2.6.0.jar:$HADOOP_HOME/share/hadoop/common/lib/commons-1.2.jar:$CLASSPATH
-export PATH=$JAVA_HOME/bin:$PATH
-export PATH=$HADOOP_HOME/bin:$PATH</code></pre>
-<p>配置<code>~/hadoop-2.6.0/etc/hadoop/hadoop-env.sh</code></p>
-<pre><code class="bash"># The java implementation to use.
-export JAVA_HOME=/home/master0/Desktop/jdk1.7.0_80</code></pre>
-<h4 id="测试hadoop"><a href="#测试hadoop" class="headerlink" title="测试hadoop"></a>测试hadoop</h4><pre><code class="bash">hadoop version</code></pre>
-<hr>
-<h4 id="使用hadoop的本地单独模式"><a href="#使用hadoop的本地单独模式" class="headerlink" title="使用hadoop的本地单独模式"></a>使用hadoop的本地单独模式</h4><p>对某目录下的文档进行单词数的统计</p>
-<pre><code class="bash">$ cd  /home/hadoop/    
-$ mkdir  input
-$ cp   $HADOOP_HOME/etc/hadoop/*.xml   input/
-$ hadoop  jar $HADOOP_HOME/share/hadoop/mapreduce/hadoop-mapreduce-examples-2.6.0.jar grep input output &#39;dfs[a-z.]+&#39;
-$ cat output/*</code></pre>
-<h4 id="克隆虚拟机"><a href="#克隆虚拟机" class="headerlink" title="克隆虚拟机"></a>克隆虚拟机</h4><p>修改主机名</p>
-<pre><code class="bash">sudo gedit /etc/hostname</code></pre>
-<hr>
-<h4 id="配置静态IP"><a href="#配置静态IP" class="headerlink" title="配置静态IP"></a>配置静态IP</h4><pre><code class="bash">sudo gedit /etc/network/interfaces</code></pre>
-<p>编辑-&gt;虚拟网络编辑器-&gt;查看NAT模式的子网地址</p>
-<p>例如为：231</p>
-<p>master</p>
-<pre><code class="bash">auto eth0
-iface eth0 inet static
-address 192.168.231.129
-netmask 255.255.255.0
-network 192.168.231.0
-boardcast 192.168.231.255
-gateway 192.168.231.2
-dns-nameservers 192.168.1.1 8.8.8.8 8.8.8.4
-
-ping 192.168.231.130</code></pre>
-<p>serve1</p>
-<pre><code class="bash">auto eth0
-iface eth0 inet static
-address 192.168.231.130
-netmask 255.255.255.0
-network 192.168.231.0
-boardcast 192.168.231.255
-gateway 192.168.231.2
-dns-nameservers 192.168.1.1 8.8.8.8 8.8.8.4
-
-ping 192.168.231.129</code></pre>
-<p>若访问不了网页的话可以将物理机的dns填写在dns-nameservers第一个</p>
-<p>若拖文件拖不进虚拟机需检查：</p>
-<p>虚拟机ping与其对应的模式的虚拟网卡可不可以ping通</p>
-<p>主机ping与虚拟机可不可以ping通</p>
-<p>VMware Network Adapter VMnet1:桥接模式虚拟网卡</p>
-<p>VMware Network Adapter VMnet8:NAT模式虚拟网卡</p>
-<h4 id="修改hosts文件"><a href="#修改hosts文件" class="headerlink" title="修改hosts文件"></a>修改hosts文件</h4><pre><code class="bash">sudo gedit /etc/hosts
-
-192.168.231.129  master
-192.168.231.130  serve1
-192.168.231.131  serve2</code></pre>
-<h4 id="安装ssh"><a href="#安装ssh" class="headerlink" title="安装ssh"></a>安装ssh</h4><pre><code class="bash">sudo apt-get install ssh</code></pre>
-<p>安装完毕就会出现<code>/home/master/.ssh</code>文件夹</p>
-<p>然后需要生成了一个公钥</p>
-<pre><code class="bash">ssh-keygen -t rsa -P &#39;&#39;
-
-会生成
-id_rsa  id_rsa.pub  known_hosts</code></pre>
-<p>id_rsa为私钥</p>
-<pre><code class="bash">-----BEGIN RSA PRIVATE KEY-----
-MIIEpAIBAAKCAQEAp6JLYxM9lm/ciNG5SuAd/0WBBY0VN98w1KLad5GrkZhM5iZ1
-mKnl1JHhT14//QSqtJ/tAAo8P1EZspvziS1q77DVBF4L/kInl0KEZOiFWMUOKqDj
-y+TWLSZmBK9uP5J2cb2wnIMZ4HeWw0y8hnaCpfg4FNVm8WL/EQh++EHx4VBQv0bt
-4s3qZ9LgYM0MGDrizYKCZ92vRE2CVgLlpAzXvD2uFfxlFwJl02l35fjaIW2ed6PV
-HrnT8D6BrpUIdKWzWsevj3W6IfO0upBtqOygJw0RxYSx646nDDdFXIk7bzdVFXdr
-sOjOblsPGqTJs+aApEQB3avOUZI0EixCr2h7/wIDAQABAoIBAQCY1je1lQ1J46NG
-ezBdPAkdfNktnnwB/NQginp1GbM7g4hZLid5kS2iqX6rRltA7MhW9pi2uJ5FfEPZ
-vKZGI8qjzq3o1XZJ0zcVief7uKQbU06fPyFx/KnpcGEDVI9IFtk2yqQDjuRA68fh
-OE2KqvJjL/Sxyf+ZhZDYjs50ums16PHxXlhAaP8EI78Dcff5sx+ZoKTVGum4Jrdl
-h0cXeDBcxJZg7wEtHPEUrduaiwEv88fD7aw2QwsYdCuPECncltR57iPi95hr7uaW
-XdtRZ+mAey5sBxJmZKrlPE6kK3yAvSs1tP0yz4R4azAYQqTpLmxcfMrqWRwb3IMA
-9Rl98FIBAoGBANpNaYJgaTvDT2Nski6sTu1oPefow4tosvPE1jZ/gWXExJ9m1OiI
-GcZGG0nM+UCx85+//B6gyLdvmUGgxN9vzmY3myuhQ9iesep7W+DiqDnz2J/VRM98
-eEso6P1jevlC90WJh1wNrVIuzxuN/5A5LghjNNuHCnZzJTRuSKjISjRhAoGBAMSU
-9hdNDliOXDIIRs/vjwiRuLvbECMFqETSyFdnc91dAi2cYfwlfKFlWGSPFO/LuTvL
-9PfWaKgfuAzMiZ5JoMPlo5iX8atX1V4Naz7e3OBR9rhyD0oO4aNyKtvDv7tIWTxm
-eWw/4hlmPp/wGYgfxlPOrbVfJcESYk9FmRxxeoxfAoGAP87ozCcKG2HXTqRphiLv
-Xw1dKvAqWBFeXUpnor5aQDjnkAAqs100y3OqfkPfhz18jHE9bGZqxNNl5HztjrHL
-jq0qOfKFNkgMkRFFpdIagfX4l59q4YrsTmvCzm3JgBpG1JiCbDHDO4ZbGx7CWJGe
-Fu2IgbJTKJQ3h7/ElTEWH4ECgYEAoxOr/vJ2hzI5+2twSwlBT+uLI5P8FAGacNWn
-SxLQRH/m0a2cf48dj8pCBNHJnZAUby2oX30nvujpRvza4UvVKQ20pF7QJcMshuR8
-5l/9Pb3g/WvpkRc9SdjpAvylbpj7JicgbZOlXkq6gvWsSIeLgHTBF+gBquQ0V+y1
-sqnU7uMCgYBMSR2QDG5TuSp7pNOFBFuqhOCrUHZmKqoHCZ7rSh3etxc8D5tLXciE
-APNWfGqSE2aT/PJgqNoxl5p42bnZrv3cXJuiD9Wid6yFzDH0oUa9K66vy1SWV+B8
-3rHha5wLzizgNUQZjh1XSndp1WekYCLjV+Bn8b/odBClcHKX7M/BOg==
------END RSA PRIVATE KEY-----</code></pre>
-<p>id_rsa.pub为公钥</p>
-<pre><code class="bash">ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCnoktjEz2Wb9yI0blK4B3/RYEFjRU33zDUotp3kauRmEzmJnWYqeXUkeFPXj/9BKq0n+0ACjw/URmym/OJLWrvsNUEXgv+QieXQoRk6IVYxQ4qoOPL5NYtJmYEr24/knZxvbCcgxngd5bDTLyGdoKl+DgU1WbxYv8RCH74QfHhUFC/Ru3izepn0uBgzQwYOuLNgoJn3a9ETYJWAuWkDNe8Pa4V/GUXAmXTaXfl+NohbZ53o9UeudPwPoGulQh0pbNax6+Pdboh87S6kG2o7KAnDRHFhLHrjqcMN0VciTtvN1UVd2uw6M5uWw8apMmz5oCkRAHdq85RkjQSLEKvaHv/ master@ubuntu</code></pre>
-<p>要想免密登录则需要被免密登录方的公钥：这里可以先将各台分机的公钥发送给主机master，然后再由master合成一个文件再发送给分机。这样每台机器都会有其它所有机器的公钥</p>
-<p>生成公钥文件</p>
-<pre><code class="bash">cat .ssh/id_rsa.pub &gt;&gt; .ssh/authorized_keys</code></pre>
-<pre><code class="bash">authorized_keys如下，其实和公钥相同：
-ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCnoktjEz2Wb9yI0blK4B3/RYEFjRU33zDUotp3kauRmEzmJnWYqeXUkeFPXj/9BKq0n+0ACjw/URmym/OJLWrvsNUEXgv+QieXQoRk6IVYxQ4qoOPL5NYtJmYEr24/knZxvbCcgxngd5bDTLyGdoKl+DgU1WbxYv8RCH74QfHhUFC/Ru3izepn0uBgzQwYOuLNgoJn3a9ETYJWAuWkDNe8Pa4V/GUXAmXTaXfl+NohbZ53o9UeudPwPoGulQh0pbNax6+Pdboh87S6kG2o7KAnDRHFhLHrjqcMN0VciTtvN1UVd2uw6M5uWw8apMmz5oCkRAHdq85RkjQSLEKvaHv/ master@ubuntu</code></pre>
-<pre><code class="bash">分机serve1复制公钥到master主机上：
-scp .ssh/id_rsa.pub master@master:/home/master/id_rsa_1.pub
-将分机serve1的公钥追加到主机的authorized_keys上
-cat id_rsa_1.pub &gt;&gt; .ssh/authorized_keys</code></pre>
-<p>重复以上两步直到主机master的authorized_keys有所有分机的公钥，再进行分发操作</p>
-<pre><code class="bash">scp .ssh/authorized_keys master@serve1:/home/master/.ssh/authorized_keys
-scp .ssh/authorized_keys master@serve2:/home/master/.ssh/authorized_keys</code></pre>
-<p>分发完毕后即可进行测试：</p>
-<pre><code class="bash">ssh master
-ssh serve1
-能连接成功即可</code></pre>
-<p>SSH免密码设置失败解决</p>
-<ol>
-<li>权限问题</li>
-</ol>
-<p>.ssh目录，以及/home/当前用户 需要700权限，参考以下操作调整</p>
-<pre><code class="bash">$sudo   chmod   777   ~/.ssh
-
-$sudo  chmod 700  /home/当前用户</code></pre>
-<p>.ssh目录下的authorized_keys文件需要600或644权限，参考以下操作调整</p>
-<pre><code class="bash">$sudo chmod   644   ~/.ssh/authorized_keys</code></pre>
-<ol start="2">
-<li>StrictModes问题</li>
-</ol>
-<pre><code class="bash">$sudo gedit /etc/ssh/sshd_config</code></pre>
-<p>找到</p>
-<pre><code class="bash">\#StrictModes yes</code></pre>
-<p>改成</p>
-<pre><code class="bash">StrictModes no</code></pre>
-<p>如果还不行，可以用<code>ssh -vvv 目标机器ip</code> 查看详情</p>
-<h4 id="配置Hadoop集群"><a href="#配置Hadoop集群" class="headerlink" title="配置Hadoop集群"></a>配置Hadoop集群</h4><p>以下将会修改多个Hadoop配置文件均位于<code>hadoop-2.6.0/etc</code>目录下</p>
-<p>修改：<code>hadoop-env.sh</code> 、<code>yarn-env.sh</code></p>
-<pre><code class="bash">gedit etc/hadoop/hadoop-env.sh
-
-# The java implementation to use.
-export JAVA_HOME=/home/master/jdk1.7.0_80</code></pre>
-<pre><code class="bash">gedit etc/hadoop/yarn-env.sh</code></pre>
-<p>core-site.xml</p>
-<p>core-site.xml的完整参数请参考: <a href="http://hadoop.apache.org/docs/r2.6.0/hadoop-project-dist/hadoop-common/core-default.xml" target="_blank" rel="noopener">http://hadoop.apache.org/docs/r2.6.0/hadoop-project-dist/hadoop-common/core-default.xml</a></p>
-<pre><code class="bash">gedit etc/hadoop/core-site.xml</code></pre>
-<p><code>/home/hadoop/tmp</code> 目录如不存在，则先mkdir手动创建</p>
-<pre><code class="xml">&lt;configuration&gt;
-
- &lt;property&gt;
-   &lt;name&gt;fs.defaultFS&lt;/name&gt;
-   &lt;value&gt;hdfs://master:9000&lt;/value&gt;&lt;!--主机名:端口号--&gt;     
- &lt;/property&gt;
- &lt;property&gt;
-     &lt;name&gt;hadoop.tmp.dir&lt;/name&gt;
-     &lt;value&gt;/home/master/tmp&lt;/value&gt;&lt;!--/tmp/hadoop-${user.name}--&gt;   
- &lt;/property&gt; 
-
-&lt;/configuration&gt;</code></pre>
-<p>hdfs-site.xml</p>
-<p>hdfs-site.xml的完整参数请参考: <a href="http://hadoop.apache.org/docs/r2.6.0/hadoop-project-dist/hadoop-hdfs/hdfs-default.xml" target="_blank" rel="noopener">http://hadoop.apache.org/docs/r2.6.0/hadoop-project-dist/hadoop-hdfs/hdfs-default.xml</a></p>
-<pre><code class="bash">gedit etc/hadoop/hdfs-site.xml</code></pre>
-<pre><code class="xml">&lt;configuration&gt;
-    &lt;property&gt;
-        &lt;name&gt;dfs.datanode.ipc.address&lt;/name&gt;
-        &lt;value&gt;0.0.0.0:50020&lt;/value&gt;
-    &lt;/property&gt;
-    &lt;property&gt;
-        &lt;name&gt;dfs.datanode.http.address&lt;/name&gt;
-        &lt;value&gt;0.0.0.0:50075&lt;/value&gt;
-    &lt;/property&gt;
-    &lt;property&gt;
-        &lt;name&gt;dfs.namenode.name.dir&lt;/name&gt;
-        &lt;value&gt;file:/home/master/data/namenode&lt;/value&gt;
-        &lt;!--元数据--&gt;
-    &lt;/property&gt;
-    &lt;property&gt;
-        &lt;name&gt;dfs.datanode.data.dir&lt;/name&gt;
-        &lt;value&gt;file:/home/master/data/datanode&lt;/value&gt;
-        &lt;!--数据块--&gt;
-    &lt;/property&gt;
-    &lt;property&gt;
-        &lt;name&gt;dfs.namenode.secondary.http-address&lt;/name&gt;
-        &lt;value&gt;slave1:9001&lt;/value&gt;
-    &lt;/property&gt;
-    &lt;property&gt;
-        &lt;name&gt;dfs.replication&lt;/name&gt;
-        &lt;value&gt;1&lt;/value&gt;
-        &lt;!--备份数量--&gt;
-    &lt;/property&gt;
-    &lt;property&gt;
-        &lt;name&gt;dfs.permissions&lt;/name&gt;
-        &lt;value&gt;false&lt;/value&gt;
-        &lt;!--权限验证--&gt;
-    &lt;/property&gt;
-&lt;/configuration&gt;</code></pre>
-<p>配置slaves分机列表</p>
-<pre><code class="bash">gedit etc/hadoop/slaves</code></pre>
-<pre><code class="bash">master
-serve1</code></pre>
-<p>分发配置文件到集群的其它机器</p>
-<pre><code class="bash">scp -r hadoop-2.6.0/etc/hadoop/ master@serve1:/home/master/hadoop-2.6.0/etc/</code></pre>
-<p>格式化hdfs</p>
-<pre><code class="bash">hdfs namenode -format</code></pre>
-<p>等看到执行信息有has been successfully formatted表示格式化ok</p>
-<p>启动 dfs</p>
-<pre><code class="bash">hadoop-2.6.0/sbin/start-dfs.sh</code></pre>
-<p>验证hadoop是否启动成功：</p>
-<pre><code class="bash">$jps
-显示有：
-4895 DataNode
-4775 NameNode</code></pre>
-<h4 id="安装-MapReduce"><a href="#安装-MapReduce" class="headerlink" title="安装 MapReduce"></a>安装 MapReduce</h4><p>mapred-site.xml的完整参数请参考<a href="http://hadoop.apache.org/docs/r2.6.0/hadoop-mapreduce-client/hadoop-mapreduce-client-core/mapred-default.xml" target="_blank" rel="noopener">http://hadoop.apache.org/docs/r2.6.0/hadoop-mapreduce-client/hadoop-mapreduce-client-core/mapred-default.xml</a></p>
-<p>将mapred-site.xml.template改名成mapred-site.xml</p>
-<pre><code class="xml">&lt;configuration&gt;
-    &lt;property&gt;
-        &lt;name&gt;mapreduce.framework.name&lt;/name&gt;
-        &lt;value&gt;yarn&lt;/value&gt;
-    &lt;/property&gt;
-    &lt;property&gt;
-        &lt;name&gt;mapreduce.jobhistory.address&lt;/name&gt;
-        &lt;value&gt;master:10020&lt;/value&gt;
-    &lt;/property&gt;
-    &lt;property&gt;
-        &lt;name&gt;mapreduce.jobhistory.webapp.address&lt;/name&gt;
-        &lt;value&gt;master:19888&lt;/value&gt;
-    &lt;/property&gt;
-&lt;/configuration&gt;</code></pre>
-<p>yarn-site.xml</p>
-<p>yarn-site.xml的完整参数请参考: <a href="http://hadoop.apache.org/docs/r2.6.0/hadoop-yarn/hadoop-yarn-common/yarn-default.xml" target="_blank" rel="noopener">http://hadoop.apache.org/docs/r2.6.0/hadoop-yarn/hadoop-yarn-common/yarn-default.xml</a></p>
-<pre><code class="xml">&lt;configuration&gt;
-    &lt;property&gt;
-        &lt;name&gt;yarn.nodemanager.aux-services&lt;/name&gt;
-        &lt;value&gt;mapreduce_shuffle&lt;/value&gt;
-    &lt;/property&gt;
-    &lt;property&gt;
-        &lt;name&gt;yarn.nodemanager.aux-services.mapreduce.shuffle.class&lt;/name&gt;
-        &lt;value&gt;org.apache.hadoop.mapred.ShuffleHandler&lt;/value&gt;
-    &lt;/property&gt;
-    &lt;property&gt;
-        &lt;name&gt;yarn.resourcemanager.scheduler.address&lt;/name&gt;
-        &lt;value&gt;master:8030&lt;/value&gt;
-    &lt;/property&gt;
-    &lt;property&gt;
-        &lt;name&gt;yarn.resourcemanager.resource-tracker.address&lt;/name&gt;
-        &lt;value&gt;master:8025&lt;/value&gt;
-    &lt;/property&gt;
-    &lt;property&gt;
-        &lt;name&gt;yarn.resourcemanager.address&lt;/name&gt;
-        &lt;value&gt;master:8040&lt;/value&gt;
-    &lt;/property&gt;
-&lt;/configuration&gt;</code></pre>
-<h4 id="启动yarn"><a href="#启动yarn" class="headerlink" title="启动yarn"></a>启动yarn</h4><pre><code class="bash">hadoop-2.6.0/sbin/start-yarn.sh</code></pre>
-<pre><code class="bash">$jps
-多了ResourceManager和NodeManager表示启动yarn成功
-SecondaryNameNode
-ResourceManager
-NameNode</code></pre>
-<pre><code class="bash">hadoop-2.6.0/sbin/start-dfs.sh
-hadoop-2.6.0/sbin/start-yarn.sh
-
-jps
-master节点上有几下3个进程：
-7482 ResourceManager
-7335 SecondaryNameNode
-7159 NameNode
-slave1、slave2上有几下2个进程：
-2296 DataNode
-2398 NodeManager
-
-hadoop-2.6.0/sbin/stop-dfs.sh
-hadoop-2.6.0/sbin/stop-yarn.sh</code></pre>
-<p>或打开浏览器访问：hdfs管理界面: <a href="http://master:50070" target="_blank" rel="noopener">http://master:50070</a></p>
-<p>yarn的管理界面: <a href="http://master:8088/" target="_blank" rel="noopener">http://master:8088/</a></p>
-<p>查看hadoop状态</p>
-<pre><code class="bash">hdfs dfsadmin -report //查看hdfs的状态报告
-
-yarn  node -list   //查看yarn的基本信息
-
-Secondary// TODO
-NameNode 元数据
-DataNode 数据块</code></pre>
-<hr>
-<h2 id="HDFS文件系统"><a href="#HDFS文件系统" class="headerlink" title="HDFS文件系统"></a>HDFS文件系统</h2><p>hadoop实现了一个分布式文件系统HDFS(Hadoop Distributed File System)</p>
-<img src="HDFS架构.png" />
-
-<p>元数据：用于描述数据的数据。</p>
-<p>NameNode 主服务器，用来管理整个文件系统的命名空间和元数据，以及处理来自外界的文件访问请求。整个集群中只有一个。含有：</p>
-<ol>
-<li>命名空间：整个分布式文件系统的目录结构</li>
-<li>数据块与文件名的映射表</li>
-<li>每个数据块副本的位置信息(每个数据块默认3个副本)</li>
-</ol>
-<p>元数据保存在NameNode的内存当中(1G内存可存放1000000个块对应的元数据信息，缺省每块64M计算可对应64T实际数据)</p>
-<p>DataNode通过心跳包(Heartbeats)与NameNode通讯</p>
-<p>HA(High Available)高可用</p>
-<p>DataNode 用来实际存储和管理文件的数据块</p>
-<p>数据块-64M(128M)数据块+备份公用一个ID</p>
-<p>主从架构：1个NameNode对应n个DataNode</p>
-<pre><code class="bash">
-client-java app -&gt; data NameNode(客户端向NameNode发起请求)
-client-sid datanode-&gt; datanode -&gt; r/w -&gt; dfs file(NameNode返回对应的DataNode给客户端让客户端来通过DataNode进行访问)
-                   -&gt; namenode(向NameNode汇报情况)</code></pre>
-<h3 id="JVM从HDFS读取文件流程"><a href="#JVM从HDFS读取文件流程" class="headerlink" title="JVM从HDFS读取文件流程"></a>JVM从HDFS读取文件流程</h3><img src="HDFS数据的读取过程.png" />
-
-<p>client会从距离最近的机子上读取</p>
-<h4 id="HDFS文件存储的组织与读写："><a href="#HDFS文件存储的组织与读写：" class="headerlink" title="HDFS文件存储的组织与读写："></a>HDFS文件存储的组织与读写：</h4><p>数据写入</p>
-<ol>
-<li>客户端调用FileSystem 实例的create 方法，创建文件。NameNode 通过一些检查，比如文件是否存在，客户端是否拥有创建权限等;通过检查之后，在NameNode 添加文件信息。注意，因为此时文件没有数据，所以NameNode 上也没有文件数据块的信息。</li>
-<li>创建结束之后， HDFS 会返回一个输出流DFSDataOutputStream 给客户端。</li>
-<li>客户端调用输出流DFSDataOutputStream 的write 方法向HDFS 中对应的文件写入数据。</li>
-<li>数据首先会被分包，这些分包会写人一个输出流的内部队列Data 队列中，接收完数据分包，输出流DFSDataOutputStream 会向NameNode 申请保存文件和副本数据块的若干个DataNode ， 这若干个DataNode 会形成一个数据传输管道。DFSDataOutputStream 将数据传输给距离上最短的DataNode ，这个DataNode 接收到数据包之后会传给下一个DataNode 。数据在各DataNode之间通过管道流动，而不是全部由输出流分发，以减少传输开销。</li>
-<li>因为各DataNode 位于不同机器上，数据需要通过网络发送，所以，为了保证所有DataNode 的数据都是准确的，接收到数据的DataNode 要向发送者发送确认包(ACK Packet ) 。对于某个数据块，只有当DFSDataOutputStream 收到了所有DataNode 的正确ACK. 才能确认传输结束。DFSDataOutputStream 内部专门维护了一个等待ACK 队列，这一队列保存已经进入管道传输数据、但是并未被完全确认的数据包。</li>
-<li>不断执行第3 - 5 步直到数据全部写完，客户端调用close 关闭文件。</li>
-<li>DFSDataInputStream 继续等待直到所有数据写人完毕并被确认，调用complete 方法通知NameNode 文件写入完成。NameNode 接收到complete 消息之后，等待相应数量的副本写入完毕后，告知客户端</li>
-</ol>
-<pre><code class="bash">查看文件
-hadoop fs -cat /output/part-00000
-查看hadoop文件系统
-hadoop fs -ls /
-hadoop fs -ls -R /output
-hadoop fs -ls /output
-创建文件夹
-hadoop fs -mkdir /tmp
-hadoop fs -mkdir /input
-hadoop fs -mkdir /output
-将文件放到hadoop文件系统-put 当前路径 /home/master/input 放到的路径
-hadoop fs -put /home/master/input/* /input
-hadoop fs -get /output output
-
-hadoop fs -rm -R /input
-hadoop fs -rm -r /output/output
-hadoop fs -mv /output/output/part-r-00000 /output/part-r-00000</code></pre>
-<p>运行例子</p>
-<pre><code class="bash">hadoop jar hadoop-2.6.0/share/hadoop/mapreduce/hadoop-mapreduce-examples-2.6.0.jar grep /input /output &#39;dfs[a-z.]+&#39;</code></pre>
-<h3 id="Hadoop-IO"><a href="#Hadoop-IO" class="headerlink" title="Hadoop IO"></a>Hadoop IO</h3><p>HDFS数据完整性</p>
-<p>校验和+后台进程</p>
-<p>文件数据结构-解决大量小文件</p>
-<p>SequenceFile：用流来读写</p>
-<p>MapFile</p>
-<h2 id="MapReduce-1"><a href="#MapReduce-1" class="headerlink" title="MapReduce"></a>MapReduce</h2><p>Map/Reduce是一个用于大规模数据处理的分布式计算模型，它最初是由Google工程师设计并实现的，Google已经将它完整的MapReduce论文公开发布了。其中对它的定义是，Map/Reduce是一个编程模型（programming model），是一个用于处理和生成大规模数据集（processing and generating large data sets）的相关的实现。用户定义一个map函数来处理一个key/value对以生成一批中间的key/value对，再定义一个reduce函数将所有这些中间的有着相同key的values合并起来。很多现实世界中的任务都可用这个模型来表达。</p>
-<img src="how-hadoop-runs-a-mapreduce-kob.jpg" />
-
-<h3 id="结构"><a href="#结构" class="headerlink" title="结构"></a>结构</h3><img src="hadoop-mapreduce-framework-architecture.jpg" />
-
-<p>Mapper、Reduce</p>
-<blockquote>
-<p>运行于Hadoop的MapReduce应用程序最基本的组成部分包括一个Mapper和一个Reducer类，以及一个创建JobConf的执行程序，在一些应用中还可以包括一个Combiner类，它实际也是Reducer的实现。</p>
-</blockquote>
-<p>JobTracker、TaskTracker</p>
-<blockquote>
-<p>它们都是由一个master服务JobTracker和多个运行于多个节点的slaver服务TaskTracker两个类提供的服务调度的。master负责调度job的每一个子任务task运行于slave上，并监控它们，如果发现有失败的task就重新运行它，slave则负责直接执行每一个task。TaskTracker都需要运行在HDFS的DataNode上，而JobTracker则不需要，一般情况应该把JobTracker部署在单独的机器上。</p>
-</blockquote>
-<p>JobClient</p>
-<blockquote>
-<p>每一个job都会在用户端通过JobClient类将应用程序以及配置参数Configuration打包成jar文件存储在HDFS，并把路径提交到JobTracker的master服务，然后由master创建每一个Task（即MapTask和ReduceTask）将它们分发到各个TaskTracker服务中去执行。</p>
-</blockquote>
-<p>JobInProgress</p>
-<blockquote>
-<p>JobClient提交job后，JobTracker会创建一个JobInProgress来跟踪和调度这个job，并把它添加到job队列里。JobInProgress会根据提交的job jar中定义的输入数据集（已分解成FileSplit）创建对应的一批TaskInProgress用于监控和调度MapTask，同时在创建指定数目的TaskInProgress用于监控和调度ReduceTask，缺省为1个ReduceTask。</p>
-</blockquote>
-<p>TaskInProgress</p>
-<blockquote>
-<p>JobTracker启动任务时通过每一个TaskInProgress来launchTask，这时会把Task对象（即MapTask和ReduceTask）序列化写入相应的TaskTracker服务中，TaskTracker收到后会创建对应的TaskInProgress（此TaskInProgress实现非JobTracker中使用的TaskInProgress，作用类似）用于监控和调度该Task。启动具体的Task进程是通过TaskInProgress管理的TaskRunner对象来运行的。TaskRunner会自动装载job jar，并设置好环境变量后启动一个独立的java child进程来执行Task，即MapTask或者ReduceTask，但它们不一定运行在同一个TaskTracker中。</p>
-</blockquote>
-<p>MapTask、ReduceTask</p>
-<blockquote>
-<p>一个完整的job会自动依次执行Mapper、Combiner（在JobConf指定了Combiner时执行）和Reducer，其中Mapper和Combiner是由MapTask调用执行，Reducer则由ReduceTask调用，Combiner实际也是Reducer接口类的实现。Mapper会根据job jar中定义的输入数据集按&lt;key1,value1&gt;对读入，处理完成生成临时的&lt;key2,value2&gt;对，如果定义了Combiner，MapTask会在Mapper完成调用该Combiner将相同key的值做合并处理，以减少输出结果集。MapTask的任务全完成即交给ReduceTask进程调用Reducer处理，生成最终结果&lt;key3,value3&gt;对。这个过程在下一部分再详细介绍。</p>
-</blockquote>
-<img src="mapreduce运行机制.jpg" />
-
-<h3 id="案例"><a href="#案例" class="headerlink" title="案例"></a>案例</h3><h4 id="单词统计案例"><a href="#单词统计案例" class="headerlink" title="单词统计案例"></a>单词统计案例</h4><pre><code>Mapper&lt;LongWritable, Text, Text, IntWritable&gt;
-public void map(LongWritable k1, Text v1, Context context)
-输入LongWritable k1, Text v1(LongWritable, Text)：序号,行
-处理：从行中split出每个单词，并将每个单词的值设为1
-输出Context context(Text, IntWritable)：单词,所有该单词的值的集合(数组)
-
-Reducer&lt;Text, IntWritable, Text, IntWritable&gt;
-public void reduce(Text key, Iterable&lt;IntWritable&gt; values, Context context)
-输入Text key, Iterable&lt;IntWritable&gt; values(Text, IntWritable)：单词,所有该单词的值的集合(数组)
-处理：使用迭代器Iterator来迭代每个单词的值的数组并将数组中的每个元素相加，和作为该单词新的值
-输出Context context(Text, IntWritable)：单词,单词出现次数</code></pre><pre><code class="java">package mypro1;
-
-import java.io.IOException;
-import java.net.URI;
-import java.util.Iterator;
-
-import org.apache.hadoop.conf.Configuration;
-import org.apache.hadoop.fs.FileSystem;
-import org.apache.hadoop.fs.Path;
-import org.apache.hadoop.io.IntWritable;
-import org.apache.hadoop.io.LongWritable;
-import org.apache.hadoop.io.Text;
-import org.apache.hadoop.mapreduce.Job;
-import org.apache.hadoop.mapreduce.Mapper;
-import org.apache.hadoop.mapreduce.Reducer;
-import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
-import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;   
-
-public class MyWordCount {
-
-    static class MyMapper  extends  Mapper&lt;LongWritable, Text, Text, IntWritable&gt;{  
-        // 输入LongWritable k1, Text v1(LongWritable, Text)：序号,行
-        public void map(LongWritable k1, Text v1, Context context) 
-            throws java.io.IOException, java.lang.InterruptedException{
-            // 处理：从行中split出每个单词，并将每个单词的值设为1
-            String[]  lines= v1.toString().split(&quot;\\s+&quot;);
-            for(String word: lines){
-                // 输出Context context(Text, IntWritable)：单词,所有该单词的值的集合(数组)
-                context.write(new Text(word), new IntWritable(1));
-            }
-
-            System.out.println(&quot;map......&quot;);
-        }
-
-    }
-
-    static class  MyReduce extends Reducer&lt;Text, IntWritable, Text, IntWritable&gt;{
-        // 输入Text key, Iterable&lt;IntWritable&gt; values(Text, IntWritable)：单词,所有该单词的值的集合(数组)
-        public void reduce(Text key, Iterable&lt;IntWritable&gt; values, Context context)
-             throws java.io.IOException, java.lang.InterruptedException{
-            // 处理：使用迭代器Iterator来迭代每个单词的值的数组并将数组中的每个元素相加，和作为该单词新的值
-            int sum=0;
-            Iterator&lt;IntWritable&gt;  it = values.iterator();
-            while(it.hasNext()){
-                sum+= it.next().get();
-            }
-            // 输出Context context(Text, IntWritable)：单词,单词出现次数
-            context.write(key, new IntWritable(sum));    
-
-            System.out.println(&quot;reduce......&quot;);
-        }
-
-    }
-
-    // 定义输入文件
-    private static String INPUT_PATH=&quot;hdfs://master:9000/input/hdfs-site.xml&quot;;
-    // 定义输出结果到目录
-    private static String OUTPUT_PATH=&quot;hdfs://master:9000/output/c/&quot;;
-
-    public static void main(String[] args) throws Exception {    
-        // 加载配置文件
-        Configuration  conf=new Configuration();
-        FileSystem  fs=FileSystem.get(new URI(OUTPUT_PATH),conf);
-         // 若输出目录已存在则删除
-        if(fs.exists(new Path(OUTPUT_PATH)))
-                fs.delete(new Path(OUTPUT_PATH));
-
-        // 开启一个作业
-        Job job = new Job(conf,&quot;myjob&quot;);
-        // 设置作业jar包
-        job.setJarByClass(MyWordCount.class);
-        // 设置作业Mapper类
-        job.setMapperClass(MyMapper.class);
-        // 设置作业Reducer类
-        job.setReducerClass(MyReduce.class);
-
-        // Mapper&lt;LongWritable, Text, MyK2, LongWritable&gt;定义Mapper泛型输出类
-
-        // Reducer&lt;Text, IntWritable, Text, IntWritable&gt;定义Reducer泛型输出类，因输入与输出相同可省略
-        job.setOutputKeyClass(Text.class);
-        job.setOutputValueClass(IntWritable.class);
-
-        // 使用文件读取系统读取文件到作业
-        FileInputFormat.addInputPath(job,new Path(INPUT_PATH));
-        // 使用文件读取系统输出作业结果
-        FileOutputFormat.setOutputPath(job, new Path(OUTPUT_PATH));
-
-        job.waitForCompletion(true);
-
-    }
-
-}</code></pre>
-<h4 id="排序案例"><a href="#排序案例" class="headerlink" title="排序案例"></a>排序案例</h4><pre><code>7 5
-2 1
-2 2
-9 3
-1 8
-4 5
-6 2
-0 7
-
-Mapper&lt;LongWritable, Text, MyK2, LongWritable&gt;
-public void map(LongWritable k1, Text v1, Context context)
-输入LongWritable k1, Text v1(LongWritable, Text)：序号,行
-处理
-输出Context context(MyK2, LongWritable)：两个数,后面那个数(与排序无关,为空都可以)
-
-Reducer&lt;MyK2, LongWritable,LongWritable, LongWritable&gt;
-public void reduce(MyK2 myk2, Iterable&lt;LongWritable&gt; v2s,Context context)
-输入MyK2 myk2, Iterable&lt;LongWritable&gt; v2s(MyK2, LongWritable)：两个数，后面那个数(与排序无关,为空都可以)
-处理
-输出Context context(LongWritable, LongWritable)：第一个数,第二个数
-
-0    7
-1    8
-2    1
-2    2
-4    5
-6    2
-7    5
-9    3</code></pre><pre><code class="java">package demo;
-
-import java.io.DataInput;
-import java.io.DataOutput;
-import java.io.IOException;
-import java.net.URI;
-import java.util.Iterator;
-
-import org.apache.hadoop.conf.Configuration;
-import org.apache.hadoop.fs.FileSystem;
-import org.apache.hadoop.fs.Path;
-import org.apache.hadoop.io.IntWritable;
-import org.apache.hadoop.io.LongWritable;
-import org.apache.hadoop.io.Text;
-import org.apache.hadoop.io.WritableComparable;
-import org.apache.hadoop.mapreduce.Job;
-import org.apache.hadoop.mapreduce.Mapper;
-import org.apache.hadoop.mapreduce.Reducer;
-import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
-import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;   
-
-public class Sort {
-
-    static class MyK2 implements WritableComparable&lt;MyK2&gt;{
-         public long myk2;  
-         public long myv2;  
-         public MyK2() {  
-                // TODO Auto-generated constructor stub  
-         }  
-
-         public MyK2(long myk2, long myv2) {  
-             this.myk2 = myk2;  
-             this.myv2 = myv2;  
-         }
-
-        @Override
-        public void readFields(DataInput in) throws IOException {
-            this.myk2=in.readLong();  
-            this.myv2=in.readLong();
-        }
-
-        @Override
-        public void write(DataOutput out) throws IOException {
-            out.writeLong(myk2);  
-            out.writeLong(myv2);
-        }
-
-        @Override
-        public int compareTo(MyK2 my) {
-            long temp=this.myk2-my.myk2; 
-            if(temp!=0){
-                return (int) temp; 
-            }
-            return (int) (this.myv2-my.myv2);
-        }  
-    }
-
-    static class MyMapper  extends  Mapper&lt;LongWritable, Text, MyK2, LongWritable&gt;{  
-         public void map(LongWritable k1, Text v1, Context context) 
-                         throws java.io.IOException, java.lang.InterruptedException
-         {
-            String[]  lines= v1.toString().split(&quot;\\s&quot;);
-            MyK2 myK2 = new MyK2(Long.parseLong(lines[0]), Long.parseLong(lines[1]));
-            context.write(myK2, new LongWritable(Long.parseLong(lines[0])));
-            System.out.println(&quot;map......&quot;);
-         }
-
-    }
-
-    static class  MyReduce extends Reducer&lt;MyK2, LongWritable,LongWritable, LongWritable&gt;{
-         public void reduce(MyK2 myk2, Iterable&lt;LongWritable&gt; v2s,Context context) throws java.io.IOException, java.lang.InterruptedException
-         {
-             context.write(new LongWritable(myk2.myk2), new LongWritable(myk2.myv2));    
-             System.out.println(&quot;reduce......&quot;);
-         }
-
-    }
-
-    private static String INPUT_PATH=&quot;hdfs://master:9000/input/num&quot;;
-    private static String OUTPUT_PATH=&quot;hdfs://master:9000/output/num/&quot;;
-
-    public static void main(String[] args) throws Exception {    
-
-        Configuration  conf=new Configuration();
-        FileSystem  fs=FileSystem.get(new URI(OUTPUT_PATH),conf);
-
-        if(fs.exists(new Path(OUTPUT_PATH)))
-                fs.delete(new Path(OUTPUT_PATH));
-
-        Job  job=new Job(conf,&quot;myjob&quot;);
-
-        job.setJarByClass(Sort.class);
-        job.setMapperClass(MyMapper.class);
-        job.setReducerClass(MyReduce.class);
-
-        // Mapper&lt;LongWritable, Text, MyK2, LongWritable&gt;定义Mapper泛型输出类
-        job.setMapOutputKeyClass(MyK2.class);
-        job.setMapOutputValueClass(LongWritable.class);
-        // Reducer&lt;MyK2, LongWritable,LongWritable, LongWritable&gt;定义Reducer泛型输出类
-        job.setOutputKeyClass(LongWritable.class);
-        job.setOutputValueClass(LongWritable.class);
-
-        FileInputFormat.addInputPath(job,new Path(INPUT_PATH));
-        FileOutputFormat.setOutputPath(job, new Path(OUTPUT_PATH));
-
-        job.waitForCompletion(true);
-        System.out.println(&quot;end&quot;);
-    }
-
-}
-</code></pre>
-<h4 id="图案例"><a href="#图案例" class="headerlink" title="图案例"></a>图案例</h4><pre><code>输入：
-child    parent 
-Tom    Lucy
-Tom    Jack
-Jone    Lucy
-Jone    Jack
-Lucy    Mary
-Lucy    Ben
-Jack     Alice
-Jack    Jesse
-Terry    Alice
-Terry    Jesse
-Philip    Terry
-Philip    Alma
-Mark    Terry
-Mark    Alma
-需求出输入中的所有的孙子与祖父母
-
-
-Mapper&lt;LongWritable, Text, Text, Text&gt;
-public void map(LongWritable k1, Text v1, Context context)
-输入LongWritable k1, Text v1(LongWritable, Text)：序号,行
-处理：读取行里的数据split，并以关系形式保存(以Tom    Lucy为例)：
-Tom,1,Tom,Lucy
-Tom,2,Lucy,Tom
-输出Context context(Text, Text)：人名，这个人与其他人的关系(数组)
-
-Reducer&lt;Text, Text, Text, Text&gt;
-public void reduce(Text key, Iterable&lt;Text&gt; values, Context context)
-输入Text key, Iterable&lt;Text&gt; values(Text, Text)：人名，这个人与其他人的关系(数组)
-处理：从数组中读出关系并将与该人有关的符合条件的人加入临时数组并输出
-输出Context context(Text, Text)：孙子，祖父母
-
-Jone    Alice
-Jone    Jesse
-Tom    Alice
-Tom    Jesse
-Jone    Mary
-Jone    Ben
-Tom    Mary
-Tom    Ben
-Mark    Alice
-Mark    Jesse
-Philip    Alice
-Philip    Jesse
-</code></pre><pre><code class="java">package mr;
-
-import java.io.IOException;
-import java.net.URI;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-
-import org.apache.hadoop.conf.Configuration;
-import org.apache.hadoop.fs.FileSystem ;
-import org.apache.hadoop.fs.Path;
-import org.apache.hadoop.io.IntWritable;
-import org.apache.hadoop.io.LongWritable;
-import org.apache.hadoop.io.NullWritable;
-import org.apache.hadoop.io.Text;
-import org.apache.hadoop.mapreduce.Job;
-import org.apache.hadoop.mapreduce.Mapper;
-import org.apache.hadoop.mapreduce.Reducer;
-import org.apache.hadoop.mapreduce.Mapper.Context;
-import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
-import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;   
-
-public class MyGL {
-    private static class MyGLMapper  extends  Mapper&lt;LongWritable, Text, Text, Text&gt;{  
-
-        public void map(LongWritable k1, Text v1, Context context) 
-            throws java.io.IOException, java.lang.InterruptedException{
-
-            //  1   2  file   tab  ,
-            String[]  lines = v1.toString().split(&quot;\t&quot;);        
-
-            if(lines.length != 2 || lines[0].trim().equals(&quot;child&quot;))
-                return;   //child  parent
-
-
-            String word1=lines[0].trim();  //  tom
-            String word2=lines[1].trim();  //  lucy
-
-
-            context.write(new Text(word1), new Text(&quot;1&quot;+&quot;,&quot;+word1+&quot;,&quot;+word2));
-            context.write(new Text(word2), new Text(&quot;2&quot;+&quot;,&quot;+word1+&quot;,&quot;+word2));
-            System.out.println(&quot;map......&quot;+word1+&quot;-&quot;+word2);
-        }
-
-    }
-
-    private static class  MyGLReduce extends Reducer&lt;Text, Text, Text, Text&gt;{
-        public void reduce(Text key, Iterable&lt;Text&gt; values, Context context)
-            throws java.io.IOException, java.lang.InterruptedException {
-            /*
-            * lucy   2+tom+lucy
-            * lucy   1+lucy+mary
-            * 
-            * 2--&gt;split[1]  tom
-            * 1--&gt;split[2]  mary
-            * 
-            * k3=tom  v3=mary
-            * */
-            List&lt;String&gt;  grandch = new ArrayList();
-            List&lt;String&gt;  grandpa = new ArrayList();
-
-            Iterator&lt;Text&gt;  it=values.iterator();
-            while(it.hasNext()){
-                String  lines= it.next().toString();   //2+tom+lucy
-                String[] words=lines.split(&quot;,&quot;);      //[&quot;2&quot;,&quot;tom&quot;,&quot;lucy&quot;]
-                if(words[0].equals(&quot;1&quot;)){
-                    grandpa.add(words[2]);
-                }
-                else if(words[0].equals(&quot;2&quot;)){
-                    grandch.add(words[1]);
-
-                }
-                else
-                    return;
-
-
-            }
-
-            for(String ch:grandch)    
-                for(String pa:grandpa){
-                    context.write(new Text(ch), new Text(pa)); 
-                    System.out.println(&quot;reduce......&quot;+ch+&quot; - &quot;+pa);
-                }
-
-            System.out.println(&quot;reduce......&quot;);
-        }
-
-       protected void cleanup(Context context) throws java.io.IOException, java.lang.InterruptedException{
-
-
-
-
-        }
-
-    }
-
-    private static String INPUT_PATH=&quot;hdfs://master:9000/input/gl.dat&quot;;
-    private static String OUTPUT_PATH=&quot;hdfs://master:9000/output/c/&quot;;
-
-    public static void main(String[] args) throws Exception {    
-
-        Configuration  conf=new Configuration();
-        FileSystem  fs=FileSystem.get(new URI(OUTPUT_PATH),conf);
-
-        if(fs.exists(new Path(OUTPUT_PATH)))
-                fs.delete(new Path(OUTPUT_PATH));
-
-        Job  job=new Job(conf,&quot;myjob&quot;);
-
-        job.setJarByClass(MyGL.class);
-        job.setMapperClass(MyGLMapper.class);
-        job.setReducerClass(MyGLReduce.class);
-
-
-        job.setOutputKeyClass(Text.class);
-        job.setOutputValueClass(Text.class);
-
-
-
-        FileInputFormat.addInputPath(job,new Path(INPUT_PATH));
-        FileOutputFormat.setOutputPath(job, new Path(OUTPUT_PATH));
-
-        job.waitForCompletion(true);
-
-    }
-
-}
-</code></pre>
-<!--TODO:http://langyu.iteye.com/blog/992916-->
-<!--TODO:http://www.cnblogs.com/zhangchaoyang/articles/2648815.html-->
-
-<h4 id="矩阵乘法"><a href="#矩阵乘法" class="headerlink" title="矩阵乘法"></a>矩阵乘法</h4><p>矩阵乘法公式：</p>
-<img src="矩阵乘法公式.png" />
-
-<pre><code>矩阵A(4*3)(i*n)
-1,2,3
-4,5,0
-7,8,9
-10,11,12
-
-矩阵B(3*2)(n*j)
-10,15
-0,2
-11,9
-
-根据矩阵乘法的定义：矩阵A的列数=矩阵B的行数，即矩阵A和矩阵B都有相同的n
-矩阵乘法的结果是产生(i*j)的矩阵C
-
-矩阵C(4*2)(i*j)
-43,46
-40,70
-169,202
-232,280
-
-1*10+2*0+3*11=43
-1*15+2*2+3*9=46
-
-计算每个矩阵C中的元素(i,j)都需要矩阵A的(i,r)与矩阵B的(r,j)相乘再加上下一个r取值[1,n]
-接下来看看进行一个矩阵计算需要哪些信息：
-因为每次计算r都是从1到n，所以r的值不需要保存进map，
-需要：计算结果是在C的哪里即(i,j)，A矩阵对应的值，B矩阵对应的值，这个值来自哪个矩阵(A还是B)
-
-那么如何唯一标识矩阵C的一个元素呢？使用矩阵C的坐标，将C的坐标(i,j)作为key
-(哪个矩阵,对应的r,矩阵的值)作为value，这样就可以保存进行矩阵计算的全部信息了
-
-分类讨论：
-(i,j为计算C的第(i,j)个元素的值，r取值[1,n])
-对于矩阵A的值：
-key(i,j) value(a,A的列即r,A[i,r])
-对于矩阵B的值：
-key(i,j) value(b,B的列即r,B[r,j])
-
-分类讨论的计算过程见下图</code></pre><img src="矩阵乘法.png" />
-
-<pre><code class="java">package demo;
-
-import java.io.IOException;
-import java.net.URI;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
-
-import org.apache.hadoop.conf.Configuration;
-import org.apache.hadoop.fs.FileSystem;
-import org.apache.hadoop.fs.Path;
-import org.apache.hadoop.io.IntWritable;
-import org.apache.hadoop.io.LongWritable;
-import org.apache.hadoop.io.Text;
-import org.apache.hadoop.mapreduce.Job;
-import org.apache.hadoop.mapreduce.Mapper;
-import org.apache.hadoop.mapreduce.Reducer;
-import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
-import org.apache.hadoop.mapreduce.lib.input.FileSplit;
-import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
-
-public class MatrixProdect {
-    static class MyMapper extends Mapper&lt;LongWritable, Text, Text, Text&gt; {
-
-        private int rowNum = 4;// 矩阵A的行数
-        private int colNum = 2;// 矩阵B的列数
-        private int rowIndexA = 1; // 矩阵A，当前在第几行
-        private int rowIndexB = 1; // 矩阵B，当前在第几行
-
-        public void map(LongWritable key, Text value, Context context)
-                throws java.io.IOException, java.lang.InterruptedException {
-
-            FileSplit fs = (FileSplit) context.getInputSplit();
-            String fileName = fs.getPath().getName();
-
-            String[] tokens = value.toString().split(&quot;,&quot;); // 读进一行数据
-            if (&quot;a&quot;.equals(fileName)) { // 通过文件名判断是矩阵A还是矩阵B
-                for (int j = 1; j &lt;= colNum; j++) {
-                    Text k = new Text(rowIndexA + &quot;,&quot; + j);
-                    for (int r = 0; r &lt; tokens.length; r++) {
-                        Text v = new Text(&quot;a,&quot; + (r + 1) + &quot;,&quot; + tokens[r]);
-                        System.out.println(&quot;map......&quot; + fileName + &quot;(&quot; + k + &quot;)&quot; + v);
-                        context.write(k, v);
-                    }
-                }
-                rowIndexA++;// 每执行一次map方法，扫描矩阵的下一行
-            } else if (&quot;b&quot;.equals(fileName)) {
-                for (int i = 1; i &lt;= rowNum; i++) {
-                    for (int r = 0; r &lt; tokens.length; r++) {
-                        Text k = new Text(i + &quot;,&quot; + (r + 1));
-                        Text v = new Text(&quot;b,&quot; + rowIndexB + &quot;,&quot; + tokens[r]);
-                        System.out.println(&quot;map......&quot; + fileName + &quot;(&quot; + k + &quot;)&quot; + v);
-                        context.write(k, v);
-                    }
-                }
-                rowIndexB++;// 每执行一次map方法，扫描矩阵的下一行
-            }
-
-        }
-
-    }
-
-    static class MyReduce extends Reducer&lt;Text, Text, Text, IntWritable&gt; {
-        public void reduce(Text key, Iterable&lt;Text&gt; values, Context context)
-                throws java.io.IOException, java.lang.InterruptedException {
-
-            Map&lt;String, String&gt; mapA = new HashMap&lt;String, String&gt;();
-            Map&lt;String, String&gt; mapB = new HashMap&lt;String, String&gt;();
-
-            // 根据矩阵来分类
-            for (Text value : values) {
-                String[] val = value.toString().split(&quot;,&quot;);
-                if (&quot;a&quot;.equals(val[0])) {
-                    mapA.put(val[1], val[2]);
-                } else if (&quot;b&quot;.equals(val[0])) {
-                    mapB.put(val[1], val[2]);
-                }
-            }
-
-            int result = 0;
-            Iterator&lt;String&gt; mKeys = mapA.keySet().iterator();
-            while (mKeys.hasNext()) { // 取相同的r值的数相乘
-                String mkey = mKeys.next();
-                if (mapB.get(mkey) == null) {
-                    continue;
-                }
-                result += Integer.parseInt(mapA.get(mkey)) * Integer.parseInt(mapB.get(mkey));
-            }
-            System.out.println(&quot;reduce......&quot; + &quot;(&quot; + key + &quot;)&quot; + result);
-            context.write(key, new IntWritable(result));
-        }
-
-    }
-
-    private static String INPUT_PATH_A = &quot;hdfs://master:9000/input/a&quot;;
-    private static String INPUT_PATH_B = &quot;hdfs://master:9000/input/b&quot;;
-    private static String OUTPUT_PATH = &quot;hdfs://master:9000/output/matrix/&quot;;
-
-    public static void main(String[] args) throws Exception {
-
-        Configuration conf = new Configuration();
-        FileSystem fs = FileSystem.get(new URI(OUTPUT_PATH), conf);
-
-        if (fs.exists(new Path(OUTPUT_PATH)))
-            fs.delete(new Path(OUTPUT_PATH));
-
-        Job job = new Job(conf, &quot;myjob&quot;);
-
-        job.setJarByClass(MatrixProdect.class);
-        job.setMapperClass(MyMapper.class);
-        job.setReducerClass(MyReduce.class);
-
-        job.setMapOutputKeyClass(Text.class);
-        job.setMapOutputValueClass(Text.class);
-
-        job.setOutputKeyClass(Text.class);
-        job.setOutputValueClass(IntWritable.class);
-
-        FileInputFormat.addInputPath(job, new Path(INPUT_PATH_A));
-        FileInputFormat.addInputPath(job, new Path(INPUT_PATH_B));
-        FileOutputFormat.setOutputPath(job, new Path(OUTPUT_PATH));
-
-        job.waitForCompletion(true);
-        System.out.println(&quot;end&quot;);
-    }
-
-}
-</code></pre>
-<p>计算方法与上面一样，只是矩阵的存储结构不一样。省略了值为0的元素，对于较大且稀疏的矩阵所占存储空间较小</p>
-<pre><code>行,列,值</code></pre><img src="矩阵乘法2.png" />
-
-<!--
-```java
-// TODO:
-```
--->
- 
-      <!-- reward -->
-      
-    </div>
-    
 
     <!-- copyright -->
     
     <footer class="article-footer">
        
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/HDFS/" rel="tag">HDFS</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Hadoop/" rel="tag">Hadoop</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MapReduce/" rel="tag">MapReduce</a></li></ul>
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%BE%AE%E6%9C%8D%E5%8A%A1/" rel="tag">微服务</a></li></ul>
 
     </footer>
   </div>
@@ -3870,7 +467,7 @@ public class MatrixProdect {
 
     
     <article
-  id="post-Hive"
+  id="post-全文搜索ElasticSearch"
   class="article article-type-post"
   itemscope
   itemprop="blogPost"
@@ -3881,399 +478,76 @@ public class MatrixProdect {
     <header class="article-header">
        
 <h2 itemprop="name">
-  <a class="article-title" href="/2017/08/17/Hive/"
-    >Hive</a> 
+  <a class="article-title" href="/2020/03/15/%E5%85%A8%E6%96%87%E6%90%9C%E7%B4%A2ElasticSearch/"
+    >全文搜索ElasticSearch</a> 
 </h2>
  
 
     </header>
      
     <div class="article-meta">
-      <a href="/2017/08/17/Hive/" class="article-date">
-  <time datetime="2017-08-17T12:09:47.000Z" itemprop="datePublished">2017-08-17</time>
-</a> 
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E5%A4%A7%E6%95%B0%E6%8D%AE/">大数据</a>
-  </div>
-   
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <h2 id="安装hive"><a href="#安装hive" class="headerlink" title="安装hive"></a>安装hive</h2><p>hive–&gt;hql–&gt;hive引擎–&gt;mapreduce Task</p>
-<h3 id="配置mysql数据库"><a href="#配置mysql数据库" class="headerlink" title="配置mysql数据库"></a>配置mysql数据库</h3><p>前置条件：安装数据库mysql</p>
-<pre><code class="bash">sudo apt-get install mysql-server mysql-client</code></pre>
-<p>启动停止mysql服务</p>
-<pre><code class="bash">sudo start mysql
-sudo stop mysql  </code></pre>
-<p>取消本地监听</p>
-<p>取消本地监听需要修改 my.cnf 文件：</p>
-<pre><code class="bash">$sudo vim /etc/mysql/my.cnf
-// 找到如下内容，并注释
-#bind-address = 127.0.0.1</code></pre>
-<p>修改了配置文件后需要重启 mysqld 才能使这些修改生效。</p>
-<p>检查 mysqld 进程是否已经开启： </p>
-<pre><code class="bash">$pgrep mysqld</code></pre>
-<p>如果进程开启，这个命令将会返回该进程的 id </p>
-<p>root登录mysql</p>
-<pre><code class="bash">mysql -uroot -p</code></pre>
-<p>下载<a href="apache-hive-1.1.0-bin.tar.gz">apache-hive-1.1.0</a></p>
-<p>解压到/home/master/apache-hive-1.1.0</p>
-<h3 id="配置环境变量"><a href="#配置环境变量" class="headerlink" title="配置环境变量"></a>配置环境变量</h3><pre><code class="bash">sudo gedit /etc/profile
-
-#set hive environment
-HIVE_HOME=/home/master/apache-hive-1.1.0
-PATH=$HIVE_HOME/bin:$PATH
-CLASSPATH=$CLASSPATH:$HIVE_HOME/lib
-export HIVE_HOME
-export PATH
-export CLASSPATH
-
-source /etc/profile</code></pre>
-<p>配置hive-env.sh</p>
-<pre><code class="bash">cd /home/master/apache-hive-1.1.0/conf
-
-gedit hive-env.sh
-
-HADOOP_HOME=/home/master/hadoop-2.6.0
-
-export HIVE_CONF_DIR=/home/master/hadoop-2.6.0/conf</code></pre>
-<p>配置hive-site.xml</p>
-<pre><code class="bash">cp hive-default.xml.template hive-site.xml
-
-sudo gedit hive-site.xml</code></pre>
-<pre><code class="xml">&lt;property&gt;
-  &lt;name&gt;hive.metastore.warehouse.dir&lt;/name&gt;
-  &lt;value&gt; /home/master/hive/warehouse&lt;/value&gt;
-  &lt;description&gt;location of default database for the warehouse&lt;/description&gt;
-&lt;/property&gt;
-&lt;property&gt;
-  &lt;name&gt;hive.exec.scratchdir&lt;/name&gt;
-  &lt;value&gt; /home/master/hive/scratchdir&lt;/value&gt;
-  &lt;description&gt;Scratch space for Hive jobs&lt;/description&gt;
-&lt;/property&gt;
-&lt;property&gt;
-  &lt;name&gt;hive.querylog.location&lt;/name&gt;
-  &lt;value&gt;/home/master/apache-hive-1.1.0/logs&lt;/value&gt;
-  &lt;description&gt;
-    Location of Hive run time structured log file
-  &lt;/description&gt;
-&lt;/property&gt;
-&lt;property&gt;
-  &lt;name&gt;javax.jdo.option.ConnectionURL&lt;/name&gt;
-  &lt;value&gt;jdbc:mysql://master:3306/hive_metadata?createDatabaseIfNotExist=true&lt;/value&gt;
-  &lt;description&gt;JDBC connect string for a JDBC metastore&lt;/description&gt;
-&lt;/property&gt;
-&lt;property&gt;
-  &lt;name&gt;javax.jdo.option.ConnectionDriverName&lt;/name&gt;
-  &lt;value&gt;com.mysql.jdbc.Driver&lt;/value&gt;
-  &lt;description&gt;Driver class name for a JDBC metastore&lt;/description&gt;
-&lt;/property&gt;
-&lt;property&gt;
-  &lt;name&gt;javax.jdo.option.ConnectionUserName&lt;/name&gt;
-  &lt;value&gt;root&lt;/value&gt;
-  &lt;description&gt;username to use against metastore database&lt;/description&gt;
-&lt;/property&gt;
-&lt;property&gt;
-  &lt;name&gt;javax.jdo.option.ConnectionPassword&lt;/name&gt;
-  &lt;value&gt;root123&lt;/value&gt;
-  &lt;description&gt;password to use against metastore database&lt;/description&gt;
-&lt;/property&gt;
-&lt;property&gt;
-   &lt;name&gt;hive.exec.local.scratchdir&lt;/name&gt;  
-  &lt;!--拼凑目录--&gt; 
-   &lt;value&gt;/home/master/apache-hive-1.1.0/local/${system:user.name}&lt;/value&gt;
-   &lt;description&gt;Local scratch space for Hive jobs&lt;/description&gt;
-  &lt;/property&gt;
-&lt;property&gt;
-   &lt;name&gt;hive.downloaded.resources.dir&lt;/name&gt;
-   &lt;value&gt;/home/master/apache-hive-1.1.0/local/${hive.session.id}_resources&lt;/value&gt;
-   &lt;description&gt;Temporary local directory for added resources in theremote file system.&lt;/description&gt;
-  &lt;/property&gt;
-&lt;property&gt;
-   &lt;name&gt;hive.server2.logging.operation.log.location&lt;/name&gt;
-   &lt;value&gt;/home/master/apache-hive-1.1.0/logs/operation_logs&lt;/value&gt;
-   &lt;description&gt;Top leveldirectory where operation logs are stored if logging functionality isenabled&lt;/description&gt;
-  &lt;/property&gt;</code></pre>
-<p>在apache-hive-1.1.0目录下创建local目录mkdir local</p>
-<h3 id="配置log4j"><a href="#配置log4j" class="headerlink" title="配置log4j"></a>配置log4j</h3><p>创建配置文件：</p>
-<pre><code class="bash">cp hive-exec-log4j.properties.template  hive-exec-log4j.properties
-cp hive-log4j.properties.template  hive-log4j.properties</code></pre>
-<p>修改上面两个文件中的配置</p>
-<pre><code class="bash">sudo gedit hive-exec-log4j.properties
-sudo gedit hive-log4j.properties
-
-hive.log.dir=/home/master/apache-hive-1.1.0/logs
-log4j.appender.EventCounter=org.apache.hadoop.log.metrics.EventCounter</code></pre>
-<p>注意如果没有logs目录就建立一个 执行命令</p>
-<pre><code class="bash">$mkdir /home/master/apache-hive-1.1.0/logs</code></pre>
-<h3 id="添加Mysql驱动包"><a href="#添加Mysql驱动包" class="headerlink" title="添加Mysql驱动包"></a>添加Mysql驱动包</h3><ol>
-<li><p>下载驱动包<br>本实验使用的mysql是mysql 5.6 版本，配套的jdbc是<a href="mysql-connector-java-5.1.9.jar">mysql-connector-java-5.1.24-bin.jar</a><br>这个jar在网上下载就可以了，一定要根据mysql版本选择配套的版本</p>
-</li>
-<li><p>添加驱动包<br>把驱动包放到 $HIVE_HOME/lib 目录下</p>
-</li>
-<li><p>修改hadoop的库文件<br>在$HADOOP_HOME/share/hadoop/yarn/lib下备份jline-0.9.94.jar</p>
-</li>
-<li><p>执行命令</p>
-<pre><code class="bash">cd /home/master/hadoop-2.6.0/share/hadoop/yarn/lib
-$mv jline-0.9.94.jar jline-0.9.94.jar.bak</code></pre>
-</li>
-<li><p>Copy高版本的jline</p>
-<pre><code class="bash">$cp $HIVE_HOME/lib/jline-2.12.jar $HADOOP_HOME/share/hadoop/yarn/lib
-cp /home/master/apache-hive-1.1.0/lib/jline-2.12.jar /home/master/hadoop-2.6.0/share/hadoop/yarn/lib</code></pre>
-</li>
-</ol>
-<p>验证配置是否成功</p>
-<p>启动hive</p>
-<pre><code class="bash">hive</code></pre>
-<p>没有报错且显示hinve&gt;</p>
-<pre><code class="bash">create table test(id int, name String);
-show tables;
-insert into test values(0, &#39;Sombra&#39;);
-select * from test;</code></pre>
-<h3 id="从文件导入数据"><a href="#从文件导入数据" class="headerlink" title="从文件导入数据"></a>从文件导入数据</h3><pre><code class="bash">create table shakespaeare(child string, parent string)
-row format delimited fields terminated by &#39;,&#39;
-stored as textfile;
-
-load data inpath &quot;hdfs://master:9000/input/gl.dat&quot;
-into table shakespaeare;</code></pre>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Hive/" rel="tag">Hive</a></li></ul>
-
-    </footer>
-  </div>
-
-    
- 
-   
-</article>
-
-    
-    <article
-  id="post-HDFS"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2017/08/13/HDFS/"
-    >HDFS</a> 
-</h2>
- 
-
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2017/08/13/HDFS/" class="article-date">
-  <time datetime="2017-08-13T09:19:43.000Z" itemprop="datePublished">2017-08-13</time>
-</a> 
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E5%A4%A7%E6%95%B0%E6%8D%AE/">大数据</a>
-  </div>
-   
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <h2 id="HDFS启动与关闭"><a href="#HDFS启动与关闭" class="headerlink" title="HDFS启动与关闭"></a>HDFS启动与关闭</h2><p>HDFS 和普通的硬盘上的文件系统不一样，是通过Java 虚拟机运行在整个集群当中的，<br>所以当Hadoop 程序写好之后，需要启动HDFS 文件系统，才能运行。</p>
-<p>HDFS启动过程如下:</p>
-<pre><code class="bash">bin/start-dfs.sh</code></pre>
-<p>这一脚本会启动NameNode ， 然后根据conf/slaves 中的记录逐个启动DataNode ，最后<br>根据conf/masters 中记录的Secondary NameNode 地址启动SecondaryNameNode 。</p>
-<p>HDFS 关闭过程如下:</p>
-<pre><code class="bash">bin/stop-dfs.sh</code></pre>
-<p>这一脚本的运行过程正好是bin/start-dfs.sh 的逆过程，关闭Secondary NameNode ，然后<br>是每个DataNode ，最后是NameNode自身。</p>
-<h2 id="HDFS命令基本格式"><a href="#HDFS命令基本格式" class="headerlink" title="HDFS命令基本格式:"></a>HDFS命令基本格式:</h2><pre><code class="bash">hadoop fs -cmd &lt; args &gt;</code></pre>
-<h3 id="ls"><a href="#ls" class="headerlink" title="ls"></a><code>ls</code></h3><pre><code class="bash">hadoop fs -ls  /</code></pre>
-<p>列出hdfs文件系统根目录下的目录和文件</p>
-<pre><code class="bash">hadoop fs -ls -R /</code></pre>
-<p>列出hdfs文件系统所有的目录和文件</p>
-<h3 id="put"><a href="#put" class="headerlink" title="put"></a><code>put</code></h3><pre><code class="bash">hadoop fs -put &lt; local file &gt; &lt; hdfs file &gt;</code></pre>
-<p>hdfs file的父目录一定要存在，否则命令不会执行</p>
-<pre><code class="bash">hadoop fs -put  &lt; local file or dir &gt;...&lt; hdfs dir &gt;</code></pre>
-<p>hdfs dir 一定要存在，否则命令不会执行</p>
-<pre><code class="bash">hadoop fs -put - &lt; hdsf  file&gt;</code></pre>
-<p>从键盘读取输入到hdfs file中，按Ctrl+D结束输入，hdfs file不能存在，否则命令不会执行</p>
-<h3 id="moveFromLocal"><a href="#moveFromLocal" class="headerlink" title="moveFromLocal"></a><code>moveFromLocal</code></h3><pre><code class="bash">hadoop fs -moveFromLocal  &lt; local src &gt; ... &lt; hdfs dst &gt;</code></pre>
-<p>与put相类似，命令执行后源文件 local src 被删除，也可以从从键盘读取输入到hdfs file中</p>
-<h3 id="copyFromLocal"><a href="#copyFromLocal" class="headerlink" title="copyFromLocal"></a><code>copyFromLocal</code></h3><pre><code class="bash">hadoop fs -copyFromLocal  &lt; local src &gt; ... &lt; hdfs dst &gt;</code></pre>
-<p>与put相类似，也可以从从键盘读取输入到hdfs file中</p>
-<h3 id="get"><a href="#get" class="headerlink" title="get"></a><code>get</code></h3><pre><code class="bash">hadoop fs -get &lt; hdfs file &gt; &lt; local file or dir&gt;</code></pre>
-<p>local file不能和 hdfs file名字不能相同，否则会提示文件已存在，没有重名的文件会复制到本地</p>
-<pre><code class="bash">hadoop fs -get &lt; hdfs file or dir &gt; ... &lt; local  dir &gt;</code></pre>
-<p>拷贝多个文件或目录到本地时，本地要为文件夹路径</p>
-<p><code>注意：</code>如果用户不是root， local 路径要为用户文件夹下的路径，否则会出现权限问题，</p>
-<h3 id="moveToLocal"><a href="#moveToLocal" class="headerlink" title="moveToLocal"></a><code>moveToLocal</code></h3><p>当前版本中还未实现此命令</p>
-<h3 id="copyToLocal"><a href="#copyToLocal" class="headerlink" title="copyToLocal"></a><code>copyToLocal</code></h3><pre><code class="bash">hadoop fs -copyToLocal &lt; local src &gt; ... &lt; hdfs dst &gt;</code></pre>
-<p>与get相类似</p>
-<h3 id="rm"><a href="#rm" class="headerlink" title="rm"></a><code>rm</code></h3><pre><code class="bash">hadoop fs -rm &lt; hdfs file &gt; ...
-hadoop fs -rm -r &lt; hdfs dir&gt;...</code></pre>
-<p>每次可以删除多个文件或目录</p>
-<h3 id="mkdir"><a href="#mkdir" class="headerlink" title="mkdir"></a><code>mkdir</code></h3><pre><code class="bash">hadoop fs -mkdir &lt; hdfs path&gt;</code></pre>
-<p>只能一级一级的建目录，父目录不存在的话使用这个命令会报错</p>
-<pre><code class="bash">hadoop fs -mkdir -p &lt; hdfs path&gt; </code></pre>
-<p>所创建的目录如果父目录不存在就创建该父目录</p>
-<h3 id="getmerge"><a href="#getmerge" class="headerlink" title="getmerge"></a><code>getmerge</code></h3><pre><code class="bash">hadoop fs -getmerge &lt; hdfs dir &gt;  &lt; local file &gt;</code></pre>
-<p>将hdfs指定目录下所有文件排序后合并到local指定的<code>文件</code>中，文件不存在时会自动创建，文件存在时会覆盖里面的内容</p>
-<pre><code class="bash">hadoop fs -getmerge -nl  &lt; hdfs dir &gt;  &lt; local file &gt;</code></pre>
-<p>加上nl后，合并到local file中的hdfs文件之间会空出一行</p>
-<h3 id="cp"><a href="#cp" class="headerlink" title="cp"></a><code>cp</code></h3><pre><code class="bash">hadoop fs -cp  &lt; hdfs file &gt;  &lt; hdfs file &gt;</code></pre>
-<p>目标文件不能存在，否则命令不能执行，相当于给文件重命名并保存，源文件还存在</p>
-<p>hadoop fs -cp &lt; hdfs file or dir &gt;… &lt; hdfs dir &gt;</p>
-<p>目标文件夹要存在，否则命令不能执行</p>
-<h3 id="mv"><a href="#mv" class="headerlink" title="mv"></a><code>mv</code></h3><pre><code class="bash">hadoop fs -mv &lt; hdfs file &gt;  &lt; hdfs file &gt;</code></pre>
-<p>目标文件不能存在，否则命令不能执行，相当于给文件重命名并保存，源文件不存在</p>
-<pre><code class="bash">hadoop fs -mv  &lt; hdfs file or dir &gt;...  &lt; hdfs dir &gt;</code></pre>
-<p>源路径有多个时，目标路径必须为目录，且必须存在。</p>
-<p><code>注意：</code>跨文件系统的移动（local到hdfs或者反过来）都是不允许的</p>
-<h3 id="count"><a href="#count" class="headerlink" title="count"></a><code>count</code></h3><pre><code class="bash">hadoop fs -count &lt; hdfs path &gt;</code></pre>
-<p>统计hdfs对应路径下的目录个数，文件个数，文件总计大小</p>
-<p>显示为目录个数，文件个数，文件总计大小，输入路径</p>
-<h3 id="du"><a href="#du" class="headerlink" title="du"></a><code>du</code></h3><pre><code class="bash">hadoop fs -du &lt; hdsf path&gt; </code></pre>
-<p>显示hdfs对应路径下每个文件夹和文件的大小</p>
-<pre><code class="bash">hadoop fs -du -s &lt; hdsf path&gt; </code></pre>
-<p>显示hdfs对应路径下所有文件和的大小</p>
-<pre><code class="bash">hadoop fs -du - h &lt; hdsf path&gt; </code></pre>
-<p>显示hdfs对应路径下每个文件夹和文件的大小,文件的大小用方便阅读的形式表示，例如用64M代替67108864</p>
-<h3 id="text"><a href="#text" class="headerlink" title="text"></a><code>text</code></h3><pre><code class="bash">hadoop fs -text &lt; hdsf file&gt;</code></pre>
-<p>将文本文件或某些格式的非文本文件通过文本格式输出</p>
-<h3 id="setrep"><a href="#setrep" class="headerlink" title="setrep"></a><code>setrep</code></h3><pre><code class="bash">hadoop fs -setrep -R 3 &lt; hdfs path &gt;</code></pre>
-<p>改变一个文件在hdfs中的副本个数，上述命令中数字3为所设置的副本个数，-R选项可以对一个人目录下的所有目录+文件递归执行改变副本个数的操作</p>
-<h3 id="stat"><a href="#stat" class="headerlink" title="stat"></a><code>stat</code></h3><pre><code class="bash">hdoop fs -stat [format] &lt; hdfs path &gt;</code></pre>
-<p>返回对应路径的状态信息</p>
-<p>[format]可选参数有：%b（文件大小），%o（Block大小），%n（文件名），%r（副本个数），%y（最后一次修改日期和时间）</p>
-<p>可以这样书写<code>hadoop fs -stat %b%o%n &lt; hdfs path &gt;</code>，不过不建议，这样每个字符输出的结果不是太容易分清楚</p>
-<h3 id="tail"><a href="#tail" class="headerlink" title="tail"></a><code>tail</code></h3><pre><code class="bash">hadoop fs -tail &lt; hdfs file &gt;</code></pre>
-<p>在标准输出中显示文件末尾的1KB数据</p>
-<h3 id="archive"><a href="#archive" class="headerlink" title="archive"></a><code>archive</code></h3><pre><code class="bash">hadoop archive -archiveName name.har -p &lt; hdfs parent dir &gt; &lt; src &gt;* &lt; hdfs dst &gt;</code></pre>
-<p>命令中参数name：压缩文件名，自己任意取；&lt; hdfs parent dir &gt; ：压缩文件所在的父目录；&lt; src &gt;：要压缩的文件名；&lt; hdfs dst &gt;：压缩文件存放路径</p>
-<p>*示例：hadoop archive -archiveName hadoop.har -p /user 1.txt 2.txt /des</p>
-<p>示例中将hdfs中/user目录下的文件1.txt，2.txt压缩成一个名叫hadoop.har的文件存放在hdfs中/des目录下，如果1.txt，2.txt不写就是将/user目录下所有的目录和文件压缩成一个名叫hadoop.har的文件存放在hdfs中/des目录下</p>
-<p>显示har的内容可以用如下命令：</p>
-<pre><code class="bash">hadoop fs -ls /des/hadoop.jar</code></pre>
-<p>显示har压缩的是那些文件可以用如下命令</p>
-<pre><code class="bash">hadoop fs -ls -R har:///des/hadoop.har</code></pre>
-<p><code>注意：</code>har文件不能进行二次压缩。如果想给.har加文件，只能找到原来的文件，重新创建一个。har文件中原来文件的数据并没有变化，har文件真正的作用是减少NameNode和DataNode过多的空间浪费。</p>
-<h3 id="balancer"><a href="#balancer" class="headerlink" title="balancer"></a><code>balancer</code></h3><pre><code class="bash">hdfs balancer</code></pre>
-<p>如果管理员发现某些DataNode保存数据过多，某些DataNode保存数据相对较少，可以使用上述命令手动启动内部的均衡过程</p>
-<h3 id="dfsadmin"><a href="#dfsadmin" class="headerlink" title="dfsadmin"></a><code>dfsadmin</code></h3><pre><code class="bash">hdfs dfsadmin -help</code></pre>
-<p>管理员可以通过dfsadmin管理HDFS，用法可以通过上述命令查看</p>
-<p>hdfs dfsadmin -report</p>
-<p>显示文件系统的基本数据</p>
-<pre><code class="bash">hdfs dfsadmin -safemode &lt; enter | leave | get | wait &gt;</code></pre>
-<p>enter：进入安全模式；leave：离开安全模式；get：获知是否开启安全模式；</p>
-<p>wait：等待离开安全模式</p>
-<h3 id="distcp"><a href="#distcp" class="headerlink" title="distcp"></a><code>distcp</code></h3><p>用来在两个HDFS之间拷贝数据</p>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/HDFS/" rel="tag">HDFS</a></li></ul>
-
-    </footer>
-  </div>
-
-    
- 
-   
-</article>
-
-    
-    <article
-  id="post-Node.js中使用Authenticator(两部验证器)"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2017/07/30/Node.js%E4%B8%AD%E4%BD%BF%E7%94%A8Authenticator(%E4%B8%A4%E9%83%A8%E9%AA%8C%E8%AF%81%E5%99%A8)/"
-    >Oracle PL</a> 
-</h2>
- 
-
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2017/07/30/Node.js%E4%B8%AD%E4%BD%BF%E7%94%A8Authenticator(%E4%B8%A4%E9%83%A8%E9%AA%8C%E8%AF%81%E5%99%A8)/" class="article-date">
-  <time datetime="2017-07-30T13:31:43.000Z" itemprop="datePublished">2017-07-30</time>
+      <a href="/2020/03/15/%E5%85%A8%E6%96%87%E6%90%9C%E7%B4%A2ElasticSearch/" class="article-date">
+  <time datetime="2020-03-15T03:52:04.000Z" itemprop="datePublished">2020-03-15</time>
 </a> 
   <div class="article-category">
     <a class="article-category-link" href="/categories/%E5%90%8E%E7%AB%AF/">后端</a>
   </div>
+
    
     </div>
-      
-    <div class="article-entry" itemprop="articleBody">
        
-  <p>Node.js Authenticator：<a href="https://www.npmjs.com/package/authenticator" target="_blank" rel="noopener">https://www.npmjs.com/package/authenticator</a></p>
-<p>Two- and Multi- Factor Authenication (2FA / MFA) for node.js</p>
-<h2 id="关于验证器"><a href="#关于验证器" class="headerlink" title="关于验证器"></a>关于验证器</h2><p>Google现在也推荐用户启用两步验证（Two-step verification）功能（Youtube上的视频介绍），并且除了以短信或者电话的方式发送一次性密码之外，还提供了另一种基于时间的一次性密码（Time-based One-time Password，简称TOTP），只需要在手机上安装密码生成应用程序，就可以生成一个随着时间变化的一次性密码，用于帐户验证，而且这个应用程序不需要连接网络即可工作。仔细看了看这个方案的实现原理，发现挺有意思的。下面简单介绍一下。</p>
-<p>Google的两步验证算法源自另一种名为HMAC-Based One-Time Password的算法，简称HOTP。HOTP的工作原理如下：</p>
-<p>客户端和服务器事先协商好一个密钥K，用于一次性密码的生成过程，此密钥不被任何第三方所知道。此外，客户端和服务器各有一个计数器C，并且事先将计数值同步。</p>
-<p>进行验证时，客户端对密钥和计数器的组合(K,C)使用HMAC（Hash-based Message Authentication Code）算法计算一次性密码，公式如下：</p>
-<pre><code>HOTP(K,C) = Truncate(HMAC-SHA-1(K,C))</code></pre><p>上面采用了HMAC-SHA-1，当然也可以使用HMAC-MD5等。HMAC算法得出的值位数比较多，不方便用户输入，因此需要截断（Truncate）成为一组不太长十进制数（例如6位）。计算完成之后客户端计数器C计数值加1。用户将这一组十进制数输入并且提交之后，服务器端同样的计算，并且与用户提交的数值比较，如果相同，则验证通过，服务器端将计数值C增加1。如果不相同，则验证失败。</p>
-<p>这里的一个比较有趣的问题是，如果验证失败或者客户端不小心多进行了一次生成密码操作，那么服务器和客户端之间的计数器C将不再同步，因此需要有一个重新同步（Resynchronization）的机制。这里不作具体介绍，详情可以参看RFC 4226。</p>
-<p>介绍完了HOTP，Time-based One-time Password（TOTP）也就容易理解了。TOTP将HOTP中的计数器C用当前时间T来替代，于是就得到了随着时间变化的一次性密码。非常有趣吧！</p>
-<p>Google选择了30秒作为时间片，T的数值为从Unix epoch（1970年1月1日 00:00:00）来经历的30秒的个数。事实上，这个方法还有一个另外的功能。我们知道如果客户端和服务器的时钟有偏差，会造成与上面类似的问题，也就是客户端生成的密码和服务端生成的密码不一致。但是，如果服务器通过计算前n个时间片的密码并且成功验证之后，服务器就知道了客户端的时钟偏差。因此，下一次验证时，服务器就可以直接将偏差考虑在内进行计算，而不需要进行n次计算。</p>
-<h2 id="Install"><a href="#Install" class="headerlink" title="Install"></a>Install</h2><pre><code class="bash">npm install authenticator --save</code></pre>
-<h2 id="Usage"><a href="#Usage" class="headerlink" title="Usage"></a>Usage</h2><pre><code class="js">&#39;use strict&#39;;
-
-var authenticator = require(&#39;authenticator&#39;);
-
-var formattedKey = authenticator.generateKey();
-// &quot;acqo ua72 d3yf a4e5 uorx ztkh j2xl 3wiz&quot;
-// 这个formattedKey就是客户端或令牌在手动输入模式下需要输入的密钥
-
-var formattedToken = authenticator.generateToken(formattedKey);
-// &quot;957 124&quot;
-// 这个是根据密钥和时间动态生成的验证码用于和来自用户输入的验证码比较
-
-authenticator.verifyToken(formattedKey, formattedToken);
-// { delta: 0 }
-// 验证验证码是否匹配
-
-authenticator.verifyToken(formattedKey, &#39;000 000&#39;);
-// null
-// 验证验证码是否匹配
-
-authenticator.generateTotpUri(formattedKey, &quot;john.doe@email.com&quot;, &quot;ACME Co&quot;, &#39;SHA1&#39;, 6, 30);
-// 生成otpauth用于生成二维码给客户端扫码
-// otpauth://totp/ACME%20Co:john.doe@email.com?secret=HXDMVJECJJWSRB3HWIZR4IFUGFTMXBOZ&amp;issuer=ACME%20Co&amp;algorithm=SHA1&amp;digits=6&amp;period=30</code></pre>
- 
-      <!-- reward -->
-      
-    </div>
-    
 
     <!-- copyright -->
     
     <footer class="article-footer">
        
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Authenticator/" rel="tag">Authenticator</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Node-js/" rel="tag">Node.js</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Security/" rel="tag">Security</a></li></ul>
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E6%90%9C%E7%B4%A2/" rel="tag">搜索</a></li></ul>
+
+    </footer>
+  </div>
+
+    
+ 
+   
+</article>
+
+    
+    <article
+  id="post-MAC-开发环境配置"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2020/03/07/MAC-%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/"
+    >MAC 开发环境配置</a> 
+</h2>
+ 
+
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2020/03/07/MAC-%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/" class="article-date">
+  <time datetime="2020-03-07T04:39:04.000Z" itemprop="datePublished">2020-03-07</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E6%9D%82%E9%A1%B9/">杂项</a>
+  </div>
+
+   
+    </div>
+       
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Mac/" rel="tag">Mac</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E8%B8%A9%E5%9D%91/" rel="tag">踩坑</a></li></ul>
 
     </footer>
   </div>
@@ -4290,7 +564,7 @@ authenticator.generateTotpUri(formattedKey, &quot;john.doe@email.com&quot;, &quo
   
   <nav class="page-nav">
     
-    <a class="extend prev" rel="prev" href="/page/2/">上一页</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/4/">下一页</a>
+    <a class="extend prev" rel="prev" href="/page/2/">上一页</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><a class="page-number" href="/page/5/">5</a><a class="extend next" rel="next" href="/page/4/">下一页</a>
   </nav>
   
 </section>
@@ -4377,15 +651,7 @@ authenticator.generateTotpUri(formattedKey, &quot;john.doe@email.com&quot;, &quo
     </li>
     
     <li class="nav-item">
-      <a class="nav-item-link" href="/tags/%E6%97%85%E8%A1%8C/">旅行</a>
-    </li>
-    
-    <li class="nav-item">
-      <a class="nav-item-link" href="http://shenyu-vip.lofter.com" target="_blank" rel="noopener">摄影</a>
-    </li>
-    
-    <li class="nav-item">
-      <a class="nav-item-link" href="/2019/about">关于我</a>
+      <a class="nav-item-link" href="/about">关于我</a>
     </li>
     
   </ul>
