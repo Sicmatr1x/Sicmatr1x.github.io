@@ -76,6 +76,99 @@ void traverse(TreeNode root) {
 }
 ```
 
+## 哈希表
+
+### 构造哈希函数需要考虑的因素：
+
+1. 计算哈希函数所需时间(包括硬件指令因素)
+2. 关键字长度
+3. 哈希表大小
+4. 关键字的分布情况
+5. 记录的查找频率
+
+### 常见构造哈希函数的方法：
+
+1. 直接定址法
+   - 取关键字或关键字的某个线性函数值为哈希地址，即：`H(key)=key` 或 `H(key)=a*key+b`
+2. 数字分析法
+   - 假设关键字是以r为基的数(如十进制)，并且哈希表中可能出现的关键字都是事先知道的，则可取关键字的若干数位组成哈希地址
+3. 平方取中法
+   - 取关键字平方后的中间几位为哈希地址
+4. 折叠法(folding)
+   - 将关键字分割成位数相同的几部分(最后一部分的位数可以不同)，然后取这几部分的叠加和(舍去进位)作为哈希地址
+5. 除留余数法
+   - 取关键字被某个不大于哈希表长度m的数p除后所得余数为哈希地址，即：`H(key)=key % p, p<=m`
+6. 随机数法
+   - 选择一个随机函数，取关键字的随机函数值为它的哈希地址，即：`H(key)=random(key)`，其中random为随机函数。通常关键字长度不等时采用此方法。
+
+### 处理冲突的方法
+
+1. 开放定址法
+2. 再哈希法
+3. 链地址法
+4. 建立一个公共溢出区
+
+```java
+/**
+ * 采用：
+ * 除留余数法+链地址法(拉链法)
+ */
+public class ZipHashTable {
+    // 一般情况下取质数或不包含小于20的质因数的合数
+    private static final int N = 1023;
+
+    @SuppressWarnings("unchecked")
+    private final List<int[]>[] buckets = new List[N];
+
+    public ZipHashTable() {
+
+    }
+
+    public void put(int key, int value) {
+        final int hash = key % N;
+        List<int[]> bucket = buckets[hash];
+        if (bucket == null) {
+            bucket = new LinkedList<>();
+            buckets[hash] = bucket;
+        }
+        boolean contains = false;
+        for (int[] slot : bucket) {
+            if (slot[0] == key) {
+                contains = true;
+                slot[1] = value;
+                break;
+            }
+        }
+        if (!contains) {
+            bucket.add(new int[] {key, value});
+        }
+    }
+
+    public int get(int key) {
+        final int hash = key % N;
+        final List<int[]> bucket = buckets[hash];
+        if (bucket == null) {
+            return -1;
+        }
+        for (int[] slot : bucket) {
+            if (slot[0] == key) {
+                return slot[1];
+            }
+        }
+        return -1;
+    }
+
+    public void remove(int key) {
+        final int hash = key % N;
+        final List<int[]> bucket = buckets[hash];
+        if (bucket == null) {
+            return;
+        }
+        bucket.removeIf(slot -> slot[0] == key);
+    }
+}
+```
+
 ## 二叉树
 
 二叉树算法的设计的总路线：明确一个节点要做的事情，然后剩下的事抛给框架。
@@ -91,7 +184,7 @@ void traverse(TreeNode root) {
 }
 ```
 
-DFS(Breadth First Search)广度优先搜索：
+BFS(Breadth First Search)广度优先搜索：
 
 ```java
 // 二叉树每层作为一个数组放到大数组里
@@ -247,6 +340,13 @@ TreeNode getMin(TreeNode node) {
     return node;
 } 
 ```
+
+# 动态规划
+
+1. 重叠子问题
+2. 最优子结构
+
+状态转移方程
 
 # 查找
 
