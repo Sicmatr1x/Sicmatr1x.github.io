@@ -1,6 +1,6 @@
 ---
 title: JVM-6_本地方法接口
-date: 2020-08-06 14:38:49
+date: 2020-05-16 14:38:49
 categories:
     - Java
 tags: 
