@@ -59,19 +59,25 @@ sudo tar -xzvf frp_0.33.0_linux_amd64.tar.gz
 cd frp_0.33.0_linux_amd64
 ```
 
-修改配置文件`frps.ini`
+查看配置文件`frps.ini`
 
 ```
 # cat frps.ini
 [common]
 bind_port = 7000
+```
 
+使用vim修改配置文件`frps.ini`
+
+```
 # sudo vim frps.ini
 [common]
 bind_port = 7000
 token = password
 vhost_http_port = 8090
 ```
+
+按i进入insert模式，然后增加修改成如上，按ESC退出insert模式，然后输入`:`进入命令模式，`wq`保持并退出
 
 启动服务端
 
@@ -86,6 +92,16 @@ vhost_http_port = 8090
 
 ```
 nohup ./frps -c ./frps.ini &
+```
+
+需要重启的话可以先：
+
+```
+# lsof -i :7000
+COMMAND  PID USER   FD   TYPE    DEVICE SIZE/OFF NODE NAME
+frps    1817 root    3u  IPv6  16887360      0t0  TCP *:afs3-fileserver (LISTEN)
+# kill 1817
+# nohup ./frps -c ./frps.ini &
 ```
 
 ### 客户端配置
@@ -116,7 +132,28 @@ local_port = 8090
 custom_domains=45.**.**.**9
 ```
 
-启动客户端
+实际上这里要是还想开放4000端口可以不需要修改服务器文件只用在`frpc.ini`里增加如下的test_tcp部分就行
+
+```
+[common]
+server_addr = 45.**.**.**9
+server_port = 7000
+token = password
+
+[web]
+#配置类型为tcp协议
+type = http
+#内网需要监听的端口,即本地运行的服务所使用的端口
+local_port = 8090
+#公网服务器的IP或者已解析的域名
+custom_domains=45.**.**.**9
+
+[test_tcp]
+type = tcp
+local_ip = 127.0.0.1
+local_port = 4000
+remote_port = 4000
+```
 
 ```
 cd /Users/sicmatr1x/Develop/frp_0.33.0_darwin_amd64
