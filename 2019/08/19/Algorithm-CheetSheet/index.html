@@ -1,0 +1,914 @@
+<!DOCTYPE html>
+
+
+<html lang="en">
+
+
+<head>
+  <meta charset="utf-8" />
+    
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+  <title>
+    Algorithm CheetSheet |  
+  </title>
+  <meta name="generator" content="hexo-theme-ayer">
+  
+  <link rel="shortcut icon" href="/favicon.ico" />
+  
+  <link rel="stylesheet" href="/dist/main.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Shen-Yu/cdn/css/remixicon.min.css">
+  <link rel="stylesheet" href="/css/custom.css">
+  
+  <script src="https://cdn.jsdelivr.net/npm/pace-js@1.0.2/pace.min.js"></script>
+  
+  
+
+  
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@latest/build/styles/vs2015.min.css"><!- highlight.js ->
+  <script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@latest/build/highlight.min.js"></script>
+  <script>
+    hljs.initHighlightingOnLoad();
+  </script>
+</head>
+
+</html>
+
+
+<body>
+  <div id="app">
+    
+      
+    <main class="content on">
+      <section class="outer">
+  <article
+  id="post-Algorithm-CheetSheet"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h1 class="article-title sea-center" style="border-left:0" itemprop="name">
+  Algorithm CheetSheet
+</h1>
+ 
+
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2019/08/19/Algorithm-CheetSheet/" class="article-date">
+  <time datetime="2019-08-19T11:33:07.000Z" itemprop="datePublished">2019-08-19</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E7%AE%97%E6%B3%95/">算法</a>
+  </div>
+
+  
+<div class="word_count">
+    <span class="post-time">
+        <span class="post-meta-item-icon">
+            <i class="ri-quill-pen-line"></i>
+            <span class="post-meta-item-text"> Word count:</span>
+            <span class="post-count">2.1k</span>
+        </span>
+    </span>
+
+    <span class="post-time">
+        &nbsp; | &nbsp;
+        <span class="post-meta-item-icon">
+            <i class="ri-book-open-line"></i>
+            <span class="post-meta-item-text"> Reading time≈</span>
+            <span class="post-count">9 min</span>
+        </span>
+    </span>
+</div>
+ 
+    </div>
+      
+    <div class="tocbot"></div>
+
+
+
+
+  
+    <div class="article-entry" itemprop="articleBody">
+       
+  <h1 id="数据结构"><a href="#数据结构" class="headerlink" title="数据结构"></a>数据结构</h1><h2 id="数组-顺序表"><a href="#数组-顺序表" class="headerlink" title="数组/顺序表"></a>数组/顺序表</h2><p>数组遍历框架，典型的线性迭代结构：</p>
+<pre><code class="java">void traverse(int[] arr) {
+    for (int i = 0; i &lt; arr.length; i++) {
+        // 迭代访问 arr[i]
+    }
+}</code></pre>
+<h2 id="链表"><a href="#链表" class="headerlink" title="链表"></a>链表</h2><p>链表遍历框架，兼具迭代和递归结构：</p>
+<pre><code class="java">/* 基本的单链表节点 */
+class ListNode {
+    int val;
+    ListNode next;
+}
+
+void traverse(ListNode head) {
+    for (ListNode p = head; p != null; p = p.next) {
+        // 迭代访问 p.val
+    }
+}
+
+void traverse(ListNode head) {
+    // 递归访问 head.val
+    traverse(head.next)
+}</code></pre>
+<p>二叉树遍历框架，典型的非线性递归遍历结构：</p>
+<pre><code class="java">/* 基本的二叉树节点 */
+class TreeNode {
+    int val;
+    TreeNode left, right;
+}
+
+void traverse(TreeNode root) {
+    traverse(root.left)
+    traverse(root.right)
+}</code></pre>
+<p>你看二叉树的递归遍历方式和链表的递归遍历方式，相似不？再看看二叉树结构和单链表结构，相似不？如果再多几条叉，N 叉树你会不会遍历？</p>
+<p>二叉树框架可以扩展为 N 叉树的遍历框架：</p>
+<pre><code class="java">/* 基本的 N 叉树节点 */
+class TreeNode {
+    int val;
+    TreeNode[] children;
+}
+
+void traverse(TreeNode root) {
+    for (TreeNode child : root.children)
+        traverse(child)
+}</code></pre>
+<h2 id="哈希表"><a href="#哈希表" class="headerlink" title="哈希表"></a>哈希表</h2><h3 id="构造哈希函数需要考虑的因素："><a href="#构造哈希函数需要考虑的因素：" class="headerlink" title="构造哈希函数需要考虑的因素："></a>构造哈希函数需要考虑的因素：</h3><ol>
+<li>计算哈希函数所需时间(包括硬件指令因素)</li>
+<li>关键字长度</li>
+<li>哈希表大小</li>
+<li>关键字的分布情况</li>
+<li>记录的查找频率</li>
+</ol>
+<h3 id="常见构造哈希函数的方法："><a href="#常见构造哈希函数的方法：" class="headerlink" title="常见构造哈希函数的方法："></a>常见构造哈希函数的方法：</h3><ol>
+<li>直接定址法<ul>
+<li>取关键字或关键字的某个线性函数值为哈希地址，即：<code>H(key)=key</code> 或 <code>H(key)=a*key+b</code></li>
+</ul>
+</li>
+<li>数字分析法<ul>
+<li>假设关键字是以r为基的数(如十进制)，并且哈希表中可能出现的关键字都是事先知道的，则可取关键字的若干数位组成哈希地址</li>
+</ul>
+</li>
+<li>平方取中法<ul>
+<li>取关键字平方后的中间几位为哈希地址</li>
+</ul>
+</li>
+<li>折叠法(folding)<ul>
+<li>将关键字分割成位数相同的几部分(最后一部分的位数可以不同)，然后取这几部分的叠加和(舍去进位)作为哈希地址</li>
+</ul>
+</li>
+<li>除留余数法<ul>
+<li>取关键字被某个不大于哈希表长度m的数p除后所得余数为哈希地址，即：<code>H(key)=key % p, p&lt;=m</code></li>
+</ul>
+</li>
+<li>随机数法<ul>
+<li>选择一个随机函数，取关键字的随机函数值为它的哈希地址，即：<code>H(key)=random(key)</code>，其中random为随机函数。通常关键字长度不等时采用此方法。</li>
+</ul>
+</li>
+</ol>
+<h3 id="处理冲突的方法"><a href="#处理冲突的方法" class="headerlink" title="处理冲突的方法"></a>处理冲突的方法</h3><ol>
+<li>开放定址法</li>
+<li>再哈希法</li>
+<li>链地址法</li>
+<li>建立一个公共溢出区</li>
+</ol>
+<pre><code class="java">/**
+ * 采用：
+ * 除留余数法+链地址法(拉链法)
+ */
+public class ZipHashTable {
+    // 一般情况下取质数或不包含小于20的质因数的合数
+    private static final int N = 1023;
+
+    @SuppressWarnings(&quot;unchecked&quot;)
+    private final List&lt;int[]&gt;[] buckets = new List[N];
+
+    public ZipHashTable() {
+
+    }
+
+    public void put(int key, int value) {
+        final int hash = key % N;
+        List&lt;int[]&gt; bucket = buckets[hash];
+        if (bucket == null) {
+            bucket = new LinkedList&lt;&gt;();
+            buckets[hash] = bucket;
+        }
+        boolean contains = false;
+        for (int[] slot : bucket) {
+            if (slot[0] == key) {
+                contains = true;
+                slot[1] = value;
+                break;
+            }
+        }
+        if (!contains) {
+            bucket.add(new int[] {key, value});
+        }
+    }
+
+    public int get(int key) {
+        final int hash = key % N;
+        final List&lt;int[]&gt; bucket = buckets[hash];
+        if (bucket == null) {
+            return -1;
+        }
+        for (int[] slot : bucket) {
+            if (slot[0] == key) {
+                return slot[1];
+            }
+        }
+        return -1;
+    }
+
+    public void remove(int key) {
+        final int hash = key % N;
+        final List&lt;int[]&gt; bucket = buckets[hash];
+        if (bucket == null) {
+            return;
+        }
+        bucket.removeIf(slot -&gt; slot[0] == key);
+    }
+}</code></pre>
+<h2 id="二叉树"><a href="#二叉树" class="headerlink" title="二叉树"></a>二叉树</h2><p>二叉树算法的设计的总路线：明确一个节点要做的事情，然后剩下的事抛给框架。</p>
+<p>DFS(Depth First Search)深度优先搜索：</p>
+<pre><code class="java">void traverse(TreeNode root) {
+    // root 需要做什么？在这做。
+    // 其他的不用 root 操心，抛给框架
+    traverse(root.left);
+    traverse(root.right);
+}</code></pre>
+<p>BFS(Breadth First Search)广度优先搜索：</p>
+<pre><code class="java">// 二叉树每层作为一个数组放到大数组里
+// 队列每次全部弹出到临时数组，分别获取该层所有结点的所有孩子并加入队列
+public List&lt;List&lt;Integer&gt;&gt; levelOrder(TreeNode root) {
+    List&lt;List&lt;Integer&gt;&gt; res = new ArrayList&lt;&gt;();
+    Queue&lt;TreeNode&gt; q = new LinkedList&lt;&gt;();
+    q.offer(root);
+    while (!q.isEmpty()) {
+        int size = q.size();
+        List&lt;Integer&gt; level = new LinkedList&lt;&gt;();
+        for (int i = 0; i &lt; size; ++i) {
+            TreeNode cur = q.peek();
+            q.poll();
+            if (cur == null) {
+                continue;
+            }
+            level.add(cur.val);
+            q.offer(cur.left);
+            q.offer(cur.right);
+        }
+        if (!level.isEmpty()) {
+            res.add(level);
+        }
+    }
+    return res;
+}</code></pre>
+<ol>
+<li>如何把二叉树所有的节点中的值加一？</li>
+</ol>
+<pre><code class="java">void plusOne(TreeNode root) {
+    if (root == null) return;
+    root.val += 1;
+
+    plusOne(root.left);
+    plusOne(root.right);
+}</code></pre>
+<ol start="2">
+<li>如何判断两棵二叉树是否完全相同？</li>
+</ol>
+<pre><code class="java">boolean isSameTree(TreeNode root1, TreeNode root2) {
+    // 都为空的话，显然相同
+    if (root1 == null &amp;&amp; root2 == null) return true;
+    // 一个为空，一个非空，显然不同
+    if (root1 == null || root2 == null) return false;
+    // 两个都非空，但 val 不一样也不行
+    if (root1.val != root2.val) return false;
+
+    // root1 和 root2 该比的都比完了
+    return isSameTree(root1.left, root2.left)
+        &amp;&amp; isSameTree(root1.right, root2.right);
+}</code></pre>
+<h4 id="二叉搜索树"><a href="#二叉搜索树" class="headerlink" title="二叉搜索树"></a>二叉搜索树</h4><p>二叉搜索树（Binary Search Tree，简称 BST）是一种很常用的的二叉树。它的定义是：一个二叉树中，任意节点的值要大于等于左子树所有节点的值，且要小于等于右边子树的所有节点的值。</p>
+<p>零、判断 BST 的合法性:</p>
+<pre><code class="java">boolean isValidBST(TreeNode root) {
+    return isValidBST(root, null, null);
+}
+
+boolean isValidBST(TreeNode root, TreeNode min, TreeNode max) {
+    if (root == null) return true;
+    if (min != null &amp;&amp; root.val &lt;= min.val) return false;
+    if (max != null &amp;&amp; root.val &gt;= max.val) return false;
+    return isValidBST(root.left, min, root) 
+        &amp;&amp; isValidBST(root.right, root, max);
+}</code></pre>
+<p>在 BST 中查找一个数是否存在:</p>
+<pre><code class="java">boolean isInBST(TreeNode root, int target) {
+    if (root == null) return false;
+    if (root.val == target)
+        return true;
+    if (root.val &lt; target) 
+        return isInBST(root.right, target);
+    if (root.val &gt; target)
+        return isInBST(root.left, target);
+    // root 该做的事做完了，顺带把框架也完成了，妙
+}</code></pre>
+<p>于是，我们对原始框架进行改造，抽象出一套<strong>针对 BST 的遍历框架</strong>：</p>
+<pre><code class="java">void BST(TreeNode root, int target) {
+    if (root.val == target)
+        // 找到目标，做点什么
+    if (root.val &lt; target) 
+        BST(root.right, target);
+    if (root.val &gt; target)
+        BST(root.left, target);
+}</code></pre>
+<p>在 BST 中插入一个数:</p>
+<pre><code class="java">TreeNode insertIntoBST(TreeNode root, int val) {
+    // 找到空位置插入新节点
+    if (root == null) return new TreeNode(val);
+    // if (root.val == val)
+    //     BST 中一般不会插入已存在元素
+    if (root.val &lt; val) 
+        root.right = insertIntoBST(root.right, val);
+    if (root.val &gt; val) 
+        root.left = insertIntoBST(root.left, val);
+    return root;
+}</code></pre>
+<p>在 BST 中删除一个数:</p>
+<ol>
+<li>A 恰好是末端节点，两个子节点都为空，那么它可以当场去世了。</li>
+<li>A 只有一个非空子节点，那么它要让这个孩子接替自己的位置。</li>
+<li>A 有两个子节点，麻烦了，为了不破坏 BST 的性质，A 必须找到左子树中最大的那个节点，或者右子树中最小的那个节点来接替自己。我们以第二种方式讲解。</li>
+</ol>
+<p>三种情况分析完毕，填入框架，简化一下代码：</p>
+<pre><code class="java">TreeNode deleteNode(TreeNode root, int key) {
+    if (root == null) return null;
+    if (root.val == key) {
+        // 这两个 if 把情况 1 和 2 都正确处理了
+        if (root.left == null) return root.right;
+        if (root.right == null) return root.left;
+        // 处理情况 3
+        TreeNode minNode = getMin(root.right);
+        root.val = minNode.val;
+        root.right = deleteNode(root.right, minNode.val);
+    } else if (root.val &gt; key) {
+        root.left = deleteNode(root.left, key);
+    } else if (root.val &lt; key) {
+        root.right = deleteNode(root.right, key);
+    }
+    return root;
+}
+
+TreeNode getMin(TreeNode node) {
+    // BST 最左边的就是最小的
+    while (node.left != null) node = node.left;
+    return node;
+} </code></pre>
+<h1 id="动态规划"><a href="#动态规划" class="headerlink" title="动态规划"></a>动态规划</h1><ol>
+<li>重叠子问题</li>
+<li>最优子结构</li>
+</ol>
+<p>状态转移方程</p>
+<h1 id="查找"><a href="#查找" class="headerlink" title="查找"></a>查找</h1><h2 id="二分查找"><a href="#二分查找" class="headerlink" title="二分查找"></a>二分查找</h2><pre><code class="java">int binary_search(int[] nums, int target) {
+    int left = 0, right = nums.length - 1; 
+    while(left &lt;= right) {
+        int mid = left + (right - left) / 2;
+        if (nums[mid] &lt; target) {
+            left = mid + 1;
+        } else if (nums[mid] &gt; target) {
+            right = mid - 1; 
+        } else if(nums[mid] == target) {
+            // 直接返回
+            return mid;
+        }
+    }
+    // 直接返回
+    return -1;
+}
+
+/*
+比如说给你有序数组 `nums = [1,2,2,2,3]`，`target` 为 2，此算法返回的索引是 2，没错。但是如果我想得到 `target` 的左侧边界，即索引 1，或者我想得到 `target` 的右侧边界，即索引 3，这样的话此算法是无法处理的。
+*/
+
+// 寻找左侧边界的二分搜索
+int left_bound(int[] nums, int target) {
+    int left = 0, right = nums.length - 1;
+    while (left &lt;= right) {
+        int mid = left + (right - left) / 2;
+        if (nums[mid] &lt; target) {
+            left = mid + 1;
+        } else if (nums[mid] &gt; target) {
+            right = mid - 1;
+        } else if (nums[mid] == target) {
+            // 别返回，锁定左侧边界
+            right = mid - 1;
+        }
+    }
+    // 最后要检查 left 越界的情况
+    if (left &gt;= nums.length || nums[left] != target)
+        return -1;
+    return left;
+}
+
+// 寻找右侧边界的二分搜索
+int right_bound(int[] nums, int target) {
+    int left = 0, right = nums.length - 1;
+    while (left &lt;= right) {
+        int mid = left + (right - left) / 2;
+        if (nums[mid] &lt; target) {
+            left = mid + 1;
+        } else if (nums[mid] &gt; target) {
+            right = mid - 1;
+        } else if (nums[mid] == target) {
+            // 别返回，锁定右侧边界
+            left = mid + 1;
+        }
+    }
+    // 最后要检查 right 越界的情况
+    if (right &lt; 0 || nums[right] != target)
+        return -1;
+    return right;
+}</code></pre>
+ 
+      <!-- reward -->
+      
+      <div id="reword-out">
+        <div id="reward-btn">
+          Donate
+        </div>
+      </div>
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <div class="declare">
+      <ul class="post-copyright">
+        <li>
+          <i class="ri-copyright-line"></i>
+          <strong>Copyright： </strong>
+          Copyright is owned by the author. For commercial reprints, please contact the author for authorization. For non-commercial reprints, please indicate the source.
+        </li>
+      </ul>
+    </div>
+    
+    <footer class="article-footer">
+       
+<div class="share-btn">
+      <span class="share-sns share-outer">
+        <i class="ri-share-forward-line"></i>
+        分享
+      </span>
+      <div class="share-wrap">
+        <i class="arrow"></i>
+        <div class="share-icons">
+          
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="ri-weibo-fill"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="ri-wechat-fill"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="ri-qq-fill"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="ri-douban-line"></i>
+          </a>
+          <!-- <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a> -->
+          
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="ri-facebook-circle-fill"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="ri-twitter-fill"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="ri-google-fill"></i>
+          </a>
+        </div>
+      </div>
+</div>
+
+<div class="wx-share-modal">
+    <a class="modal-close" href="javascript:;"><i class="ri-close-circle-line"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data=http://yoursite.com/2019/08/19/Algorithm-CheetSheet/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div id="share-mask"></div>  
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/LeetCode/" rel="tag">LeetCode</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+  <nav class="article-nav">
+    
+      <a href="/2019/09/13/Bitcoin/" class="article-nav-link">
+        <strong class="article-nav-caption">上一篇</strong>
+        <div class="article-nav-title">
+          
+            Bitcoin
+          
+        </div>
+      </a>
+    
+    
+      <a href="/2019/07/25/Ethereum/" class="article-nav-link">
+        <strong class="article-nav-caption">下一篇</strong>
+        <div class="article-nav-title">Ethereum</div>
+      </a>
+    
+  </nav>
+
+   
+ 
+   
+<div class="gitalk" id="gitalk-container"></div>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.6.2/dist/gitalk.css">
+<script src="https://cdn.jsdelivr.net/npm/gitalk@1.6.2/dist/gitalk.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/blueimp-md5@2.10.0/js/md5.min.js"></script>
+<script type="text/javascript">
+  var gitalk = new Gitalk({
+    clientID: 'db290dc011893521d885',
+    clientSecret: '4cbc64d2114f4963d8090a55b508568b2f26075b',
+    repo: 'blog-comments',
+    owner: 'Sicmatr1x',
+    admin: ['Sicmatr1x'],
+    // id: location.pathname,      // Ensure uniqueness and length less than 50
+    id: md5(location.pathname),
+    distractionFreeMode: false,  // Facebook-like distraction free mode
+    pagerDirection: 'last'
+  })
+
+  gitalk.render('gitalk-container')
+</script>
+  
+</article>
+
+</section>
+      <footer class="footer">
+  <div class="outer">
+    <ul>
+      <li>
+        Copyrights &copy;
+        2015-2020
+        <i class="ri-heart-fill heart_icon"></i> Sicmatr1x
+      </li>
+    </ul>
+    <ul>
+      <li>
+        
+        
+        
+        Powered by <a href="https://hexo.io" target="_blank">Hexo</a>
+        <span class="division">|</span>
+        Theme - <a href="https://github.com/Shen-Yu/hexo-theme-ayer" target="_blank">Ayer</a>
+        
+      </li>
+    </ul>
+    <ul>
+      <li>
+        
+        
+        <span>
+  <span><i class="ri-user-3-fill"></i>Visitors:<span id="busuanzi_value_site_uv"></span></s>
+  <span class="division">|</span>
+  <span><i class="ri-eye-fill"></i>Views:<span id="busuanzi_value_page_pv"></span></span>
+</span>
+        
+      </li>
+    </ul>
+    <ul>
+      
+    </ul>
+    <ul>
+      <li>
+        <!-- cnzz统计 -->
+        
+      </li>
+    </ul>
+  </div>
+</footer>
+      <div class="float_btns">
+        <div class="totop" id="totop">
+  <i class="ri-arrow-up-line"></i>
+</div>
+
+<div class="todark" id="todark">
+  <i class="ri-moon-line"></i>
+</div>
+
+      </div>
+    </main>
+    <aside class="sidebar on">
+      <button class="navbar-toggle"></button>
+<nav class="navbar">
+  
+  <div class="logo">
+    <a href="/"><img src="/images/ayer-side.svg" alt="Sicmatr1x"></a>
+  </div>
+  
+  <ul class="nav nav-main">
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/">主页</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/archives">归档</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/categories">分类</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/tags">标签</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/about">关于我</a>
+    </li>
+    
+  </ul>
+</nav>
+<nav class="navbar navbar-bottom">
+  <ul class="nav">
+    <li class="nav-item">
+      
+      <a class="nav-item-link nav-item-search"  title="Search">
+        <i class="ri-search-line"></i>
+      </a>
+      
+      
+      <a class="nav-item-link" target="_blank" href="/atom.xml" title="RSS Feed">
+        <i class="ri-rss-line"></i>
+      </a>
+      
+    </li>
+  </ul>
+</nav>
+<div class="search-form-wrap">
+  <div class="local-search local-search-plugin">
+  <input type="search" id="local-search-input" class="local-search-input" placeholder="Search...">
+  <div id="local-search-result" class="local-search-result"></div>
+</div>
+</div>
+    </aside>
+    <script>
+      if (window.matchMedia("(max-width: 768px)").matches) {
+        document.querySelector('.content').classList.remove('on');
+        document.querySelector('.sidebar').classList.remove('on');
+      }
+    </script>
+    <div id="mask"></div>
+
+<!-- #reward -->
+<div id="reward">
+  <span class="close"><i class="ri-close-line"></i></span>
+  <p class="reward-p"><i class="ri-cup-line"></i>请我喝杯咖啡吧~，ETH:0xDF06f28BcdD7DBb25c56f9560E184874d5FC0973</p>
+  <div class="reward-box">
+    
+    <div class="reward-item">
+      <img class="reward-img" src="/images/alipay.png">
+      <span class="reward-type">支付宝</span>
+    </div>
+    
+    
+    <div class="reward-item">
+      <img class="reward-img" src="/images/wechatpay.png">
+      <span class="reward-type">微信</span>
+    </div>
+    
+  </div>
+</div>
+    <script src="/js/jquery-2.0.3.min.js"></script>
+<script src="/js/lazyload.min.js"></script>
+<!-- Tocbot -->
+
+<script src="/js/tocbot.min.js"></script>
+<script>
+  tocbot.init({
+    tocSelector: '.tocbot',
+    contentSelector: '.article-entry',
+    headingSelector: 'h1, h2, h3, h4, h5, h6',
+    hasInnerContainers: true,
+    scrollSmooth: true,
+    scrollContainer: 'main',
+    positionFixedSelector: '.tocbot',
+    positionFixedClass: 'is-position-fixed',
+    fixedSidebarOffset: 'auto'
+  });
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/jquery-modal@0.9.2/jquery.modal.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/jquery-modal@0.9.2/jquery.modal.min.css">
+<script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/js/jquery.justifiedGallery.min.js"></script>
+<script src="/dist/main.js"></script>
+<!-- ImageViewer -->
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                <!--  Controls are self-explanatory. Order can be changed. -->
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" style="display:none" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css">
+<script src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"></script>
+
+<script>
+    function viewer_init() {
+        let pswpElement = document.querySelectorAll('.pswp')[0];
+        let $imgArr = document.querySelectorAll(('.article-entry img:not(.reward-img)'))
+
+        $imgArr.forEach(($em, i) => {
+            $em.onclick = () => {
+                // slider展开状态
+                // todo: 这样不好，后面改成状态
+                if (document.querySelector('.left-col.show')) return
+                let items = []
+                $imgArr.forEach(($em2, i2) => {
+                    let img = $em2.getAttribute('data-idx', i2)
+                    let src = $em2.getAttribute('data-target') || $em2.getAttribute('src')
+                    let title = $em2.getAttribute('alt')
+                    // 获得原图尺寸
+                    const image = new Image()
+                    image.src = src
+                    items.push({
+                        src: src,
+                        w: image.width || $em2.width,
+                        h: image.height || $em2.height,
+                        title: title
+                    })
+                })
+                var gallery = new PhotoSwipe(pswpElement, PhotoSwipeUI_Default, items, {
+                    index: parseInt(i)
+                });
+                gallery.init()
+            }
+        })
+    }
+    viewer_init()
+</script>
+
+<!-- MathJax -->
+
+<!-- Katex -->
+
+<!-- busuanzi  -->
+
+<script src="/js/busuanzi-2.3.pure.min.js"></script>
+
+<!-- ClickLove -->
+
+<!-- ClickBoom1 -->
+
+<!-- ClickBoom2 -->
+
+<!-- CodeCopy -->
+
+<link rel="stylesheet" href="/css/clipboard.css">
+<script src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js"></script>
+<script>
+  function wait(callback, seconds) {
+    var timelag = null;
+    timelag = window.setTimeout(callback, seconds);
+  }
+  !function (e, t, a) {
+    var initCopyCode = function(){
+      var copyHtml = '';
+      copyHtml += '<button class="btn-copy" data-clipboard-snippet="">';
+      copyHtml += '<i class="ri-file-copy-2-line"></i><span>COPY</span>';
+      copyHtml += '</button>';
+      $(".highlight .code pre").before(copyHtml);
+      $(".article pre code").before(copyHtml);
+      var clipboard = new ClipboardJS('.btn-copy', {
+        target: function(trigger) {
+          return trigger.nextElementSibling;
+        }
+      });
+      clipboard.on('success', function(e) {
+        let $btn = $(e.trigger);
+        $btn.addClass('copied');
+        let $icon = $($btn.find('i'));
+        $icon.removeClass('ri-file-copy-2-line');
+        $icon.addClass('ri-checkbox-circle-line');
+        let $span = $($btn.find('span'));
+        $span[0].innerText = 'COPIED';
+        
+        wait(function () { // 等待两秒钟后恢复
+          $icon.removeClass('ri-checkbox-circle-line');
+          $icon.addClass('ri-file-copy-2-line');
+          $span[0].innerText = 'COPY';
+        }, 2000);
+      });
+      clipboard.on('error', function(e) {
+        e.clearSelection();
+        let $btn = $(e.trigger);
+        $btn.addClass('copy-failed');
+        let $icon = $($btn.find('i'));
+        $icon.removeClass('ri-file-copy-2-line');
+        $icon.addClass('ri-time-line');
+        let $span = $($btn.find('span'));
+        $span[0].innerText = 'COPY FAILED';
+        
+        wait(function () { // 等待两秒钟后恢复
+          $icon.removeClass('ri-time-line');
+          $icon.addClass('ri-file-copy-2-line');
+          $span[0].innerText = 'COPY';
+        }, 2000);
+      });
+    }
+    initCopyCode();
+  }(window, document);
+</script>
+
+
+<!-- CanvasBackground -->
+
+
+    
+  </div>
+</body>
+
+</html>

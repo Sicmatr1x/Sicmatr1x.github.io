@@ -1,0 +1,761 @@
+<!DOCTYPE html>
+
+
+<html lang="en">
+
+
+<head>
+  <meta charset="utf-8" />
+    
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+  <title>
+    Ethereum |  
+  </title>
+  <meta name="generator" content="hexo-theme-ayer">
+  
+  <link rel="shortcut icon" href="/favicon.ico" />
+  
+  <link rel="stylesheet" href="/dist/main.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Shen-Yu/cdn/css/remixicon.min.css">
+  <link rel="stylesheet" href="/css/custom.css">
+  
+  <script src="https://cdn.jsdelivr.net/npm/pace-js@1.0.2/pace.min.js"></script>
+  
+  
+
+  
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@latest/build/styles/vs2015.min.css"><!- highlight.js ->
+  <script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@latest/build/highlight.min.js"></script>
+  <script>
+    hljs.initHighlightingOnLoad();
+  </script>
+</head>
+
+</html>
+
+
+<body>
+  <div id="app">
+    
+      
+    <main class="content on">
+      <section class="outer">
+  <article
+  id="post-Ethereum"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h1 class="article-title sea-center" style="border-left:0" itemprop="name">
+  Ethereum
+</h1>
+ 
+
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2019/07/25/Ethereum/" class="article-date">
+  <time datetime="2019-07-25T02:28:01.000Z" itemprop="datePublished">2019-07-25</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E5%8C%BA%E5%9D%97%E9%93%BE/">区块链</a>
+  </div>
+
+  
+<div class="word_count">
+    <span class="post-time">
+        <span class="post-meta-item-icon">
+            <i class="ri-quill-pen-line"></i>
+            <span class="post-meta-item-text"> Word count:</span>
+            <span class="post-count">4k</span>
+        </span>
+    </span>
+
+    <span class="post-time">
+        &nbsp; | &nbsp;
+        <span class="post-meta-item-icon">
+            <i class="ri-book-open-line"></i>
+            <span class="post-meta-item-text"> Reading time≈</span>
+            <span class="post-count">14 min</span>
+        </span>
+    </span>
+</div>
+ 
+    </div>
+      
+    <div class="tocbot"></div>
+
+
+
+
+  
+    <div class="article-entry" itemprop="articleBody">
+       
+  <blockquote>
+<p>以太坊的目的是基于脚本、竞争币和链上元协议（on-chain meta-protocol）概念进行整合和提高，使得开发者能够创建任意的基于共识的、可扩展的、标准化的、特性完备的、易于开发的和协同的应用。以太坊通过建立终极的抽象的基础层-内置有图灵完备编程语言的区块链-使得任何人都能够创建合约和去中心化应用并在其中设立他们自由定义的所有权规则、交易方式和状态转换函数。域名币的主体框架只需要两行代码就可以实现，诸如货币和信誉系统等其它协议只需要不到二十行代码就可以实现。智能合约-包含价值而且只有满足某些条件才能打开的加密箱子-也能在我们的平台上创建，并且因为图灵完备性、价值知晓（value-awareness）、区块链知晓（blockchain-awareness）和多状态所增加的力量而比比特币脚本所能提供的智能合约强大得多。</p>
+</blockquote>
+<p>以太坊白皮书-译文：<a href="https://ethfans.org/wikis/%E4%BB%A5%E5%A4%AA%E5%9D%8A%E7%99%BD%E7%9A%AE%E4%B9%A6" target="_blank" rel="noopener">https://ethfans.org/wikis/%E4%BB%A5%E5%A4%AA%E5%9D%8A%E7%99%BD%E7%9A%AE%E4%B9%A6</a></p>
+<h2 id="常用ETH客户端"><a href="#常用ETH客户端" class="headerlink" title="常用ETH客户端"></a>常用ETH客户端</h2><ul>
+<li>go-ethereum(Go)：官方推荐，开发使用最多 <ul>
+<li>地址：<a href="https://github.com/ethereum/go-ethereum" target="_blank" rel="noopener">https://github.com/ethereum/go-ethereum</a></li>
+</ul>
+</li>
+<li>parity（Rust)：最轻便客户端，在历次以太坊网络攻击中表现卓越 <ul>
+<li>地址：<a href="https://github.com/ethcore/parity/releases" target="_blank" rel="noopener">https://github.com/ethcore/parity/releases</a></li>
+</ul>
+</li>
+<li>cpp-ethereum(C++) <ul>
+<li>地址：<a href="https://github.com/ethereum/cpp-ethereum" target="_blank" rel="noopener">https://github.com/ethereum/cpp-ethereum</a> </li>
+</ul>
+</li>
+<li>pyethapp(python) <ul>
+<li>地址：<a href="https://github.com/heikoheiko/pyethapp" target="_blank" rel="noopener">https://github.com/heikoheiko/pyethapp</a> </li>
+</ul>
+</li>
+<li>ethereumjs-lib(javascript) <ul>
+<li>地址：<a href="https://github.com/ethereumis/ethereumis-lib" target="_blank" rel="noopener">https://github.com/ethereumis/ethereumis-lib</a> </li>
+</ul>
+</li>
+<li>EthereumJ/Harmony(Java) <ul>
+<li>地址：<a href="https://github.com/ethereum/ethereumi" target="_blank" rel="noopener">https://github.com/ethereum/ethereumi</a></li>
+</ul>
+</li>
+</ul>
+<h3 id="节点"><a href="#节点" class="headerlink" title="节点"></a>节点</h3><h4 id="全节点"><a href="#全节点" class="headerlink" title="全节点"></a>全节点</h4><p>全节点是整个主链的一个副本，存储并维护链上的所有数据，并随时验证新区块的合法性。<br>区块链的健康和扩展弹性，取决于具有许多独立操作和地理上分散的全节点。每个全节点都可以帮助其他新节点获取区块数据，并提供所有交易和合约的独立验证。<br>运行全节点将耗费巨大的成本，包括硬件资源和带宽。<br>以太坊开发不需要在实时网络（主网）上运行的全节点。我们可以使用测试网络的节点来代替，也可以用本地私链，或者使用服务商提供的基于云的以太坊客户端；这些几乎都可以执行所有操作。</p>
+<p>优点：</p>
+<ul>
+<li>为以太坊网络的灵活性和抗审查性提供有力支持。</li>
+<li>权威地验证所有交易。</li>
+<li>可以直接与公共区块链上的任何合约交互。</li>
+<li>可以离线查询区块链状态（帐户，合约等）。</li>
+<li>可以直接把自己的合约部署到公共区块链中。</li>
+</ul>
+<p>缺点：</p>
+<ul>
+<li>需要巨大的硬件和带宽资源，而且会不断增长。</li>
+<li>第一次下载往往需要几天才能完全同步。</li>
+<li>必须及时维护、升级并保持在线状态以同步区块</li>
+</ul>
+<p>运行全节点配置要求：</p>
+<p>最低要求：</p>
+<ul>
+<li>双核以上CPU</li>
+<li>硬盘存储可用空间至少80GB</li>
+<li>如果是SSD，需要4GB以上RAM，如果是HDD，至少8GB RAM</li>
+<li>8MB/s下载带宽</li>
+</ul>
+<p>推荐配置：</p>
+<ul>
+<li>四核以上的快速CPU</li>
+<li>16GB以上RAM</li>
+<li>500GB以上可用空间的快速SSD</li>
+<li>25+MB/s下载带宽</li>
+</ul>
+<h4 id="远程客户端"><a href="#远程客户端" class="headerlink" title="远程客户端"></a>远程客户端</h4><p>不存储区块链的本地副本或验证块和交易。这些客户端一般只提供钱包的功能，可以创建和广播交易。远程客户端可用于连接到现有网络，MetaMask就是一个这样的客户端。</p>
+<h4 id="轻节点"><a href="#轻节点" class="headerlink" title="轻节点"></a>轻节点</h4><p>不保存链上的区块历史数据，只保存区块链当前的状态。轻节点可以对块和交易进行验证。</p>
+<h4 id="本地私链"><a href="#本地私链" class="headerlink" title="本地私链"></a>本地私链</h4><p>优点：</p>
+<ul>
+<li>磁盘上几乎没有数据，也不同步别的数据，是一个完全“干净”的环境。</li>
+<li>无需获取测试以太，你可以任意分配以太，也可以随时自己挖矿获得。</li>
+<li>没有其他用户，也没有其他合约，没有任何外部干扰。</li>
+</ul>
+<p>缺点：</p>
+<ul>
+<li>没有其他用户意味与公链的行为不同。发送的交易并不存在空间或交易顺序的竞争。</li>
+<li>除自己之外没有矿工意味着挖矿更容易预测，因此无法测试公链上发生的某些情况。</li>
+<li>没有其他合约，意味着你必须部署要测试的所有内容，包括所有的依赖项和合约库。</li>
+</ul>
+<h3 id="ETH客户端Geth-go-ethereum-Go-的使用"><a href="#ETH客户端Geth-go-ethereum-Go-的使用" class="headerlink" title="ETH客户端Geth(go-ethereum(Go))的使用"></a>ETH客户端Geth(go-ethereum(Go))的使用</h3><p>下载完毕后进入根目录：</p>
+<pre><code>geth --datadir G:\Ethereum</code></pre><p>使用<code>--datadir</code>参数指定数据存放目录，因为我使用的windows版本所以这里的路径是Windows的路径</p>
+<h3 id="JSON-RPC"><a href="#JSON-RPC" class="headerlink" title="JSON-RPC"></a>JSON-RPC</h3><p>以太坊客户端提供了API和一组远程调用（RPC）命令，这些命令被编码为JSON。这被称为JSON-RPCAPI。本质上，JSON-RPCAPI就是一个接口，允许我们编写的程序使用以太坊客户端作为网关，访问以太坊网络和链上数据。</p>
+<p>通常，RPC接口作为一个HTTP服务，端口设定为8545。出于安全原因，默认情况下，它仅限于接受来自localhost的连接。</p>
+<p>要访问JSON-RPCAPI，我们可以使用编程语言编写的专用库，例如JavaScript的 web3.js。</p>
+<p>或者也可以手动构建HTTP请求并发送/接收JSON编码的请求，如：</p>
+<pre><code>$curl -X POST -H &quot;Content-Type:application/json&quot; --data \ {&quot;jsonrpc&quot;:&quot;2.0&quot;&quot;method&quot;:&quot;web3_clientVersion&#39;&quot;,&quot;params&quot;:],&quot;id&quot;:1&quot;I http://localhost:8545</code></pre><h3 id="以太坊没有UTXO，但是又Account"><a href="#以太坊没有UTXO，但是又Account" class="headerlink" title="以太坊没有UTXO，但是又Account"></a>以太坊没有UTXO，但是又Account</h3><p>以太坊的“状态”，就是系统中所有帐户的列表</p>
+<p>每个账户都包括了一个余额（balance)，和以太坊特殊定义的数据（代码和内部存储）</p>
+<p>如果发送帐户有足够的余额来支付，则交易有效；在这种情况下发送帐户先扣款，而收款帐户将记入这笔收入</p>
+<p>如果接收帐户有相关代码，则代码会自动运行，并且它的内部存储也可能被更改，或者代码还可能向其他帐户发送额外的消息，这就会导致进一步的借贷资金关系</p>
+<h3 id="交易-Transaction"><a href="#交易-Transaction" class="headerlink" title="交易(Transaction)"></a>交易(Transaction)</h3><p>签名的数据包，由EOA发送到另一个账户：</p>
+<ol>
+<li>(To)消息的接收方地址</li>
+<li>v,r,s：发送方EOA的ECDSA签名的三个组成部分</li>
+<li>金额(Value)</li>
+<li>数据(Data)可选：可变长度二进制数据负载(payload)</li>
+<li>START GAS：交易发起人愿意支付的最大gas量</li>
+<li>GAS PRICE：交易发起人愿意支付的gas单价(单位：wei)</li>
+<li>nonce：发起人EOA发出的序列号，防止交易消息重播</li>
+</ol>
+<h3 id="消息-Message"><a href="#消息-Message" class="headerlink" title="消息(Message)"></a>消息(Message)</h3><ul>
+<li><p>合约可以向其它合约发送“消息”</p>
+</li>
+<li><p>消息是不会被序列化的虚拟对象，只存在于以太坊执行环境（EVM）中，而交易会被矿工打包到区块中，若消息不涉及到转账就不会被序列号并打包到区块中</p>
+</li>
+<li><p>可以看作函数调用</p>
+</li>
+<li><p>消息发送方</p>
+</li>
+<li><p>消息接收方</p>
+</li>
+<li><p>金额（VALUE)</p>
+</li>
+<li><p>数据（DATA，可选）</p>
+</li>
+<li><p>START GAS</p>
+</li>
+</ul>
+<h3 id="合约-Contract"><a href="#合约-Contract" class="headerlink" title="合约(Contract)"></a>合约(Contract)</h3><p>可以读/写自己的内部存储（32字节key-value的数据库）</p>
+<p>可向其他合约发送消息，依次触发执行</p>
+<p>一旦合约运行结束，并且由它发送的消息触发的所有子执行（sub-execution)结束，EVM就会中止运行，直到下次交易被唤醒</p>
+<h3 id="交易中的gas"><a href="#交易中的gas" class="headerlink" title="交易中的gas"></a>交易中的gas</h3><p>当由于交易或消息触发EVM运行时，每个指令都会在网络的每个节点上执行。这具有成本：对于每个执行的操作，都存在固定的成本，我们把这个成本用一定量的gas表示。</p>
+<p>gas是交易发起人需要为EVM上的每项操作支付的成本名称。发起交易时，我们需要从执行代码的矿工那里用以太币购买gas。</p>
+<p>gas与消耗的系统资源对应，这是具有自然成本的。因此在设计上gas和ether有意地解耦，消耗的gas数量代表了对资源的占用，而对应的交易费用则还跟gas对以太的单价有关。这两者是由自由市场调节的：gas的价格实际上是由矿工决定的，他们可以拒绝处理gas价格低于最低限额的交易。我们不需要专门购买gas，只需将以太币添加到帐户即可，客户端在发送交易时会自动用以太币购买gas。而以太币本身的价格通常由于市场力量而波动。</p>
+<h3 id="交易的接收者-To"><a href="#交易的接收者-To" class="headerlink" title="交易的接收者(To)"></a>交易的接收者(To)</h3><p>交易接收者在to字段中指定，是一个20字节的以太坊地址。地址可以是EOA或合约地址。</p>
+<p>以太坊没有进一步的验证，任何20字节的值都被认为是有效的。如果20字节值对应于没有相应私钥的地址，或不存在的合约，则该交易仍然有效。以太坊无法知道地址是否是从公钥正确派生的。</p>
+<p>如果将交易发送到无效地址，将销毁发送的以太，使其永远无法访问。</p>
+<p>验证接收人地址是否有效的工作，应该在用户界面一层完成。</p>
+<h2 id="交易的value和data"><a href="#交易的value和data" class="headerlink" title="交易的value和data"></a>交易的value和data</h2><p>交易的主要“有效负载”包含在两个字段中：value和data。交易可以同时有value和data，仅有value，仅有data，或者既没有value也没有data。所有四种组合都有效。</p>
+<ul>
+<li>仅有value的交易就是一笔以太的付款</li>
+<li>仅有data的交易一般是合约调用</li>
+<li>进行合约调用的同时，我们除了传输data，还可以发送以太，从而交易中同时包含data和value没有value也</li>
+<li>没有data的交易，只是在浪费gas，但它是有效的</li>
+</ul>
+<h2 id="向EOA或合约传递data"><a href="#向EOA或合约传递data" class="headerlink" title="向EOA或合约传递data"></a>向EOA或合约传递data</h2><p>当交易包含数据有效负载时，它很可能是发送到合约地址的，但它同样可以发送给EOA</p>
+<p>如果发送data给EOA，数据负载（data payload）的解释取决于钱包</p>
+<p>如果发送数据负载给合约地址，EVM会解释为函数调用，从payload里解码出函数名称和参数，调用该函数并传入参数</p>
+<p>发送给合约的数据有效负载是32字节的十六进制序列化编码：</p>
+<ul>
+<li>函数选择器：函数原型的Keccak256哈希的前4个字节。这允许EVM明确地识别将要调用的函数。</li>
+<li>函数参数：根据EVM定义的各种基本类型的规则进行编码。</li>
+</ul>
+<h2 id="以太坊虚拟机-EVM"><a href="#以太坊虚拟机-EVM" class="headerlink" title="以太坊虚拟机(EVM)"></a>以太坊虚拟机(EVM)</h2><ul>
+<li>以太坊虚拟机EVM是智能合约的运行环境</li>
+<li>作为区块验证协议的一部分，参与网络的每个节点都会运行EVM。他们会检查正在验证的块中列出的交易，并运行由EVM中的交易触发的代码</li>
+<li>EVM不仅是沙盒封装的，而且是完全隔离的，也就是说在EVM中运行的代码是无法访问网络、文件系统和其他进程的，甚至智能合约之间的访问也是受限的</li>
+<li>合约以字节码的格式（EVMbytecode)存在于区块链上</li>
+<li>合约通常以高级语言（solidity)编写，通过EVM编译器编译为字节码，最终通过客户端上载部署到区块链网络中</li>
+</ul>
+<h3 id="EVM和账户"><a href="#EVM和账户" class="headerlink" title="EVM和账户"></a>EVM和账户</h3><ul>
+<li>以太坊中有两类账户：外部账户和合约账户，它们共用EVM中同一个地址空间</li>
+<li>无论帐户是否存储代码，这两类账户对EVM来说处理方式是完全一样的</li>
+<li>每个账户在EVM中都有一个键值对形式的持久化存储。其中key和value的长度都是256位，称之为存储空间(storage)</li>
+</ul>
+<h3 id="EVM和交易"><a href="#EVM和交易" class="headerlink" title="EVM和交易"></a>EVM和交易</h3><ul>
+<li>交易可以看作是从一个帐户发送到另一个帐户的消息，它可以包含二进制数据（payload)和以太币</li>
+<li>如果目标账户含有代码，此代码会在EVM中执行，并以payload作为入参，这就是合约的调用</li>
+<li>如果目标账户是零账户（账户地址为0），此交易就将创建一个新合约，这个用来创建合约的交易的payload会被转换为EVM字节码并执行，执行的输出作为合约代码永久存储</li>
+</ul>
+<h3 id="EVM和gas"><a href="#EVM和gas" class="headerlink" title="EVM和gas"></a>EVM和gas</h3><ul>
+<li>合约被交易触发调用时，指令会在全网的每个节点上执行：这需要消耗算力成本；每一个指令的执行都有特定的消耗，gas就用来量化表示这个成本消耗</li>
+<li>一经创建，每笔交易都按照一定数量的gas预付一笔费用，目的是限制执行交易所需要的工作量和为交易支付手续费</li>
+<li>EVM执行交易时，gas将按特定规则逐渐耗尽</li>
+<li>gas price是交易发送者设置的一个值，作为发送者预付手续费的单价。如果交易执行后还有剩余，gas会原路返还</li>
+<li>无论执行到什么位置，一旦gas被耗尽（比如降为负值），将会触发一个out-of-gas异常。当前调用帧（call frame)所做的所有状态修改都将被回滚</li>
+</ul>
+<h3 id="EVM数据存储"><a href="#EVM数据存储" class="headerlink" title="EVM数据存储"></a>EVM数据存储</h3><p>Storage</p>
+<ul>
+<li>每个账户都有一块持久化的存储空间，称为storage，这是一个将256位字映射到256位字的key-value存储区，可以理解为合约的数据库</li>
+<li>永久储存在区块链中，由于会永久保存合约状态变量，所以读写的gas开销也最大<br>Memory(内存）</li>
+<li>每一次消息调用，合约会临时获取一块干净的内存空间·生命周期仅为整个方法执行期间，函数调用后回收，因为仅保存临时变量，故读写gas开销较小Stack(栈）</li>
+<li>EVM不是基于寄存器的，而是基于栈的，因此所有的计算都在一个被称为栈(stack)的区域执行</li>
+<li>存放部分局部值类型变量，几乎免费使用的内存，但有数量限制</li>
+</ul>
+<h3 id="EVM指令集"><a href="#EVM指令集" class="headerlink" title="EVM指令集"></a>EVM指令集</h3><ul>
+<li>所有的指令都是针对“256位的字（word)“这个基本的数据类型来进行操作</li>
+<li>具备常用的算术、位、逻辑和比较操作，也可以做到有条件和无条件跳转</li>
+<li>合约可以访问当前区块的相关属性，比如它的块高度和时间戳</li>
+</ul>
+<h3 id="消息调用-Message-Calls"><a href="#消息调用-Message-Calls" class="headerlink" title="消息调用(Message Calls)"></a>消息调用(Message Calls)</h3><ul>
+<li>合约地址到合约地址的value=0的调用被称为消息调用</li>
+<li>合约可以通过消息调用的方式来调用其它合约或者发送以太币到非合约账户</li>
+<li>合约可以决定在其内部的消息调用中，对于剩余的gas，应发送和保留多少</li>
+<li>如果在内部消息调用时发生了out-of-gas异常（或其他任何异常），这将由一个被压入栈顶的错误值所指明；此时只有与该内部消息调用一起发送的gas会被消耗掉</li>
+</ul>
+<h3 id="委托调用-Delegatecall"><a href="#委托调用-Delegatecall" class="headerlink" title="委托调用(Delegatecall)"></a>委托调用(Delegatecall)</h3><ul>
+<li>一种特殊类型的消息调用</li>
+<li>目标地址的代码将在发起调用的合约的上下文中执行，并且msg.sender和msg.value不变</li>
+<li>可以由此实现“库”（library)：可复用的代码库可以放在一个合约的存储上，通过委托调用引入相应代码</li>
+</ul>
+<h3 id="合约的创建和自毁"><a href="#合约的创建和自毁" class="headerlink" title="合约的创建和自毁"></a>合约的创建和自毁</h3><ul>
+<li>通过一个特殊的消息调用create calls，合约可以创建其他合约（不是简单的调用零地址）</li>
+<li>合约代码从区块链上移除的唯一方式是合约在合约地址上的执行自毁操作selfdestruct；合约账户上剩余的以太币会发送给指定的目标，然后其存储和代码从状态中被移除</li>
+</ul>
+ 
+      <!-- reward -->
+      
+      <div id="reword-out">
+        <div id="reward-btn">
+          Donate
+        </div>
+      </div>
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <div class="declare">
+      <ul class="post-copyright">
+        <li>
+          <i class="ri-copyright-line"></i>
+          <strong>Copyright： </strong>
+          Copyright is owned by the author. For commercial reprints, please contact the author for authorization. For non-commercial reprints, please indicate the source.
+        </li>
+      </ul>
+    </div>
+    
+    <footer class="article-footer">
+       
+<div class="share-btn">
+      <span class="share-sns share-outer">
+        <i class="ri-share-forward-line"></i>
+        分享
+      </span>
+      <div class="share-wrap">
+        <i class="arrow"></i>
+        <div class="share-icons">
+          
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="ri-weibo-fill"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="ri-wechat-fill"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="ri-qq-fill"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="ri-douban-line"></i>
+          </a>
+          <!-- <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a> -->
+          
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="ri-facebook-circle-fill"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="ri-twitter-fill"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="ri-google-fill"></i>
+          </a>
+        </div>
+      </div>
+</div>
+
+<div class="wx-share-modal">
+    <a class="modal-close" href="javascript:;"><i class="ri-close-circle-line"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data=http://yoursite.com/2019/07/25/Ethereum/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div id="share-mask"></div>  
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ETH/" rel="tag">ETH</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E8%B8%A9%E5%9D%91/" rel="tag">踩坑</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+  <nav class="article-nav">
+    
+      <a href="/2019/08/19/Algorithm-CheetSheet/" class="article-nav-link">
+        <strong class="article-nav-caption">上一篇</strong>
+        <div class="article-nav-title">
+          
+            Algorithm CheetSheet
+          
+        </div>
+      </a>
+    
+    
+      <a href="/2019/05/20/Daily-Knowledge-Point/" class="article-nav-link">
+        <strong class="article-nav-caption">下一篇</strong>
+        <div class="article-nav-title">Daily Knowledge Point</div>
+      </a>
+    
+  </nav>
+
+   
+ 
+   
+<div class="gitalk" id="gitalk-container"></div>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.6.2/dist/gitalk.css">
+<script src="https://cdn.jsdelivr.net/npm/gitalk@1.6.2/dist/gitalk.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/blueimp-md5@2.10.0/js/md5.min.js"></script>
+<script type="text/javascript">
+  var gitalk = new Gitalk({
+    clientID: 'db290dc011893521d885',
+    clientSecret: '4cbc64d2114f4963d8090a55b508568b2f26075b',
+    repo: 'blog-comments',
+    owner: 'Sicmatr1x',
+    admin: ['Sicmatr1x'],
+    // id: location.pathname,      // Ensure uniqueness and length less than 50
+    id: md5(location.pathname),
+    distractionFreeMode: false,  // Facebook-like distraction free mode
+    pagerDirection: 'last'
+  })
+
+  gitalk.render('gitalk-container')
+</script>
+  
+</article>
+
+</section>
+      <footer class="footer">
+  <div class="outer">
+    <ul>
+      <li>
+        Copyrights &copy;
+        2015-2020
+        <i class="ri-heart-fill heart_icon"></i> Sicmatr1x
+      </li>
+    </ul>
+    <ul>
+      <li>
+        
+        
+        
+        Powered by <a href="https://hexo.io" target="_blank">Hexo</a>
+        <span class="division">|</span>
+        Theme - <a href="https://github.com/Shen-Yu/hexo-theme-ayer" target="_blank">Ayer</a>
+        
+      </li>
+    </ul>
+    <ul>
+      <li>
+        
+        
+        <span>
+  <span><i class="ri-user-3-fill"></i>Visitors:<span id="busuanzi_value_site_uv"></span></s>
+  <span class="division">|</span>
+  <span><i class="ri-eye-fill"></i>Views:<span id="busuanzi_value_page_pv"></span></span>
+</span>
+        
+      </li>
+    </ul>
+    <ul>
+      
+    </ul>
+    <ul>
+      <li>
+        <!-- cnzz统计 -->
+        
+      </li>
+    </ul>
+  </div>
+</footer>
+      <div class="float_btns">
+        <div class="totop" id="totop">
+  <i class="ri-arrow-up-line"></i>
+</div>
+
+<div class="todark" id="todark">
+  <i class="ri-moon-line"></i>
+</div>
+
+      </div>
+    </main>
+    <aside class="sidebar on">
+      <button class="navbar-toggle"></button>
+<nav class="navbar">
+  
+  <div class="logo">
+    <a href="/"><img src="/images/ayer-side.svg" alt="Sicmatr1x"></a>
+  </div>
+  
+  <ul class="nav nav-main">
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/">主页</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/archives">归档</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/categories">分类</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/tags">标签</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/about">关于我</a>
+    </li>
+    
+  </ul>
+</nav>
+<nav class="navbar navbar-bottom">
+  <ul class="nav">
+    <li class="nav-item">
+      
+      <a class="nav-item-link nav-item-search"  title="Search">
+        <i class="ri-search-line"></i>
+      </a>
+      
+      
+      <a class="nav-item-link" target="_blank" href="/atom.xml" title="RSS Feed">
+        <i class="ri-rss-line"></i>
+      </a>
+      
+    </li>
+  </ul>
+</nav>
+<div class="search-form-wrap">
+  <div class="local-search local-search-plugin">
+  <input type="search" id="local-search-input" class="local-search-input" placeholder="Search...">
+  <div id="local-search-result" class="local-search-result"></div>
+</div>
+</div>
+    </aside>
+    <script>
+      if (window.matchMedia("(max-width: 768px)").matches) {
+        document.querySelector('.content').classList.remove('on');
+        document.querySelector('.sidebar').classList.remove('on');
+      }
+    </script>
+    <div id="mask"></div>
+
+<!-- #reward -->
+<div id="reward">
+  <span class="close"><i class="ri-close-line"></i></span>
+  <p class="reward-p"><i class="ri-cup-line"></i>请我喝杯咖啡吧~，ETH:0xDF06f28BcdD7DBb25c56f9560E184874d5FC0973</p>
+  <div class="reward-box">
+    
+    <div class="reward-item">
+      <img class="reward-img" src="/images/alipay.png">
+      <span class="reward-type">支付宝</span>
+    </div>
+    
+    
+    <div class="reward-item">
+      <img class="reward-img" src="/images/wechatpay.png">
+      <span class="reward-type">微信</span>
+    </div>
+    
+  </div>
+</div>
+    <script src="/js/jquery-2.0.3.min.js"></script>
+<script src="/js/lazyload.min.js"></script>
+<!-- Tocbot -->
+
+<script src="/js/tocbot.min.js"></script>
+<script>
+  tocbot.init({
+    tocSelector: '.tocbot',
+    contentSelector: '.article-entry',
+    headingSelector: 'h1, h2, h3, h4, h5, h6',
+    hasInnerContainers: true,
+    scrollSmooth: true,
+    scrollContainer: 'main',
+    positionFixedSelector: '.tocbot',
+    positionFixedClass: 'is-position-fixed',
+    fixedSidebarOffset: 'auto'
+  });
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/jquery-modal@0.9.2/jquery.modal.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/jquery-modal@0.9.2/jquery.modal.min.css">
+<script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/js/jquery.justifiedGallery.min.js"></script>
+<script src="/dist/main.js"></script>
+<!-- ImageViewer -->
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                <!--  Controls are self-explanatory. Order can be changed. -->
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" style="display:none" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css">
+<script src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"></script>
+
+<script>
+    function viewer_init() {
+        let pswpElement = document.querySelectorAll('.pswp')[0];
+        let $imgArr = document.querySelectorAll(('.article-entry img:not(.reward-img)'))
+
+        $imgArr.forEach(($em, i) => {
+            $em.onclick = () => {
+                // slider展开状态
+                // todo: 这样不好，后面改成状态
+                if (document.querySelector('.left-col.show')) return
+                let items = []
+                $imgArr.forEach(($em2, i2) => {
+                    let img = $em2.getAttribute('data-idx', i2)
+                    let src = $em2.getAttribute('data-target') || $em2.getAttribute('src')
+                    let title = $em2.getAttribute('alt')
+                    // 获得原图尺寸
+                    const image = new Image()
+                    image.src = src
+                    items.push({
+                        src: src,
+                        w: image.width || $em2.width,
+                        h: image.height || $em2.height,
+                        title: title
+                    })
+                })
+                var gallery = new PhotoSwipe(pswpElement, PhotoSwipeUI_Default, items, {
+                    index: parseInt(i)
+                });
+                gallery.init()
+            }
+        })
+    }
+    viewer_init()
+</script>
+
+<!-- MathJax -->
+
+<!-- Katex -->
+
+<!-- busuanzi  -->
+
+<script src="/js/busuanzi-2.3.pure.min.js"></script>
+
+<!-- ClickLove -->
+
+<!-- ClickBoom1 -->
+
+<!-- ClickBoom2 -->
+
+<!-- CodeCopy -->
+
+<link rel="stylesheet" href="/css/clipboard.css">
+<script src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js"></script>
+<script>
+  function wait(callback, seconds) {
+    var timelag = null;
+    timelag = window.setTimeout(callback, seconds);
+  }
+  !function (e, t, a) {
+    var initCopyCode = function(){
+      var copyHtml = '';
+      copyHtml += '<button class="btn-copy" data-clipboard-snippet="">';
+      copyHtml += '<i class="ri-file-copy-2-line"></i><span>COPY</span>';
+      copyHtml += '</button>';
+      $(".highlight .code pre").before(copyHtml);
+      $(".article pre code").before(copyHtml);
+      var clipboard = new ClipboardJS('.btn-copy', {
+        target: function(trigger) {
+          return trigger.nextElementSibling;
+        }
+      });
+      clipboard.on('success', function(e) {
+        let $btn = $(e.trigger);
+        $btn.addClass('copied');
+        let $icon = $($btn.find('i'));
+        $icon.removeClass('ri-file-copy-2-line');
+        $icon.addClass('ri-checkbox-circle-line');
+        let $span = $($btn.find('span'));
+        $span[0].innerText = 'COPIED';
+        
+        wait(function () { // 等待两秒钟后恢复
+          $icon.removeClass('ri-checkbox-circle-line');
+          $icon.addClass('ri-file-copy-2-line');
+          $span[0].innerText = 'COPY';
+        }, 2000);
+      });
+      clipboard.on('error', function(e) {
+        e.clearSelection();
+        let $btn = $(e.trigger);
+        $btn.addClass('copy-failed');
+        let $icon = $($btn.find('i'));
+        $icon.removeClass('ri-file-copy-2-line');
+        $icon.addClass('ri-time-line');
+        let $span = $($btn.find('span'));
+        $span[0].innerText = 'COPY FAILED';
+        
+        wait(function () { // 等待两秒钟后恢复
+          $icon.removeClass('ri-time-line');
+          $icon.addClass('ri-file-copy-2-line');
+          $span[0].innerText = 'COPY';
+        }, 2000);
+      });
+    }
+    initCopyCode();
+  }(window, document);
+</script>
+
+
+<!-- CanvasBackground -->
+
+
+    
+  </div>
+</body>
+
+</html>

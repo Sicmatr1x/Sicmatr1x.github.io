@@ -1,0 +1,678 @@
+<!DOCTYPE html>
+
+
+<html lang="en">
+
+
+<head>
+  <meta charset="utf-8" />
+    
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+  <title>
+    ETH Solidity智能合约入门 |  
+  </title>
+  <meta name="generator" content="hexo-theme-ayer">
+  
+  <link rel="shortcut icon" href="/favicon.ico" />
+  
+  <link rel="stylesheet" href="/dist/main.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Shen-Yu/cdn/css/remixicon.min.css">
+  <link rel="stylesheet" href="/css/custom.css">
+  
+  <script src="https://cdn.jsdelivr.net/npm/pace-js@1.0.2/pace.min.js"></script>
+  
+  
+
+  
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@latest/build/styles/vs2015.min.css"><!- highlight.js ->
+  <script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@latest/build/highlight.min.js"></script>
+  <script>
+    hljs.initHighlightingOnLoad();
+  </script>
+</head>
+
+</html>
+
+
+<body>
+  <div id="app">
+    
+      
+    <main class="content on">
+      <section class="outer">
+  <article
+  id="post-ETH-Solidity智能合约入门"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h1 class="article-title sea-center" style="border-left:0" itemprop="name">
+  ETH Solidity智能合约入门
+</h1>
+ 
+
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2020/09/05/ETH-Solidity%E6%99%BA%E8%83%BD%E5%90%88%E7%BA%A6%E5%85%A5%E9%97%A8/" class="article-date">
+  <time datetime="2020-09-05T02:45:38.000Z" itemprop="datePublished">2020-09-05</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Solidity/">Solidity</a>
+  </div>
+
+  
+<div class="word_count">
+    <span class="post-time">
+        <span class="post-meta-item-icon">
+            <i class="ri-quill-pen-line"></i>
+            <span class="post-meta-item-text"> Word count:</span>
+            <span class="post-count">1.3k</span>
+        </span>
+    </span>
+
+    <span class="post-time">
+        &nbsp; | &nbsp;
+        <span class="post-meta-item-icon">
+            <i class="ri-book-open-line"></i>
+            <span class="post-meta-item-text"> Reading time≈</span>
+            <span class="post-count">4 min</span>
+        </span>
+    </span>
+</div>
+ 
+    </div>
+      
+    <div class="tocbot"></div>
+
+
+
+
+  
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>Solidity 是一门面向合约的、为实现智能合约而创建的高级编程语言。这门语言受到了 C++，Python 和 Javascript 语言的影响，设计的目的是能在以太坊虚拟机（EVM）上运行。</p>
+<p>Solidity 是静态类型语言，支持继承、库和复杂的用户定义类型等特性。</p>
+<p>目前尝试 Solidity 编程的最好的方式是使用 <a href="https://remix.ethereum.org/" target="_blank" rel="noopener">Remix</a> （需要时间加载，请耐心等待）。Remix 是一个基于 Web 浏览器的 IDE，它可以让你编写 Solidity 智能合约，然后部署并运行该智能合约。</p>
+<p>Solidity Doc: <a href="https://solidity-cn.readthedocs.io/zh/develop/" target="_blank" rel="noopener">https://solidity-cn.readthedocs.io/zh/develop/</a></p>
+<h3 id="Solidity源码和智能合约"><a href="#Solidity源码和智能合约" class="headerlink" title="Solidity源码和智能合约"></a>Solidity源码和智能合约</h3><p>Solidity源代码要成为可以运行在以太坊上的智能合约需要经历如下的步骤：</p>
+<ol>
+<li>用Solidity编写的智能合约源代码需要先使用编译器编译为字节码（Bytecode)，编译过程中会同时产生智能合约的二进制接口规范（Application Binary Interface，简称为ABl）；</li>
+<li>通过交易（Transaction)的方式将字节码部署到以太坊网络，每次成功部署都会产生一个新的智能合约账户；</li>
+<li>使用Javascript编写的DApp通常通过web3.js+ABI去调用智能合约中的函数来实现数据的读取和修改。</li>
+</ol>
+<img src="./slidity编译流程.png">
+
+<h2 id="安装Solidity编译器"><a href="#安装Solidity编译器" class="headerlink" title="安装Solidity编译器"></a>安装Solidity编译器</h2><h3 id="Remix"><a href="#Remix" class="headerlink" title="Remix"></a>Remix</h3><p><a href="https://remix.ethereum.org/" target="_blank" rel="noopener">Remix</a> 可在线使用，而无需安装任何东西。如果你想离线使用，可按 <a href="https://github.com/ethereum/browser-solidity/tree/gh-pages" target="_blank" rel="noopener">https://github.com/ethereum/browser-solidity/tree/gh-pages</a> 的页面说明下载 zip 文件来使用。 该页面有进一步详细说明如何安装 Solidity 命令行编译器到你计算机上。如果你刚好要处理大型合约，或者需要更多的编译选项，那么你应该选择使用命令行编译器 solc。</p>
+<h3 id="solcjs"><a href="#solcjs" class="headerlink" title="solcjs"></a>solcjs</h3><p>solc是Solidity源码库的构建目标之一，它是Solidity的命令行编译器</p>
+<p>使用npm可以便捷地安装Solidity编译器solcjs</p>
+<pre><code>npm install -g solc</code></pre><h3 id="根据例子学习Solidity"><a href="#根据例子学习Solidity" class="headerlink" title="根据例子学习Solidity"></a>根据例子学习Solidity</h3><h4 id="创建水龙头合约"><a href="#创建水龙头合约" class="headerlink" title="创建水龙头合约"></a>创建水龙头合约</h4><p><strong>打开remix在线开发环境：</strong></p>
+<p>选择new file创建Fucet.sol文件</p>
+<img src="./20200905105632.png">
+
+<p>输入代码</p>
+<p><strong>编译合约：</strong></p>
+<p>选择solidity compiler tab，点击compile Faucet.sol按钮编译代码为字节码文件</p>
+<img src="./20200905105759.png">
+
+<p>编译完成后solidity compiler tab上面的旋转箭头会变成一个成功的绿色小勾</p>
+<p><strong>发布合约：</strong></p>
+<p>需要浏览器安装MetaMask插件并登录ETH钱包</p>
+<img src="./20200905110105.png">
+
+<p>这里选择Ropsten测试环境</p>
+<p>选择Deploy &amp; Run Transactions tab，Environment选择Injected Web3，当你选择成功之后metamask会自动提示是否授权网页访问metamask钱包，选择同意你的钱包地址就会出现在Account下面的选项卡里，如选图所示：</p>
+<img src="./20200905110222.png">
+
+<p>点击deploy，metamask会弹出是否支付一定的gas来创建合约，点确定，等一下，等待时间取决于你的网络状况</p>
+<p>如果deploy成功会这个tab里出现如上图所示的Deployed Contracts一栏且内容为部署成功之后的合约的地址</p>
+<p>本例中为：<code>0x3280EB0E28d1715C6fBfFb18952fB4D8A548B93d</code></p>
+<p>使用Etherscan查询deploy合约的transaction：<a href="https://ropsten.etherscan.io/tx/0x1b0a4f6223a539870cc216c98d70742fc550879648ae2235bbc77cf222f24ba7" target="_blank" rel="noopener">https://ropsten.etherscan.io/tx/0x1b0a4f6223a539870cc216c98d70742fc550879648ae2235bbc77cf222f24ba7</a></p>
+<img src="./20200905110829.png">
+
+<p>使用Etherscan查询deploy合约的地址：<a href="https://ropsten.etherscan.io/address/0x3280eb0e28d1715c6fbffb18952fb4d8a548b93d" target="_blank" rel="noopener">https://ropsten.etherscan.io/address/0x3280eb0e28d1715c6fbffb18952fb4d8a548b93d</a></p>
+<img src="./20200905110903.png">
+
+<p>这个案例合约的作用是任何人可以提供一个amount参数然后该合约会给你发对应的币，但是当前合约里面没有ETH。所以需要添加一个接受ETH币的函数。重新deploy不是在旧的合约上面修改而是部署一个新的合约，因为合约一旦部署到区块链上就无法修改了。</p>
+<p><code>pragma solidity ^0.4.17;</code>引入solidity的版本，<code>^</code>表示高于0.4.17但小于0.5这个大版本，<code>&gt;</code>表示大于当前版本</p>
+<pre><code class="solidity">pragma solidity ^0.4.17;
+
+contract Fucet {
+    function withdraw(uint amount) public {
+        require(amount &lt;= 100000000000000000);
+        msg.sender.transfer(amount); // wei
+    }
+
+
+    function () public payable {
+
+    }
+}</code></pre>
+<p>重新deploy，使用Etherscan查询deploy合约的地址：<a href="https://ropsten.etherscan.io/address/0x7124eA18277f9a7764848470733F1aD98aFF9154" target="_blank" rel="noopener">https://ropsten.etherscan.io/address/0x7124eA18277f9a7764848470733F1aD98aFF9154</a></p>
+<img src="./20200905150141.png">
+
+<p>使用metamask发送1个ETH到新的合约地址：<a href="https://ropsten.etherscan.io/tx/0xff2c7d0568ab8b994ef1e0feeb779b2be19367186ba2a0e23c1014915dd5fe38" target="_blank" rel="noopener">https://ropsten.etherscan.io/tx/0xff2c7d0568ab8b994ef1e0feeb779b2be19367186ba2a0e23c1014915dd5fe38</a></p>
+<img src="./20200905150231.png">
+
+<p>可以看到发送成功之后新的合约上的交易就从1个变成2个了，第一个transaction是合约创建的transaction，第二个是我们转了1个ETH到这个合约的transaction</p>
+<img src="./20200905150317.png">
+
+<p>好了终于可以测试水龙头的代码了：我们输入<code>100000000000000000</code>到amount参数框里，尝试从水龙头获取0.1个ETH</p>
+<img src="./20200905150523.png">
+
+<p>交易成功，看下transaction详情：</p>
+<img src="./20200905151148.png">
+
+<p>再看下水龙头合约的transaction记录：</p>
+<img src="./20200905150857.png">
+
+<p>注意：这里第三个transaction的value怎么是0，我们不是从合约得到了0.1个ETH吗，合约不是把ETH直接从一个账户转到另外一个账户而是走内部交易</p>
+<img src="./20200905151804.png">
+
+<p>那么我们的测试钱包是否也有一个对应的内部交易呢？是的</p>
+<img src="./20200905152006.png">
+
+<p>到这里就宣布水龙头合约大功告成啦！！！</p>
+<h4 id="简单数据存储合约"><a href="#简单数据存储合约" class="headerlink" title="简单数据存储合约"></a>简单数据存储合约</h4><pre><code class="sol">pragma solidity &gt;0.4.22;
+
+contract SimpleStorage {
+    uint myData;
+    function setData(uint newData) public {
+        myData = newData;
+    }
+    // view表明该function只读取数据不修改数据
+    function getData() public view returns(uint) {
+        return myData;
+    }
+}
+</code></pre>
+<ul>
+<li>Deploy success at: 0x3280eb0e28d1715c6fbffb18952fb4d8a548b93d</li>
+<li>Etherscan: <a href="https://rinkeby.etherscan.io/address/0x3280eb0e28d1715c6fbffb18952fb4d8a548b93d" target="_blank" rel="noopener">https://rinkeby.etherscan.io/address/0x3280eb0e28d1715c6fbffb18952fb4d8a548b93d</a></li>
+</ul>
+<p>与合约交互测试一下效果：</p>
+<img src="./20200916113754.png">
+
+<p>这里设置值需要消耗gas但是获取值getData不需要消耗gas</p>
+<img src="./202009161137.png">
+
+
+ 
+      <!-- reward -->
+      
+      <div id="reword-out">
+        <div id="reward-btn">
+          Donate
+        </div>
+      </div>
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <div class="declare">
+      <ul class="post-copyright">
+        <li>
+          <i class="ri-copyright-line"></i>
+          <strong>Copyright： </strong>
+          Copyright is owned by the author. For commercial reprints, please contact the author for authorization. For non-commercial reprints, please indicate the source.
+        </li>
+      </ul>
+    </div>
+    
+    <footer class="article-footer">
+       
+<div class="share-btn">
+      <span class="share-sns share-outer">
+        <i class="ri-share-forward-line"></i>
+        分享
+      </span>
+      <div class="share-wrap">
+        <i class="arrow"></i>
+        <div class="share-icons">
+          
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="ri-weibo-fill"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="ri-wechat-fill"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="ri-qq-fill"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="ri-douban-line"></i>
+          </a>
+          <!-- <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a> -->
+          
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="ri-facebook-circle-fill"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="ri-twitter-fill"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="ri-google-fill"></i>
+          </a>
+        </div>
+      </div>
+</div>
+
+<div class="wx-share-modal">
+    <a class="modal-close" href="javascript:;"><i class="ri-close-circle-line"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data=http://yoursite.com/2020/09/05/ETH-Solidity%E6%99%BA%E8%83%BD%E5%90%88%E7%BA%A6%E5%85%A5%E9%97%A8/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div id="share-mask"></div>  
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ETH/" rel="tag">ETH</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%8C%BA%E5%9D%97%E9%93%BE/" rel="tag">区块链</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E6%99%BA%E8%83%BD%E5%90%88%E7%BA%A6/" rel="tag">智能合约</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E8%B8%A9%E5%9D%91/" rel="tag">踩坑</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+  <nav class="article-nav">
+    
+      <a href="/2020/09/16/ETH-Solidity%E6%99%BA%E8%83%BD%E5%90%88%E7%BA%A6%E8%BF%9B%E9%98%B6/" class="article-nav-link">
+        <strong class="article-nav-caption">上一篇</strong>
+        <div class="article-nav-title">
+          
+            ETH Solidity智能合约进阶
+          
+        </div>
+      </a>
+    
+    
+      <a href="/2020/08/24/JVM-12-%E6%89%A7%E8%A1%8C%E5%BC%95%E6%93%8E/" class="article-nav-link">
+        <strong class="article-nav-caption">下一篇</strong>
+        <div class="article-nav-title">JVM-12_执行引擎</div>
+      </a>
+    
+  </nav>
+
+   
+ 
+   
+<div class="gitalk" id="gitalk-container"></div>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.6.2/dist/gitalk.css">
+<script src="https://cdn.jsdelivr.net/npm/gitalk@1.6.2/dist/gitalk.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/blueimp-md5@2.10.0/js/md5.min.js"></script>
+<script type="text/javascript">
+  var gitalk = new Gitalk({
+    clientID: 'db290dc011893521d885',
+    clientSecret: '4cbc64d2114f4963d8090a55b508568b2f26075b',
+    repo: 'blog-comments',
+    owner: 'Sicmatr1x',
+    admin: ['Sicmatr1x'],
+    // id: location.pathname,      // Ensure uniqueness and length less than 50
+    id: md5(location.pathname),
+    distractionFreeMode: false,  // Facebook-like distraction free mode
+    pagerDirection: 'last'
+  })
+
+  gitalk.render('gitalk-container')
+</script>
+  
+</article>
+
+</section>
+      <footer class="footer">
+  <div class="outer">
+    <ul>
+      <li>
+        Copyrights &copy;
+        2015-2020
+        <i class="ri-heart-fill heart_icon"></i> Sicmatr1x
+      </li>
+    </ul>
+    <ul>
+      <li>
+        
+        
+        
+        Powered by <a href="https://hexo.io" target="_blank">Hexo</a>
+        <span class="division">|</span>
+        Theme - <a href="https://github.com/Shen-Yu/hexo-theme-ayer" target="_blank">Ayer</a>
+        
+      </li>
+    </ul>
+    <ul>
+      <li>
+        
+        
+        <span>
+  <span><i class="ri-user-3-fill"></i>Visitors:<span id="busuanzi_value_site_uv"></span></s>
+  <span class="division">|</span>
+  <span><i class="ri-eye-fill"></i>Views:<span id="busuanzi_value_page_pv"></span></span>
+</span>
+        
+      </li>
+    </ul>
+    <ul>
+      
+    </ul>
+    <ul>
+      <li>
+        <!-- cnzz统计 -->
+        
+      </li>
+    </ul>
+  </div>
+</footer>
+      <div class="float_btns">
+        <div class="totop" id="totop">
+  <i class="ri-arrow-up-line"></i>
+</div>
+
+<div class="todark" id="todark">
+  <i class="ri-moon-line"></i>
+</div>
+
+      </div>
+    </main>
+    <aside class="sidebar on">
+      <button class="navbar-toggle"></button>
+<nav class="navbar">
+  
+  <div class="logo">
+    <a href="/"><img src="/images/ayer-side.svg" alt="Sicmatr1x"></a>
+  </div>
+  
+  <ul class="nav nav-main">
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/">主页</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/archives">归档</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/categories">分类</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/tags">标签</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/about">关于我</a>
+    </li>
+    
+  </ul>
+</nav>
+<nav class="navbar navbar-bottom">
+  <ul class="nav">
+    <li class="nav-item">
+      
+      <a class="nav-item-link nav-item-search"  title="Search">
+        <i class="ri-search-line"></i>
+      </a>
+      
+      
+      <a class="nav-item-link" target="_blank" href="/atom.xml" title="RSS Feed">
+        <i class="ri-rss-line"></i>
+      </a>
+      
+    </li>
+  </ul>
+</nav>
+<div class="search-form-wrap">
+  <div class="local-search local-search-plugin">
+  <input type="search" id="local-search-input" class="local-search-input" placeholder="Search...">
+  <div id="local-search-result" class="local-search-result"></div>
+</div>
+</div>
+    </aside>
+    <script>
+      if (window.matchMedia("(max-width: 768px)").matches) {
+        document.querySelector('.content').classList.remove('on');
+        document.querySelector('.sidebar').classList.remove('on');
+      }
+    </script>
+    <div id="mask"></div>
+
+<!-- #reward -->
+<div id="reward">
+  <span class="close"><i class="ri-close-line"></i></span>
+  <p class="reward-p"><i class="ri-cup-line"></i>请我喝杯咖啡吧~，ETH:0xDF06f28BcdD7DBb25c56f9560E184874d5FC0973</p>
+  <div class="reward-box">
+    
+    <div class="reward-item">
+      <img class="reward-img" src="/images/alipay.png">
+      <span class="reward-type">支付宝</span>
+    </div>
+    
+    
+    <div class="reward-item">
+      <img class="reward-img" src="/images/wechatpay.png">
+      <span class="reward-type">微信</span>
+    </div>
+    
+  </div>
+</div>
+    <script src="/js/jquery-2.0.3.min.js"></script>
+<script src="/js/lazyload.min.js"></script>
+<!-- Tocbot -->
+
+<script src="/js/tocbot.min.js"></script>
+<script>
+  tocbot.init({
+    tocSelector: '.tocbot',
+    contentSelector: '.article-entry',
+    headingSelector: 'h1, h2, h3, h4, h5, h6',
+    hasInnerContainers: true,
+    scrollSmooth: true,
+    scrollContainer: 'main',
+    positionFixedSelector: '.tocbot',
+    positionFixedClass: 'is-position-fixed',
+    fixedSidebarOffset: 'auto'
+  });
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/jquery-modal@0.9.2/jquery.modal.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/jquery-modal@0.9.2/jquery.modal.min.css">
+<script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/js/jquery.justifiedGallery.min.js"></script>
+<script src="/dist/main.js"></script>
+<!-- ImageViewer -->
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                <!--  Controls are self-explanatory. Order can be changed. -->
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" style="display:none" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css">
+<script src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"></script>
+
+<script>
+    function viewer_init() {
+        let pswpElement = document.querySelectorAll('.pswp')[0];
+        let $imgArr = document.querySelectorAll(('.article-entry img:not(.reward-img)'))
+
+        $imgArr.forEach(($em, i) => {
+            $em.onclick = () => {
+                // slider展开状态
+                // todo: 这样不好，后面改成状态
+                if (document.querySelector('.left-col.show')) return
+                let items = []
+                $imgArr.forEach(($em2, i2) => {
+                    let img = $em2.getAttribute('data-idx', i2)
+                    let src = $em2.getAttribute('data-target') || $em2.getAttribute('src')
+                    let title = $em2.getAttribute('alt')
+                    // 获得原图尺寸
+                    const image = new Image()
+                    image.src = src
+                    items.push({
+                        src: src,
+                        w: image.width || $em2.width,
+                        h: image.height || $em2.height,
+                        title: title
+                    })
+                })
+                var gallery = new PhotoSwipe(pswpElement, PhotoSwipeUI_Default, items, {
+                    index: parseInt(i)
+                });
+                gallery.init()
+            }
+        })
+    }
+    viewer_init()
+</script>
+
+<!-- MathJax -->
+
+<!-- Katex -->
+
+<!-- busuanzi  -->
+
+<script src="/js/busuanzi-2.3.pure.min.js"></script>
+
+<!-- ClickLove -->
+
+<!-- ClickBoom1 -->
+
+<!-- ClickBoom2 -->
+
+<!-- CodeCopy -->
+
+<link rel="stylesheet" href="/css/clipboard.css">
+<script src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js"></script>
+<script>
+  function wait(callback, seconds) {
+    var timelag = null;
+    timelag = window.setTimeout(callback, seconds);
+  }
+  !function (e, t, a) {
+    var initCopyCode = function(){
+      var copyHtml = '';
+      copyHtml += '<button class="btn-copy" data-clipboard-snippet="">';
+      copyHtml += '<i class="ri-file-copy-2-line"></i><span>COPY</span>';
+      copyHtml += '</button>';
+      $(".highlight .code pre").before(copyHtml);
+      $(".article pre code").before(copyHtml);
+      var clipboard = new ClipboardJS('.btn-copy', {
+        target: function(trigger) {
+          return trigger.nextElementSibling;
+        }
+      });
+      clipboard.on('success', function(e) {
+        let $btn = $(e.trigger);
+        $btn.addClass('copied');
+        let $icon = $($btn.find('i'));
+        $icon.removeClass('ri-file-copy-2-line');
+        $icon.addClass('ri-checkbox-circle-line');
+        let $span = $($btn.find('span'));
+        $span[0].innerText = 'COPIED';
+        
+        wait(function () { // 等待两秒钟后恢复
+          $icon.removeClass('ri-checkbox-circle-line');
+          $icon.addClass('ri-file-copy-2-line');
+          $span[0].innerText = 'COPY';
+        }, 2000);
+      });
+      clipboard.on('error', function(e) {
+        e.clearSelection();
+        let $btn = $(e.trigger);
+        $btn.addClass('copy-failed');
+        let $icon = $($btn.find('i'));
+        $icon.removeClass('ri-file-copy-2-line');
+        $icon.addClass('ri-time-line');
+        let $span = $($btn.find('span'));
+        $span[0].innerText = 'COPY FAILED';
+        
+        wait(function () { // 等待两秒钟后恢复
+          $icon.removeClass('ri-time-line');
+          $icon.addClass('ri-file-copy-2-line');
+          $span[0].innerText = 'COPY';
+        }, 2000);
+      });
+    }
+    initCopyCode();
+  }(window, document);
+</script>
+
+
+<!-- CanvasBackground -->
+
+
+    
+  </div>
+</body>
+
+</html>
