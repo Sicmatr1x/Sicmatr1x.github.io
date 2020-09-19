@@ -372,7 +372,7 @@ address payable(v0.5.0引入)
 `<address payable>.send(uint256 amount)returns(bool)`
 - 向指定地址发送数量为amount的 ether（以Wei为单位），失败时返回false，发 送2300gas的矿工费用，不可调节 
 
-`<address>.cal(bytes memory)returns(bool,bytes memory)`
+`<address>.call(bytes memory)returns(bool,bytes memory)`
 - 发出底层函数CALL，失败时返回false，发送所有可用gas，可调节
 
 `<address>.delegatecall(bytes memory)returns(bool,bytes memory)`
