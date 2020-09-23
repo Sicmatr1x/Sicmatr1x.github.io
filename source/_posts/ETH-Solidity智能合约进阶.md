@@ -381,6 +381,145 @@ address payable(v0.5.0引入)
 `<address>.staticcall(bytes memory)returns(bool,bytes memory)`
 - 发出底层函数STATICCALL，失败时返回false，发送所有可用gas，可调节
 
+### Solidity数据位置
 
+- 所有的复杂类型，即数组、结构和映射类型，都有一个额外属性，“数据位置”，用来说明数据是保存在内存memory中还是存储storage中
+- 根据上下文不同，大多数时候数据有默认的位置，但也可以通过在类型名后增加关键字storage或memory进行修改
+- 函数参数（包括返回的参数）的数据位置默认是memory，局部变量的数据位置默认是storage，状态变量的数据位置强制是storage
+- 另外还存在第三种数据位置，calldata，这是一块只读的，且不会永久存储的位置，用来存储函数参数。外部函数的参数（非返回参数）的数据位置被强制指定为calldata，效果跟memory差不多
+
+
+强制指定的数据位置
+- 外部函数的参数（不包括返回参数）：calldata；
+- 状态变量：storage
+
+默认数据位置
+- 函数参数（包括返回参数）：memory；
+- 引用类型的局部变量：storage
+- 值类型的局部变量：栈（stack)
+
+特别要求
+- 公开可见（publicly visible)的函数参数一定是memory类型，如果要求是storage类型则必须是private或者internal函数，这是为了防止随意的公开调用占用资源
+
+### 未初始化的storage类型指针会指向第一个状态变量
+
+```sol
+pragma solidity ^0.4.0;
+/**
+这个案例涉及到solidity的一个坑
+a, b, data和x都是storge的
+x是一个可变长度的数组的引用，默认指向该合约空间的头部
+合约空间大致如下：
+a-b-data
+^
+|
+x
+
+而一个可变数组的指针指向的空间默认存储该可变数组的长度，所以每调一次f()就会导致变量a++
+而又因为solidity的可变数组的内容是采用hash表的形式存储的，
+所以b的值大概率不变，真正push进去的值不知道存到哪里去了
+ */
+contract C {
+    uint public a;
+    uint public b;
+    uint[] public data;
+    function f() public {
+        uint[] x;
+        x.push(2);
+        data = x;
+    }
+}
+```
+
+接下来看一个更加真实的例子：
+
+```sol
+pragma solidity ^0.4.17;
+
+/**
+这里你即使猜52合约也不会返还你给的value*2的ETH，因为这个newGuess是sorage类型的指针
+未初始化导致其指向此合约第一个状态变量即luckyNumber，导致会把address类型的值赋给luckyNumber覆盖掉原本的值
+ */
+contract Honeypot {
+    uint luckyNumber = 52;
+    struct Guess {
+        address player;
+        uint number;
+    }
+    Guess[] public guessHistory;
+    address owner = msg.sender;
+    function guess(uint _num) public payable {
+        Guess newGuess;
+        newGuess.player = msg.sender;
+        newGuess.number = _num;
+        guessHistory.push(newGuess);
+        if (_num == luckyNumber) {
+            msg.sender.transfer(msg.value * 2);
+        }
+    }
+}
+```
+
+### solidity函数的可见性
+
+函数的可见性可以指定为external，public，internal 或者private；对于状态变量，不能设置为external，默认是internal。
+- external：外部函数作为合约接口的一部分，意味着我们可以从其他合约和交易中调用。一个外部函数f不能从内部调用（即f不起作用，但this.f()可以）。当收到大量数据的时候，外部函数有时候会更有效率。
+- puhlic：public函数是合约接口的一部分，可以在内部或通过消息调用。
+对于public状态变量，会自动生成一个getter函数。
+- internal：这些函数和状态变量只能是内部访问（即从当前合约内部或从它派生的合约访问），不使用this调用。
+- private：private函数和状态变量仅在当前定义它们的合约中使用，并且不能被派生合约使用。
+
+- pure：纯函数，不允许修改或访问状态
+- view：不允许修改状态
+- payable：允许从消息调用中接收以太币Ether。
+- constant：与view相同，一般只修饰状态变量，不允许赋值（除初始化以外）
+
+以下情况被认为是修改状态：
+- 修改状态变量。
+- 产生事件。
+- 创建其它合约。
+- 使用`selfdestruct`。
+- 通过调用发送以太币。
+- 调用任何没有标记为view或者pure的函数。
+- 使用低级调用。
+- 使用包含特定操作码的内联汇编。
+
+以下被认为是从状态中进行读取：
+- 读取状态变量。
+- 访问`this.balance`或者`<address>.balance`。
+- 访问block，tx，msg中任意成员（除msg.sig和msg.data之外）。
+- 调用任何未标记为pure的函数。
+- 使用包含某些操作码的内联汇编。
+
+### 函数修饰器(modifier)
+
+使用修饰器modifier可以轻松改变函数的行为。例如，它们可以在执行函数之前自动检查某个条件。修饰器modifier是合约的可继承属性，并可能被派生合约覆盖
+
+如果同一个函数有多个修饰器modifier，它们之间以空格隔开，修饰器modifier会依次检查执行。
+
+### 回退函数(fallback)
+
+- 回退函数（fallback function)是合约中的特殊函数；没有名字，不能有参数也不能有返回值
+- 如果在一个到合约的调用中，没有其他函数与给定的函数标识符匹配（或没有提供调用数据），那么这个函数（fallback函数）会被执行
+- 每当合约收到以太币（没有任何数据），回退函数就会执行。此外，为了接收以太币，fallback函数必须标记为payable。如果不存在这样的函数，则合约不能通过常规交易接收以太币
+- 在上下文中通常只有很少的gas可以用来完成回退函数的调用，所以使fallback函数的调用尽量廉价很重要
+
+### 事件(event)
+
+事件是以太坊EVM提供的一种日志基础设施。事件可以用来做操作记录，存储为日志。也可以用来实现一些交互功能，比如通知UI，返回函数调用结果等
+
+当定义的事件触发时，我们可以将事件存储到EVM的交易日志中，日志是区块链中的一种特殊数据结构；日志与合约关联，与合约的存储合并存入区块链中；只要某个区块可以访问，其相关的日志就可以访问；但在合约中，我们不能直接访问日志和事件数据
+
+可以通过日志实现简单支付验证SPV（Simplified PaymentVerification)如果一个外部实体提供了一个带有这种证明的合约，它可以检查日志是否真实存在于区块链中
+
+### solidity异常处理
+
+Solidity使用“状态恢复异常”来处理异常。这样的异常将撤消对当前调用（及其所有子调用）中的状态所做的所有更改，并且向调用者返回错误。
+
+函数assert和require可用于判断条件，并在不满足条件时抛出异常
+
+- `assert()`一般只应用于测试内部错误，并检查常量
+- `require()`应用于确保满足有效条件《如输入或合约状态变量），或验证调用外部合约的返回值
+- `revert()`用于抛出异常，它可以标记一个错误并将当前调用回退
 
 
