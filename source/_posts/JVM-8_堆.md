@@ -30,7 +30,9 @@ Java堆区在JVM启动的时候即被创建，其空间大小也就确定了。�
 
 <img src="image-20200706200739392.png">
 
-《Java虚拟机规范》中对Java堆的描述是：所有的对象实例以及数组都应当在运行时分配在堆上。（The heap is the run-time data area from which memory for all class instances and arrays is allocated）
+《Java虚拟机规范》中对Java堆的描述是：所有的对象实例以及数组都应当在运行时分配在堆上。
+
+> The heap is the run-time data area from which memory for all class instances and arrays is allocated
 
 我要说的是：“几乎”所有的对象实例都在这里分配内存。—从实际使用角度看的。
 
@@ -299,9 +301,9 @@ JVM在进行GC时，并非每次都对上面三个内存区域一起回收的，
 部分收集：不是完整收集整个Java堆的垃圾收集。其中又分为：
 
 - 新生代收集（MinorGC/YoungGC）：只是新生代的垃圾收集
-- 老年代收集（MajorGC/o1dGC）：只是老年代的圾收集。
+- 老年代收集（MajorGC/oldGC）：只是老年代的圾收集。
   - 目前，只有CMSGC会有单独收集老年代的行为。
-  - 注意，很多时候Major GC会和Fu11GC混淆使用，需要具体分辨是老年代回收还是整堆回收。
+  - 注意，很多时候Major GC会和Full GC混淆使用，需要具体分辨是老年代回收还是整堆回收。
 - 混合收集（MixedGC）：收集整个新生代以及部分老年代的垃圾收集。
   - 目前，只有G1 GC会有这种行为
 
@@ -331,9 +333,9 @@ Major GC的速度一般会比MinorGc慢1e倍以上，STW的时间更长，如果
 
 ### Full GC
 
-触发Fu11GC执行的情况有如下五种：
+触发FullGC执行的情况有如下五种：
 
-- 调用System.gc（）时，系统建议执行Fu11GC，但是不必然执行
+- 调用`System.gc()`时，系统建议执行FullGC，但是不必然执行
 - 老年代空间不足
 - 方法区空间不足
 - 通过Minor GC后进入老年代的平均大小大于老年代的可用内存
