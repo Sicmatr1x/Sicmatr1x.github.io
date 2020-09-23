@@ -522,4 +522,83 @@ Solidity使用“状态恢复异常”来处理异常。这样的异常将撤消
 - `require()`应用于确保满足有效条件《如输入或合约状态变量），或验证调用外部合约的返回值
 - `revert()`用于抛出异常，它可以标记一个错误并将当前调用回退
 
+## web3.js
+
+- Web3 JavaScript app API
+- web3.js是一个JavaScriptAPI库。要使DApp在以太坊上运行，我们可以使用web3.js库提供的web3对象
+- web3.js通过RPC调用与本地节点通信，它可以用于任何暴露了RPC层的以太坊节点
+- web3包含eth对象-web3.eth（专门与以太坊区块链交互）和shh对象-web3.shh（用于与Whisper交互）
+
+### web3模块加载
+
+首先需要将web3模块安装在项目中：
+
+```
+npm install web3@0.20.1 
+```
+
+然后创建一个web3实例，设置一个“provider”
+
+为了保证我们的MetaMask设置好的provider不被覆盖掉，在引入 web3之前我们一般要做当前环境检查（以v0.20.1为例）：
+
+```js
+if (typeof web3!==undefined) {
+    web3 = new Web3(web3.currentProvider); 
+} else { 
+    web3 = new Web3(new Web3.providers .HttpProvider("http://localhost:8545");
+}
+```
+
+### 异步回调(callback)
+
+web3jsAPI设计的最初目的，主要是为了和本地RPC节点共同使用，所以默认情况下发送的是同步HTTP请求
+
+如果要发送异步请求，可以在函数的最后一个参数位置上，传入一个回调函数。回调函数是可选（optioanl)的
+
+我们一般采用的回调风格是所谓的“错误优先”，例如：
+
+```js
+web3.eth.getBlock(48,function(error,result){ 
+    if (!error) {
+        console.log(JSON.stringify(result));
+    } else {
+        console.error(error);
+    }
+});
+```
+
+### 回调Prmise事件(v1.0.0)
+
+为了帮助web3集成到不同标准的所有类型项目中，1.0.0版本提供了多种方式来处理异步函数。大多数的web3对象允许将一个回调函数作为最后一个函数参数传入，同时会返回一个promise用于链式函数调用。
+
+以太坊作为一个区块链系统，一次请求具有不同的结束阶段。为了满足这样的要求，1.0.0版本将这类函数调用的返回值包成一个“承诺事件”（promiEwent)，这是一个promise和EventEmitter的结合体。
+
+PromiEvent的用法就像promise一样，另外还加入了.on，.once和.off方法
+
+
+```js
+web3.eth.sendTransaction({from:'Ox123...',data:'Ox432..'})
+.once('transactionHash', function(hash){...}) 
+.once('receipt', function(receipt){..})
+.on('confirmation', function(confNumber,receipt){...})
+.on('error', function(error){...})
+.then(function(receipt)({
+    //will be fired once the receipt is mined 
+});
+```
+
+### 应用二进制接口(ABI)
+
+web3.js通过以太坊智能合约的json接口（Application Binary Interface,ABl)创建一个JavaScript对象，用来在js 代码中描述 
+
+函数(functions) 
+- type:函数类型，默认`function`，也可能是`constructor`
+- constant, payable, stateMutability:函数的状态可变性 
+- inputs,outputs:函数输入、输出参数描述列表 
+
+事件(events) 
+- type：类型，总是`event`
+- inputs：输入对象列表，包括name、type、indexed
+
+
 
