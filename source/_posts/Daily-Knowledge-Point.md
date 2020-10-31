@@ -620,3 +620,36 @@ spring:
     url: jdbc:mysql://192.168.33.10:3306/gulimall_pms?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai
     driver-class-name: com.mysql.jdbc.Driver
 ```
+
+### 2020-09-20
+
+#### git彻底删除大文件(包括提交历史)
+
+**步骤一: 从你的资料库中清除文件**
+
+```bash
+$ git filter-branch --force --index-filter 'git rm --cached --ignore-unmatch path-to-your-remove-file' --prune-empty --tag-name-filter cat -- --all
+```
+
+如果你要删除的目标不是文件，而是文件夹，那么请在 `git rm --cached' 命令后面添加 -r 命令，表示递归的删除（子）文件夹和文件夹下的文件，类似于 `rm -rf` 命令。
+
+例如删除根目录下的2018文件夹里面的全部文件
+
+```bash
+git filter-branch --force --index-filter 'git rm -r --cached --ignore-unmatch 2018' --prune-empty --tag-name-filter cat -- --all
+```
+
+看到例如以下的提示表示成功了
+
+```
+Ref 'refs/heads/master' was rewritten
+Ref 'refs/remotes/origin/master' was rewritten
+```
+
+**步骤二: 推送我们修改后的repo**
+
+```
+$ git push origin master --force --all
+```
+
+这个过程其实是重新上传我们的repo, 比较耗时, 虽然跟删掉重新建一个repo有些类似, 但是好处是保留了原有的更新记录, 所以还是有些不同的. 如果你实在不在意这些更新记录, 也可以删掉重建, 两者也差不太多, 也许后者还更直观些.
