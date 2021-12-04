@@ -73,7 +73,7 @@
         <span class="post-meta-item-icon">
             <i class="ri-quill-pen-line"></i>
             <span class="post-meta-item-text"> Word count:</span>
-            <span class="post-count">4k</span>
+            <span class="post-count">4.3k</span>
         </span>
     </span>
 
@@ -82,7 +82,7 @@
         <span class="post-meta-item-icon">
             <i class="ri-book-open-line"></i>
             <span class="post-meta-item-text"> Reading time≈</span>
-            <span class="post-count">19 min</span>
+            <span class="post-count">21 min</span>
         </span>
     </span>
 </div>
@@ -504,6 +504,15 @@ gyp ERR! not ok</code></pre><p>A: 老版本的SASS调用到的<code>v8::String::
     password: root
     url: jdbc:mysql://192.168.33.10:3306/gulimall_pms?useUnicode=true&amp;characterEncoding=UTF-8&amp;serverTimezone=Asia/Shanghai
     driver-class-name: com.mysql.jdbc.Driver</code></pre>
+<h3 id="2020-09-20"><a href="#2020-09-20" class="headerlink" title="2020-09-20"></a>2020-09-20</h3><h4 id="git彻底删除大文件-包括提交历史"><a href="#git彻底删除大文件-包括提交历史" class="headerlink" title="git彻底删除大文件(包括提交历史)"></a>git彻底删除大文件(包括提交历史)</h4><p><strong>步骤一: 从你的资料库中清除文件</strong></p>
+<pre><code class="bash">$ git filter-branch --force --index-filter &#39;git rm --cached --ignore-unmatch path-to-your-remove-file&#39; --prune-empty --tag-name-filter cat -- --all</code></pre>
+<p>如果你要删除的目标不是文件，而是文件夹，那么请在 <code>git rm --cached&#39; 命令后面添加 -r 命令，表示递归的删除（子）文件夹和文件夹下的文件，类似于</code>rm -rf` 命令。</p>
+<p>例如删除根目录下的2018文件夹里面的全部文件</p>
+<pre><code class="bash">git filter-branch --force --index-filter &#39;git rm -r --cached --ignore-unmatch 2018&#39; --prune-empty --tag-name-filter cat -- --all</code></pre>
+<p>看到例如以下的提示表示成功了</p>
+<pre><code>Ref &#39;refs/heads/master&#39; was rewritten
+Ref &#39;refs/remotes/origin/master&#39; was rewritten</code></pre><p><strong>步骤二: 推送我们修改后的repo</strong></p>
+<pre><code>$ git push origin master --force --all</code></pre><p>这个过程其实是重新上传我们的repo, 比较耗时, 虽然跟删掉重新建一个repo有些类似, 但是好处是保留了原有的更新记录, 所以还是有些不同的. 如果你实在不在意这些更新记录, 也可以删掉重建, 两者也差不太多, 也许后者还更直观些.</p>
  
       <!-- reward -->
       
