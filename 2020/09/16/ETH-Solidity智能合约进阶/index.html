@@ -73,7 +73,7 @@
         <span class="post-meta-item-icon">
             <i class="ri-quill-pen-line"></i>
             <span class="post-meta-item-text"> Word count:</span>
-            <span class="post-count">2.3k</span>
+            <span class="post-count">4.7k</span>
         </span>
     </span>
 
@@ -82,7 +82,7 @@
         <span class="post-meta-item-icon">
             <i class="ri-book-open-line"></i>
             <span class="post-meta-item-text"> Reading time≈</span>
-            <span class="post-count">11 min</span>
+            <span class="post-count">20 min</span>
         </span>
     </span>
 </div>
@@ -434,6 +434,180 @@ contract Ballot {
 <ul>
 <li>发出底层函数STATICCALL，失败时返回false，发送所有可用gas，可调节</li>
 </ul>
+<h3 id="Solidity数据位置"><a href="#Solidity数据位置" class="headerlink" title="Solidity数据位置"></a>Solidity数据位置</h3><ul>
+<li>所有的复杂类型，即数组、结构和映射类型，都有一个额外属性，“数据位置”，用来说明数据是保存在内存memory中还是存储storage中</li>
+<li>根据上下文不同，大多数时候数据有默认的位置，但也可以通过在类型名后增加关键字storage或memory进行修改</li>
+<li>函数参数（包括返回的参数）的数据位置默认是memory，局部变量的数据位置默认是storage，状态变量的数据位置强制是storage</li>
+<li>另外还存在第三种数据位置，calldata，这是一块只读的，且不会永久存储的位置，用来存储函数参数。外部函数的参数（非返回参数）的数据位置被强制指定为calldata，效果跟memory差不多</li>
+</ul>
+<p>强制指定的数据位置</p>
+<ul>
+<li>外部函数的参数（不包括返回参数）：calldata；</li>
+<li>状态变量：storage</li>
+</ul>
+<p>默认数据位置</p>
+<ul>
+<li>函数参数（包括返回参数）：memory；</li>
+<li>引用类型的局部变量：storage</li>
+<li>值类型的局部变量：栈（stack)</li>
+</ul>
+<p>特别要求</p>
+<ul>
+<li>公开可见（publicly visible)的函数参数一定是memory类型，如果要求是storage类型则必须是private或者internal函数，这是为了防止随意的公开调用占用资源</li>
+</ul>
+<h3 id="未初始化的storage类型指针会指向第一个状态变量"><a href="#未初始化的storage类型指针会指向第一个状态变量" class="headerlink" title="未初始化的storage类型指针会指向第一个状态变量"></a>未初始化的storage类型指针会指向第一个状态变量</h3><pre><code class="sol">pragma solidity ^0.4.0;
+/**
+这个案例涉及到solidity的一个坑
+a, b, data和x都是storge的
+x是一个可变长度的数组的引用，默认指向该合约空间的头部
+合约空间大致如下：
+a-b-data
+^
+|
+x
+
+而一个可变数组的指针指向的空间默认存储该可变数组的长度，所以每调一次f()就会导致变量a++
+而又因为solidity的可变数组的内容是采用hash表的形式存储的，
+所以b的值大概率不变，真正push进去的值不知道存到哪里去了
+ */
+contract C {
+    uint public a;
+    uint public b;
+    uint[] public data;
+    function f() public {
+        uint[] x;
+        x.push(2);
+        data = x;
+    }
+}</code></pre>
+<p>接下来看一个更加真实的例子：</p>
+<pre><code class="sol">pragma solidity ^0.4.17;
+
+/**
+这里你即使猜52合约也不会返还你给的value*2的ETH，因为这个newGuess是sorage类型的指针
+未初始化导致其指向此合约第一个状态变量即luckyNumber，导致会把address类型的值赋给luckyNumber覆盖掉原本的值
+ */
+contract Honeypot {
+    uint luckyNumber = 52;
+    struct Guess {
+        address player;
+        uint number;
+    }
+    Guess[] public guessHistory;
+    address owner = msg.sender;
+    function guess(uint _num) public payable {
+        Guess newGuess;
+        newGuess.player = msg.sender;
+        newGuess.number = _num;
+        guessHistory.push(newGuess);
+        if (_num == luckyNumber) {
+            msg.sender.transfer(msg.value * 2);
+        }
+    }
+}</code></pre>
+<h3 id="solidity函数的可见性"><a href="#solidity函数的可见性" class="headerlink" title="solidity函数的可见性"></a>solidity函数的可见性</h3><p>函数的可见性可以指定为external，public，internal 或者private；对于状态变量，不能设置为external，默认是internal。</p>
+<ul>
+<li><p>external：外部函数作为合约接口的一部分，意味着我们可以从其他合约和交易中调用。一个外部函数f不能从内部调用（即f不起作用，但this.f()可以）。当收到大量数据的时候，外部函数有时候会更有效率。</p>
+</li>
+<li><p>puhlic：public函数是合约接口的一部分，可以在内部或通过消息调用。<br>对于public状态变量，会自动生成一个getter函数。</p>
+</li>
+<li><p>internal：这些函数和状态变量只能是内部访问（即从当前合约内部或从它派生的合约访问），不使用this调用。</p>
+</li>
+<li><p>private：private函数和状态变量仅在当前定义它们的合约中使用，并且不能被派生合约使用。</p>
+</li>
+<li><p>pure：纯函数，不允许修改或访问状态</p>
+</li>
+<li><p>view：不允许修改状态</p>
+</li>
+<li><p>payable：允许从消息调用中接收以太币Ether。</p>
+</li>
+<li><p>constant：与view相同，一般只修饰状态变量，不允许赋值（除初始化以外）</p>
+</li>
+</ul>
+<p>以下情况被认为是修改状态：</p>
+<ul>
+<li>修改状态变量。</li>
+<li>产生事件。</li>
+<li>创建其它合约。</li>
+<li>使用<code>selfdestruct</code>。</li>
+<li>通过调用发送以太币。</li>
+<li>调用任何没有标记为view或者pure的函数。</li>
+<li>使用低级调用。</li>
+<li>使用包含特定操作码的内联汇编。</li>
+</ul>
+<p>以下被认为是从状态中进行读取：</p>
+<ul>
+<li>读取状态变量。</li>
+<li>访问<code>this.balance</code>或者<code>&lt;address&gt;.balance</code>。</li>
+<li>访问block，tx，msg中任意成员（除msg.sig和msg.data之外）。</li>
+<li>调用任何未标记为pure的函数。</li>
+<li>使用包含某些操作码的内联汇编。</li>
+</ul>
+<h3 id="函数修饰器-modifier"><a href="#函数修饰器-modifier" class="headerlink" title="函数修饰器(modifier)"></a>函数修饰器(modifier)</h3><p>使用修饰器modifier可以轻松改变函数的行为。例如，它们可以在执行函数之前自动检查某个条件。修饰器modifier是合约的可继承属性，并可能被派生合约覆盖</p>
+<p>如果同一个函数有多个修饰器modifier，它们之间以空格隔开，修饰器modifier会依次检查执行。</p>
+<h3 id="回退函数-fallback"><a href="#回退函数-fallback" class="headerlink" title="回退函数(fallback)"></a>回退函数(fallback)</h3><ul>
+<li>回退函数（fallback function)是合约中的特殊函数；没有名字，不能有参数也不能有返回值</li>
+<li>如果在一个到合约的调用中，没有其他函数与给定的函数标识符匹配（或没有提供调用数据），那么这个函数（fallback函数）会被执行</li>
+<li>每当合约收到以太币（没有任何数据），回退函数就会执行。此外，为了接收以太币，fallback函数必须标记为payable。如果不存在这样的函数，则合约不能通过常规交易接收以太币</li>
+<li>在上下文中通常只有很少的gas可以用来完成回退函数的调用，所以使fallback函数的调用尽量廉价很重要</li>
+</ul>
+<h3 id="事件-event"><a href="#事件-event" class="headerlink" title="事件(event)"></a>事件(event)</h3><p>事件是以太坊EVM提供的一种日志基础设施。事件可以用来做操作记录，存储为日志。也可以用来实现一些交互功能，比如通知UI，返回函数调用结果等</p>
+<p>当定义的事件触发时，我们可以将事件存储到EVM的交易日志中，日志是区块链中的一种特殊数据结构；日志与合约关联，与合约的存储合并存入区块链中；只要某个区块可以访问，其相关的日志就可以访问；但在合约中，我们不能直接访问日志和事件数据</p>
+<p>可以通过日志实现简单支付验证SPV（Simplified PaymentVerification)如果一个外部实体提供了一个带有这种证明的合约，它可以检查日志是否真实存在于区块链中</p>
+<h3 id="solidity异常处理"><a href="#solidity异常处理" class="headerlink" title="solidity异常处理"></a>solidity异常处理</h3><p>Solidity使用“状态恢复异常”来处理异常。这样的异常将撤消对当前调用（及其所有子调用）中的状态所做的所有更改，并且向调用者返回错误。</p>
+<p>函数assert和require可用于判断条件，并在不满足条件时抛出异常</p>
+<ul>
+<li><code>assert()</code>一般只应用于测试内部错误，并检查常量</li>
+<li><code>require()</code>应用于确保满足有效条件《如输入或合约状态变量），或验证调用外部合约的返回值</li>
+<li><code>revert()</code>用于抛出异常，它可以标记一个错误并将当前调用回退</li>
+</ul>
+<h2 id="web3-js"><a href="#web3-js" class="headerlink" title="web3.js"></a>web3.js</h2><ul>
+<li>Web3 JavaScript app API</li>
+<li>web3.js是一个JavaScriptAPI库。要使DApp在以太坊上运行，我们可以使用web3.js库提供的web3对象</li>
+<li>web3.js通过RPC调用与本地节点通信，它可以用于任何暴露了RPC层的以太坊节点</li>
+<li>web3包含eth对象-web3.eth（专门与以太坊区块链交互）和shh对象-web3.shh（用于与Whisper交互）</li>
+</ul>
+<h3 id="web3模块加载"><a href="#web3模块加载" class="headerlink" title="web3模块加载"></a>web3模块加载</h3><p>首先需要将web3模块安装在项目中：</p>
+<pre><code>npm install web3@0.20.1 </code></pre><p>然后创建一个web3实例，设置一个“provider”</p>
+<p>为了保证我们的MetaMask设置好的provider不被覆盖掉，在引入 web3之前我们一般要做当前环境检查（以v0.20.1为例）：</p>
+<pre><code class="js">if (typeof web3!==undefined) {
+    web3 = new Web3(web3.currentProvider); 
+} else { 
+    web3 = new Web3(new Web3.providers .HttpProvider(&quot;http://localhost:8545&quot;);
+}</code></pre>
+<h3 id="异步回调-callback"><a href="#异步回调-callback" class="headerlink" title="异步回调(callback)"></a>异步回调(callback)</h3><p>web3jsAPI设计的最初目的，主要是为了和本地RPC节点共同使用，所以默认情况下发送的是同步HTTP请求</p>
+<p>如果要发送异步请求，可以在函数的最后一个参数位置上，传入一个回调函数。回调函数是可选（optioanl)的</p>
+<p>我们一般采用的回调风格是所谓的“错误优先”，例如：</p>
+<pre><code class="js">web3.eth.getBlock(48,function(error,result){ 
+    if (!error) {
+        console.log(JSON.stringify(result));
+    } else {
+        console.error(error);
+    }
+});</code></pre>
+<h3 id="回调Prmise事件-v1-0-0"><a href="#回调Prmise事件-v1-0-0" class="headerlink" title="回调Prmise事件(v1.0.0)"></a>回调Prmise事件(v1.0.0)</h3><p>为了帮助web3集成到不同标准的所有类型项目中，1.0.0版本提供了多种方式来处理异步函数。大多数的web3对象允许将一个回调函数作为最后一个函数参数传入，同时会返回一个promise用于链式函数调用。</p>
+<p>以太坊作为一个区块链系统，一次请求具有不同的结束阶段。为了满足这样的要求，1.0.0版本将这类函数调用的返回值包成一个“承诺事件”（promiEwent)，这是一个promise和EventEmitter的结合体。</p>
+<p>PromiEvent的用法就像promise一样，另外还加入了.on，.once和.off方法</p>
+<pre><code class="js">web3.eth.sendTransaction({from:&#39;Ox123...&#39;,data:&#39;Ox432..&#39;})
+.once(&#39;transactionHash&#39;, function(hash){...}) 
+.once(&#39;receipt&#39;, function(receipt){..})
+.on(&#39;confirmation&#39;, function(confNumber,receipt){...})
+.on(&#39;error&#39;, function(error){...})
+.then(function(receipt)({
+    //will be fired once the receipt is mined 
+});</code></pre>
+<h3 id="应用二进制接口-ABI"><a href="#应用二进制接口-ABI" class="headerlink" title="应用二进制接口(ABI)"></a>应用二进制接口(ABI)</h3><p>web3.js通过以太坊智能合约的json接口（Application Binary Interface,ABl)创建一个JavaScript对象，用来在js 代码中描述 </p>
+<p>函数(functions) </p>
+<ul>
+<li>type:函数类型，默认<code>function</code>，也可能是<code>constructor</code></li>
+<li>constant, payable, stateMutability:函数的状态可变性 </li>
+<li>inputs,outputs:函数输入、输出参数描述列表 </li>
+</ul>
+<p>事件(events) </p>
+<ul>
+<li>type：类型，总是<code>event</code></li>
+<li>inputs：输入对象列表，包括name、type、indexed</li>
+</ul>
  
       <!-- reward -->
       
@@ -563,7 +737,7 @@ contract Ballot {
     <ul>
       <li>
         Copyrights &copy;
-        2015-2020
+        2015-2022
         <i class="ri-heart-fill heart_icon"></i> Sicmatr1x
       </li>
     </ul>

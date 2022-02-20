@@ -112,7 +112,10 @@
 <p>下图就是使用：Java VisualVM(C:\Program Files\Java\jdk1.8.0_231\bin\jvisualvm.exe)查看堆空间的内容，通过 jdk bin提供的插件</p>
 <img src="image-20200706200739392.png">
 
-<p>《Java虚拟机规范》中对Java堆的描述是：所有的对象实例以及数组都应当在运行时分配在堆上。（The heap is the run-time data area from which memory for all class instances and arrays is allocated）</p>
+<p>《Java虚拟机规范》中对Java堆的描述是：所有的对象实例以及数组都应当在运行时分配在堆上。</p>
+<blockquote>
+<p>The heap is the run-time data area from which memory for all class instances and arrays is allocated</p>
+</blockquote>
 <p>我要说的是：“几乎”所有的对象实例都在这里分配内存。—从实际使用角度看的。</p>
 <ul>
 <li>因为还有一些对象是在栈上分配的</li>
@@ -325,9 +328,9 @@ public class HeapInstanceTest {
 <p>部分收集：不是完整收集整个Java堆的垃圾收集。其中又分为：</p>
 <ul>
 <li>新生代收集（MinorGC/YoungGC）：只是新生代的垃圾收集</li>
-<li>老年代收集（MajorGC/o1dGC）：只是老年代的圾收集。<ul>
+<li>老年代收集（MajorGC/oldGC）：只是老年代的圾收集。<ul>
 <li>目前，只有CMSGC会有单独收集老年代的行为。</li>
-<li>注意，很多时候Major GC会和Fu11GC混淆使用，需要具体分辨是老年代回收还是整堆回收。</li>
+<li>注意，很多时候Major GC会和Full GC混淆使用，需要具体分辨是老年代回收还是整堆回收。</li>
 </ul>
 </li>
 <li>混合收集（MixedGC）：收集整个新生代以及部分老年代的垃圾收集。<ul>
@@ -350,9 +353,9 @@ public class HeapInstanceTest {
 <li>也就是在老年代空间不足时，会先尝试触发MinorGc。如果之后空间还不足，则触发Major GC</li>
 </ul>
 <p>Major GC的速度一般会比MinorGc慢1e倍以上，STW的时间更长，如果Major GC后，内存还不足，就报OOM了</p>
-<h3 id="Full-GC"><a href="#Full-GC" class="headerlink" title="Full GC"></a>Full GC</h3><p>触发Fu11GC执行的情况有如下五种：</p>
+<h3 id="Full-GC"><a href="#Full-GC" class="headerlink" title="Full GC"></a>Full GC</h3><p>触发FullGC执行的情况有如下五种：</p>
 <ul>
-<li>调用System.gc（）时，系统建议执行Fu11GC，但是不必然执行</li>
+<li>调用<code>System.gc()</code>时，系统建议执行FullGC，但是不必然执行</li>
 <li>老年代空间不足</li>
 <li>方法区空间不足</li>
 <li>通过Minor GC后进入老年代的平均大小大于老年代的可用内存</li>
@@ -808,7 +811,7 @@ private static void alloc() {
     <ul>
       <li>
         Copyrights &copy;
-        2015-2020
+        2015-2022
         <i class="ri-heart-fill heart_icon"></i> Sicmatr1x
       </li>
     </ul>
