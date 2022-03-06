@@ -2,10 +2,9 @@
 title: 'EIP-20: ERC-20 Token Standard'
 date: 2020-09-16 23:18:30
 categories:
-    - ETH
+    - Crypto
 tags: 
-    - ETH
-    - 区块链
+    - Ethereum
     - 智能合约
 ---
 

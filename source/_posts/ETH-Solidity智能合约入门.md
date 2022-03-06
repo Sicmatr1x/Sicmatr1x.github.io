@@ -4,9 +4,7 @@ date: 2020-09-05 10:45:38
 categories:
     - Solidity
 tags: 
-    - 踩坑
-    - ETH
-    - 区块链
+    - Ethereum
     - 智能合约
 ---
 
