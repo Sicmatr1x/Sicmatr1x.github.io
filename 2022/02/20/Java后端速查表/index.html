@@ -73,7 +73,7 @@
         <span class="post-meta-item-icon">
             <i class="ri-quill-pen-line"></i>
             <span class="post-meta-item-text"> Word count:</span>
-            <span class="post-count">10.1k</span>
+            <span class="post-count">13.8k</span>
         </span>
     </span>
 
@@ -82,7 +82,7 @@
         <span class="post-meta-item-icon">
             <i class="ri-book-open-line"></i>
             <span class="post-meta-item-text"> Reading time≈</span>
-            <span class="post-count">35 min</span>
+            <span class="post-count">49 min</span>
         </span>
     </span>
 </div>
@@ -183,10 +183,58 @@
 </ol>
 </li>
 </ul>
+<h3 id="I-O"><a href="#I-O" class="headerlink" title="I/O"></a>I/O</h3><p>传统拷贝流程(下载文件为例):</p>
+<ul>
+<li>磁盘 -&gt; 内核缓冲区 -&gt; 用户缓冲区 -&gt; 网络堆栈相关的内核缓冲区 -&gt; 网卡</li>
+<li>DMA从磁盘读取文件到内核缓冲区 -&gt; CPU从内核缓冲区拷贝到用户缓冲区 -&gt; 应用程序调write系统调用把用户缓冲区的内容拷贝到网络堆栈相关的内核缓冲区 -&gt; socket把内核缓冲区的内容发送到网卡上</li>
+</ul>
+<p>零拷贝(下载文件为例):</p>
+<ul>
+<li>磁盘 -&gt; 内核缓冲区 -&gt; 网络堆栈相关的内核缓冲区 -&gt; 网卡</li>
+<li>磁盘上的数据会通过DMA被拷贝的内核缓冲区 -&gt; 操作系统把内核缓冲区与应用程序共享 -&gt; 应用程序调write系统调用将内核缓冲区的内容拷贝到socket缓冲区中 -&gt; socket把内核缓冲区的内容发送到网卡上</li>
+</ul>
+<p>BIO(Blocked I/O): 面向流(单向); 同步阻塞I/O</p>
+<ol>
+<li>服务端: 通过ServerSocket注册端口</li>
+<li>服务端: 调用<code>accept()</code>监听客户端Socket请求</li>
+<li>客户端: 调用<code>connect()</code>连接服务端</li>
+<li>服务端/客户端: 从Socket中获取字节输入流或输出流对数据进行读写操作</li>
+</ol>
+<p>NIO(Non-blocked I/O): 面向缓冲区(双向); 非阻塞I/O</p>
+<ul>
+<li>一个线程对应一个Selector选择器</li>
+<li>一个Selector对应多个Channel通道</li>
+<li>一个Channel对应一个Buffer(底层是一个数组)</li>
+<li>直接缓冲区与非直接缓冲区<ul>
+<li>直接缓冲区(非堆内存): 本地IO -&gt; 直接内存 -&gt; 本地IO</li>
+<li>非直接缓冲区(堆内存): 本地IO -&gt; 直接内存 -&gt; 非直接内存 -&gt; 直接内存 -&gt; 本地IO</li>
+</ul>
+</li>
+</ul>
+<p>Selector选择器</p>
+<ul>
+<li>可以通过Selector来实现一个I/O线程并发处理N个客户端连接和读写操作</li>
+<li>Selector接多个Channel并监听这些Channel上的事件，使用选择器的事件迭代器遍历获取选择器监听到的事件并判断事件类型分别处理，处理完后清除事件</li>
+</ul>
+<p>AIO(Async-Blocked I/O): 异步非阻塞I/O</p>
 <h3 id="多线程"><a href="#多线程" class="headerlink" title="多线程"></a>多线程</h3><p>多线程</p>
 <ul>
-<li>进程: 是程序的一次执行过程，是系统运行程序的基本单位。系统运行一个程序即是一个进程从创建，运行到消亡的过程。</li>
-<li>线程: 与进程相似，但线程是一个比进程更小的执行单位。一个进程在其执行的过程中可以产生多个线程。与进程不同的是多个线程可以共享同一块内存空间和一组系统资源(堆)，所以系统在产生一个线程，或是在各个线程之间作切换工作时，负担要比进程小得多。但是频繁的切换线程可能会消耗大量的CPU资源，因为需要频繁的保存和恢复线程运行上下文。</li>
+<li>进程(资源分配的基本单位): 是程序的一次执行过程，是系统运行程序的基本单位。系统运行一个程序即是一个进程从创建，运行到消亡的过程。</li>
+<li>线程(执行调度的基本单位): 与进程相似，但线程是一个比进程更小的执行单位。一个进程在其执行的过程中可以产生多个线程。与进程不同的是多个线程可以共享同一块内存空间和一组系统资源(堆)，所以系统在产生一个线程，或是在各个线程之间作切换工作时，负担要比进程小得多。但是频繁的切换线程可能会消耗大量的CPU资源，因为需要频繁的保存和恢复线程运行上下文。<ul>
+<li>特性<ol>
+<li>可见性</li>
+<li>有序性</li>
+<li>原子性</li>
+</ol>
+</li>
+</ul>
+</li>
+<li>纤程: </li>
+</ul>
+<p>线程撕裂者: 一个核里面可以跑多个线程</p>
+<ul>
+<li>一颗CPU可以有多个核，正常的CPU一个核可以同时跑一个线程</li>
+<li>线程撕裂者就是一个核里面有一个ALU(arithmetic and logic unit)服务2寄存器组，ALU可以在2个寄存器组之间快速切换，一个寄存器组存一个线程的工作数据，这样一个核看起来就是同时跑2个线程。例如4核8线程</li>
 </ul>
 <p>并行与并发</p>
 <ul>
@@ -266,6 +314,14 @@
 <li>实例数据: 存放类的属性数据信息，包括父类的属性信息，如果是数组的实例部分还包括数组的长度，这部分内存按4字节对齐</li>
 <li>对其填充</li>
 </ol>
+<p>ReentrantLock(可重入锁):</p>
+<ul>
+<li>指的是一个线程能够对一个临界资源重复加锁</li>
+</ul>
+<p>LongAdder</p>
+<ul>
+<li>采用分段CAS: 除了真正记录数值的base属性外，还有与base相同的数据类型的cell数组，如果存在多个线程同时对Lang做自增操作，则new一个cell元素放到cell数组里供新增的线程做操作(这里会根据线程数自动扩容或缩容cell数组)，使得同时对base做自增操作的线程数变少，自旋占用的CPU变少，最后再用sum求和操作对所有cell属性和base属性做求和操作并返回，这个求出来的和就是所有线程做的操作的总和</li>
+</ul>
 <p>线程的状态变化:</p>
 <ol>
 <li>New(创建状态): 在程序中用构造方法创建了一个线程对象后，新的线程对象便处于新建状态，此时它已经有了相应的内存空间和其他资源(程序计数器、本地方法栈、虚拟机栈)，但还处于不可运行状态。新建一个线程对象可采用<code>Thread</code> 类的构造方法来实现，例如 <code>Thread thread=new Thread()</code></li>
@@ -318,6 +374,11 @@ public static ExecutorService newCachedThreadPool() {
 <pre><code class="java">ExecutorService executor = new ThreadPoolExecutor(10, 10, // 10个线程，最大也支持10个
         60L, TimeUnit.SECONDS, // 超时时间60秒
         new ArrayBlockingQueue(10)); // 有界队列，容量为10，最多容纳10个task</code></pre>
+<p>Q: 线程池怎么设置核心线程数?</p>
+<ul>
+<li>如果是CPU密集型服务线程数量等于CPU核心数</li>
+<li>如果是I/O密集型服务: 线程数 = ((工作时间+休息时间)/工作时间) * CPU核心数 * CPU利用率</li>
+</ul>
 <p>workQueue(工作队列): </p>
 <ul>
 <li><code>ArrayBlockingQueue</code>: 基于数组结构的有界阻塞队列，按FIFO（先进先出）原则对任务进行排序。使用该队列，线程池中能创建的最大线程数为<code>maximumPoolSize</code>。 </li>
@@ -355,11 +416,12 @@ public static ExecutorService newCachedThreadPool() {
 </ol>
 <p>Q: 父线程子线程怎么共享数据?</p>
 <ul>
-<li>可以使用<code>InheritableThreadLocals</code>可继承线程变量这个类来实现，<code>ThreadLocals</code>是线程变量，相当于一个map，每个线程是map的key，value是<code>set()</code>进去的值，一个线程使用<code>get()</code>只能get到它自己set进去的值，所以不可用于获取父线程的数据。而<code>InheritableThreadLocals</code>会在子线程new出来的时候就把自己的value复制进去，所以子线程可以使用这个来共享获取父线程的数据</li>
+<li>可以使用<code>InheritableThreadLocals</code>可继承线程变量这个类来实现，<code>ThreadLocals</code>是线程变量，相当于一个map，每个线程是map的key，value是<code>set()</code>进去的值，一个线程使用<code>get()</code>只能get到它自己set进去的值，所以不可用于获取父线程的数据。而<code>InheritableThreadLocals</code>会在子线程new出来的时候就把自己的value复制进去，所以子线程可以使用这个来共享获取父线程的数 据</li>
 </ul>
 <p>AQS(AbstractQueuedSynchronized):</p>
 <ul>
 <li>抽象队列同步器AQS: 是一个同步框架，它提供通用机制来原子性管理同步状态、阻塞和唤醒线程，以及维护被阻塞线程的队列. AQS定义了一套多线程访问共享资源的同步器框架，许多同步类实现都依赖于它，如常用的ReentrantLock/Semaphore/CountDownLatch</li>
+<li>底层实现为: CAS + volatile</li>
 </ul>
 <p>CAS原理:</p>
 <ul>
@@ -378,21 +440,40 @@ public static ExecutorService newCachedThreadPool() {
 </ol>
 </li>
 </ul>
-<p>缓存一致性协议(MESI = modified + exclusive + shared + invalid)</p>
+<p><code>Atomic::cmpxchg</code></p>
+<pre><code class="c++">#define LOCK_IF_MP(mp) &quot;cmp $0, &quot; #mp &quot;; je 1f; lock; 1: &quot;// 判断mp是否为多核CPU是则返回LOCK指令
+
+inline jlong Atomic::cmpxchg (jlong exchange_value, volatile jlong* dest, jlong compare_value) {
+  bool mp = os::is_MP(); // 
+  __arm__ __volatile__ (LOCK_IF_MP(%4) &quot;cmpxchgq %1,(%3)&quot; // MP=mult prosser LOCK_IF_MP返回lock指令 汇编指令cmpxchgq执行原子的CAS
+                        : &quot;=a&quot; (exchange_value)
+                        : &quot;r&quot; (exchange_value), &quot;a&quot; (compare_value), &quot;r&quot; (dest), &quot;r&quot; (mp)
+                        : &quot;cc&quot;, &quot;memory&quot;);
+  return exchange_value;
+}</code></pre>
+<ul>
+<li>乐观锁底层实现: lock + cmpxchg 指令</li>
+<li>悲观锁底层实现: lock 指令</li>
+<li>volatile的底层实现也是用的: lock指令</li>
+</ul>
+<p>缓存一致性协议: 硬件级别的协议</p>
 <ul>
 <li>作用: 多核CPU有多个一级缓存，保证缓存内部数据的一致,不让系统数据混乱</li>
-<li>MESI中每个缓存行(Cache line:CPU中缓存存储数据的单元)都有四个状态<ol>
-<li>M(修改): 该Cache line有效，数据被修改了，和内存中的数据不一致，数据只存在于本Cache中</li>
-<li>E(互斥): 该Cache line有效，数据和内存中的数据一致，数据只存在于本Cache中</li>
-<li>S(共享): 该Cache line有效，数据和内存中的数据一致，数据存在于很多Cache中。当有一个CPU修改该缓存行对应的内存的内容时会使该缓存行变成 I 状态</li>
-<li>I(无效): 该Cache line无效</li>
+<li>Intel CPU对缓存一致性协议的实现(MESI = modified + exclusive + shared + invalid)</li>
+<li>MESI中每个缓存行(Cache line:CPU中缓存存储数据的单元，一般为64字节)都有四个状态(假设线程 A 和线程 B 同时对一个变量执行 i++)<ol>
+<li>核心 A 从内存中加载变量 i，并将缓存行设置为 E（独享），随后通过总线嗅探检查内存中对变量 i 的操作；</li>
+<li>核心 B 从内存中加载变量 i，总线嗅探机制会将核心 A 与核心 B 的缓存行设置为 S（共享）</li>
+<li>核心 A 对变量 i 进行修改，缓存行设置为 M（修改），而核心 B 被通知修改缓存行为 I（无 效）。如果存在高并发，则交给总线裁决</li>
+<li>核心 A 将修改后数据同步回内存，并将变量设置为 E（独享）</li>
+<li>核心 B 重新刷新缓存行，并将缓存行核心 A 和核心 B 的缓存行设置为 S（共享）</li>
 </ol>
 </li>
 <li>CPU 是通过总线和内存进行数据传输的。在多核心时代下，多个核心通过同一条总线和内存以及其他硬件进行通信</li>
 <li>通过在 inc 指令前添加 lock 前缀，即可让该指令具备原子性。多个核心同时执行同一条 inc 指令时，会以串行的方式进行</li>
+<li>伪共享问题: 伪共享是指多个线程同时读写同一个缓存行中的变量，而导致缓存行失效的问题。尽管多个线程分别访问的是不同的数据，但由于它们存在同一个缓存行中，只要任何一方修改都会使得缓存失效，降低了运算效率。解决方案: 字节填充，在变量前后填充多个字节使得 变量大小+填充的字节=64字节，这样这个变量肯定会独占一个缓存行。</li>
 </ul>
 <blockquote>
-<p><a href="https://blog.csdn.net/m18870420619/article/details/82431319" target="_blank" rel="noopener">CPU缓存一致性协议MESI</a></p>
+<p><a href="https://blog.csdn.net/m18870420619/article/details/82431319" target="_blank" rel="noopener">CPU缓存一致性协议MESI</a><br><a href="https://www.cnblogs.com/jokerjason/p/9584402.html" target="_blank" rel="noopener">缓存行与MESI</a></p>
 </blockquote>
 <p>用户态内核态</p>
 <ul>
@@ -407,6 +488,18 @@ public static ExecutorService newCachedThreadPool() {
 <li>外设中断: 当外设完成用户的请求时，会向CPU发送中断信号</li>
 </ol>
 </li>
+</ul>
+<h3 id="多线程框架"><a href="#多线程框架" class="headerlink" title="多线程框架"></a>多线程框架</h3><p>Disruptor 框架</p>
+<ul>
+<li>英国外汇交易公司LMAX开发的一个高性能队列。主要用于线程与线程之间的消息传递</li>
+<li>QPS: 600w</li>
+<li>为什么快:<ol>
+<li>CAS: ArrayBlockingQueue使用了重量级锁(lock锁)，而Disruptor采用CAS操作</li>
+<li>消除伪共享: 解决方案: 字节填充，在变量前后填充多个字节使得 变量大小+填充的字节=64字节，这样这个变量肯定会独占一个缓存行。</li>
+<li>RingBuffer: 环形数组，没有删除操作，超过容量会直接覆盖原有数据，避免了垃圾回收。大小必须为2的n次方，因为取余运算直接使用的是位运算，使得元素定位更快。</li>
+</ol>
+</li>
+<li></li>
 </ul>
 <h3 id="JVM"><a href="#JVM" class="headerlink" title="JVM"></a>JVM</h3><p>类加载子系统: 根据给定的全限定名类名(如java.lang.Object)来装载class文件的内容到方法区(Method Area)</p>
 <ol>
@@ -566,7 +659,106 @@ public static ExecutorService newCachedThreadPool() {
 <li>只用3层的B+ Tree就支持上千万行数据的查找</li>
 </ul>
 <p>MVCC</p>
-<h3 id="高并发"><a href="#高并发" class="headerlink" title="高并发"></a>高并发</h3><h4 id="常用高并发相关工具"><a href="#常用高并发相关工具" class="headerlink" title="常用高并发相关工具"></a>常用高并发相关工具</h4><p>Apache JMeter</p>
+<h3 id="RocketMQ"><a href="#RocketMQ" class="headerlink" title="RocketMQ"></a>RocketMQ</h3><p>组成:</p>
+<ol>
+<li>Name Server: 名称服务充当路由消息的提供者，可集群部署，节点之间无任何信息同步，提供命名服务，更新和发现 Broker 服务</li>
+<li>Producer(生产者): </li>
+<li>Broker: 消息中转角色，负责存储消息，转发消息。Broker 在实际部署过程中对应一台服务器，每个 Broker 可以存储多个Topic的消息，每个Topic的消息也可以分片存储于不同的 Broker</li>
+<li>Consumer(消费者): </li>
+</ol>
+<ul>
+<li>Topic: 表示消息的第一级类型，一条消息必须有一个Topic</li>
+<li>Queue: Queue是Topic在一个Broker上的分片，在分片基础上再等分为若干份（可指定份数）后的其中一份，是负载均衡过程中资源分配的基本单元</li>
+<li>tags: Tags是Topic下的次级消息类型/二级类型，可以在同一个Topic下基于Tags进行消息过滤。Tags的过滤需要经过两次比对，首先会在Broker端通过Tag hashcode进行一次比对过滤，匹配成功传到consumer端后再对具体Tags进行比对，以防止Tag hashcode重复的情况</li>
+<li>commitLog: 用于存储消息的文件。顺序写入，随机读写。消息只要被写入 commitlog 那么该消息就不会丢失。</li>
+<li>ConsumeQueue: ConsumeQueue中并不需要存储消息的内容，而存储的是消息在CommitLog中的offset。通过broker保存的offset可以在ConsumeQueue中获取消息，从而快速的定位到commitLog的消息位置</li>
+</ul>
+<p>集群: 推荐多主多从</p>
+<ul>
+<li><p>多个master节点多个slave节点，一个master节点配一个slave节点，slave是master节点的备份</p>
+</li>
+<li><p>slave节点不接受生产者的消息，生产者的消息发给master节点</p>
+</li>
+<li><p>消费者一般从master节点消费消息</p>
+</li>
+<li><p>若master节点宕机，则消费者从对应的slave节点消费消息，注意：这里slave即使master宕机也不会升级，依然是slave节点</p>
+</li>
+<li><p>同步复制: 生产者发送同步消息需主节点和从节点都写入文件或内存(异步刷盘是内存，一般选择异步刷盘)之后才会返回确认信息给生产者</p>
+</li>
+<li><p>异步刷盘(高性能): 注意这里因为消息同时存在于主节点和从节点所以这里可以采用异步刷盘，丢失的概率不大</p>
+</li>
+<li><p>Topic: 表示消息的第一级类型，一条消息必须有一个Topic</p>
+</li>
+<li><p>Queue: Queue是Topic在一个Broker上的分片，在分片基础上再等分为若干份（可指定份数）后的其中一份，是负载均衡过程中资源分配的基本单元</p>
+</li>
+<li><p>tags: Tags是Topic下的次级消息类型/二级类型，可以在同一个Topic下基于Tags进行消息过滤。Tags的过滤需要经过两次比对，首先会在Broker端通过Tag hashcode进行一次比对过滤，匹配成功传到consumer端后再对具体Tags进行比对，以防止Tag hashcode重复的情况</p>
+</li>
+<li><p>commitLog: 用于存储消息的文件。顺序写入，随机读写。消息只要被写入 commitLog 那么该消息就不会丢失。</p>
+</li>
+<li><p>ConsumeQueue: ConsumeQueue中并不需要存储消息的内容，而存储的是消息在CommitLog中的offset。通过broker保存的offset可以在ConsumeQueue中获取消息，从而快速的定位到commitLog的消息位置</p>
+</li>
+</ul>
+<p>消息类型</p>
+<ul>
+<li>同步消息: 消息发送方发出数据后，生产者会阻塞直到MQ服务方发回响应消息，表示已经写入数据到queue里了</li>
+<li>异步消息: MQ 的异步发送，需要用户实现异步发送回调接口(SendCallback)，在执行消息的异步发送时，应用不需要等待服务器响应即可直接返回，通过回调接口接收服务器响应</li>
+<li>单向(one-way)消息: 只负责发送消息，不等待服务器回应且没有回调函数触发，即只发送请求不等待应答。此方式发送消息的过程耗时非常短，一般在微秒级别</li>
+</ul>
+<p>消息丢失分析:</p>
+<ul>
+<li>生产者发送时丢失: 同步复制+重试</li>
+<li>RocketMQ自身丢失: 主从架构+持久化</li>
+<li>消费者消费消息丢失: 重试+死信队列</li>
+</ul>
+<p>消息重复消费问题:</p>
+<ul>
+<li>MVCC(Multi-Version Concurrency Control多版本并发控制): 生产者发送到queue的消息需要带上这个版本号，消费者在执行业务逻辑的同时带上版本号，sql的update语句的where带上version号保证语句的幂等性。<ul>
+<li>缺点: 这意味着生产者在发送消息之前就需要查表拿到最新的版本号，增加了生产者和消费者的耦合度</li>
+</ul>
+</li>
+<li>去重表方案: 每个消息带唯一id，然后消费者维护消息表，id设成唯一，消费消息的同时insert这张表，如果抛异常就把异常吃了直接返回，后续业务逻辑不继续进行了</li>
+</ul>
+<p>顺序消息消费问题:</p>
+<ol>
+<li>一个topic对应一个queue，这样需要顺序消费的消息就在同一条queue里</li>
+<li>重试参数改成0</li>
+</ol>
+<h3 id="Kafka"><a href="#Kafka" class="headerlink" title="Kafka"></a>Kafka</h3><ul>
+<li>Partition: topic中的数据分割为一个或多个partition。每个topic至少有一个partition。每个partition中的数据使用多个segment文件存储。</li>
+</ul>
+<p>消息传递模式</p>
+<ul>
+<li>点对点传递模式: 消息持久化到一个队列中，一个或多个消费者消费队列中的数据，一条消息只能被消费一次</li>
+<li>发布-订阅模式: 消息被持久化到一个topic中，消费者可以订阅一个或多个topic，消费者可以消费该topic中所有的数据，同一条数据可以被多个消费者消费，数据被消费后不会立马删除</li>
+</ul>
+<p>RocketMQ与Kafka的区别</p>
+<ol>
+<li>rocketMQ的NameServer和kafka的zookeeper对比<ul>
+<li>kafka具备选举功能: Master/Slave的选举，有2步<ol>
+<li>先通过ZK在所有机器中，选举出一个KafkaController</li>
+<li>再由这个Controller，决定每个partition的Master是谁，Slave是谁</li>
+</ol>
+</li>
+<li>因为有了选举功能，所以kafka某个partition的master挂了，该partition对应的某个slave会升级为主对外提供服务</li>
+<li>rocketMQ不具备选举，Master/Slave的角色也是固定的。当一个Master挂了之后，你可以写到其他Master上，但不能让一个Slave切换成Master</li>
+<li>rocketMq的所有broker节点的角色都是一样，上面分配的topic和对应的queue的数量也是一样的，Mq只能保证当一个broker挂了，把原本写到这个broker的请求迁移到其他broker上面</li>
+</ul>
+</li>
+<li>kafka为什么比RocketMQ有更大的吞吐量<ul>
+<li>kafka在消息存储过程中会根据topic和partition的数量创建物理文件，也就是说我们创建一个topic并指定了3个partition，那么就会有3个物理文件目录，也就说说partition的数量和对应的物理文件是一一对应的</li>
+<li>RocketMQ在消息存储方式是采用commitLog，RocketMQ的queue的数量其实是在consumeQueue里面体现的，在真正存储消息的commitLog其实就只有一个物理文件</li>
+<li>kafka的多文件并发写入 VS RocketMQ的单文件写入，性能差异kafka完胜可想而知</li>
+<li>kafka的大量文件存储会导致一个问题，也就说在partition特别多的时候，磁盘的访问会发生很大的瓶颈，毕竟单个文件看着是append操作，但是多个文件之间必然会导致磁盘的寻道</li>
+</ul>
+</li>
+</ol>
+<h3 id="高并发"><a href="#高并发" class="headerlink" title="高并发"></a>高并发</h3><p>一致性哈希算法</p>
+<ul>
+<li>假设你需要对文件进行缓存，你有缓存集群，对每个文件根据哈希对服务器数量取模，将每一张文件映射到一台缓存服务器上面。缺点: 如果你要增加一台服务器，那么需要对所有的文件都重新计算一遍，这样就会导致缓存雪崩，全部缓存到文件失效</li>
+<li>为解决这个问题可以采用一致性哈希算法: 将服务器映射到一个环上面，然后根据哈希值取模，将文件映射到环上某个位置，然后这个文件存储的服务器就是映射位置顺时针遇到的第一个服务器，这样如果增加一台服务器也只会使得环上的一部分文件缓存失效，避免了缓存雪崩</li>
+<li>缺点: 有时候可能会出现缓存不均匀的情况，即服务器映射到环上的位置是不均匀的，可以通过增加虚拟节点解决，文件顺时针遇到虚拟节点就放到虚拟节点对应的那个真实节点对应的服务器上</li>
+</ul>
+<h4 id="常用高并发相关工具"><a href="#常用高并发相关工具" class="headerlink" title="常用高并发相关工具"></a>常用高并发相关工具</h4><p>Apache JMeter</p>
  
       <!-- reward -->
       
@@ -647,6 +839,15 @@ public static ExecutorService newCachedThreadPool() {
 
    
   <nav class="article-nav">
+    
+      <a href="/2022/02/26/BIP39/" class="article-nav-link">
+        <strong class="article-nav-caption">上一篇</strong>
+        <div class="article-nav-title">
+          
+            BIP39助记词库
+          
+        </div>
+      </a>
     
     
       <a href="/2020/10/07/%E7%AE%97%E6%B3%95-%E9%80%92%E5%BD%92/" class="article-nav-link">
