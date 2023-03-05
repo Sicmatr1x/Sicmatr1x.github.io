@@ -1,10 +1,10 @@
 ---
 title: JVM-8_堆
-date: 2020-06-06 15:45:52
+date: 2022-06-06 15:45:52
 categories:
     - Java
 tags: 
-    - 后端
+    - Java
     - JVM
 ---
 

@@ -2,7 +2,7 @@
 title: Clean Code
 date: 2019-10-26 11:49:04
 categories:
-    - 后端
+    - Java
 tags: 
     - Java
 cover: /img/article-cover/building_blocks_hires.jpg

@@ -2,7 +2,7 @@
 title: (Tor) Set up an obfs4 bridge
 date: 2018-08-16 10:39:13
 categories:
-    - 工具
+    - ToolKit
 tags: 
     - Tor
 ---

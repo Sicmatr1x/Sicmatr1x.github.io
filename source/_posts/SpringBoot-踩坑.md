@@ -5,7 +5,7 @@ categories:
     - 后端
 tags: 
     - 踩坑
-    - Spring Boot
+    - SpringBoot
 ---
 
 ## 常用功能

@@ -4,7 +4,7 @@ date: 2020-03-23 15:37:04
 categories:
     - 后端
 tags: 
-    - Spring Boot
+    - SpringBoot
 ---
 
 ## 自动配置

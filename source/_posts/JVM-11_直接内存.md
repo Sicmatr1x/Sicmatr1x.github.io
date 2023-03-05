@@ -1,10 +1,10 @@
 ---
 title: JVM-11_直接内存
-date: 2020-07-16 09:56:07
+date: 2022-07-16 09:56:07
 categories:
     - Java
 tags: 
-    - 后端
+    - Java
     - JVM
 ---
 

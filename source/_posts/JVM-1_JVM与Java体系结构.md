@@ -1,11 +1,11 @@
 ---
 title: JVM-1_JVM与Java体系结构
-date: 2020-03-06 10:04:40
+date: 2022-03-06 10:04:40
 categories:
     - Java
 tags: 
-    - 后端
     - JVM
+    - Java
 ---
 
 ## 基于栈的指令集架构与基于寄存器的指令集架构

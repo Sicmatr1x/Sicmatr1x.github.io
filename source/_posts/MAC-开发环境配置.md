@@ -1,6 +1,6 @@
 ---
 title: MAC 开发环境配置
-date: 2020-03-07 12:39:04
+date: 2021-03-07 12:39:04
 categories:
     - 杂项
 tags: 

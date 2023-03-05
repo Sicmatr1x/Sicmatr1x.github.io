@@ -5,7 +5,7 @@ categories:
     - Crypto
 tags: 
     - Ethereum
-    - 智能合约
+    - SmartContract
 ---
 
 # EIP-20: ERC-20 Token Standard

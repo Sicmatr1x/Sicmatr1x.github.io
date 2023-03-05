@@ -2,9 +2,9 @@
 title: Algorithm CheetSheet
 date: 2019-08-19 19:33:07
 categories:
-    - 算法
-tags: 
     - LeetCode
+tags: 
+    - DataStructure
 ---
 
 # 数据结构

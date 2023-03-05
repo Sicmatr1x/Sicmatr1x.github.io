@@ -5,7 +5,7 @@ categories:
     - Solidity
 tags: 
     - Ethereum
-    - 智能合约
+    - SmartContract
 ---
 
 ### 根据例子学习Solidity

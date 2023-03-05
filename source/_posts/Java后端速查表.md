@@ -1,11 +1,11 @@
 ---
 title: Java后端速查表
-date: 2022-02-20 10:04:40
+date: 2023-01-20 10:04:40
 categories:
     - Java
 tags: 
-    - 后端
     - JVM
+    - Java
 ---
 
 # Java后端

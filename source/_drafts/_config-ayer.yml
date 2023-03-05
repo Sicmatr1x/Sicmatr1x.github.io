@@ -10,9 +10,9 @@ menu:
 # https://github.com/mattboldt/typed.js
 subtitle:
   enable: true # 是否开启动效
-  text: 理智是慢慢黑夜里的一个微小的火花，是疯狂的世界里的一个珍贵的例外。 # 显示的文字
+  text: ...... # 显示的文字
   text2: Reason is a tiny spark in the dark night, a precious exception in the crazy world. # 滚动播放，如果不需要可以留空
-  text3: 给岁月以文明而非给文明以岁月。 # 最多支持三段文字
+  text3:  ......# 最多支持三段文字
   startDelay: 0 # 延迟时间
   typeSpeed: 200 # 打字速度
   loop: true # 是否循环
