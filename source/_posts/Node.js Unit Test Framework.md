@@ -2,16 +2,10 @@
 title: Node.js Unit Test Framework
 date: 2019-10-28 17:13:04
 categories:
-    - 后端
+    - Back-end
 tags: 
     - Node.js
     - Unit test
-    - TDD
-    - mocha
-    - sinon.js
-    - chai.js
-    - supertest
-    - istanbul.js
 cover: /img/article-cover/nodejs.png
 ---
 

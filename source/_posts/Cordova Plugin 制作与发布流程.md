@@ -2,7 +2,7 @@
 title: Cordova Plugin 制作与发布流程
 date: 2018-12-21 17:47:04
 categories:
-    - Hybrid App
+    - App
 tags: 
     - Cordova
 mp3: http://domain.com/awesome.mp3

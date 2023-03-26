@@ -2,7 +2,7 @@
 title: SpringCloud Alibaba
 date: 2020-07-13 17:37:39
 categories:
-    - 后端
+    - Back-end
 tags: 
     - 踩坑
     - SpringCloud

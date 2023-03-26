@@ -4,7 +4,7 @@ date: 2022-07-25 10:25:07
 categories:
     - Java
 tags: 
-    - 后端
+    - Back-end
 ---
 
 Java NIO(New IO或Non Bloking IO)是从Java1.4版本开始引入的一个新的IO API，NIO支持面向缓冲区的、基于通道的IO操作，读写文件更加高效。

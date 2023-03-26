@@ -2,7 +2,7 @@
 title: Java复习笔记：多线程与并发第一章
 date: 2022-11-13 17:07:53
 categories:
-    - 后端
+    - Back-end
 tags: 
     - Java
 ---

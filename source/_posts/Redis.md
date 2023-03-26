@@ -2,7 +2,7 @@
 title: Redis
 date: 2019-12-06 17:02:36
 categories:
-    - 后端
+    - Back-end
 tags: 
     - Redis
     - 高并发

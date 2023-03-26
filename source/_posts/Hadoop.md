@@ -2,7 +2,7 @@
 title: Hadoop
 date: 2022-08-19 17:38:04
 categories:
-    - 大数据
+    - Big Data
 tags: 
     - Hadoop
     - MapReduce

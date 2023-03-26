@@ -2,7 +2,7 @@
 title: Hive
 date: 2022-08-17 20:09:47
 categories:
-    - 大数据
+    - Big Data
 tags: 
     - Hive
 ---

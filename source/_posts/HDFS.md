@@ -2,7 +2,7 @@
 title: HDFS
 date: 2022-08-13 17:19:43
 categories:
-    - 大数据
+    - Big Data
 tags: 
     - HDFS
 ---

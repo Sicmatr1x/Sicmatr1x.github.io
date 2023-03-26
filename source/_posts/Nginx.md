@@ -2,7 +2,7 @@
 title: Nginx
 date: 2020-04-10 09:43:00
 categories:
-    - 后端
+    - Back-end
 tags: 
     - 高并发
     - Nginx

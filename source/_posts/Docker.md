@@ -2,7 +2,7 @@
 title: Docker
 date: 2019-10-27 22:05:19
 categories:
-    - 运维
+    - Ops
 tags: 
     - Docker
 ---

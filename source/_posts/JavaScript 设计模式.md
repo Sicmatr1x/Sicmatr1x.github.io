@@ -2,7 +2,7 @@
 title: JavaScript 设计模式
 date: 2019-12-06 17:11:36
 categories:
-    - 设计模式
+    - Design Patterns
 tags: 
     - JavaScript
 cover: /img/article-cover/jigsaw_puzzle_hires.jpg

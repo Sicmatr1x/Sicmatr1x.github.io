@@ -2,7 +2,7 @@
 title: Java复习笔记：注解
 date: 2021-05-13 14:49:28
 categories:
-    - 设计模式
+    - Design Patterns
 tags: 
     - JavaScript
 cover: /img/article-cover/jigsaw_puzzle_hires.jpg
