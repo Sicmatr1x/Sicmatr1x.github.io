@@ -44,7 +44,10 @@ post_asset_folder: true
 relative_link: false
 future: true
 highlight:
-  hljs: true
+  enable: false
+  line_number: true
+  auto_detect: false
+  tab_replace:
 
 
 # Home page setting
@@ -82,8 +85,7 @@ pagination_dir: page
 # Extensions
 ## Plugins: https://hexo.io/plugins/
 ## Themes: https://github.com/Shen-Yu/hexo-theme-ayer
-## Themes: https://github.com/Yue-plus/hexo-theme-arknights
-theme: arknights
+theme: ayer
 
 # Deployment
 ## Docs: https://hexo.io/docs/deployment.html
