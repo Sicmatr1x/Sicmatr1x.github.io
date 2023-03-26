@@ -1,351 +1,53 @@
-<!DOCTYPE html>
-
-
-<html lang="en">
-
-
-<head>
-  <meta charset="utf-8" />
-    
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-  <title>
-    Clean Code |  
-  </title>
-  <meta name="generator" content="hexo-theme-ayer">
-  
-  <link rel="shortcut icon" href="/favicon.ico" />
-  
-  <link rel="stylesheet" href="/dist/main.css">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Shen-Yu/cdn/css/remixicon.min.css">
-  <link rel="stylesheet" href="/css/custom.css">
-  
-  <script src="https://cdn.jsdelivr.net/npm/pace-js@1.0.2/pace.min.js"></script>
-  
-  
-
-  
-
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@latest/build/styles/vs2015.min.css"><!- highlight.js ->
-  <script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@latest/build/highlight.min.js"></script>
-  <script>
-    hljs.initHighlightingOnLoad();
-  </script>
-</head>
-
-</html>
-
-
-<body>
-  <div id="app">
-    
-      
-    <main class="content on">
-      <section class="outer">
-  <article
-  id="post-Clean Code"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h1 class="article-title sea-center" style="border-left:0" itemprop="name">
-  Clean Code
-</h1>
- 
-
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2019/10/26/Clean%20Code/" class="article-date">
-  <time datetime="2019-10-26T03:49:04.000Z" itemprop="datePublished">2019-10-26</time>
-</a> 
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E5%90%8E%E7%AB%AF/">后端</a>
-  </div>
-
-  
-<div class="word_count">
-    <span class="post-time">
-        <span class="post-meta-item-icon">
-            <i class="ri-quill-pen-line"></i>
-            <span class="post-meta-item-text"> Word count:</span>
-            <span class="post-count">6k</span>
-        </span>
-    </span>
-
-    <span class="post-time">
-        &nbsp; | &nbsp;
-        <span class="post-meta-item-icon">
-            <i class="ri-book-open-line"></i>
-            <span class="post-meta-item-text"> Reading time≈</span>
-            <span class="post-count">22 min</span>
-        </span>
-    </span>
-</div>
- 
-    </div>
-      
-    <div class="tocbot"></div>
-
-
-
-
-  
-    <div class="article-entry" itemprop="articleBody">
-       
-  <h2 id="整洁代码"><a href="#整洁代码" class="headerlink" title="整洁代码"></a>整洁代码</h2><h3 id="单一权责原则-Single-Responsibility-SRP"><a href="#单一权责原则-Single-Responsibility-SRP" class="headerlink" title="单一权责原则(Single Responsibility ,SRP)"></a>单一权责原则(Single Responsibility ,SRP)</h3><p>一个类只负责一功能领域中的相应职，或者可以定义为：就一个类而言,应该只有一个引起它变化的原因.</p>
+<!DOCTYPE html><html lang="en" theme-mode="dark"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Clean Code | Sicmatr1x</title><script>var config = {"root":"/","search":{"preload":false,"activeHolder":"Enter here","blurHolder":"Search","noResult":"Data \"$0\" not found"},"code":{"codeInfo":"$0 - $1 lines","copy":"copy","copyFinish":"copied","expand":"expand"}}</script><script src="/js/gitalk.js"></script><script src="//unpkg.com/mermaid@9.2.2/dist/mermaid.min.js"></script><link rel="stylesheet" href="/css/arknights.css"><script>if (window.localStorage.getItem('theme-mode') === 'light') document.documentElement.setAttribute('theme-mode', 'light')
+if (window.localStorage.getItem('theme-mode') === 'dark') document.documentElement.setAttribute('theme-mode', 'dark')</script><style>@font-face {
+ font-family: BenderLight;
+ src: local('Bender'), url("/font/BenderLight.ttf");
+}
+@font-face {
+ font-family: 'JetBrains Mono';
+ src: local('JetBrains Mono'), url('/font/JetBrainsMono-Regular.woff2') format('woff2');
+}</style><meta name="generator" content="Hexo 6.3.0"><link rel="alternate" href="/atom.xml" title="Sicmatr1x" type="application/atom+xml">
+</head><body><div class="loading" style="opacity: 0"><div class="loadingBar left"></div><div class="loadingBar right"></div></div><main><header class="closed"><nav><div class="navBtn hide"><i class="navBtnIcon"><span class="navBtnIconBar"></span><span class="navBtnIconBar"></span><span class="navBtnIconBar"></span></i></div><div class="navItem" id="search-header"><span class="navItemTitle"><input autocomplete="off" autocorrect="off" autocapitalize="none" placeholder="Search" spellcheck="false" maxlength="50" type="text" id="search-input"></span></div><div class="navItem" id="search-holder"></div><div class="search-popup"><div id="search-result"></div></div><ol class="navContent"><li class="navItem"><a class="navBlock" href="/"><span class="navItemTitle">Home</span></a></li><li class="navItem" matchdata="categories,tags"><a class="navBlock" href="/archives/"><span class="navItemTitle">Archives</span></a></li></ol></nav></header><article><div id="post-bg"><div id="post-title"><h1>Clean Code</h1><div id="post-info"><span>First Post: <div class="control"><time datetime="2019-10-26T03:49:04.000Z" id="date"> 2019-10-26</time></div></span><br><span>Last Update: <div class="control"><time datetime="2023-03-05T10:38:34.927Z" id="updated"> 2023-03-05</time></div></span></div></div><hr><div id="post-content"><h2 id="整洁代码"><a href="#整洁代码" class="headerlink" title="整洁代码"></a>整洁代码</h2><h3 id="单一权责原则-Single-Responsibility-SRP"><a href="#单一权责原则-Single-Responsibility-SRP" class="headerlink" title="单一权责原则(Single Responsibility ,SRP)"></a>单一权责原则(Single Responsibility ,SRP)</h3><p>一个类只负责一功能领域中的相应职，或者可以定义为：就一个类而言,应该只有一个引起它变化的原因.</p>
 <p>修改前:</p>
-<pre><code class="java">public class CustomerDataChart{
-    public Connection getConnection(){
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">CustomerDataChart</span>&#123;<br>    <span class="hljs-keyword">public</span> Connection <span class="hljs-title function_">getConnection</span><span class="hljs-params">()</span>&#123;<br><br>    &#125;<br>    <span class="hljs-keyword">public</span> List&lt;Customers&gt; <span class="hljs-title function_">findCustomers</span><span class="hljs-params">()</span>&#123;<br><br>    &#125;<br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">createChart</span><span class="hljs-params">()</span>&#123;<br><br>    &#125;<br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">displayChart</span><span class="hljs-params">()</span>&#123;<br><br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
 
-    }
-    public List&lt;Customers&gt; findCustomers(){
-
-    }
-    public void createChart(){
-
-    }
-    public void displayChart(){
-
-    }
-}</code></pre>
 <p>修改后:</p>
-<pre><code class="java">public class DBUtil{
-    public Connection getConnection(){
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">DBUtil</span>&#123;<br>    <span class="hljs-keyword">public</span> Connection <span class="hljs-title function_">getConnection</span><span class="hljs-params">()</span>&#123;<br><br>    &#125;<br>&#125;<br><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">CustomerDAO</span>&#123;<br>    <span class="hljs-keyword">private</span> DBUtil util;<br>    <span class="hljs-keyword">public</span> List&lt;Customers&gt; <span class="hljs-title function_">findCustomers</span><span class="hljs-params">()</span>&#123;<br><br>    &#125;<br>&#125;<br><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">CustomerDataChart</span>&#123;<br>    <span class="hljs-keyword">private</span> CustomerDAO dao;<br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">createChart</span><span class="hljs-params">()</span>&#123;<br><br>    &#125;<br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">displayChart</span><span class="hljs-params">()</span>&#123;<br><br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
 
-    }
-}
-
-public class CustomerDAO{
-    private DBUtil util;
-    public List&lt;Customers&gt; findCustomers(){
-
-    }
-}
-
-public class CustomerDataChart{
-    private CustomerDAO dao;
-    public void createChart(){
-
-    }
-    public void displayChart(){
-
-    }
-}</code></pre>
 <hr>
 <h3 id="开放闭合原则-Open-Closed-Principle-OCP"><a href="#开放闭合原则-Open-Closed-Principle-OCP" class="headerlink" title="开放闭合原则(Open Closed Principle,OCP)"></a>开放闭合原则(Open Closed Principle,OCP)</h3><p>一个软件实体应当对扩展开放，对修改关闭。即软件实体应尽量在不修改原有代码<br>的情况下进行扩展。</p>
 <p>修改前:</p>
-<pre><code class="java">public class PieChart{
-    public void display(){
-        System.out.println(&quot;PieChart:&quot; + type);
-    }
-}
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">PieChart</span>&#123;<br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">display</span><span class="hljs-params">()</span>&#123;<br>        System.out.println(<span class="hljs-string">&quot;PieChart:&quot;</span> + type);<br>    &#125;<br>&#125;<br><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">BarChart</span>&#123;<br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">display</span><span class="hljs-params">()</span>&#123;<br>        System.out.println(<span class="hljs-string">&quot;BarChart:&quot;</span> + type);<br>    &#125;<br>&#125;<br><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">ChartDisplay</span> &#123;<br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">display</span><span class="hljs-params">(String type)</span>&#123;<br>        <span class="hljs-keyword">switch</span>(type)&#123;<br>            <span class="hljs-keyword">case</span> <span class="hljs-string">&quot;PieChart&quot;</span>:<br>                <span class="hljs-type">PieChart</span> <span class="hljs-variable">pie</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">PieChart</span>();<br>                pie.display();<br>                <span class="hljs-keyword">break</span>;<br>            <span class="hljs-keyword">case</span> <span class="hljs-string">&quot;BarChart&quot;</span>:<br>                <span class="hljs-type">BarChart</span> <span class="hljs-variable">bar</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">BarChart</span>();<br>                bar.display();<br>                <span class="hljs-keyword">break</span>;<br>        &#125;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
 
-public class BarChart{
-    public void display(){
-        System.out.println(&quot;BarChart:&quot; + type);
-    }
-}
-
-public class ChartDisplay {
-    public void display(String type){
-        switch(type){
-            case &quot;PieChart&quot;:
-                PieChart pie = new PieChart();
-                pie.display();
-                break;
-            case &quot;BarChart&quot;:
-                BarChart bar = new BarChart();
-                bar.display();
-                break;
-        }
-    }
-}</code></pre>
 <p>修改后:</p>
-<pre><code class="java">public abstract class AbstractChart{
-    public void display();
-}
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">abstract</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">AbstractChart</span>&#123;<br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">display</span><span class="hljs-params">()</span>;<br>&#125;<br><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">PieChart</span> <span class="hljs-keyword">extends</span> <span class="hljs-title class_">AbstractChart</span>&#123;<br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">display</span><span class="hljs-params">()</span>&#123;<br>        System.out.println(<span class="hljs-string">&quot;PieChart&quot;</span>);<br>    &#125;<br>&#125;<br><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">BarChart</span> <span class="hljs-keyword">extends</span> <span class="hljs-title class_">AbstractChart</span>&#123;<br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">display</span><span class="hljs-params">()</span>&#123;<br>        System.out.println(<span class="hljs-string">&quot;BarChart&quot;</span>);<br>    &#125;<br>&#125;<br><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">ChartDisplay</span>&#123;<br>    <span class="hljs-keyword">private</span> AbstractChart chart;<br>    <span class="hljs-keyword">public</span> <span class="hljs-title function_">setChart</span><span class="hljs-params">(AbstractChart chart)</span>&#123;<br>        <span class="hljs-built_in">this</span>.chart = chart;<br>    &#125;<br><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">display</span><span class="hljs-params">()</span>&#123;<br>        chart.display();<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
 
-public class PieChart extends AbstractChart{
-    @Override
-    public void display(){
-        System.out.println(&quot;PieChart&quot;);
-    }
-}
-
-public class BarChart extends AbstractChart{
-    @Override
-    public void display(){
-        System.out.println(&quot;BarChart&quot;);
-    }
-}
-
-public class ChartDisplay{
-    private AbstractChart chart;
-    public setChart(AbstractChart chart){
-        this.chart = chart;
-    }
-
-    public void display(){
-        chart.display();
-    }
-}</code></pre>
 <hr>
 <h3 id="LSP里氏代换原则-Liskov-Substitution-Principle"><a href="#LSP里氏代换原则-Liskov-Substitution-Principle" class="headerlink" title="LSP里氏代换原则(Liskov Substitution Principle)"></a>LSP里氏代换原则(Liskov Substitution Principle)</h3><p>所有引用基类（父类）的地方必须能透明地使用其子类的对象。</p>
 <p>修改前:</p>
-<pre><code class="java">public class CommonCustomer {
-    private String name;
-    private String email;
-    public getName(){
-        return this.name;
-    }
-    public setName(String name){
-        this.name = name;
-    }
-    public getEmail(){
-        return this.email;
-    }
-    public setEmail(String email){
-        this.email = email;
-    }
-}
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">CommonCustomer</span> &#123;<br>    <span class="hljs-keyword">private</span> String name;<br>    <span class="hljs-keyword">private</span> String email;<br>    <span class="hljs-keyword">public</span> <span class="hljs-title function_">getName</span><span class="hljs-params">()</span>&#123;<br>        <span class="hljs-keyword">return</span> <span class="hljs-built_in">this</span>.name;<br>    &#125;<br>    <span class="hljs-keyword">public</span> <span class="hljs-title function_">setName</span><span class="hljs-params">(String name)</span>&#123;<br>        <span class="hljs-built_in">this</span>.name = name;<br>    &#125;<br>    <span class="hljs-keyword">public</span> <span class="hljs-title function_">getEmail</span><span class="hljs-params">()</span>&#123;<br>        <span class="hljs-keyword">return</span> <span class="hljs-built_in">this</span>.email;<br>    &#125;<br>    <span class="hljs-keyword">public</span> <span class="hljs-title function_">setEmail</span><span class="hljs-params">(String email)</span>&#123;<br>        <span class="hljs-built_in">this</span>.email = email;<br>    &#125;<br>&#125;<br><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">VIPCustomer</span> &#123;<br>    <span class="hljs-keyword">private</span> String name;<br>    <span class="hljs-keyword">private</span> String email;<br>    <span class="hljs-keyword">public</span> <span class="hljs-title function_">getName</span><span class="hljs-params">()</span>&#123;<br>        <span class="hljs-keyword">return</span> <span class="hljs-built_in">this</span>.name;<br>    &#125;<br>    <span class="hljs-keyword">public</span> <span class="hljs-title function_">setName</span><span class="hljs-params">(String name)</span>&#123;<br>        <span class="hljs-built_in">this</span>.name = name;<br>    &#125;<br>    <span class="hljs-keyword">public</span> <span class="hljs-title function_">getEmail</span><span class="hljs-params">()</span>&#123;<br>        <span class="hljs-keyword">return</span> <span class="hljs-built_in">this</span>.email;<br>    &#125;<br>    <span class="hljs-keyword">public</span> <span class="hljs-title function_">setEmail</span><span class="hljs-params">(String email)</span>&#123;<br>        <span class="hljs-built_in">this</span>.email = email;<br>    &#125;<br>&#125;<br><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">EmailSender</span> &#123;<br>    <span class="hljs-keyword">public</span> <span class="hljs-title function_">send</span><span class="hljs-params">(CommonCustomer customer)</span>&#123;<br>        <span class="hljs-comment">//send</span><br>    &#125;<br>    <span class="hljs-keyword">public</span> <span class="hljs-title function_">send</span><span class="hljs-params">(VIPCustomer customer)</span>&#123;<br>        <span class="hljs-comment">//send</span><br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
 
-public class VIPCustomer {
-    private String name;
-    private String email;
-    public getName(){
-        return this.name;
-    }
-    public setName(String name){
-        this.name = name;
-    }
-    public getEmail(){
-        return this.email;
-    }
-    public setEmail(String email){
-        this.email = email;
-    }
-}
-
-public class EmailSender {
-    public send(CommonCustomer customer){
-        //send
-    }
-    public send(VIPCustomer customer){
-        //send
-    }
-}</code></pre>
 <p>修改后:</p>
-<pre><code class="java">public class Customer {
-    private String name;
-    private String email;
-    public getName(){
-        return this.name;
-    }
-    public setName(String name){
-        this.name = name;
-    }
-    public getEmail(){
-        return this.email;
-    }
-    public setEmail(String email){
-        this.email = email;
-    }
-}
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">Customer</span> &#123;<br>    <span class="hljs-keyword">private</span> String name;<br>    <span class="hljs-keyword">private</span> String email;<br>    <span class="hljs-keyword">public</span> <span class="hljs-title function_">getName</span><span class="hljs-params">()</span>&#123;<br>        <span class="hljs-keyword">return</span> <span class="hljs-built_in">this</span>.name;<br>    &#125;<br>    <span class="hljs-keyword">public</span> <span class="hljs-title function_">setName</span><span class="hljs-params">(String name)</span>&#123;<br>        <span class="hljs-built_in">this</span>.name = name;<br>    &#125;<br>    <span class="hljs-keyword">public</span> <span class="hljs-title function_">getEmail</span><span class="hljs-params">()</span>&#123;<br>        <span class="hljs-keyword">return</span> <span class="hljs-built_in">this</span>.email;<br>    &#125;<br>    <span class="hljs-keyword">public</span> <span class="hljs-title function_">setEmail</span><span class="hljs-params">(String email)</span>&#123;<br>        <span class="hljs-built_in">this</span>.email = email;<br>    &#125;<br>&#125;<br><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">CommonCustomer</span> <span class="hljs-keyword">extends</span> <span class="hljs-title class_">Customer</span>&#123;<br><br>&#125;<br><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">VIPCustomer</span> <span class="hljs-keyword">extends</span> <span class="hljs-title class_">Customer</span>&#123;<br><br>&#125;<br><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">EmailSender</span> &#123;<br>    <span class="hljs-keyword">public</span> <span class="hljs-title function_">send</span><span class="hljs-params">(Customer customer)</span>&#123;<br>        <span class="hljs-comment">//send</span><br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
 
-public class CommonCustomer extends Customer{
-
-}
-
-public class VIPCustomer extends Customer{
-
-}
-
-public class EmailSender {
-    public send(Customer customer){
-        //send
-    }
-}</code></pre>
 <hr>
 <h3 id="接口隔离原则-Interface-Segregation-Principle-ISP"><a href="#接口隔离原则-Interface-Segregation-Principle-ISP" class="headerlink" title="接口隔离原则(Interface Segregation Principle, ISP)"></a>接口隔离原则(Interface Segregation Principle, ISP)</h3><p>使用多个专门的接口，而不使用单一的总接口，即客户端不应该依赖那些它不需要<br>的接口。</p>
 <p>修改前:</p>
-<pre><code class="java">public interface CustomerDataDisplay {
-    public void dataRead();
-    public void transformToXML();
-    public void createChart();
-    public void displayChart();
-    public void createReport();
-    public void displayReport();
-}
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">interface</span> <span class="hljs-title class_">CustomerDataDisplay</span> &#123;<br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">dataRead</span><span class="hljs-params">()</span>;<br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">transformToXML</span><span class="hljs-params">()</span>;<br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">createChart</span><span class="hljs-params">()</span>;<br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">displayChart</span><span class="hljs-params">()</span>;<br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">createReport</span><span class="hljs-params">()</span>;<br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">displayReport</span><span class="hljs-params">()</span>;<br>&#125;<br><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">ConcreteClass</span> <span class="hljs-keyword">implements</span> <span class="hljs-title class_">CustomerDataDisplay</span>&#123;<br><br>&#125;<br></code></pre></td></tr></table></figure>
 
-public class ConcreteClass implements CustomerDataDisplay{
-
-}</code></pre>
 <p>修改后:</p>
-<pre><code class="java">public interface DataHandler {
-    public void dataRead();
-}
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">interface</span> <span class="hljs-title class_">DataHandler</span> &#123;<br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">dataRead</span><span class="hljs-params">()</span>;<br>&#125;<br><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">interface</span> <span class="hljs-title class_">XMLTransformer</span> &#123;<br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">transformToXML</span><span class="hljs-params">()</span>;<br>&#125;<br><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">interface</span> <span class="hljs-title class_">ChartHandler</span> &#123;<br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">createChart</span><span class="hljs-params">()</span>;<br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">displayChart</span><span class="hljs-params">()</span>;<br>&#125;<br><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">interface</span> <span class="hljs-title class_">ReportHandler</span> &#123;<br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">createReport</span><span class="hljs-params">()</span>;<br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">displayReport</span><span class="hljs-params">()</span>;<br>&#125;<br><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">ConcreteClass</span> <span class="hljs-keyword">implements</span> <span class="hljs-title class_">DataHandler</span>, ChartHandler&#123;<br><br>&#125;<br></code></pre></td></tr></table></figure>
 
-public interface XMLTransformer {
-    public void transformToXML();
-}
-
-public interface ChartHandler {
-    public void createChart();
-    public void displayChart();
-}
-
-public interface ReportHandler {
-    public void createReport();
-    public void displayReport();
-}
-
-public class ConcreteClass implements DataHandler, ChartHandler{
-
-}</code></pre>
 <hr>
 <h3 id="依赖倒置原则-Dependency-Inversion-Principle-DIP"><a href="#依赖倒置原则-Dependency-Inversion-Principle-DIP" class="headerlink" title="依赖倒置原则(Dependency Inversion Principle,DIP)"></a>依赖倒置原则(Dependency Inversion Principle,DIP)</h3><p>抽象不应该依赖于细节，细节应当依赖于抽象。换言之，要针对接口编程，而不是<br>针对实现编程。</p>
 <p>修改前:</p>
-<pre><code class="java">public interface TXTDataConvertor {
-    public void addCustomer();
-}
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">interface</span> <span class="hljs-title class_">TXTDataConvertor</span> &#123;<br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">addCustomer</span><span class="hljs-params">()</span>;<br>&#125;<br><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">interface</span> <span class="hljs-title class_">ExcelDataConvertor</span> &#123;<br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">addCustomer</span><span class="hljs-params">()</span>;<br>&#125;<br><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">CustomerDAO</span> <span class="hljs-keyword">implements</span> <span class="hljs-title class_">TXTDataConvertor</span>, ExcelDataConvertor&#123;<br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">addCustomer</span><span class="hljs-params">()</span>&#123;<br><br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
 
-public interface ExcelDataConvertor {
-    public void addCustomer();
-}
-
-public class CustomerDAO implements TXTDataConvertor, ExcelDataConvertor{
-    public void addCustomer(){
-
-    }
-}</code></pre>
 <p>修改后:</p>
-<pre><code class="java">public interface TXTDataConvertor {
-    public void readFile();
-}
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">interface</span> <span class="hljs-title class_">TXTDataConvertor</span> &#123;<br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">readFile</span><span class="hljs-params">()</span>;<br>&#125;<br><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">interface</span> <span class="hljs-title class_">ExcelDataConvertor</span> &#123;<br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">readFile</span><span class="hljs-params">()</span>;<br>&#125;<br><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">abstract</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">DataConvertor</span> <span class="hljs-keyword">implements</span> <span class="hljs-title class_">TXTDataConvertor</span>, ExcelDataConvertor&#123;<br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">readFile</span><span class="hljs-params">()</span>&#123;<br><br>    &#125;<br>&#125;<br><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">CustomerDAO</span> <span class="hljs-keyword">extends</span> <span class="hljs-title class_">DataConvertor</span>&#123;<br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">addCustomer</span><span class="hljs-params">()</span>&#123;<br><br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
 
-public interface ExcelDataConvertor {
-    public void readFile();
-}
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs xml">...<br><span class="hljs-tag">&lt;<span class="hljs-name">className</span>&gt;</span>TX TDataConvertor<span class="hljs-tag">&lt;/<span class="hljs-name">className</span>&gt;</span><br>...<br></code></pre></td></tr></table></figure>
 
-public abstract class DataConvertor implements TXTDataConvertor, ExcelDataConvertor{
-    public void readFile(){
-
-    }
-}
-
-public class CustomerDAO extends DataConvertor{
-    public void addCustomer(){
-
-    }
-}</code></pre>
-<pre><code class="xml">...
-&lt;className&gt;TX TDataConvertor&lt;/className&gt;
-...</code></pre>
 <hr>
 <h2 id="有意义的命名"><a href="#有意义的命名" class="headerlink" title="有意义的命名"></a>有意义的命名</h2><h3 id="名副其实"><a href="#名副其实" class="headerlink" title="名副其实"></a>名副其实</h3><p>如果名称需要注释来补充，那就不算是名副其实。</p>
 <h3 id="避免误导-amp-做有意义的区分"><a href="#避免误导-amp-做有意义的区分" class="headerlink" title="避免误导 &amp; 做有意义的区分"></a>避免误导 &amp; 做有意义的区分</h3><p>避免误导：避免留下掩藏代码本意的错误线索。应当避免使用与本意相悖的词。</p>
@@ -374,8 +76,7 @@ public class CustomerDAO extends DataConvertor{
 <li>避免思维映射:不应当让读者在脑中把你的名称翻译为他们熟知的名称。这种问题经常出现在选择是使用问题领域术语还是解决方案领域术语时。</li>
 <li>类名或对象名应该是名词或名词短语</li>
 <li>方法名应当是动词或者动词短语</li>
-<li>重构构造器，使用描述了参数的静态工厂方法名<pre><code class="java">  Complex fulcrumPoint = Complex.FromRealNumber(23.0); </code></pre>
-</li>
+<li>重构构造器，使用描述了参数的静态工厂方法名<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-type">Complex</span> <span class="hljs-variable">fulcrumPoint</span> <span class="hljs-operator">=</span> Complex.FromRealNumber(<span class="hljs-number">23.0</span>); <br></code></pre></td></tr></table></figure></li>
 <li>给每个抽象概念选一个词，并且一以贯之</li>
 <li>别用双关语</li>
 <li>使用解决方案领域名称</li>
@@ -394,54 +95,24 @@ public class CustomerDAO extends DataConvertor{
 <li>每个函数一个抽象层级:要让每个函数后面都跟着位于下一抽象层级的函数，这样一来，在查看函数列表时，就能偱抽象层级向下阅读了。我把这叫做向下规则。</li>
 <li>swith语句。</li>
 </ol>
-<pre><code class="java">public Money calculatePay(Empoyee e) throws InvalidEmployeeType{
-    switch (e.type) {
-        case COMMISSIONED:
-            return calculateCommissionedPay(e);
-        case HOURLY:
-            return calculateHourlyPay(e);
-        case SELARIED:
-            return calculateSalariedPay(e);
-        default:
-          throw new InvalidEmployeeType(e.type);
-    }
-}</code></pre>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> Money <span class="hljs-title function_">calculatePay</span><span class="hljs-params">(Empoyee e)</span> <span class="hljs-keyword">throws</span> InvalidEmployeeType&#123;<br>    <span class="hljs-keyword">switch</span> (e.type) &#123;<br>        <span class="hljs-keyword">case</span> COMMISSIONED:<br>            <span class="hljs-keyword">return</span> calculateCommissionedPay(e);<br>        <span class="hljs-keyword">case</span> HOURLY:<br>            <span class="hljs-keyword">return</span> calculateHourlyPay(e);<br>        <span class="hljs-keyword">case</span> SELARIED:<br>            <span class="hljs-keyword">return</span> calculateSalariedPay(e);<br>        <span class="hljs-keyword">default</span>:<br>          <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">InvalidEmployeeType</span>(e.type);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
 <pre><code>- 太长，当出现新的雇员类型时，还会变得更长。
 - 明显做了不止一件事。
 - 违反了单以权责原则，有好几个修改的理由。
 - 违反了开放闭合原则，每当添加新类型时，就必须修改之。
-- 可能会到处出现类似的结构函数</code></pre><p>可以改成:</p>
-<pre><code class="java">public abstract class Employee {
-    public abstract boolean isPayday();
-    public abstract Money calculatePay();
-    public abstract void deliverPay();
-}
+- 可能会到处出现类似的结构函数
+</code></pre>
+<p>可以改成:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">abstract</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">Employee</span> &#123;<br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">abstract</span> <span class="hljs-type">boolean</span> <span class="hljs-title function_">isPayday</span><span class="hljs-params">()</span>;<br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">abstract</span> Money <span class="hljs-title function_">calculatePay</span><span class="hljs-params">()</span>;<br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">abstract</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">deliverPay</span><span class="hljs-params">()</span>;<br>&#125;<br><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">interface</span> <span class="hljs-title class_">EmployeeFactory</span> &#123;<br>    <span class="hljs-keyword">public</span> Employee <span class="hljs-title function_">makeEmployee</span><span class="hljs-params">(EmployeeRecord r)</span> <span class="hljs-keyword">throws</span> InvalidEmployeeType;<br>&#125;<br><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">EmployeeFactoryImpl</span> <span class="hljs-keyword">implements</span> <span class="hljs-title class_">EmployeeFactory</span> &#123;<br>    <span class="hljs-keyword">public</span> Employee <span class="hljs-title function_">makeEmployee</span><span class="hljs-params">(EmployeeRecord r)</span> <span class="hljs-keyword">throws</span> InvalidEmployeeType&#123;<br>        <span class="hljs-keyword">switch</span> (e.type) &#123;<br>            <span class="hljs-keyword">case</span> COMMISSIONED:<br>              <span class="hljs-keyword">return</span> CommissionedEmployee(r);<br>            <span class="hljs-keyword">case</span> HOURLY:<br>              <span class="hljs-keyword">return</span> HourlyPayEmployee(r);<br>            <span class="hljs-keyword">case</span> SELARIED:<br>              <span class="hljs-keyword">return</span> SalariedPayEmployee(r);<br>            <span class="hljs-keyword">default</span>:<br>              <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">InvalidEmployeeType</span>(e.type);<br>        &#125;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
 
-public interface EmployeeFactory {
-    public Employee makeEmployee(EmployeeRecord r) throws InvalidEmployeeType;
-}
-
-public class EmployeeFactoryImpl implements EmployeeFactory {
-    public Employee makeEmployee(EmployeeRecord r) throws InvalidEmployeeType{
-        switch (e.type) {
-            case COMMISSIONED:
-              return CommissionedEmployee(r);
-            case HOURLY:
-              return HourlyPayEmployee(r);
-            case SELARIED:
-              return SalariedPayEmployee(r);
-            default:
-              throw new InvalidEmployeeType(e.type);
-        }
-    }
-}</code></pre>
 <p>将swith语句埋到抽象工厂下，该工厂使用 switch 语句为 Employee 的派生物创建适当的实体，而不同的函数，如 calculatePay、isPayday 和 deliverPay等，则藉由 Employee 接口多态地接受派遣。对于 switch 语句，我的规矩是如果只出现一次，用于创建多态对象，而且隐藏在某个继承关系中。</p>
 <ol start="5">
 <li>使用描述性的名称。</li>
-<li>函数参数个数 &lt;= 3。</li>
+<li>函数参数个数 &lt;&#x3D; 3。</li>
 <li>无副作用</li>
 <li>分割指令与询问。函数要么做什么事，要么回答什么事，但二者不可得兼。函数应该修改某对象的状态或是返回该对象的有关信息。两样都干常会导致混乱。</li>
-<li>使用异常替代返回错误码。从指令式函数返回错误码轻微违反了指令与询问分隔的规则。它鼓励了在if 语句判断中把指令当作表达式使用。这不会引起动词/形容词混淆，但却导致更深层次的嵌套结构。当返回误码时，就是在要求调用者立刻处理错误。另一方面，如果使用异常替代返回错误码，错误处理代码就能从主路径代码中分离出来。</li>
+<li>使用异常替代返回错误码。从指令式函数返回错误码轻微违反了指令与询问分隔的规则。它鼓励了在if 语句判断中把指令当作表达式使用。这不会引起动词&#x2F;形容词混淆，但却导致更深层次的嵌套结构。当返回误码时，就是在要求调用者立刻处理错误。另一方面，如果使用异常替代返回错误码，错误处理代码就能从主路径代码中分离出来。</li>
 <li>别重复自己。</li>
 <li>结构化编程。每个函数、函数中的每个代码块都应该有一个入口、一个出口。每个函数中之该有一个return语句。</li>
 </ol>
@@ -508,7 +179,7 @@ public class EmployeeFactoryImpl implements EmployeeFactory {
 <li>先写Try-Catch-Finally语句</li>
 </ol>
 <h3 id="异常的使用"><a href="#异常的使用" class="headerlink" title="异常的使用"></a>异常的使用</h3><ul>
-<li>使用不可控异常：可控异常的代价就是违反开放/闭合原则。//TODO:?</li>
+<li>使用不可控异常：可控异常的代价就是违反开放&#x2F;闭合原则。&#x2F;&#x2F;TODO:?</li>
 <li>给出异常发生的环境说明,都应当提供足够的环境说明，以便判断错误的来源和处所。</li>
 <li>定义常规流程：采用特例模式。创建一个类或配置一个对象，用来处理特例.</li>
 <li>别返回null值：在方法中返回null值，不如抛出异常，或是返回特例对象</li>
@@ -626,656 +297,282 @@ public class EmployeeFactoryImpl implements EmployeeFactory {
 <li>死函数:永不被调用函数应该删除掉</li>
 </ol>
 <h3 id="一般性问题"><a href="#一般性问题" class="headerlink" title="一般性问题"></a>一般性问题</h3><ol>
-<li>一个源文件存在多个语言<ul>
+<li>一个源文件存在多个语言</li>
+</ol>
+<ul>
 <li>尽量减少源文件语言的数量和范围。</li>
 </ul>
-</li>
-<li>明显的行为未被实现<ul>
+<ol start="2">
+<li>明显的行为未被实现</li>
+</ol>
+<ul>
 <li>遵循 “最少惊异原则 ”，函数或者类应该实现其他程序员有理由期待的行为，不要让其他程序员看代码才清楚函数的作用。</li>
 </ul>
-</li>
-<li>不正确的边界行为<ul>
+<ol start="3">
+<li>不正确的边界行为</li>
+</ol>
+<ul>
 <li>代码应该有正确的行为，追索每种边界条件并进行全面 测试。</li>
 </ul>
-</li>
-<li>忽视安全<ul>
+<ol start="4">
+<li>忽视安全</li>
+</ol>
+<ul>
 <li>关注可能引起问题的代码，注重安全与稳定。</li>
 </ul>
-</li>
-<li>重复<ul>
+<ol start="5">
+<li>重复</li>
+</ol>
+<ul>
 <li>消除重复代码，使用设计模式。</li>
 </ul>
-</li>
-<li>在错误的抽象层级上的代码<ul>
+<ol start="6">
+<li>在错误的抽象层级上的代码</li>
+</ol>
+<ul>
 <li>抽象类和派类概念模型必须完整分离，例如 ：与实现细节有关的代码不应该在基类中出现。</li>
 </ul>
-</li>
-<li>基类依赖于派类<ul>
+<ol start="7">
+<li>基类依赖于派类</li>
+</ol>
+<ul>
 <li>基类应该对派类一无所知。</li>
 </ul>
-</li>
-<li>信息过多<ul>
+<ol start="8">
+<li>信息过多</li>
+</ol>
+<ul>
 <li>类中的方法，变量越少越好，隐藏所有实现，公开接口越少越好。</li>
 </ul>
-</li>
-<li>死代码<ul>
+<ol start="9">
+<li>死代码</li>
+</ol>
+<ul>
 <li>找到并删除所有不被调用的代码。</li>
 </ul>
-</li>
-<li>垂直分隔<ul>
+<ol start="10">
+<li>垂直分隔</li>
+</ol>
+<ul>
 <li>变量和函数的定义应该靠近被调用代码。</li>
 </ul>
-</li>
-<li>前后不一致<ul>
+<ol start="11">
+<li>前后不一致</li>
+</ol>
+<ul>
 <li>函数参数变量应该从一而终，保持一致，让代码便于阅读和修改。</li>
 </ul>
-</li>
-<li>混淆视听<ul>
+<ol start="12">
+<li>混淆视听</li>
+</ol>
+<ul>
 <li>没用的变量，不被调用的函数，没有信息量的注释应该清理掉。</li>
 </ul>
-</li>
-<li>人为耦合<ul>
+<ol start="13">
+<li>人为耦合</li>
+</ol>
+<ul>
 <li>不互相依赖的东西不该耦合。</li>
 </ul>
-</li>
-<li>特性依恋<ul>
+<ol start="14">
+<li>特性依恋</li>
+</ol>
+<ul>
 <li>类的方法应该只对自身的方法和变量感兴趣，不应该垂青其他类的方法和变量。</li>
 </ul>
-</li>
-<li>选择算参数<ul>
+<ol start="15">
+<li>选择算参数</li>
+</ol>
+<ul>
 <li>避免布尔类型参数，使用多态代替。</li>
 </ul>
-</li>
-<li>晦涩的意图<ul>
+<ol start="16">
+<li>晦涩的意图</li>
+</ol>
+<ul>
 <li>代码要尽可能具有表达力，明白的意图比高效和性能重要。</li>
 </ul>
-</li>
-<li>位置错误的权责<ul>
+<ol start="17">
+<li>位置错误的权责</li>
+</ol>
+<ul>
 <li>“最少惊异原则 ”，把代码放在读者想到的地方，而不是对自己方便的地方。</li>
 </ul>
-</li>
-<li>不恰当的静态方法<ul>
+<ol start="18">
+<li>不恰当的静态方法</li>
+</ol>
+<ul>
 <li>如果要使用静态方法，必须确保 没机会打算让它有多态行为。</li>
 </ul>
-</li>
-<li>使用解释性变量<ul>
+<ol start="19">
+<li>使用解释性变量</li>
+</ol>
+<ul>
 <li>把计算过程打散成一系列命名良好的中间值使程序更加可读性。</li>
 </ul>
-</li>
+<ol start="20">
 <li>函数名称应该表达其行为</li>
 <li>理解算法</li>
-<li>把逻辑依赖改为物理依赖<ul>
+<li>把逻辑依赖改为物理依赖</li>
+</ol>
+<ul>
 <li>依赖应该是明显而不应该是假设的依赖。</li>
 </ul>
-</li>
-<li>用多态替代If/Else或Switch/Case</li>
+<ol start="23">
+<li>用多态替代If&#x2F;Else或Switch&#x2F;Case</li>
 <li>遵循标准约定</li>
 <li>用命名常量替代魔术数</li>
-<li>准确<ul>
+<li>准确</li>
+</ol>
+<ul>
 <li>代码中的含糊和不准确要么是意见不同的结果，要么源于懒散，都必须消除。</li>
 </ul>
-</li>
+<ol start="27">
 <li>结构甚于约定</li>
-<li>封装条件<ul>
+<li>封装条件</li>
+</ol>
+<ul>
 <li>把条件封装成方法。</li>
 </ul>
-</li>
-<li>避免否定性条件<ul>
+<ol start="29">
+<li>避免否定性条件</li>
+</ol>
+<ul>
 <li>使用肯定性条件。</li>
 </ul>
-</li>
+<ol start="30">
 <li>函数只该做一件事</li>
-<li>掩蔽时序耦合<ul>
+<li>掩蔽时序耦合</li>
+</ol>
+<ul>
 <li>创建顺序队列暴露时序耦合，每个函数都产一下函数所需参数，就可保障正确的时序。</li>
 </ul>
-</li>
-<li>别随意<ul>
+<ol start="32">
+<li>别随意</li>
+</ol>
+<ul>
 <li>代码不能随意，需要谨慎考虑。</li>
 </ul>
-</li>
-<li>封装边界条件<ul>
+<ol start="33">
+<li>封装边界条件</li>
+</ol>
+<ul>
 <li>例如 ：+1或-1操作必须封装起来。</li>
 </ul>
-</li>
-<li>函数应该只在一个抽象层级上<ul>
+<ol start="34">
+<li>函数应该只在一个抽象层级上</li>
+</ol>
+<ul>
 <li>封装不在一个抽象层级上的代码，保持每个函数只在一个抽象层级上。</li>
 </ul>
-</li>
-<li>在较高层级放置可配置数据<ul>
+<ol start="35">
+<li>在较高层级放置可配置数据</li>
+</ol>
+<ul>
 <li>把配置数据和常量放到基类里。</li>
 </ul>
-</li>
-<li>避免传递浏览<ul>
+<ol start="36">
+<li>避免传递浏览</li>
+</ol>
+<ul>
 <li>“得墨忒耳律 ”，编写害羞代码，让直接协作者提供所需的服务，而不要逛遍整个系统。</li>
 </ul>
-</li>
-</ol>
 <h3 id="名称"><a href="#名称" class="headerlink" title="名称"></a>名称</h3><ol>
-<li>采用描述性名称<ul>
+<li>采用描述性名称</li>
+</ol>
+<ul>
 <li>名称对应可读性有 90%的作用，必须认真命名。</li>
 </ul>
-</li>
-<li>名称应与抽象层级相符<ul>
+<ol start="2">
+<li>名称应与抽象层级相符</li>
+</ol>
+<ul>
 <li>不要取沟通实现的名称：取反映类或函数抽象层级的名称。</li>
 </ul>
-</li>
+<ol start="3">
 <li>尽可能使用标准命名法</li>
 <li>无歧义的名称</li>
 <li>为较大作用范围选用较长名称</li>
-<li>避免编码<ul>
+<li>避免编码</li>
+</ol>
+<ul>
 <li>不应该在名称中包含类型或范围的信息，例如：m_，f等前缀。</li>
 </ul>
-</li>
-<li>名称应该说明副作用<ul>
+<ol start="7">
+<li>名称应该说明副作用</li>
+</ol>
+<ul>
 <li>名称应该说明类 、变量或函数的所有信息，不应该 隐藏副作用。</li>
 </ul>
-</li>
-</ol>
 <h3 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h3><ol>
-<li>测试不足<ul>
+<li>测试不足</li>
+</ol>
+<ul>
 <li>保证足够的测试。</li>
 </ul>
-</li>
-<li>使用覆盖率工具<ul>
+<ol start="2">
+<li>使用覆盖率工具</li>
+</ol>
+<ul>
 <li>覆盖率工具可以更好地找到测试不足的模块 、类、函数。</li>
 </ul>
-</li>
+<ol start="3">
 <li>别略过小测试</li>
-<li>被忽略的测试就是对不确定事物的疑问<ul>
+<li>被忽略的测试就是对不确定事物的疑问</li>
+</ol>
+<ul>
 <li>用 <code>@Ignore</code> 表达我们对需求的疑问。</li>
 </ul>
-</li>
-<li>测试边界条件<ul>
+<ol start="5">
+<li>测试边界条件</li>
+</ol>
+<ul>
 <li>边界判读错误很常见，必须测试边界条件。</li>
 </ul>
-</li>
-<li>全面测试相近的缺陷<ul>
+<ol start="6">
+<li>全面测试相近的缺陷</li>
+</ol>
+<ul>
 <li>缺陷趋向于扎堆，如果在函数中发现一个缺陷，那么就全面测试这个函数。</li>
 </ul>
-</li>
-<li>测试失败的模式有启发性<ul>
+<ol start="7">
+<li>测试失败的模式有启发性</li>
+</ol>
+<ul>
 <li>你可以通过测试失败找到问题所在。</li>
 </ul>
-</li>
-<li>测试覆盖率的模式有启发性<ul>
+<ol start="8">
+<li>测试覆盖率的模式有启发性</li>
+</ol>
+<ul>
 <li>通过测试覆盖率检查，往往可以找 到测试失败的线索。</li>
 </ul>
-</li>
-<li>测试应该快速<ul>
+<ol start="9">
+<li>测试应该快速</li>
+</ol>
+<ul>
 <li>慢测试会导致时间紧时会跳过，导致可能出现问题。</li>
 </ul>
-</li>
-</ol>
- 
-      <!-- reward -->
-      
-      <div id="reword-out">
-        <div id="reward-btn">
-          Donate
-        </div>
-      </div>
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <div class="declare">
-      <ul class="post-copyright">
-        <li>
-          <i class="ri-copyright-line"></i>
-          <strong>Copyright： </strong>
-          Copyright is owned by the author. For commercial reprints, please contact the author for authorization. For non-commercial reprints, please indicate the source.
-        </li>
-      </ul>
-    </div>
-    
-    <footer class="article-footer">
-       
-<div class="share-btn">
-      <span class="share-sns share-outer">
-        <i class="ri-share-forward-line"></i>
-        分享
-      </span>
-      <div class="share-wrap">
-        <i class="arrow"></i>
-        <div class="share-icons">
-          
-          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
-            <i class="ri-weibo-fill"></i>
-          </a>
-          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
-            <i class="ri-wechat-fill"></i>
-          </a>
-          <a class="qq share-sns" href="javascript:;" data-type="qq">
-            <i class="ri-qq-fill"></i>
-          </a>
-          <a class="douban share-sns" href="javascript:;" data-type="douban">
-            <i class="ri-douban-line"></i>
-          </a>
-          <!-- <a class="qzone share-sns" href="javascript:;" data-type="qzone">
-            <i class="icon icon-qzone"></i>
-          </a> -->
-          
-          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
-            <i class="ri-facebook-circle-fill"></i>
-          </a>
-          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
-            <i class="ri-twitter-fill"></i>
-          </a>
-          <a class="google share-sns" href="javascript:;" data-type="google">
-            <i class="ri-google-fill"></i>
-          </a>
-        </div>
-      </div>
-</div>
-
-<div class="wx-share-modal">
-    <a class="modal-close" href="javascript:;"><i class="ri-close-circle-line"></i></a>
-    <p>扫一扫，分享到微信</p>
-    <div class="wx-qrcode">
-      <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data=http://yoursite.com/2019/10/26/Clean%20Code/" alt="微信分享二维码">
-    </div>
-</div>
-
-<div id="share-mask"></div>  
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Java/" rel="tag">Java</a></li></ul>
-
-    </footer>
-  </div>
-
-   
-  <nav class="article-nav">
-    
-      <a href="/2019/10/26/hello-world/" class="article-nav-link">
-        <strong class="article-nav-caption">上一篇</strong>
-        <div class="article-nav-title">
-          
-            Hello World
-          
-        </div>
-      </a>
-    
-    
-      <a href="/2019/09/13/Bitcoin/" class="article-nav-link">
-        <strong class="article-nav-caption">下一篇</strong>
-        <div class="article-nav-title">Bitcoin</div>
-      </a>
-    
-  </nav>
-
-   
- 
-   
-<div class="gitalk" id="gitalk-container"></div>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.6.2/dist/gitalk.css">
-<script src="https://cdn.jsdelivr.net/npm/gitalk@1.6.2/dist/gitalk.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/blueimp-md5@2.10.0/js/md5.min.js"></script>
-<script type="text/javascript">
-  var gitalk = new Gitalk({
-    clientID: 'db290dc011893521d885',
-    clientSecret: '4cbc64d2114f4963d8090a55b508568b2f26075b',
-    repo: 'blog-comments',
-    owner: 'Sicmatr1x',
-    admin: ['Sicmatr1x'],
-    // id: location.pathname,      // Ensure uniqueness and length less than 50
-    id: md5(location.pathname),
-    distractionFreeMode: false,  // Facebook-like distraction free mode
-    pagerDirection: 'last'
-  })
-
-  gitalk.render('gitalk-container')
-</script>
-  
-</article>
-
-</section>
-      <footer class="footer">
-  <div class="outer">
-    <ul>
-      <li>
-        Copyrights &copy;
-        2015-2022
-        <i class="ri-heart-fill heart_icon"></i> Sicmatr1x
-      </li>
-    </ul>
-    <ul>
-      <li>
-        
-        
-        
-        Powered by <a href="https://hexo.io" target="_blank">Hexo</a>
-        <span class="division">|</span>
-        Theme - <a href="https://github.com/Shen-Yu/hexo-theme-ayer" target="_blank">Ayer</a>
-        
-      </li>
-    </ul>
-    <ul>
-      <li>
-        
-        
-        <span>
-  <span><i class="ri-user-3-fill"></i>Visitors:<span id="busuanzi_value_site_uv"></span></s>
-  <span class="division">|</span>
-  <span><i class="ri-eye-fill"></i>Views:<span id="busuanzi_value_page_pv"></span></span>
-</span>
-        
-      </li>
-    </ul>
-    <ul>
-      
-    </ul>
-    <ul>
-      <li>
-        <!-- cnzz统计 -->
-        
-      </li>
-    </ul>
-  </div>
-</footer>
-      <div class="float_btns">
-        <div class="totop" id="totop">
-  <i class="ri-arrow-up-line"></i>
-</div>
-
-<div class="todark" id="todark">
-  <i class="ri-moon-line"></i>
-</div>
-
-      </div>
-    </main>
-    <aside class="sidebar on">
-      <button class="navbar-toggle"></button>
-<nav class="navbar">
-  
-  <div class="logo">
-    <a href="/"><img src="/images/ayer-side.svg" alt="Sicmatr1x"></a>
-  </div>
-  
-  <ul class="nav nav-main">
-    
-    <li class="nav-item">
-      <a class="nav-item-link" href="/">主页</a>
-    </li>
-    
-    <li class="nav-item">
-      <a class="nav-item-link" href="/archives">归档</a>
-    </li>
-    
-    <li class="nav-item">
-      <a class="nav-item-link" href="/categories">分类</a>
-    </li>
-    
-    <li class="nav-item">
-      <a class="nav-item-link" href="/tags">标签</a>
-    </li>
-    
-    <li class="nav-item">
-      <a class="nav-item-link" href="/about">关于我</a>
-    </li>
-    
-  </ul>
-</nav>
-<nav class="navbar navbar-bottom">
-  <ul class="nav">
-    <li class="nav-item">
-      
-      <a class="nav-item-link nav-item-search"  title="Search">
-        <i class="ri-search-line"></i>
-      </a>
-      
-      
-      <a class="nav-item-link" target="_blank" href="/atom.xml" title="RSS Feed">
-        <i class="ri-rss-line"></i>
-      </a>
-      
-    </li>
-  </ul>
-</nav>
-<div class="search-form-wrap">
-  <div class="local-search local-search-plugin">
-  <input type="search" id="local-search-input" class="local-search-input" placeholder="Search...">
-  <div id="local-search-result" class="local-search-result"></div>
-</div>
-</div>
-    </aside>
-    <script>
-      if (window.matchMedia("(max-width: 768px)").matches) {
-        document.querySelector('.content').classList.remove('on');
-        document.querySelector('.sidebar').classList.remove('on');
-      }
-    </script>
-    <div id="mask"></div>
-
-<!-- #reward -->
-<div id="reward">
-  <span class="close"><i class="ri-close-line"></i></span>
-  <p class="reward-p"><i class="ri-cup-line"></i>请我喝杯咖啡吧~，ETH:0xDF06f28BcdD7DBb25c56f9560E184874d5FC0973</p>
-  <div class="reward-box">
-    
-    <div class="reward-item">
-      <img class="reward-img" src="/images/alipay.png">
-      <span class="reward-type">支付宝</span>
-    </div>
-    
-    
-    <div class="reward-item">
-      <img class="reward-img" src="/images/wechatpay.png">
-      <span class="reward-type">微信</span>
-    </div>
-    
-  </div>
-</div>
-    <script src="/js/jquery-2.0.3.min.js"></script>
-<script src="/js/lazyload.min.js"></script>
-<!-- Tocbot -->
-
-<script src="/js/tocbot.min.js"></script>
-<script>
-  tocbot.init({
-    tocSelector: '.tocbot',
-    contentSelector: '.article-entry',
-    headingSelector: 'h1, h2, h3, h4, h5, h6',
-    hasInnerContainers: true,
-    scrollSmooth: true,
-    scrollContainer: 'main',
-    positionFixedSelector: '.tocbot',
-    positionFixedClass: 'is-position-fixed',
-    fixedSidebarOffset: 'auto'
-  });
-</script>
-
-<script src="https://cdn.jsdelivr.net/npm/jquery-modal@0.9.2/jquery.modal.min.js"></script>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/jquery-modal@0.9.2/jquery.modal.min.css">
-<script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/js/jquery.justifiedGallery.min.js"></script>
-<script src="/dist/main.js"></script>
-<!-- ImageViewer -->
-
-<!-- Root element of PhotoSwipe. Must have class pswp. -->
-<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
-
-    <!-- Background of PhotoSwipe. 
-         It's a separate element as animating opacity is faster than rgba(). -->
-    <div class="pswp__bg"></div>
-
-    <!-- Slides wrapper with overflow:hidden. -->
-    <div class="pswp__scroll-wrap">
-
-        <!-- Container that holds slides. 
-            PhotoSwipe keeps only 3 of them in the DOM to save memory.
-            Don't modify these 3 pswp__item elements, data is added later on. -->
-        <div class="pswp__container">
-            <div class="pswp__item"></div>
-            <div class="pswp__item"></div>
-            <div class="pswp__item"></div>
-        </div>
-
-        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
-        <div class="pswp__ui pswp__ui--hidden">
-
-            <div class="pswp__top-bar">
-
-                <!--  Controls are self-explanatory. Order can be changed. -->
-
-                <div class="pswp__counter"></div>
-
-                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
-
-                <button class="pswp__button pswp__button--share" style="display:none" title="Share"></button>
-
-                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
-
-                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
-
-                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
-                <!-- element will get class pswp__preloader--active when preloader is running -->
-                <div class="pswp__preloader">
-                    <div class="pswp__preloader__icn">
-                        <div class="pswp__preloader__cut">
-                            <div class="pswp__preloader__donut"></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
-                <div class="pswp__share-tooltip"></div>
-            </div>
-
-            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
-            </button>
-
-            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
-            </button>
-
-            <div class="pswp__caption">
-                <div class="pswp__caption__center"></div>
-            </div>
-
-        </div>
-
-    </div>
-
-</div>
-
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css">
-<script src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"></script>
-
-<script>
-    function viewer_init() {
-        let pswpElement = document.querySelectorAll('.pswp')[0];
-        let $imgArr = document.querySelectorAll(('.article-entry img:not(.reward-img)'))
-
-        $imgArr.forEach(($em, i) => {
-            $em.onclick = () => {
-                // slider展开状态
-                // todo: 这样不好，后面改成状态
-                if (document.querySelector('.left-col.show')) return
-                let items = []
-                $imgArr.forEach(($em2, i2) => {
-                    let img = $em2.getAttribute('data-idx', i2)
-                    let src = $em2.getAttribute('data-target') || $em2.getAttribute('src')
-                    let title = $em2.getAttribute('alt')
-                    // 获得原图尺寸
-                    const image = new Image()
-                    image.src = src
-                    items.push({
-                        src: src,
-                        w: image.width || $em2.width,
-                        h: image.height || $em2.height,
-                        title: title
-                    })
-                })
-                var gallery = new PhotoSwipe(pswpElement, PhotoSwipeUI_Default, items, {
-                    index: parseInt(i)
-                });
-                gallery.init()
-            }
-        })
-    }
-    viewer_init()
-</script>
-
-<!-- MathJax -->
-
-<!-- Katex -->
-
-<!-- busuanzi  -->
-
-<script src="/js/busuanzi-2.3.pure.min.js"></script>
-
-<!-- ClickLove -->
-
-<!-- ClickBoom1 -->
-
-<!-- ClickBoom2 -->
-
-<!-- CodeCopy -->
-
-<link rel="stylesheet" href="/css/clipboard.css">
-<script src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js"></script>
-<script>
-  function wait(callback, seconds) {
-    var timelag = null;
-    timelag = window.setTimeout(callback, seconds);
-  }
-  !function (e, t, a) {
-    var initCopyCode = function(){
-      var copyHtml = '';
-      copyHtml += '<button class="btn-copy" data-clipboard-snippet="">';
-      copyHtml += '<i class="ri-file-copy-2-line"></i><span>COPY</span>';
-      copyHtml += '</button>';
-      $(".highlight .code pre").before(copyHtml);
-      $(".article pre code").before(copyHtml);
-      var clipboard = new ClipboardJS('.btn-copy', {
-        target: function(trigger) {
-          return trigger.nextElementSibling;
-        }
-      });
-      clipboard.on('success', function(e) {
-        let $btn = $(e.trigger);
-        $btn.addClass('copied');
-        let $icon = $($btn.find('i'));
-        $icon.removeClass('ri-file-copy-2-line');
-        $icon.addClass('ri-checkbox-circle-line');
-        let $span = $($btn.find('span'));
-        $span[0].innerText = 'COPIED';
-        
-        wait(function () { // 等待两秒钟后恢复
-          $icon.removeClass('ri-checkbox-circle-line');
-          $icon.addClass('ri-file-copy-2-line');
-          $span[0].innerText = 'COPY';
-        }, 2000);
-      });
-      clipboard.on('error', function(e) {
-        e.clearSelection();
-        let $btn = $(e.trigger);
-        $btn.addClass('copy-failed');
-        let $icon = $($btn.find('i'));
-        $icon.removeClass('ri-file-copy-2-line');
-        $icon.addClass('ri-time-line');
-        let $span = $($btn.find('span'));
-        $span[0].innerText = 'COPY FAILED';
-        
-        wait(function () { // 等待两秒钟后恢复
-          $icon.removeClass('ri-time-line');
-          $icon.addClass('ri-file-copy-2-line');
-          $span[0].innerText = 'COPY';
-        }, 2000);
-      });
-    }
-    initCopyCode();
-  }(window, document);
-</script>
-
-
-<!-- CanvasBackground -->
-
-
-    
-  </div>
-</body>
-
-</html>
+<div id="paginator"></div></div><div id="post-footer"><div id="pages"><div class="footer-link" style="width: 50%;text-align:right;border-right:1px #fe2 solid"><a href="/2019/10/26/hello-world/">← Next Hello World</a></div><div class="footer-link" style="width: 50%;right:1px;border-left:1px #fe2 solid"><a href="/2019/09/13/Bitcoin/">Bitcoin Prev →</a></div></div></div><div id="comments"><div class="selector"><button class="gitalk-sel"></button></div><div id="gitalk"></div></div></div><div class="bottom-btn"><div><a id="to-top" onClick="scrolls.scrolltop();" title="To Top" style="opacity: 0; display: none;">∧</a><a id="to-index" href="#toc-div" title="To Catalog">≡</a><a id="color-mode" onClick="colorMode.change()" title="Change Theme"></a></div></div></article><aside><div id="about"><a href="/" id="logo"><img src="https://ak.hypergryph.com/assets/index/images/ak/pc/faction/1.png" alt="Logo"></a><h1 id="Dr"><a href="/">Sicmatr1x</a></h1><div id="description"><p></p></div></div><div id="aside-block"><div id="toc-div"><h1>Catalog</h1><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%95%B4%E6%B4%81%E4%BB%A3%E7%A0%81"><span class="toc-number">1.</span> <span class="toc-text">整洁代码</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8D%95%E4%B8%80%E6%9D%83%E8%B4%A3%E5%8E%9F%E5%88%99-Single-Responsibility-SRP"><span class="toc-number">1.1.</span> <span class="toc-text">单一权责原则(Single Responsibility ,SRP)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BC%80%E6%94%BE%E9%97%AD%E5%90%88%E5%8E%9F%E5%88%99-Open-Closed-Principle-OCP"><span class="toc-number">1.2.</span> <span class="toc-text">开放闭合原则(Open Closed Principle,OCP)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#LSP%E9%87%8C%E6%B0%8F%E4%BB%A3%E6%8D%A2%E5%8E%9F%E5%88%99-Liskov-Substitution-Principle"><span class="toc-number">1.3.</span> <span class="toc-text">LSP里氏代换原则(Liskov Substitution Principle)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8E%A5%E5%8F%A3%E9%9A%94%E7%A6%BB%E5%8E%9F%E5%88%99-Interface-Segregation-Principle-ISP"><span class="toc-number">1.4.</span> <span class="toc-text">接口隔离原则(Interface Segregation Principle, ISP)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BE%9D%E8%B5%96%E5%80%92%E7%BD%AE%E5%8E%9F%E5%88%99-Dependency-Inversion-Principle-DIP"><span class="toc-number">1.5.</span> <span class="toc-text">依赖倒置原则(Dependency Inversion Principle,DIP)</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9C%89%E6%84%8F%E4%B9%89%E7%9A%84%E5%91%BD%E5%90%8D"><span class="toc-number">2.</span> <span class="toc-text">有意义的命名</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%90%8D%E5%89%AF%E5%85%B6%E5%AE%9E"><span class="toc-number">2.1.</span> <span class="toc-text">名副其实</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%81%BF%E5%85%8D%E8%AF%AF%E5%AF%BC-amp-%E5%81%9A%E6%9C%89%E6%84%8F%E4%B9%89%E7%9A%84%E5%8C%BA%E5%88%86"><span class="toc-number">2.2.</span> <span class="toc-text">避免误导 &amp; 做有意义的区分</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8%E8%AF%BB%E5%BE%97%E5%87%BA%E6%9D%A5%E7%9A%84%E5%90%8D%E7%A7%B0-amp-%E4%BD%BF%E7%94%A8%E5%8F%AF%E6%90%9C%E7%B4%A2%E7%9A%84%E5%90%8D%E7%A7%B0"><span class="toc-number">2.3.</span> <span class="toc-text">使用读得出来的名称 &amp; 使用可搜索的名称</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%81%BF%E5%85%8D%E4%BD%BF%E7%94%A8%E7%BC%96%E7%A0%81"><span class="toc-number">2.4.</span> <span class="toc-text">避免使用编码</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B8%B8%E8%A7%81%E8%AF%AF%E5%8C%BA"><span class="toc-number">2.5.</span> <span class="toc-text">常见误区</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%87%BD%E6%95%B0"><span class="toc-number">3.</span> <span class="toc-text">函数</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%87%BD%E6%95%B0%E7%9A%84%E5%8E%9F%E5%88%99"><span class="toc-number">3.1.</span> <span class="toc-text">函数的原则</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%87%BD%E6%95%B0%E4%BF%AE%E6%94%B9%E7%9A%84%E7%AD%96%E7%95%A5"><span class="toc-number">3.2.</span> <span class="toc-text">函数修改的策略</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B3%A8%E9%87%8A"><span class="toc-number">4.</span> <span class="toc-text">注释</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A0%BC%E5%BC%8F"><span class="toc-number">5.</span> <span class="toc-text">格式</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A0%BC%E5%BC%8F%E7%9A%84%E7%9B%AE%E7%9A%84"><span class="toc-number">5.1.</span> <span class="toc-text">格式的目的</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AF%B9%E8%B1%A1%E5%92%8C%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84"><span class="toc-number">6.</span> <span class="toc-text">对象和数据结构</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E6%8A%BD%E8%B1%A1"><span class="toc-number">6.1.</span> <span class="toc-text">数据抽象</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BE%97%E5%A2%A8%E5%BF%92%E8%80%B3%E5%BE%8B"><span class="toc-number">6.2.</span> <span class="toc-text">得墨忒耳律</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E4%BC%A0%E9%80%81%E5%AF%B9%E8%B1%A1"><span class="toc-number">6.3.</span> <span class="toc-text">数据传送对象</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%94%99%E8%AF%AF%E5%A4%84%E7%90%86"><span class="toc-number">7.</span> <span class="toc-text">错误处理</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BC%82%E5%B8%B8%E7%9A%84%E4%BD%BF%E7%94%A8"><span class="toc-number">7.1.</span> <span class="toc-text">异常的使用</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%BE%B9%E7%95%8C"><span class="toc-number">8.</span> <span class="toc-text">边界</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%95%B4%E6%B4%81%E7%9A%84%E8%BE%B9%E7%95%8C"><span class="toc-number">8.1.</span> <span class="toc-text">整洁的边界</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95"><span class="toc-number">9.</span> <span class="toc-text">单元测试</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#TDD%E4%B8%89%E5%AE%9A%E5%BE%8B"><span class="toc-number">9.1.</span> <span class="toc-text">TDD三定律</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%95%B4%E6%B4%81%E7%9A%84%E6%B5%8B%E8%AF%95"><span class="toc-number">9.2.</span> <span class="toc-text">整洁的测试</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#F-I-R-S-T"><span class="toc-number">9.3.</span> <span class="toc-text">F.I.R.S.T</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%B1%BB"><span class="toc-number">10.</span> <span class="toc-text">类</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%B1%BB%E7%9A%84%E7%BB%84%E7%BB%87"><span class="toc-number">10.1.</span> <span class="toc-text">类的组织</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%BA%E4%BA%86%E4%BF%AE%E6%94%B9%E8%80%8C%E7%BB%84%E7%BB%87"><span class="toc-number">10.2.</span> <span class="toc-text">为了修改而组织</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%B3%BB%E7%BB%9F"><span class="toc-number">11.</span> <span class="toc-text">系统</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B0%86%E7%B3%BB%E7%BB%9F%E7%9A%84%E6%9E%84%E9%80%A0%E4%B8%8E%E4%BD%BF%E7%94%A8%E5%88%86%E5%BC%80"><span class="toc-number">11.1.</span> <span class="toc-text">将系统的构造与使用分开</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%89%A9%E5%AE%B9"><span class="toc-number">11.2.</span> <span class="toc-text">扩容</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A8%AA%E5%88%87%E5%85%B3%E6%B3%A8%E7%82%B9"><span class="toc-number">11.3.</span> <span class="toc-text">横切关注点</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B5%8B%E8%AF%95%E9%A9%B1%E5%8A%A8%E7%B3%BB%E7%BB%9F%E6%9E%B6%E6%9E%84"><span class="toc-number">11.4.</span> <span class="toc-text">测试驱动系统架构</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%B3%BB%E7%BB%9F%E9%9C%80%E8%A6%81%E9%A2%86%E5%9F%9F%E7%89%B9%E5%AE%9A%E8%AF%AD%E8%A8%80"><span class="toc-number">11.5.</span> <span class="toc-text">系统需要领域特定语言</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%BF%AD%E4%BB%A3"><span class="toc-number">12.</span> <span class="toc-text">迭代</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B"><span class="toc-number">13.</span> <span class="toc-text">并发编程</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8C%91%E6%88%98%E4%B8%8E%E5%B9%B6%E5%8F%91%E9%98%B2%E5%BE%A1%E5%8E%9F%E5%88%99"><span class="toc-number">13.1.</span> <span class="toc-text">挑战与并发防御原则</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BA%86%E8%A7%A3%E6%89%A7%E8%A1%8C%E6%A8%A1%E5%9E%8B"><span class="toc-number">13.2.</span> <span class="toc-text">了解执行模型</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AD%A6%E6%83%95%E5%90%8C%E6%AD%A5%E6%96%B9%E6%B3%95%E4%B9%8B%E9%97%B4%E7%9A%84%E4%BE%9D%E8%B5%96"><span class="toc-number">13.3.</span> <span class="toc-text">警惕同步方法之间的依赖</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BF%9D%E6%8C%81%E5%90%8C%E6%AD%A5%E5%8C%BA%E5%9F%9F%E5%BE%AE%E5%B0%8F"><span class="toc-number">13.4.</span> <span class="toc-text">保持同步区域微小</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Code-Smell-List"><span class="toc-number">14.</span> <span class="toc-text">Code Smell List</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B3%A8%E9%87%8A-1"><span class="toc-number">14.1.</span> <span class="toc-text">注释</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%8E%AF%E5%A2%83"><span class="toc-number">14.2.</span> <span class="toc-text">环境</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%87%BD%E6%95%B0-1"><span class="toc-number">14.3.</span> <span class="toc-text">函数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%80%E8%88%AC%E6%80%A7%E9%97%AE%E9%A2%98"><span class="toc-number">14.4.</span> <span class="toc-text">一般性问题</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%90%8D%E7%A7%B0"><span class="toc-number">14.5.</span> <span class="toc-text">名称</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B5%8B%E8%AF%95"><span class="toc-number">14.6.</span> <span class="toc-text">测试</span></a></li></ol></li></ol></div></div><footer><nobr>Published with <a target="_blank" rel="noopener" href="http://hexo.io">Hexo</a></nobr><wbr><nobr> Theme <a target="_blank" rel="noopener" href="https://github.com/Yue-plus/hexo-theme-arknights">Arknights</a></nobr><wbr><nobr>by <a target="_blank" rel="noopener" href="https://github.com/Yue-plus">Yue_plus</a></nobr></footer></aside></main><canvas id="canvas-dust"></canvas><script src="/js/search.js"></script><script class="pjax-js">reset=_=>{gitalk = new Gitalk({
+ clientID: '',
+ clientSecret: '',
+ repo: 'blog-comments',
+ owner: 'Sicmatr1x',
+ admin: ['Sicmatr1x'],
+ distractionFreeMode: false,
+ id: 
+});
+if (document.querySelector("#gitalk")) gitalk.render("gitalk");code.findCode();}</script><script src="/js/arknights.js"></script><script src="/js/pjax.js"></script><script>window.addEventListener("load",() => {pjax = new Pjax({
+ cacheBust: false,
+ selectors: ['title','article','#aside-block','.pjax-js'],
+ switches: {'article': Pjax.switches.sideBySide},
+ switchesOptions: {
+   'article': {
+     classNames: {
+       remove: "pjax-out",
+       add: "pjax-in"
+     }
+   }
+ }
+});
+document.addEventListener("pjax:complete", reset);reset()})</script></body></html>

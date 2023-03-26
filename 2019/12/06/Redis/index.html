@@ -1,104 +1,14 @@
-<!DOCTYPE html>
-
-
-<html lang="en">
-
-
-<head>
-  <meta charset="utf-8" />
-    
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-  <title>
-    Redis |  
-  </title>
-  <meta name="generator" content="hexo-theme-ayer">
-  
-  <link rel="shortcut icon" href="/favicon.ico" />
-  
-  <link rel="stylesheet" href="/dist/main.css">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Shen-Yu/cdn/css/remixicon.min.css">
-  <link rel="stylesheet" href="/css/custom.css">
-  
-  <script src="https://cdn.jsdelivr.net/npm/pace-js@1.0.2/pace.min.js"></script>
-  
-  
-
-  
-
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@latest/build/styles/vs2015.min.css"><!- highlight.js ->
-  <script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@latest/build/highlight.min.js"></script>
-  <script>
-    hljs.initHighlightingOnLoad();
-  </script>
-</head>
-
-</html>
-
-
-<body>
-  <div id="app">
-    
-      
-    <main class="content on">
-      <section class="outer">
-  <article
-  id="post-Redis"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h1 class="article-title sea-center" style="border-left:0" itemprop="name">
-  Redis
-</h1>
- 
-
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2019/12/06/Redis/" class="article-date">
-  <time datetime="2019-12-06T09:02:36.000Z" itemprop="datePublished">2019-12-06</time>
-</a> 
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E5%90%8E%E7%AB%AF/">后端</a>
-  </div>
-
-  
-<div class="word_count">
-    <span class="post-time">
-        <span class="post-meta-item-icon">
-            <i class="ri-quill-pen-line"></i>
-            <span class="post-meta-item-text"> Word count:</span>
-            <span class="post-count">8.3k</span>
-        </span>
-    </span>
-
-    <span class="post-time">
-        &nbsp; | &nbsp;
-        <span class="post-meta-item-icon">
-            <i class="ri-book-open-line"></i>
-            <span class="post-meta-item-text"> Reading time≈</span>
-            <span class="post-count">31 min</span>
-        </span>
-    </span>
-</div>
- 
-    </div>
-      
-    <div class="tocbot"></div>
-
-
-
-
-  
-    <div class="article-entry" itemprop="articleBody">
-       
-  <p>Redis is an open source (BSD licensed), in-memory data structure store, used as a database, cache and message broker.</p>
-<h2 id="缓存中间件-Memcache和Redis的区别"><a href="#缓存中间件-Memcache和Redis的区别" class="headerlink" title="缓存中间件 Memcache和Redis的区别"></a>缓存中间件 <a href="https://www.memcached.org/" target="_blank" rel="noopener">Memcache</a>和<a href="https://redis.io/" target="_blank" rel="noopener">Redis</a>的区别</h2><ul>
+<!DOCTYPE html><html lang="en" theme-mode="dark"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Redis | Sicmatr1x</title><script>var config = {"root":"/","search":{"preload":false,"activeHolder":"Enter here","blurHolder":"Search","noResult":"Data \"$0\" not found"},"code":{"codeInfo":"$0 - $1 lines","copy":"copy","copyFinish":"copied","expand":"expand"}}</script><script src="/js/gitalk.js"></script><script src="//unpkg.com/mermaid@9.2.2/dist/mermaid.min.js"></script><link rel="stylesheet" href="/css/arknights.css"><script>if (window.localStorage.getItem('theme-mode') === 'light') document.documentElement.setAttribute('theme-mode', 'light')
+if (window.localStorage.getItem('theme-mode') === 'dark') document.documentElement.setAttribute('theme-mode', 'dark')</script><style>@font-face {
+ font-family: BenderLight;
+ src: local('Bender'), url("/font/BenderLight.ttf");
+}
+@font-face {
+ font-family: 'JetBrains Mono';
+ src: local('JetBrains Mono'), url('/font/JetBrainsMono-Regular.woff2') format('woff2');
+}</style><meta name="generator" content="Hexo 6.3.0"><link rel="alternate" href="/atom.xml" title="Sicmatr1x" type="application/atom+xml">
+</head><body><div class="loading" style="opacity: 0"><div class="loadingBar left"></div><div class="loadingBar right"></div></div><main><header class="closed"><nav><div class="navBtn hide"><i class="navBtnIcon"><span class="navBtnIconBar"></span><span class="navBtnIconBar"></span><span class="navBtnIconBar"></span></i></div><div class="navItem" id="search-header"><span class="navItemTitle"><input autocomplete="off" autocorrect="off" autocapitalize="none" placeholder="Search" spellcheck="false" maxlength="50" type="text" id="search-input"></span></div><div class="navItem" id="search-holder"></div><div class="search-popup"><div id="search-result"></div></div><ol class="navContent"><li class="navItem"><a class="navBlock" href="/"><span class="navItemTitle">Home</span></a></li><li class="navItem" matchdata="categories,tags"><a class="navBlock" href="/archives/"><span class="navItemTitle">Archives</span></a></li></ol></nav></header><article><div id="post-bg"><div id="post-title"><h1>Redis</h1><div id="post-info"><span>First Post: <div class="control"><time datetime="2019-12-06T09:02:36.000Z" id="date"> 2019-12-06</time></div></span><br><span>Last Update: <div class="control"><time datetime="2020-05-12T07:58:09.000Z" id="updated"> 2020-05-12</time></div></span></div></div><hr><div id="post-content"><p>Redis is an open source (BSD licensed), in-memory data structure store, used as a database, cache and message broker.</p>
+<h2 id="缓存中间件-Memcache和Redis的区别"><a href="#缓存中间件-Memcache和Redis的区别" class="headerlink" title="缓存中间件 Memcache和Redis的区别"></a>缓存中间件 <a target="_blank" rel="noopener" href="https://www.memcached.org/">Memcache</a>和<a target="_blank" rel="noopener" href="https://redis.io/">Redis</a>的区别</h2><ul>
 <li>Memcache：代码层次类似Hash<ul>
 <li>支持简单数据类型</li>
 <li>不支持数据持久化存储</li>
@@ -118,30 +28,43 @@
 </li>
 </ul>
 <h2 id="基本概念"><a href="#基本概念" class="headerlink" title="基本概念"></a>基本概念</h2><h3 id="基本命令"><a href="#基本命令" class="headerlink" title="基本命令"></a>基本命令</h3><p>启动服务器：</p>
-<pre><code>redis-server.exe redis.windows.conf</code></pre><p>连接服务器：</p>
-<pre><code>redis-cli.exe -h 127.0.0.1 -p 6379</code></pre><p>键值对操作：</p>
-<pre><code>set myKey abc
-get myKey
-DEL myKey</code></pre><h3 id="配置文件"><a href="#配置文件" class="headerlink" title="配置文件"></a>配置文件</h3><p>Redis 的配置文件位于 Redis 安装目录下，文件名为 redis.conf(Windows 名为 redis.windows.conf)。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">redis-server.exe redis.windows.conf<br></code></pre></td></tr></table></figure>
+
+<p>连接服务器：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">redis-cli.exe -h 127.0.0.1 -p 6379<br></code></pre></td></tr></table></figure>
+
+<p>键值对操作：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">set myKey abc<br>get myKey<br>DEL myKey<br></code></pre></td></tr></table></figure>
+
+<h3 id="配置文件"><a href="#配置文件" class="headerlink" title="配置文件"></a>配置文件</h3><p>Redis 的配置文件位于 Redis 安装目录下，文件名为 redis.conf(Windows 名为 redis.windows.conf)。</p>
 <h4 id="查看配置"><a href="#查看配置" class="headerlink" title="查看配置"></a>查看配置</h4><p>Redis CONFIG 命令格式如下:<code>CONFIG GET CONFIG_SETTING_NAME</code></p>
-<pre><code>CONFIG GET loglevel</code></pre><h4 id="编辑配置"><a href="#编辑配置" class="headerlink" title="编辑配置"></a>编辑配置</h4><p>CONFIG SET 命令基本语法：<code>CONFIG SET CONFIG_SETTING_NAME NEW_CONFIG_VALUE</code></p>
-<pre><code>CONFIG SET loglevel &quot;notice&quot;</code></pre><h3 id="Q-amp-A"><a href="#Q-amp-A" class="headerlink" title="Q &amp; A"></a>Q &amp; A</h3><h4 id="Q-从海量Key里查询出某一固定前缀的Key"><a href="#Q-从海量Key里查询出某一固定前缀的Key" class="headerlink" title="Q: 从海量Key里查询出某一固定前缀的Key"></a>Q: 从海量Key里查询出某一固定前缀的Key</h4><ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">CONFIG GET loglevel<br></code></pre></td></tr></table></figure>
+
+<h4 id="编辑配置"><a href="#编辑配置" class="headerlink" title="编辑配置"></a>编辑配置</h4><p>CONFIG SET 命令基本语法：<code>CONFIG SET CONFIG_SETTING_NAME NEW_CONFIG_VALUE</code></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">CONFIG SET loglevel &quot;notice&quot;<br></code></pre></td></tr></table></figure>
+
+<h3 id="Q-amp-A"><a href="#Q-amp-A" class="headerlink" title="Q &amp; A"></a>Q &amp; A</h3><h4 id="Q-从海量Key里查询出某一固定前缀的Key"><a href="#Q-从海量Key里查询出某一固定前缀的Key" class="headerlink" title="Q: 从海量Key里查询出某一固定前缀的Key"></a>Q: 从海量Key里查询出某一固定前缀的Key</h4><ul>
 <li>摸清数据规模，问清楚边界</li>
 </ul>
 <p>使用指令 <code>KEYS pattern</code> 可以查找所有符合给定模式pattern的key</p>
-<pre><code>KEYS pattern
-KEYS tes*</code></pre><p>缺点：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">KEYS pattern<br>KEYS tes*<br></code></pre></td></tr></table></figure>
+
+<p>缺点：</p>
 <ul>
 <li>KEYS指令一次性返回所有匹配的key可能会因为key数量过大使服务器卡顿</li>
 </ul>
 <p>解决：使用SCAN指令无阻塞提取</p>
-<pre><code>SCAN cursor [MATCH pattern] [COUNT count]</code></pre><ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">SCAN cursor [MATCH pattern] [COUNT count]<br></code></pre></td></tr></table></figure>
+
+<ul>
 <li>SCAN指令使用到了一个基于游标的迭代器，需要基于上一次的游标来延续之前的迭代过程</li>
 <li>以0作为游标的开始来开启新的迭代，直到命令返回游标0完成一次遍历</li>
 </ul>
 <p>缺点：一次返回的数量不可控，只能是大概率符合count参数。可能会返回重复的key，可以使用Set来接返回的数据</p>
 <p>从0开始迭代匹配<code>tes*</code>的key，一次返回10条结果，把上一次返回的结果中的位置设置成下一次的cursor</p>
-<pre><code>SCAN 0 match tes* count 10</code></pre><h4 id="Q-使用Redis实现分布式锁"><a href="#Q-使用Redis实现分布式锁" class="headerlink" title="Q: 使用Redis实现分布式锁"></a>Q: 使用Redis实现分布式锁</h4><p>特性：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">SCAN 0 match tes* count 10<br></code></pre></td></tr></table></figure>
+
+<h4 id="Q-使用Redis实现分布式锁"><a href="#Q-使用Redis实现分布式锁" class="headerlink" title="Q: 使用Redis实现分布式锁"></a>Q: 使用Redis实现分布式锁</h4><p>特性：</p>
 <ul>
 <li>互斥性：任意时刻只能有一个客户端获取锁</li>
 <li>安全性：锁只能被持有该锁的客户端删除</li>
@@ -153,11 +76,14 @@ KEYS tes*</code></pre><p>缺点：</p>
 <li>时间复杂度O(1)</li>
 <li>返回值：1:成功, 0:失败</li>
 </ul>
-<pre><code>setnx locknx test</code></pre><p>客户端可以先set locknx然后执行对应操作，此时如果有其它客户端想要获得锁会set不成功</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">setnx locknx test<br></code></pre></td></tr></table></figure>
+
+<p>客户端可以先set locknx然后执行对应操作，此时如果有其它客户端想要获得锁会set不成功</p>
 <p>缺点：存在长期有效问题，即不会过期</p>
 <p>解决方法：使用有过期时间的指令：EXPIRE key seconds</p>
-<pre><code>setnx locknx test
-expire locknx 2</code></pre><p>缺点：若程序执行完setnx locknx就挂了，就不会设置超时时间也不会释放锁</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">setnx locknx test<br>expire locknx 2<br></code></pre></td></tr></table></figure>
+
+<p>缺点：若程序执行完setnx locknx就挂了，就不会设置超时时间也不会释放锁</p>
 <p>解决方法：使用指令 SET key value [EX seconds] [PX milliseconds] [NX|XX]</p>
 <ul>
 <li>EX second: 设置键的过期时间为 second秒</li>
@@ -166,34 +92,34 @@ expire locknx 2</code></pre><p>缺点：若程序执行完setnx locknx就挂了�
 <li>XX: 只在键已经存在时，才对键进行设置操作</li>
 <li>SET操作完成时，返回OK，否则返回nil</li>
 </ul>
-<pre><code>set locktarget 12345 ex 10 nx</code></pre><h4 id="Q-大量key同时过期的注意事项"><a href="#Q-大量key同时过期的注意事项" class="headerlink" title="Q: 大量key同时过期的注意事项"></a>Q: 大量key同时过期的注意事项</h4><p>大量key集中过期时，由于清除大量的key很耗时，会出现短暂卡顿现象</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">set locktarget 12345 ex 10 nx<br></code></pre></td></tr></table></figure>
+
+<h4 id="Q-大量key同时过期的注意事项"><a href="#Q-大量key同时过期的注意事项" class="headerlink" title="Q: 大量key同时过期的注意事项"></a>Q: 大量key同时过期的注意事项</h4><p>大量key集中过期时，由于清除大量的key很耗时，会出现短暂卡顿现象</p>
 <p>解决方案：</p>
 <ul>
 <li>在设置key过期时间的时候加一个随机偏移时间</li>
 </ul>
 <h4 id="Q-如何使用Redis做异步队列"><a href="#Q-如何使用Redis做异步队列" class="headerlink" title="Q: 如何使用Redis做异步队列"></a>Q: 如何使用Redis做异步队列</h4><p>使用List作为队列，RPUSH生产消息，LPOP消费消息</p>
-<pre><code>rpush testlist aaa
-rpush testlist bbb
-rpush testlist ccc
-lpop testlist
-lpop testlist</code></pre><p>缺点：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">rpush testlist aaa<br>rpush testlist bbb<br>rpush testlist ccc<br>lpop testlist<br>lpop testlist<br></code></pre></td></tr></table></figure>
+
+<p>缺点：</p>
 <ul>
 <li>没有等待队列里有值就直接消费</li>
 </ul>
 <p>解决：</p>
 <ol>
 <li>通过在应用层引入Sleep机制去调用LPOP重试</li>
-<li>或使用指令BLPOP key [key…] timeout: 阻塞直到队列有消息或超时<ul>
+<li>或使用指令BLPOP key [key…] timeout: 阻塞直到队列有消息或超时</li>
+</ol>
+<ul>
 <li>缺点：只能供一个消费者消费<ul>
-<li>解决：使用pub/sub主题订阅者模式<ul>
+<li>解决：使用pub&#x2F;sub主题订阅者模式<ul>
 <li>缺点：消息的发布是无状态的，无法保证可达</li>
 </ul>
 </li>
 </ul>
 </li>
 </ul>
-</li>
-</ol>
 <h2 id="数据类型"><a href="#数据类型" class="headerlink" title="数据类型"></a>数据类型</h2><p>Redis支持五种数据类型：string（字符串），hash（哈希），list（列表），set（集合）及zset(sorted set：有序集合)。</p>
 <p>Redis底层数据类型基础：</p>
 <ul>
@@ -207,28 +133,24 @@ lpop testlist</code></pre><p>缺点：</p>
 </ul>
 <h3 id="String"><a href="#String" class="headerlink" title="String"></a>String</h3><p>string 类型是二进制安全的(可以包含任何数据，比如jpg)。意思是 redis 的 string 可以包含任何数据。比如jpg图片或者序列化的对象。</p>
 <p>string 类型是 Redis 最基本的数据类型，string 类型的值最大能存储 512MB。</p>
-<pre><code>SET chinese &quot;中文&quot;
-get chinese</code></pre><h3 id="Hash"><a href="#Hash" class="headerlink" title="Hash"></a>Hash</h3><p>Redis hash 是一个键值(key=&gt;value)对集合。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">SET chinese &quot;中文&quot;<br>get chinese<br></code></pre></td></tr></table></figure>
+
+<h3 id="Hash"><a href="#Hash" class="headerlink" title="Hash"></a>Hash</h3><p>Redis hash 是一个键值(key&#x3D;&gt;value)对集合。</p>
 <p>Redis hash 是一个 string 类型的 field 和 value 的映射表，hash 特别适合用于存储对象。</p>
-<p>HMSET 设置了两个 field=&gt;value 对, HGET 获取对应 field 对应的 value。每个 hash 可以存储 232 -1 键值对（40多亿）。</p>
-<pre><code>HMSET test field1 &quot;Hello&quot; field2 &quot;World&quot;
-HGET test field1
-HGET test field2</code></pre><h3 id="List"><a href="#List" class="headerlink" title="List"></a>List</h3><p>Redis 列表是简单的字符串列表，按照插入顺序排序。你可以添加一个元素到列表的头部（左边）或者尾部（右边）。列表最多可存储 232 - 1 元素 (4294967295, 每个列表可存储40多亿)</p>
-<pre><code>lpush testList redis
-lpush testList mongodb
-lpush testList rabitmq
-lrange testList 0 10</code></pre><h3 id="Set"><a href="#Set" class="headerlink" title="Set"></a>Set</h3><p>集合是通过哈希表实现的，所以添加，删除，查找的复杂度都是O(1)。集合中最大的成员数为 232 - 1(4294967295, 每个集合可存储40多亿个成员)。</p>
+<p>HMSET 设置了两个 field&#x3D;&gt;value 对, HGET 获取对应 field 对应的 value。每个 hash 可以存储 232 -1 键值对（40多亿）。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">HMSET test field1 &quot;Hello&quot; field2 &quot;World&quot;<br>HGET test field1<br>HGET test field2<br></code></pre></td></tr></table></figure>
+
+<h3 id="List"><a href="#List" class="headerlink" title="List"></a>List</h3><p>Redis 列表是简单的字符串列表，按照插入顺序排序。你可以添加一个元素到列表的头部（左边）或者尾部（右边）。列表最多可存储 232 - 1 元素 (4294967295, 每个列表可存储40多亿)</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">lpush testList redis<br>lpush testList mongodb<br>lpush testList rabitmq<br>lrange testList 0 10<br></code></pre></td></tr></table></figure>
+
+<h3 id="Set"><a href="#Set" class="headerlink" title="Set"></a>Set</h3><p>集合是通过哈希表实现的，所以添加，删除，查找的复杂度都是O(1)。集合中最大的成员数为 232 - 1(4294967295, 每个集合可存储40多亿个成员)。</p>
 <p>添加一个 string 元素到 key 对应的 set 集合中，成功返回1，如果元素已经在集合中返回 0，如果 key 对应的 set 不存在则返回错误。</p>
-<pre><code>sadd testSet redis
-sadd testSet mongodb
-sadd testSet rabitmq
-sadd testSet rabitmq
-smembers testSet</code></pre><h3 id="zset-sorted-set：有序集合"><a href="#zset-sorted-set：有序集合" class="headerlink" title="zset(sorted set：有序集合)"></a>zset(sorted set：有序集合)</h3><p>不同的是每个元素都会关联一个double类型的分数。redis正是通过分数来为集合中的成员进行从小到大的排序。zset的成员是唯一的,但分数(score)却可以重复。</p>
-<pre><code>zadd testZset 0 redis
-zadd testZset 0.3 mongodb
-zadd testZset 0.1 rabitmq
-zadd testZset 9.9 solace
-ZRANGEBYSCORE testZset 0 1000</code></pre><h3 id="各数据结构的应用场景"><a href="#各数据结构的应用场景" class="headerlink" title="各数据结构的应用场景"></a>各数据结构的应用场景</h3><table class="reference">
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">sadd testSet redis<br>sadd testSet mongodb<br>sadd testSet rabitmq<br>sadd testSet rabitmq<br>smembers testSet<br></code></pre></td></tr></table></figure>
+
+<h3 id="zset-sorted-set：有序集合"><a href="#zset-sorted-set：有序集合" class="headerlink" title="zset(sorted set：有序集合)"></a>zset(sorted set：有序集合)</h3><p>不同的是每个元素都会关联一个double类型的分数。redis正是通过分数来为集合中的成员进行从小到大的排序。zset的成员是唯一的,但分数(score)却可以重复。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">zadd testZset 0 redis<br>zadd testZset 0.3 mongodb<br>zadd testZset 0.1 rabitmq<br>zadd testZset 9.9 solace<br>ZRANGEBYSCORE testZset 0 1000<br></code></pre></td></tr></table></figure>
+
+<h3 id="各数据结构的应用场景"><a href="#各数据结构的应用场景" class="headerlink" title="各数据结构的应用场景"></a>各数据结构的应用场景</h3><table class="reference">
 <thead><tr>
 <th>类型</th>
 <th>简介</th>
@@ -270,467 +192,574 @@ ZRANGEBYSCORE testZset 0 1000</code></pre><h3 id="各数据结构的应用场景
 </table>
 
 <h2 id="Redis-命令"><a href="#Redis-命令" class="headerlink" title="Redis 命令"></a>Redis 命令</h2><p>启动 redis 客户端：</p>
-<pre><code>redis-cli</code></pre><pre><code>PING</code></pre><p>连接到主机为 127.0.0.1，端口为 6379 ，密码为 mypass 的 redis 服务上。</p>
-<pre><code>redis-cli -h host -p port -a password
-redis-cli -h 127.0.0.1 -p 6379 -a &quot;mypass&quot;</code></pre><h3 id="Redis-keys-命令"><a href="#Redis-keys-命令" class="headerlink" title="Redis keys 命令"></a>Redis keys 命令</h3><ol>
-<li>DEL key<ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">redis-cli<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">PING<br></code></pre></td></tr></table></figure>
+
+<p>连接到主机为 127.0.0.1，端口为 6379 ，密码为 mypass 的 redis 服务上。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">redis-cli -h host -p port -a password<br>redis-cli -h 127.0.0.1 -p 6379 -a &quot;mypass&quot;<br></code></pre></td></tr></table></figure>
+
+<h3 id="Redis-keys-命令"><a href="#Redis-keys-命令" class="headerlink" title="Redis keys 命令"></a>Redis keys 命令</h3><ol>
+<li>DEL key</li>
+</ol>
+<ul>
 <li>该命令用于在 key 存在时删除 key。</li>
 </ul>
-</li>
-<li>DUMP key <ul>
+<ol start="2">
+<li>DUMP key</li>
+</ol>
+<ul>
 <li>序列化给定 key ，并返回被序列化的值。</li>
 </ul>
-</li>
-<li>EXISTS key <ul>
+<ol start="3">
+<li>EXISTS key</li>
+</ol>
+<ul>
 <li>检查给定 key 是否存在。</li>
 </ul>
-</li>
-<li>EXPIRE key seconds<ul>
+<ol start="4">
+<li>EXPIRE key seconds</li>
+</ol>
+<ul>
 <li>为给定 key 设置过期时间，以秒计。</li>
 </ul>
-</li>
-<li>EXPIREAT key timestamp <ul>
+<ol start="5">
+<li>EXPIREAT key timestamp</li>
+</ol>
+<ul>
 <li>EXPIREAT 的作用和 EXPIRE 类似，都用于为 key 设置过期时间。 不同在于 EXPIREAT 命令接受的时间参数是 UNIX 时间戳(unix timestamp)。</li>
 </ul>
-</li>
-<li>PEXPIRE key milliseconds <ul>
+<ol start="6">
+<li>PEXPIRE key milliseconds</li>
+</ol>
+<ul>
 <li>设置 key 的过期时间以毫秒计。</li>
 </ul>
-</li>
-<li>PEXPIREAT key milliseconds-timestamp <ul>
+<ol start="7">
+<li>PEXPIREAT key milliseconds-timestamp</li>
+</ol>
+<ul>
 <li>设置 key 过期时间的时间戳(unix timestamp) 以毫秒计</li>
 </ul>
-</li>
-<li>KEYS pattern <ul>
+<ol start="8">
+<li>KEYS pattern</li>
+</ol>
+<ul>
 <li>查找所有符合给定模式( pattern)的 key 。</li>
 </ul>
-</li>
-<li>MOVE key db <ul>
+<ol start="9">
+<li>MOVE key db</li>
+</ol>
+<ul>
 <li>将当前数据库的 key 移动到给定的数据库 db 当中。</li>
 </ul>
-</li>
-<li>PERSIST key <ul>
+<ol start="10">
+<li>   PERSIST key</li>
+</ol>
+<ul>
 <li>移除 key 的过期时间，key 将持久保持。</li>
 </ul>
-</li>
-<li>PTTL key <ul>
+<ol start="11">
+<li>   PTTL key</li>
+</ol>
+<ul>
 <li>以毫秒为单位返回 key 的剩余的过期时间。</li>
 </ul>
-</li>
-<li>TTL key <ul>
+<ol start="12">
+<li>   TTL key</li>
+</ol>
+<ul>
 <li>以秒为单位，返回给定 key 的剩余生存时间(TTL, time to live)。</li>
 </ul>
-</li>
-<li>RANDOMKEY <ul>
+<ol start="13">
+<li>   RANDOMKEY</li>
+</ol>
+<ul>
 <li>从当前数据库中随机返回一个 key 。</li>
 </ul>
-</li>
-<li>RENAME key newkey <ul>
+<ol start="14">
+<li>   RENAME key newkey</li>
+</ol>
+<ul>
 <li>修改 key 的名称</li>
 </ul>
-</li>
-<li>RENAMENX key newkey <ul>
+<ol start="15">
+<li>   RENAMENX key newkey</li>
+</ol>
+<ul>
 <li>仅当 newkey 不存在时，将 key 改名为 newkey 。</li>
 </ul>
-</li>
-<li>TYPE key <ul>
+<ol start="16">
+<li>   TYPE key</li>
+</ol>
+<ul>
 <li>返回 key 所储存的值的类型。</li>
 </ul>
-</li>
-</ol>
 <h3 id="Redis-字符串命令"><a href="#Redis-字符串命令" class="headerlink" title="Redis 字符串命令"></a>Redis 字符串命令</h3><ol>
-<li>SET key value <ul>
+<li>   SET key value <ul>
 <li>置指定 key 的值</li>
 </ul>
 </li>
-<li>GET key <ul>
+<li>   GET key <ul>
 <li>取指定 key 的值。</li>
 </ul>
 </li>
-<li>GETRANGE key start end <ul>
+<li>   GETRANGE key start end <ul>
 <li>回 key 中字符串值的子字符</li>
 </ul>
 </li>
-<li>GETSET key value<ul>
+<li>   GETSET key value<ul>
 <li>给定 key 的值设为 value ，并返回 key 的旧值(old value)。</li>
 </ul>
 </li>
-<li>GETBIT key offset<ul>
+<li>   GETBIT key offset<ul>
 <li>key 所储存的字符串值，获取指定偏移量上的位(bit)。</li>
 </ul>
 </li>
-<li>MGET key1 [key2..]<ul>
+<li>   MGET key1 [key2..]<ul>
 <li>取所有(一个或多个)给定 key 的值。</li>
 </ul>
 </li>
-<li>SETBIT key offset value<ul>
+<li>   SETBIT key offset value<ul>
 <li>key 所储存的字符串值，设置或清除指定偏移量上的位(bit)。</li>
 </ul>
 </li>
-<li>SETEX key seconds value<ul>
+<li>   SETEX key seconds value<ul>
 <li>值 value 关联到 key ，并将 key 的过期时间设为 seconds (以秒为单位)。</li>
 </ul>
 </li>
-<li>SETNX key value<ul>
+<li>   SETNX key value<ul>
 <li>有在 key 不存在时设置 key 的值。</li>
 </ul>
 </li>
-<li>SETRANGE key offset value<ul>
+<li>   SETRANGE key offset value</li>
+</ol>
+<ul>
 <li>value 参数覆写给定 key 所储存的字符串值，从偏移量 offset 开始。</li>
 </ul>
-</li>
-<li>STRLEN key<ul>
+<ol start="11">
+<li>   STRLEN key</li>
+</ol>
+<ul>
 <li>回 key 所储存的字符串值的长度。</li>
 </ul>
-</li>
-<li>MSET key value [key value …]<ul>
+<ol start="12">
+<li>   MSET key value [key value …]</li>
+</ol>
+<ul>
 <li>时设置一个或多个 key-value 对。</li>
 </ul>
-</li>
-<li>MSETNX key value [key value …] <ul>
+<ol start="13">
+<li>   MSETNX key value [key value …]</li>
+</ol>
+<ul>
 <li>时设置一个或多个 key-value 对，当且仅当所有给定 key 都不存在。</li>
 </ul>
-</li>
-<li>PSETEX key milliseconds value<ul>
+<ol start="14">
+<li>   PSETEX key milliseconds value</li>
+</ol>
+<ul>
 <li>个命令和 SETEX 命令相似，但它以毫秒为单位设置 key 的生存时间，而不是像 SETEX 命令那样，以秒为单位。</li>
 </ul>
-</li>
-<li>INCR key<ul>
+<ol start="15">
+<li>   INCR key</li>
+</ol>
+<ul>
 <li>key 中储存的数字值增一。</li>
 </ul>
-</li>
-<li>INCRBY key increment<ul>
+<ol start="16">
+<li>   INCRBY key increment</li>
+</ol>
+<ul>
 <li>key 所储存的值加上给定的增量值（increment） 。</li>
 </ul>
-</li>
-<li>INCRBYFLOAT key increment<ul>
+<ol start="17">
+<li>   INCRBYFLOAT key increment</li>
+</ol>
+<ul>
 <li>key 所储存的值加上给定的浮点增量值（increment） 。</li>
 </ul>
-</li>
-<li>DECR key<ul>
+<ol start="18">
+<li>   DECR key</li>
+</ol>
+<ul>
 <li>key 中储存的数字值减一。</li>
 </ul>
-</li>
-<li>DECRBY key decrement<ul>
+<ol start="19">
+<li>   DECRBY key decrement</li>
+</ol>
+<ul>
 <li>key 所储存的值减去给定的减量值（decrement） 。</li>
 </ul>
-</li>
-<li>APPEND key value<ul>
+<ol start="20">
+<li>   APPEND key value</li>
+</ol>
+<ul>
 <li>果 key 已经存在并且是一个字符串， APPEND 命令将指定的 value 追加到该 key 原来值（value）的末尾。</li>
 </ul>
-</li>
-</ol>
 <h3 id="Redis-hash-命令"><a href="#Redis-hash-命令" class="headerlink" title="Redis hash 命令"></a>Redis hash 命令</h3><ol>
-<li>HDEL key field1 [field2] <ul>
+<li>   HDEL key field1 [field2] <ul>
 <li>除一个或多个哈希表字段</li>
 </ul>
 </li>
-<li>HEXISTS key field <ul>
+<li>   HEXISTS key field <ul>
 <li>看哈希表 key 中，指定的字段是否存在。</li>
 </ul>
 </li>
-<li>HGET key field <ul>
+<li>   HGET key field <ul>
 <li>取存储在哈希表中指定字段的值。</li>
 </ul>
 </li>
-<li>HGETALL key <ul>
+<li>   HGETALL key <ul>
 <li>取在哈希表中指定 key 的所有字段和值</li>
 </ul>
 </li>
-<li>HINCRBY key field increment <ul>
+<li>   HINCRBY key field increment <ul>
 <li>哈希表 key 中的指定字段的整数值加上增量 increment 。</li>
 </ul>
 </li>
-<li>HINCRBYFLOAT key field increment <ul>
+<li>   HINCRBYFLOAT key field increment <ul>
 <li>哈希表 key 中的指定字段的浮点数值加上增量 increment 。</li>
 </ul>
 </li>
-<li>HKEYS key <ul>
+<li>   HKEYS key <ul>
 <li>取所有哈希表中的字段</li>
 </ul>
 </li>
-<li>HLEN key <ul>
+<li>   HLEN key <ul>
 <li>取哈希表中字段的数量</li>
 </ul>
 </li>
-<li>HMGET key field1 [field2] <ul>
+<li>   HMGET key field1 [field2] <ul>
 <li>取所有给定字段的值</li>
 </ul>
 </li>
-<li>HMSET key field1 value1 [field2 value2 ] <ul>
+<li>   HMSET key field1 value1 [field2 value2 ]</li>
+</ol>
+<ul>
 <li>时将多个 field-value (域-值)对设置到哈希表 key 中。</li>
 </ul>
-</li>
-<li>HSET key field value <ul>
+<ol start="11">
+<li>   HSET key field value</li>
+</ol>
+<ul>
 <li>哈希表 key 中的字段 field 的值设为 value 。</li>
 </ul>
-</li>
-<li>HSETNX key field value <ul>
+<ol start="12">
+<li>   HSETNX key field value</li>
+</ol>
+<ul>
 <li>有在字段 field 不存在时，设置哈希表字段的值。</li>
 </ul>
-</li>
-<li>HVALS key <ul>
+<ol start="13">
+<li>   HVALS key</li>
+</ol>
+<ul>
 <li>取哈希表中所有值</li>
 </ul>
-</li>
-<li>HSCAN key cursor [MATCH pattern] [COUNT count] <ul>
+<ol start="14">
+<li>   HSCAN key cursor [MATCH pattern] [COUNT count]</li>
+</ol>
+<ul>
 <li>代哈希表中的键值对。</li>
 </ul>
-</li>
-</ol>
 <h3 id="Redis-列表命令"><a href="#Redis-列表命令" class="headerlink" title="Redis 列表命令"></a>Redis 列表命令</h3><ol>
-<li>BLPOP key1 [key2 ] timeout <ul>
+<li>   BLPOP key1 [key2 ] timeout <ul>
 <li>出并获取列表的第一个元素， 如果列表没有元素会阻塞列表直到等待超时或发现可弹出元素为止。</li>
 </ul>
 </li>
-<li>BRPOP key1 [key2 ] timeout <ul>
+<li>   BRPOP key1 [key2 ] timeout <ul>
 <li>出并获取列表的最后一个元素， 如果列表没有元素会阻塞列表直到等待超时或发现可弹出元素为止。</li>
 </ul>
 </li>
-<li>BRPOPLPUSH source destination timeout <ul>
+<li>   BRPOPLPUSH source destination timeout <ul>
 <li>列表中弹出一个值，将弹出的元素插入到另外一个列表中并返回它； 如果列表没有元素会阻塞列表直到等待超时或发现可弹出元素为止。</li>
 </ul>
 </li>
-<li>LINDEX key index <ul>
+<li>   LINDEX key index <ul>
 <li>过索引获取列表中的元素</li>
 </ul>
 </li>
-<li>LINSERT key BEFORE|AFTER pivot value <ul>
+<li>   LINSERT key BEFORE|AFTER pivot value <ul>
 <li>列表的元素前或者后插入元素</li>
 </ul>
 </li>
-<li>LLEN key <ul>
+<li>   LLEN key <ul>
 <li>取列表长度</li>
 </ul>
 </li>
-<li>LPOP key <ul>
+<li>   LPOP key <ul>
 <li>出并获取列表的第一个元素</li>
 </ul>
 </li>
-<li>LPUSH key value1 [value2] <ul>
+<li>   LPUSH key value1 [value2] <ul>
 <li>一个或多个值插入到列表头部</li>
 </ul>
 </li>
-<li>LPUSHX key value <ul>
+<li>   LPUSHX key value <ul>
 <li>一个值插入到已存在的列表头部</li>
 </ul>
 </li>
-<li>LRANGE key start stop <ul>
+<li>   LRANGE key start stop</li>
+</ol>
+<ul>
 <li>取列表指定范围内的元素</li>
 </ul>
-</li>
-<li>LREM key count value <ul>
+<ol start="11">
+<li>   LREM key count value</li>
+</ol>
+<ul>
 <li>除列表元素</li>
 </ul>
-</li>
-<li>LSET key index value <ul>
+<ol start="12">
+<li>   LSET key index value</li>
+</ol>
+<ul>
 <li>过索引设置列表元素的值</li>
 </ul>
-</li>
-<li>LTRIM key start stop <ul>
+<ol start="13">
+<li>   LTRIM key start stop</li>
+</ol>
+<ul>
 <li>一个列表进行修剪(trim)，就是说，让列表只保留指定区间内的元素，不在指定区间之内的元素都将被删除。</li>
 </ul>
-</li>
-<li>RPOP key <ul>
+<ol start="14">
+<li>   RPOP key</li>
+</ol>
+<ul>
 <li>除列表的最后一个元素，返回值为移除的元素。</li>
 </ul>
-</li>
-<li>RPOPLPUSH source destination <ul>
+<ol start="15">
+<li>   RPOPLPUSH source destination</li>
+</ol>
+<ul>
 <li>除列表的最后一个元素，并将该元素添加到另一个列表并返回</li>
 </ul>
-</li>
-<li>RPUSH key value1 [value2] <ul>
+<ol start="16">
+<li>   RPUSH key value1 [value2]</li>
+</ol>
+<ul>
 <li>列表中添加一个或多个值</li>
 </ul>
-</li>
-<li>RPUSHX key value <ul>
+<ol start="17">
+<li>   RPUSHX key value</li>
+</ol>
+<ul>
 <li>已存在的列表添加值</li>
 </ul>
-</li>
-</ol>
 <h3 id="Redis-集合命令"><a href="#Redis-集合命令" class="headerlink" title="Redis 集合命令"></a>Redis 集合命令</h3><ol>
-<li>SADD key member1 [member2] <ul>
+<li>   SADD key member1 [member2] <ul>
 <li>集合添加一个或多个成员</li>
 </ul>
 </li>
-<li>SCARD key <ul>
+<li>   SCARD key <ul>
 <li>取集合的成员数</li>
 </ul>
 </li>
-<li>SDIFF key1 [key2] <ul>
+<li>   SDIFF key1 [key2] <ul>
 <li>回给定所有集合的差集</li>
 </ul>
 </li>
-<li>SDIFFSTORE destination key1 [key2] <ul>
+<li>   SDIFFSTORE destination key1 [key2] <ul>
 <li>回给定所有集合的差集并存储在 destination 中</li>
 </ul>
 </li>
-<li>SINTER key1 [key2] <ul>
+<li>   SINTER key1 [key2] <ul>
 <li>回给定所有集合的交集</li>
 </ul>
 </li>
-<li>SINTERSTORE destination key1 [key2] <ul>
+<li>   SINTERSTORE destination key1 [key2] <ul>
 <li>回给定所有集合的交集并存储在 destination 中</li>
 </ul>
 </li>
-<li>SISMEMBER key member <ul>
+<li>   SISMEMBER key member <ul>
 <li>断 member 元素是否是集合 key 的成员</li>
 </ul>
 </li>
-<li>SMEMBERS key <ul>
+<li>   SMEMBERS key <ul>
 <li>回集合中的所有成员</li>
 </ul>
 </li>
-<li>SMOVE source destination member <ul>
+<li>   SMOVE source destination member <ul>
 <li>member 元素从 source 集合移动到 destination 集合</li>
 </ul>
 </li>
-<li>SPOP key <ul>
+<li>   SPOP key</li>
+</ol>
+<ul>
 <li>除并返回集合中的一个随机元素</li>
 </ul>
-</li>
-<li>SRANDMEMBER key [count] <ul>
+<ol start="11">
+<li>   SRANDMEMBER key [count]</li>
+</ol>
+<ul>
 <li>回集合中一个或多个随机数</li>
 </ul>
-</li>
-<li>SREM key member1 [member2] <ul>
+<ol start="12">
+<li>   SREM key member1 [member2]</li>
+</ol>
+<ul>
 <li>除集合中一个或多个成员</li>
 </ul>
-</li>
-<li>SUNION key1 [key2] <ul>
+<ol start="13">
+<li>   SUNION key1 [key2]</li>
+</ol>
+<ul>
 <li>回所有给定集合的并集</li>
 </ul>
-</li>
-<li>SUNIONSTORE destination key1 [key2] <ul>
+<ol start="14">
+<li>   SUNIONSTORE destination key1 [key2]</li>
+</ol>
+<ul>
 <li>有给定集合的并集存储在 destination 集合中</li>
 </ul>
-</li>
-<li>SSCAN key cursor [MATCH pattern] [COUNT count] <ul>
+<ol start="15">
+<li>   SSCAN key cursor [MATCH pattern] [COUNT count]</li>
+</ol>
+<ul>
 <li>代集合中的元素</li>
 </ul>
-</li>
-</ol>
 <h3 id="Redis-有序集合命令"><a href="#Redis-有序集合命令" class="headerlink" title="Redis 有序集合命令"></a>Redis 有序集合命令</h3><ol>
-<li>ZADD key score1 member1 [score2 member2] <ul>
+<li>   ZADD key score1 member1 [score2 member2] <ul>
 <li>有序集合添加一个或多个成员，或者更新已存在成员的分数</li>
 </ul>
 </li>
-<li>ZCARD key <ul>
+<li>   ZCARD key <ul>
 <li>取有序集合的成员数</li>
 </ul>
 </li>
-<li>ZCOUNT key min max <ul>
+<li>   ZCOUNT key min max <ul>
 <li>算在有序集合中指定区间分数的成员数</li>
 </ul>
 </li>
-<li>ZINCRBY key increment member <ul>
+<li>   ZINCRBY key increment member <ul>
 <li>序集合中对指定成员的分数加上增量 increment</li>
 </ul>
 </li>
-<li>ZINTERSTORE destination numkeys key [key …] <ul>
+<li>   ZINTERSTORE destination numkeys key [key …] <ul>
 <li>算给定的一个或多个有序集的交集并将结果集存储在新的有序集合 key 中</li>
 </ul>
 </li>
-<li>ZLEXCOUNT key min max <ul>
+<li>   ZLEXCOUNT key min max <ul>
 <li>有序集合中计算指定字典区间内成员数量</li>
 </ul>
 </li>
-<li>ZRANGE key start stop [WITHSCORES] <ul>
+<li>   ZRANGE key start stop [WITHSCORES] <ul>
 <li>过索引区间返回有序集合指定区间内的成员</li>
 </ul>
 </li>
-<li>ZRANGEBYLEX key min max [LIMIT offset count] <ul>
+<li>   ZRANGEBYLEX key min max [LIMIT offset count] <ul>
 <li>过字典区间返回有序集合的成员</li>
 </ul>
 </li>
-<li>ZRANGEBYSCORE key min max [WITHSCORES] [LIMIT] <ul>
+<li>   ZRANGEBYSCORE key min max [WITHSCORES] [LIMIT] <ul>
 <li>过分数返回有序集合指定区间内的成员</li>
 </ul>
 </li>
-<li>ZRANK key member <ul>
+<li>   ZRANK key member</li>
+</ol>
+<ul>
 <li>回有序集合中指定成员的索引</li>
 </ul>
-</li>
-<li>ZREM key member [member …] <ul>
+<ol start="11">
+<li>   ZREM key member [member …]</li>
+</ol>
+<ul>
 <li>除有序集合中的一个或多个成员</li>
 </ul>
-</li>
-<li>ZREMRANGEBYLEX key min max <ul>
+<ol start="12">
+<li>   ZREMRANGEBYLEX key min max</li>
+</ol>
+<ul>
 <li>除有序集合中给定的字典区间的所有成员</li>
 </ul>
-</li>
-<li>ZREMRANGEBYRANK key start stop <ul>
+<ol start="13">
+<li>   ZREMRANGEBYRANK key start stop</li>
+</ol>
+<ul>
 <li>除有序集合中给定的排名区间的所有成员</li>
 </ul>
-</li>
-<li>ZREMRANGEBYSCORE key min max <ul>
+<ol start="14">
+<li>   ZREMRANGEBYSCORE key min max</li>
+</ol>
+<ul>
 <li>除有序集合中给定的分数区间的所有成员</li>
 </ul>
-</li>
-<li>ZREVRANGE key start stop [WITHSCORES] <ul>
+<ol start="15">
+<li>   ZREVRANGE key start stop [WITHSCORES]</li>
+</ol>
+<ul>
 <li>回有序集中指定区间内的成员，通过索引，分数从高到底</li>
 </ul>
-</li>
-<li>ZREVRANGEBYSCORE key max min [WITHSCORES] <ul>
+<ol start="16">
+<li>   ZREVRANGEBYSCORE key max min [WITHSCORES]</li>
+</ol>
+<ul>
 <li>回有序集中指定分数区间内的成员，分数从高到低排序</li>
 </ul>
-</li>
-<li>ZREVRANK key member <ul>
+<ol start="17">
+<li>   ZREVRANK key member</li>
+</ol>
+<ul>
 <li>回有序集合中指定成员的排名，有序集成员按分数值递减(从大到小)排序</li>
 </ul>
-</li>
-<li>ZSCORE key member <ul>
+<ol start="18">
+<li>   ZSCORE key member</li>
+</ol>
+<ul>
 <li>回有序集中，成员的分数值</li>
 </ul>
-</li>
-<li>ZUNIONSTORE destination numkeys key [key …] <ul>
+<ol start="19">
+<li>   ZUNIONSTORE destination numkeys key [key …]</li>
+</ol>
+<ul>
 <li>算给定的一个或多个有序集的并集，并存储在新的 key 中</li>
 </ul>
-</li>
-<li>ZSCAN key cursor [MATCH pattern] [COUNT count] <ul>
+<ol start="20">
+<li>   ZSCAN key cursor [MATCH pattern] [COUNT count]</li>
+</ol>
+<ul>
 <li>代有序集合中的元素（包括元素成员和元素分值）</li>
 </ul>
-</li>
-</ol>
 <h3 id="Redis-HyperLogLog-命令"><a href="#Redis-HyperLogLog-命令" class="headerlink" title="Redis HyperLogLog 命令"></a>Redis HyperLogLog 命令</h3><p>Redis HyperLogLog 是用来做基数统计的算法，HyperLogLog 的优点是，在输入元素的数量或者体积非常非常大时，计算基数所需的空间总是固定 的、并且是很小的。</p>
 <p>在 Redis 里面，每个 HyperLogLog 键只需要花费 12 KB 内存，就可以计算接近 2^64 个不同元素的基 数。这和计算基数时，元素越多耗费内存就越多的集合形成鲜明对比。</p>
 <p>但是，因为 HyperLogLog 只会根据输入元素来计算基数，而不会储存输入元素本身，所以 HyperLogLog 不能像集合那样，返回输入的各个元素。</p>
 <ol>
-<li>PFADD key element [element …] <ul>
+<li>   PFADD key element [element …] <ul>
 <li>加指定元素到 HyperLogLog 中。</li>
 </ul>
 </li>
-<li>PFCOUNT key [key …] <ul>
+<li>   PFCOUNT key [key …] <ul>
 <li>回给定 HyperLogLog 的基数估算值。</li>
 </ul>
 </li>
-<li>PFMERGE destkey sourcekey [sourcekey …] <ul>
+<li>   PFMERGE destkey sourcekey [sourcekey …] <ul>
 <li>多个 HyperLogLog 合并为一个 HyperLogLog</li>
 </ul>
 </li>
 </ol>
 <h3 id="Redis-发布订阅"><a href="#Redis-发布订阅" class="headerlink" title="Redis 发布订阅"></a>Redis 发布订阅</h3><ol>
-<li>PSUBSCRIBE pattern [pattern …] <ul>
+<li>   PSUBSCRIBE pattern [pattern …] <ul>
 <li>阅一个或多个符合给定模式的频道。</li>
 </ul>
 </li>
-<li>PUBSUB subcommand [argument [argument …]] <ul>
+<li>   PUBSUB subcommand [argument [argument …]] <ul>
 <li>看订阅与发布系统状态。</li>
 </ul>
 </li>
-<li>PUBLISH channel message <ul>
+<li>   PUBLISH channel message <ul>
 <li>信息发送到指定的频道。</li>
 </ul>
 </li>
-<li>PUNSUBSCRIBE [pattern [pattern …]] <ul>
+<li>   PUNSUBSCRIBE [pattern [pattern …]] <ul>
 <li>订所有给定模式的频道。</li>
 </ul>
 </li>
-<li>SUBSCRIBE channel [channel …] <ul>
+<li>   SUBSCRIBE channel [channel …] <ul>
 <li>阅给定的一个或多个频道的信息。</li>
 </ul>
 </li>
-<li>UNSUBSCRIBE [channel [channel …]] <ul>
+<li>   UNSUBSCRIBE [channel [channel …]] <ul>
 <li>退订给定的频道。</li>
 </ul>
 </li>
@@ -741,226 +770,275 @@ redis-cli -h 127.0.0.1 -p 6379 -a &quot;mypass&quot;</code></pre><h3 id="Redis-k
 <li>在事务执行过程，其他客户端提交的命令请求不会插入到事务执行命令序列中。</li>
 </ul>
 <ol>
-<li>DISCARD <ul>
+<li>   DISCARD <ul>
 <li>消事务，放弃执行事务块内的所有命令。</li>
 </ul>
 </li>
-<li>EXEC <ul>
+<li>   EXEC <ul>
 <li>行所有事务块内的命令。</li>
 </ul>
 </li>
-<li>MULTI <ul>
+<li>   MULTI <ul>
 <li>记一个事务块的开始。</li>
 </ul>
 </li>
-<li>UNWATCH <ul>
+<li>   UNWATCH <ul>
 <li>消 WATCH 命令对所有 key 的监视。</li>
 </ul>
 </li>
-<li>WATCH key [key …] <ul>
+<li>   WATCH key [key …] <ul>
 <li>视一个(或多个) key ，如果在事务执行之前这个(或这些) key 被其他命令所改动，那么事务将被打断。</li>
 </ul>
 </li>
 </ol>
 <h3 id="Redis-脚本命令"><a href="#Redis-脚本命令" class="headerlink" title="Redis 脚本命令"></a>Redis 脚本命令</h3><ol>
-<li>EVAL script numkeys key [key …] arg [arg …] <ul>
+<li>   EVAL script numkeys key [key …] arg [arg …] <ul>
 <li>行 Lua 脚本。</li>
 </ul>
 </li>
-<li>EVALSHA sha1 numkeys key [key …] arg [arg …] <ul>
+<li>   EVALSHA sha1 numkeys key [key …] arg [arg …] <ul>
 <li>行 Lua 脚本。</li>
 </ul>
 </li>
-<li>SCRIPT EXISTS script [script …] <ul>
+<li>   SCRIPT EXISTS script [script …] <ul>
 <li>看指定的脚本是否已经被保存在缓存当中。</li>
 </ul>
 </li>
-<li>SCRIPT FLUSH <ul>
+<li>   SCRIPT FLUSH <ul>
 <li>脚本缓存中移除所有脚本。</li>
 </ul>
 </li>
-<li>SCRIPT KILL <ul>
+<li>   SCRIPT KILL <ul>
 <li>死当前正在运行的 Lua 脚本。</li>
 </ul>
 </li>
-<li>SCRIPT LOAD script <ul>
+<li>   SCRIPT LOAD script <ul>
 <li>脚本 script 添加到脚本缓存中，但并不立即执行这个脚本。</li>
 </ul>
 </li>
 </ol>
 <h3 id="Redis-连接命令"><a href="#Redis-连接命令" class="headerlink" title="Redis 连接命令"></a>Redis 连接命令</h3><ol>
-<li>AUTH password <ul>
+<li>   AUTH password <ul>
 <li>证密码是否正确</li>
 </ul>
 </li>
-<li>ECHO message <ul>
+<li>   ECHO message <ul>
 <li>印字符串</li>
 </ul>
 </li>
-<li>PING <ul>
+<li>   PING <ul>
 <li>看服务是否运行</li>
 </ul>
 </li>
-<li>QUIT <ul>
+<li>   QUIT <ul>
 <li>闭当前连接</li>
 </ul>
 </li>
-<li>SELECT index <ul>
+<li>   SELECT index <ul>
 <li>换到指定的数据库</li>
 </ul>
 </li>
 </ol>
-<pre><code>redis 127.0.0.1:6379&gt; AUTH PASSWORD
-(error) ERR Client sent AUTH, but no password is set
-redis 127.0.0.1:6379&gt; CONFIG SET requirepass &quot;mypass&quot;
-OK
-redis 127.0.0.1:6379&gt; AUTH mypass
-Ok</code></pre><h3 id="Redis-服务器命令"><a href="#Redis-服务器命令" class="headerlink" title="Redis 服务器命令"></a>Redis 服务器命令</h3><ol>
-<li>BGREWRITEAOF <ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">redis 127.0.0.1:6379&gt; AUTH PASSWORD<br>(error) ERR Client sent AUTH, but no password is set<br>redis 127.0.0.1:6379&gt; CONFIG SET requirepass &quot;mypass&quot;<br>OK<br>redis 127.0.0.1:6379&gt; AUTH mypass<br>Ok<br></code></pre></td></tr></table></figure>
+
+<h3 id="Redis-服务器命令"><a href="#Redis-服务器命令" class="headerlink" title="Redis 服务器命令"></a>Redis 服务器命令</h3><ol>
+<li>   BGREWRITEAOF <ul>
 <li>步执行一个 AOF（AppendOnly File） 文件重写操作</li>
 </ul>
 </li>
-<li>BGSAVE <ul>
+<li>   BGSAVE <ul>
 <li>后台异步保存当前数据库的数据到磁盘</li>
 </ul>
 </li>
-<li>CLIENT KILL [ip:port] [ID client-id] <ul>
+<li>   CLIENT KILL [ip:port] [ID client-id] <ul>
 <li>闭客户端连接</li>
 </ul>
 </li>
-<li>CLIENT LIST <ul>
+<li>   CLIENT LIST <ul>
 <li>取连接到服务器的客户端连接列表</li>
 </ul>
 </li>
-<li>CLIENT GETNAME <ul>
+<li>   CLIENT GETNAME <ul>
 <li>取连接的名称</li>
 </ul>
 </li>
-<li>CLIENT PAUSE timeout <ul>
+<li>   CLIENT PAUSE timeout <ul>
 <li>指定时间内终止运行来自客户端的命令</li>
 </ul>
 </li>
-<li>CLIENT SETNAME connection-name <ul>
+<li>   CLIENT SETNAME connection-name <ul>
 <li>置当前连接的名称</li>
 </ul>
 </li>
-<li>CLUSTER SLOTS <ul>
+<li>   CLUSTER SLOTS <ul>
 <li>取集群节点的映射数组</li>
 </ul>
 </li>
-<li>COMMAND <ul>
+<li>   COMMAND <ul>
 <li>取 Redis 命令详情数组</li>
 </ul>
 </li>
-<li>COMMAND COUNT <ul>
+<li>   COMMAND COUNT</li>
+</ol>
+<ul>
 <li>取 Redis 命令总数</li>
 </ul>
-</li>
-<li>COMMAND GETKEYS <ul>
+<ol start="11">
+<li>   COMMAND GETKEYS</li>
+</ol>
+<ul>
 <li>取给定命令的所有键</li>
 </ul>
-</li>
-<li>TIME <ul>
+<ol start="12">
+<li>   TIME</li>
+</ol>
+<ul>
 <li>回当前服务器时间</li>
 </ul>
-</li>
-<li>COMMAND INFO command-name [command-name …] <ul>
+<ol start="13">
+<li>   COMMAND INFO command-name [command-name …]</li>
+</ol>
+<ul>
 <li>取指定 Redis 命令描述的数组</li>
 </ul>
-</li>
-<li>CONFIG GET parameter <ul>
+<ol start="14">
+<li>   CONFIG GET parameter</li>
+</ol>
+<ul>
 <li>取指定配置参数的值</li>
 </ul>
-</li>
-<li>CONFIG REWRITE <ul>
+<ol start="15">
+<li>   CONFIG REWRITE</li>
+</ol>
+<ul>
 <li>启动 Redis 服务器时所指定的 redis.conf 配置文件进行改写</li>
 </ul>
-</li>
-<li>CONFIG SET parameter value <ul>
+<ol start="16">
+<li>   CONFIG SET parameter value</li>
+</ol>
+<ul>
 <li>改 redis 配置参数，无需重启</li>
 </ul>
-</li>
-<li>CONFIG RESETSTAT <ul>
+<ol start="17">
+<li>   CONFIG RESETSTAT</li>
+</ol>
+<ul>
 <li>置 INFO 命令中的某些统计数据</li>
 </ul>
-</li>
-<li>DBSIZE <ul>
+<ol start="18">
+<li>   DBSIZE</li>
+</ol>
+<ul>
 <li>回当前数据库的 key 的数量</li>
 </ul>
-</li>
-<li>DEBUG OBJECT key <ul>
+<ol start="19">
+<li>   DEBUG OBJECT key</li>
+</ol>
+<ul>
 <li>取 key 的调试信息</li>
 </ul>
-</li>
-<li>DEBUG SEGFAULT <ul>
+<ol start="20">
+<li>   DEBUG SEGFAULT</li>
+</ol>
+<ul>
 <li>Redis 服务崩溃</li>
 </ul>
-</li>
-<li>FLUSHALL <ul>
+<ol start="21">
+<li>   FLUSHALL</li>
+</ol>
+<ul>
 <li>除所有数据库的所有key</li>
 </ul>
-</li>
-<li>FLUSHDB <ul>
+<ol start="22">
+<li>   FLUSHDB</li>
+</ol>
+<ul>
 <li>除当前数据库的所有key</li>
 </ul>
-</li>
-<li>INFO [section] <ul>
+<ol start="23">
+<li>   INFO [section]</li>
+</ol>
+<ul>
 <li>取 Redis 服务器的各种信息和统计数值</li>
 </ul>
-</li>
-<li>LASTSAVE <ul>
+<ol start="24">
+<li>   LASTSAVE</li>
+</ol>
+<ul>
 <li>回最近一次 Redis 成功将数据保存到磁盘上的时间，以 UNIX 时间戳格式表示</li>
 </ul>
-</li>
-<li>MONITOR <ul>
+<ol start="25">
+<li>   MONITOR</li>
+</ol>
+<ul>
 <li>时打印出 Redis 服务器接收到的命令，调试用</li>
 </ul>
-</li>
-<li>ROLE <ul>
+<ol start="26">
+<li>   ROLE</li>
+</ol>
+<ul>
 <li>回主从实例所属的角色</li>
 </ul>
-</li>
-<li>SAVE <ul>
+<ol start="27">
+<li>   SAVE</li>
+</ol>
+<ul>
 <li>步保存数据到硬盘</li>
 </ul>
-</li>
-<li>SHUTDOWN [NOSAVE] [SAVE] <ul>
+<ol start="28">
+<li>   SHUTDOWN [NOSAVE] [SAVE]</li>
+</ol>
+<ul>
 <li>步保存数据到硬盘，并关闭服务器</li>
 </ul>
-</li>
-<li>SLAVEOF host port <ul>
+<ol start="29">
+<li>   SLAVEOF host port</li>
+</ol>
+<ul>
 <li>当前服务器转变为指定服务器的从属服务器(slave server)</li>
 </ul>
-</li>
-<li>SLOWLOG subcommand [argument] <ul>
+<ol start="30">
+<li>   SLOWLOG subcommand [argument]</li>
+</ol>
+<ul>
 <li>理 redis 的慢日志</li>
 </ul>
-</li>
-<li>SYNC <ul>
+<ol start="31">
+<li>   SYNC</li>
+</ol>
+<ul>
 <li>于复制功能(replication)的内部命令</li>
 </ul>
-</li>
-</ol>
 <h3 id="Redis-数据备份与恢复"><a href="#Redis-数据备份与恢复" class="headerlink" title="Redis 数据备份与恢复"></a>Redis 数据备份与恢复</h3><p>在 redis 安装目录中创建dump.rdb文件:</p>
-<pre><code>SAVE</code></pre><p>如果需要恢复数据，只需将备份文件 (dump.rdb) 移动到 redis 安装目录并启动服务即可。获取 redis 目录可以使用 CONFIG 命令:</p>
-<pre><code>CONFIG GET dir</code></pre><h3 id="Redis-安全"><a href="#Redis-安全" class="headerlink" title="Redis 安全"></a>Redis 安全</h3><p>查看是否设置了密码验证：</p>
-<pre><code>CONFIG get requirepass</code></pre><p>默认情况下 requirepass 参数是空的，这就意味着你无需通过密码验证就可以连接到 redis 服务。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">SAVE<br></code></pre></td></tr></table></figure>
+
+<p>如果需要恢复数据，只需将备份文件 (dump.rdb) 移动到 redis 安装目录并启动服务即可。获取 redis 目录可以使用 CONFIG 命令:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">CONFIG GET dir<br></code></pre></td></tr></table></figure>
+
+<h3 id="Redis-安全"><a href="#Redis-安全" class="headerlink" title="Redis 安全"></a>Redis 安全</h3><p>查看是否设置了密码验证：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">CONFIG get requirepass<br></code></pre></td></tr></table></figure>
+
+<p>默认情况下 requirepass 参数是空的，这就意味着你无需通过密码验证就可以连接到 redis 服务。</p>
 <p>你可以通过以下命令来修改该参数：</p>
-<pre><code>CONFIG set requirepass &quot;Tuesday2&quot;</code></pre><p>登录：</p>
-<pre><code>AUTH &quot;runoob&quot;</code></pre><h2 id="性能调优"><a href="#性能调优" class="headerlink" title="性能调优"></a>性能调优</h2><p>Redis可以达到100000+QPS(Query Per Second, 每秒查询次数)</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">CONFIG set requirepass &quot;Tuesday2&quot;<br></code></pre></td></tr></table></figure>
+
+<p>登录：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">AUTH &quot;runoob&quot;<br></code></pre></td></tr></table></figure>
+
+<h2 id="性能调优"><a href="#性能调优" class="headerlink" title="性能调优"></a>性能调优</h2><p>Redis可以达到100000+QPS(Query Per Second, 每秒查询次数)</p>
 <p>原理：</p>
 <ul>
 <li>完全基于内存，绝大部分请求是纯粹的内存操作，执行效率高</li>
 <li>数据结构简单，对数据操作简单</li>
 <li>采用单线程，单线程也能处理高并发请求，避免频繁创建与销毁线程占用资源，避免了频繁的上下文切换和锁竞争</li>
-<li>使用多路I/O复用模型，非阻塞IO</li>
+<li>使用多路I&#x2F;O复用模型，非阻塞IO</li>
 </ul>
-<p>Redis采用的I/O多路复用函数：epol/kqueue/evport/select</p>
-<p>优先选择时间复杂度O(1)的I/O多路复用函数作为底层实现，若当前编译环境无其它更优的函数则默认调用select</p>
-<p>基于react设计模式监听I/O事件</p>
-<h3 id="多路I-O复用模型"><a href="#多路I-O复用模型" class="headerlink" title="多路I/O复用模型"></a>多路I/O复用模型</h3><p>FD(File Descriptor): 文件描述符</p>
+<p>Redis采用的I&#x2F;O多路复用函数：epol&#x2F;kqueue&#x2F;evport&#x2F;select</p>
+<p>优先选择时间复杂度O(1)的I&#x2F;O多路复用函数作为底层实现，若当前编译环境无其它更优的函数则默认调用select</p>
+<p>基于react设计模式监听I&#x2F;O事件</p>
+<h3 id="多路I-x2F-O复用模型"><a href="#多路I-x2F-O复用模型" class="headerlink" title="多路I&#x2F;O复用模型"></a>多路I&#x2F;O复用模型</h3><p>FD(File Descriptor): 文件描述符</p>
 <p>一个打开的文件通过唯一的描述符进行引用，该描述符是打开文件的元数据到文件本身的映射。</p>
-<h4 id="传统I-O复用模型"><a href="#传统I-O复用模型" class="headerlink" title="传统I/O复用模型"></a>传统I/O复用模型</h4><p><img src="IO&#32;model.png"></img></p>
+<h4 id="传统I-x2F-O复用模型"><a href="#传统I-x2F-O复用模型" class="headerlink" title="传统I&#x2F;O复用模型"></a>传统I&#x2F;O复用模型</h4><p><img src="IO&#32;model.png"></img></p>
 <h2 id="Redis-持久化"><a href="#Redis-持久化" class="headerlink" title="Redis 持久化"></a>Redis 持久化</h2><ol>
 <li>RDB(快照)持久化：保存某个时间点的全量数据快照</li>
 <li>AOF(Append-Only-File)持久化：保存写状态</li>
@@ -976,12 +1054,9 @@ Ok</code></pre><h3 id="Redis-服务器命令"><a href="#Redis-服务器命令" c
 <li>数据安全性低。</li>
 <li>如果当数据集较大时，可能会导致整个服务器停止服务几百毫秒，甚至是1秒钟。</li>
 </ul>
-<h4 id="RDB-快照-持久化策略通过redis-conf来配置"><a href="#RDB-快照-持久化策略通过redis-conf来配置" class="headerlink" title="RDB(快照)持久化策略通过redis.conf来配置"></a>RDB(快照)持久化策略通过redis.conf来配置</h4><pre><code>save 900 1 # 900秒内如果有1条写入指令就触发一次快照
-save 300 10 # 300秒内如果有10条写入指令就触发一次快照，若10&gt;变动数&gt;0，则会等到900秒后才备份
-save 60 10000
+<h4 id="RDB-快照-持久化策略通过redis-conf来配置"><a href="#RDB-快照-持久化策略通过redis-conf来配置" class="headerlink" title="RDB(快照)持久化策略通过redis.conf来配置"></a>RDB(快照)持久化策略通过redis.conf来配置</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">save 900 1 # 900秒内如果有1条写入指令就触发一次快照<br>save 300 10 # 300秒内如果有10条写入指令就触发一次快照，若10&gt;变动数&gt;0，则会等到900秒后才备份<br>save 60 10000<br><br>stop-writes-on-bgsave-error yes # 当备份进程出错则主进程停止写入<br>rdbcompression yes # 在备份时压缩rdb文件再保存<br></code></pre></td></tr></table></figure>
 
-stop-writes-on-bgsave-error yes # 当备份进程出错则主进程停止写入
-rdbcompression yes # 在备份时压缩rdb文件再保存</code></pre><h4 id="rdb文件操作"><a href="#rdb文件操作" class="headerlink" title="rdb文件操作"></a>rdb文件操作</h4><p>手动持久化：</p>
+<h4 id="rdb文件操作"><a href="#rdb文件操作" class="headerlink" title="rdb文件操作"></a>rdb文件操作</h4><p>手动持久化：</p>
 <ul>
 <li>SAVE：阻塞Redis的服务器进程，直到RDB文件被创建完毕</li>
 <li>BGSAVE：Fork出一个子进程来创建RDB文件，不阻塞服务器进程<ul>
@@ -990,10 +1065,9 @@ rdbcompression yes # 在备份时压缩rdb文件再保存</code></pre><h4 id="rd
 </ul>
 </li>
 </ul>
-<pre><code>SAVE
-LASTSAVE
-BGSAVE
-LASTSAVE</code></pre><p>自动持久化：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">SAVE<br>LASTSAVE<br>BGSAVE<br>LASTSAVE<br></code></pre></td></tr></table></figure>
+
+<p>自动持久化：</p>
 <ul>
 <li>根据redis.conf配置里的 <code>SAVE m n</code>定时触发(用的是BGSAVE)</li>
 <li>主从复制时，主节点自动触发</li>
@@ -1002,7 +1076,7 @@ LASTSAVE</code></pre><p>自动持久化：</p>
 </ul>
 <p>缺点：</p>
 <ul>
-<li>内存数据全部同步，数据量大时会因为I/O影响性能</li>
+<li>内存数据全部同步，数据量大时会因为I&#x2F;O影响性能</li>
 <li>可能会因为Redis挂掉而丢失当前至最近一次快照期间的数据</li>
 </ul>
 <h3 id="AOF-Append-Only-File-持久化：保存写状态"><a href="#AOF-Append-Only-File-持久化：保存写状态" class="headerlink" title="AOF(Append-Only-File)持久化：保存写状态"></a>AOF(Append-Only-File)持久化：保存写状态</h3><p>AOF持久化是以日志的形式记录服务器所处理的每一个写、删除操作，查询操作不会记录，以文本的方式记录，文件中可以看到详细的操作记录。她的出现是为了弥补RDB的不足（数据的不一致性），所以它采用日志的形式来记录每个写操作，并追加到文件中。Redis 重启的会根据日志文件的内容将写指令从前到后执行一次以完成数据的恢复工作。与快照持久化相比，AOF 持久化的实时性更好，因此已成为主流的持久化方案。 默认情况下 Redis 没有开启 AOF持久化</p>
@@ -1032,7 +1106,9 @@ LASTSAVE</code></pre><p>自动持久化：</p>
 <li>根据同步策略的不同，AOF在运行效率上往往会慢于RDB。</li>
 </ul>
 <h4 id="AOF持久化策略通过redis-conf来配置"><a href="#AOF持久化策略通过redis-conf来配置" class="headerlink" title="AOF持久化策略通过redis.conf来配置"></a>AOF持久化策略通过redis.conf来配置</h4><p>默认情况下 Redis 没有开启 AOF持久化，可以通过设置 appendonly 参数开启：</p>
-<pre><code>appendonly yes</code></pre><ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">appendonly yes<br></code></pre></td></tr></table></figure>
+
+<ul>
 <li>appendfsync always：每次有数据修改发生时都会写入AOF文件</li>
 <li>appendfsync everysec：每秒钟同步一次，将多个写命令同步到硬盘</li>
 <li>appendfsync no：让操作系统决定何时进行同步</li>
@@ -1048,11 +1124,11 @@ LASTSAVE</code></pre><p>自动持久化：</p>
 <li>缺点：文件体积大，恢复时间长</li>
 </ul>
 <h3 id="RDB-AOF混合持久化方式-Redis默认"><a href="#RDB-AOF混合持久化方式-Redis默认" class="headerlink" title="RDB-AOF混合持久化方式(Redis默认)"></a>RDB-AOF混合持久化方式(Redis默认)</h3><p>使用BGSAVE做镜像全量持久化，AOF做增量持久化</p>
-<h4 id="通过redis-conf来配置"><a href="#通过redis-conf来配置" class="headerlink" title="通过redis.conf来配置"></a>通过redis.conf来配置</h4><pre><code>appendonly yes
-appendfilename &quot;appendonly.aof&quot;
-appendfsync everysec # 配置文件写入方式：always一旦缓存区发生变化就及时写入, everysec每隔一秒写入, no由操作系统来觉得写入时间，一般是缓存区满时写入</code></pre><h2 id="Pipeline"><a href="#Pipeline" class="headerlink" title="Pipeline"></a>Pipeline</h2><ul>
+<h4 id="通过redis-conf来配置"><a href="#通过redis-conf来配置" class="headerlink" title="通过redis.conf来配置"></a>通过redis.conf来配置</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">appendonly yes<br>appendfilename &quot;appendonly.aof&quot;<br>appendfsync everysec # 配置文件写入方式：always一旦缓存区发生变化就及时写入, everysec每隔一秒写入, no由操作系统来觉得写入时间，一般是缓存区满时写入<br></code></pre></td></tr></table></figure>
+
+<h2 id="Pipeline"><a href="#Pipeline" class="headerlink" title="Pipeline"></a>Pipeline</h2><ul>
 <li>Pipeline和Linux的管道机制类似</li>
-<li>基于请求/响应模型，单个请求处理需要一一应答</li>
+<li>基于请求&#x2F;响应模型，单个请求处理需要一一应答</li>
 <li>Pipeline批量执行指令，节省多次IO往返时间</li>
 <li>有顺序依赖的指令需要分批发送</li>
 </ul>
@@ -1069,11 +1145,9 @@ appendfsync everysec # 配置文件写入方式：always一旦缓存区发生变
 <ol>
 <li>Master接收到用户的操作指令，判断是否需要传播到Slave</li>
 <li>将操作记录追加到AOF文件</li>
-<li>将操作传播到其它Slave：<ol>
+<li>将操作传播到其它Slave：</li>
 <li>对齐主从库</li>
 <li>往响应缓存写入指令</li>
-</ol>
-</li>
 <li>将缓存中的数据发送给Slave</li>
 </ol>
 <p>主从模式缺点：当Master挂掉之后将无法写入数据</p>
@@ -1111,7 +1185,7 @@ appendfsync everysec # 配置文件写入方式：always一旦缓存区发生变
 <h3 id="缓存穿透"><a href="#缓存穿透" class="headerlink" title="缓存穿透"></a>缓存穿透</h3><p>简介：缓存穿透是指缓存和数据库中都没有的数据，而用户不断发起请求，如发起为id为“-1”的数据或id为特别大不存在的数据。这时的用户很可能是攻击者，攻击会导致数据库压力过大。</p>
 <p>解决办法：</p>
 <ul>
-<li>接口层增加校验，如用户鉴权校验，id做基础校验，id&lt;=0的直接拦截；</li>
+<li>接口层增加校验，如用户鉴权校验，id做基础校验，id&lt;&#x3D;0的直接拦截；</li>
 <li>从缓存取不到的数据，在数据库中也没有取到，这时也可以将key-value对写为key-null，缓存有效时间可以设置30秒</li>
 </ul>
 <h3 id="缓存击穿"><a href="#缓存击穿" class="headerlink" title="缓存击穿"></a>缓存击穿</h3><p>简介： 缓存击穿是指缓存中没有但数据库中有的数据，这时由于并发用户特别多，同时读缓存没读到数据，又同时去数据库去取数据，引起数据库压力瞬间增大</p>
@@ -1120,476 +1194,26 @@ appendfsync everysec # 配置文件写入方式：always一旦缓存区发生变
 <li>设置热点数据永远不过期。</li>
 <li>加互斥锁</li>
 </ul>
- 
-      <!-- reward -->
-      
-      <div id="reword-out">
-        <div id="reward-btn">
-          Donate
-        </div>
-      </div>
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <div class="declare">
-      <ul class="post-copyright">
-        <li>
-          <i class="ri-copyright-line"></i>
-          <strong>Copyright： </strong>
-          Copyright is owned by the author. For commercial reprints, please contact the author for authorization. For non-commercial reprints, please indicate the source.
-        </li>
-      </ul>
-    </div>
-    
-    <footer class="article-footer">
-       
-<div class="share-btn">
-      <span class="share-sns share-outer">
-        <i class="ri-share-forward-line"></i>
-        分享
-      </span>
-      <div class="share-wrap">
-        <i class="arrow"></i>
-        <div class="share-icons">
-          
-          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
-            <i class="ri-weibo-fill"></i>
-          </a>
-          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
-            <i class="ri-wechat-fill"></i>
-          </a>
-          <a class="qq share-sns" href="javascript:;" data-type="qq">
-            <i class="ri-qq-fill"></i>
-          </a>
-          <a class="douban share-sns" href="javascript:;" data-type="douban">
-            <i class="ri-douban-line"></i>
-          </a>
-          <!-- <a class="qzone share-sns" href="javascript:;" data-type="qzone">
-            <i class="icon icon-qzone"></i>
-          </a> -->
-          
-          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
-            <i class="ri-facebook-circle-fill"></i>
-          </a>
-          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
-            <i class="ri-twitter-fill"></i>
-          </a>
-          <a class="google share-sns" href="javascript:;" data-type="google">
-            <i class="ri-google-fill"></i>
-          </a>
-        </div>
-      </div>
-</div>
-
-<div class="wx-share-modal">
-    <a class="modal-close" href="javascript:;"><i class="ri-close-circle-line"></i></a>
-    <p>扫一扫，分享到微信</p>
-    <div class="wx-qrcode">
-      <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data=http://yoursite.com/2019/12/06/Redis/" alt="微信分享二维码">
-    </div>
-</div>
-
-<div id="share-mask"></div>  
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Redis/" rel="tag">Redis</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E9%AB%98%E5%B9%B6%E5%8F%91/" rel="tag">高并发</a></li></ul>
-
-    </footer>
-  </div>
-
-   
-  <nav class="article-nav">
-    
-      <a href="/2019/12/06/JavaScript%20%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" class="article-nav-link">
-        <strong class="article-nav-caption">上一篇</strong>
-        <div class="article-nav-title">
-          
-            JavaScript 设计模式
-          
-        </div>
-      </a>
-    
-    
-      <a href="/2019/11/13/Java%E5%A4%8D%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%9A%E5%A4%9A%E7%BA%BF%E7%A8%8B%E4%B8%8E%E5%B9%B6%E5%8F%91%E7%AC%AC%E4%B8%80%E7%AB%A0/" class="article-nav-link">
-        <strong class="article-nav-caption">下一篇</strong>
-        <div class="article-nav-title">Java复习笔记：多线程与并发第一章</div>
-      </a>
-    
-  </nav>
-
-   
- 
-   
-<div class="gitalk" id="gitalk-container"></div>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.6.2/dist/gitalk.css">
-<script src="https://cdn.jsdelivr.net/npm/gitalk@1.6.2/dist/gitalk.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/blueimp-md5@2.10.0/js/md5.min.js"></script>
-<script type="text/javascript">
-  var gitalk = new Gitalk({
-    clientID: 'db290dc011893521d885',
-    clientSecret: '4cbc64d2114f4963d8090a55b508568b2f26075b',
-    repo: 'blog-comments',
-    owner: 'Sicmatr1x',
-    admin: ['Sicmatr1x'],
-    // id: location.pathname,      // Ensure uniqueness and length less than 50
-    id: md5(location.pathname),
-    distractionFreeMode: false,  // Facebook-like distraction free mode
-    pagerDirection: 'last'
-  })
-
-  gitalk.render('gitalk-container')
-</script>
-  
-</article>
-
-</section>
-      <footer class="footer">
-  <div class="outer">
-    <ul>
-      <li>
-        Copyrights &copy;
-        2015-2022
-        <i class="ri-heart-fill heart_icon"></i> Sicmatr1x
-      </li>
-    </ul>
-    <ul>
-      <li>
-        
-        
-        
-        Powered by <a href="https://hexo.io" target="_blank">Hexo</a>
-        <span class="division">|</span>
-        Theme - <a href="https://github.com/Shen-Yu/hexo-theme-ayer" target="_blank">Ayer</a>
-        
-      </li>
-    </ul>
-    <ul>
-      <li>
-        
-        
-        <span>
-  <span><i class="ri-user-3-fill"></i>Visitors:<span id="busuanzi_value_site_uv"></span></s>
-  <span class="division">|</span>
-  <span><i class="ri-eye-fill"></i>Views:<span id="busuanzi_value_page_pv"></span></span>
-</span>
-        
-      </li>
-    </ul>
-    <ul>
-      
-    </ul>
-    <ul>
-      <li>
-        <!-- cnzz统计 -->
-        
-      </li>
-    </ul>
-  </div>
-</footer>
-      <div class="float_btns">
-        <div class="totop" id="totop">
-  <i class="ri-arrow-up-line"></i>
-</div>
-
-<div class="todark" id="todark">
-  <i class="ri-moon-line"></i>
-</div>
-
-      </div>
-    </main>
-    <aside class="sidebar on">
-      <button class="navbar-toggle"></button>
-<nav class="navbar">
-  
-  <div class="logo">
-    <a href="/"><img src="/images/ayer-side.svg" alt="Sicmatr1x"></a>
-  </div>
-  
-  <ul class="nav nav-main">
-    
-    <li class="nav-item">
-      <a class="nav-item-link" href="/">主页</a>
-    </li>
-    
-    <li class="nav-item">
-      <a class="nav-item-link" href="/archives">归档</a>
-    </li>
-    
-    <li class="nav-item">
-      <a class="nav-item-link" href="/categories">分类</a>
-    </li>
-    
-    <li class="nav-item">
-      <a class="nav-item-link" href="/tags">标签</a>
-    </li>
-    
-    <li class="nav-item">
-      <a class="nav-item-link" href="/about">关于我</a>
-    </li>
-    
-  </ul>
-</nav>
-<nav class="navbar navbar-bottom">
-  <ul class="nav">
-    <li class="nav-item">
-      
-      <a class="nav-item-link nav-item-search"  title="Search">
-        <i class="ri-search-line"></i>
-      </a>
-      
-      
-      <a class="nav-item-link" target="_blank" href="/atom.xml" title="RSS Feed">
-        <i class="ri-rss-line"></i>
-      </a>
-      
-    </li>
-  </ul>
-</nav>
-<div class="search-form-wrap">
-  <div class="local-search local-search-plugin">
-  <input type="search" id="local-search-input" class="local-search-input" placeholder="Search...">
-  <div id="local-search-result" class="local-search-result"></div>
-</div>
-</div>
-    </aside>
-    <script>
-      if (window.matchMedia("(max-width: 768px)").matches) {
-        document.querySelector('.content').classList.remove('on');
-        document.querySelector('.sidebar').classList.remove('on');
-      }
-    </script>
-    <div id="mask"></div>
-
-<!-- #reward -->
-<div id="reward">
-  <span class="close"><i class="ri-close-line"></i></span>
-  <p class="reward-p"><i class="ri-cup-line"></i>请我喝杯咖啡吧~，ETH:0xDF06f28BcdD7DBb25c56f9560E184874d5FC0973</p>
-  <div class="reward-box">
-    
-    <div class="reward-item">
-      <img class="reward-img" src="/images/alipay.png">
-      <span class="reward-type">支付宝</span>
-    </div>
-    
-    
-    <div class="reward-item">
-      <img class="reward-img" src="/images/wechatpay.png">
-      <span class="reward-type">微信</span>
-    </div>
-    
-  </div>
-</div>
-    <script src="/js/jquery-2.0.3.min.js"></script>
-<script src="/js/lazyload.min.js"></script>
-<!-- Tocbot -->
-
-<script src="/js/tocbot.min.js"></script>
-<script>
-  tocbot.init({
-    tocSelector: '.tocbot',
-    contentSelector: '.article-entry',
-    headingSelector: 'h1, h2, h3, h4, h5, h6',
-    hasInnerContainers: true,
-    scrollSmooth: true,
-    scrollContainer: 'main',
-    positionFixedSelector: '.tocbot',
-    positionFixedClass: 'is-position-fixed',
-    fixedSidebarOffset: 'auto'
-  });
-</script>
-
-<script src="https://cdn.jsdelivr.net/npm/jquery-modal@0.9.2/jquery.modal.min.js"></script>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/jquery-modal@0.9.2/jquery.modal.min.css">
-<script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/js/jquery.justifiedGallery.min.js"></script>
-<script src="/dist/main.js"></script>
-<!-- ImageViewer -->
-
-<!-- Root element of PhotoSwipe. Must have class pswp. -->
-<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
-
-    <!-- Background of PhotoSwipe. 
-         It's a separate element as animating opacity is faster than rgba(). -->
-    <div class="pswp__bg"></div>
-
-    <!-- Slides wrapper with overflow:hidden. -->
-    <div class="pswp__scroll-wrap">
-
-        <!-- Container that holds slides. 
-            PhotoSwipe keeps only 3 of them in the DOM to save memory.
-            Don't modify these 3 pswp__item elements, data is added later on. -->
-        <div class="pswp__container">
-            <div class="pswp__item"></div>
-            <div class="pswp__item"></div>
-            <div class="pswp__item"></div>
-        </div>
-
-        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
-        <div class="pswp__ui pswp__ui--hidden">
-
-            <div class="pswp__top-bar">
-
-                <!--  Controls are self-explanatory. Order can be changed. -->
-
-                <div class="pswp__counter"></div>
-
-                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
-
-                <button class="pswp__button pswp__button--share" style="display:none" title="Share"></button>
-
-                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
-
-                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
-
-                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
-                <!-- element will get class pswp__preloader--active when preloader is running -->
-                <div class="pswp__preloader">
-                    <div class="pswp__preloader__icn">
-                        <div class="pswp__preloader__cut">
-                            <div class="pswp__preloader__donut"></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
-                <div class="pswp__share-tooltip"></div>
-            </div>
-
-            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
-            </button>
-
-            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
-            </button>
-
-            <div class="pswp__caption">
-                <div class="pswp__caption__center"></div>
-            </div>
-
-        </div>
-
-    </div>
-
-</div>
-
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css">
-<script src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"></script>
-
-<script>
-    function viewer_init() {
-        let pswpElement = document.querySelectorAll('.pswp')[0];
-        let $imgArr = document.querySelectorAll(('.article-entry img:not(.reward-img)'))
-
-        $imgArr.forEach(($em, i) => {
-            $em.onclick = () => {
-                // slider展开状态
-                // todo: 这样不好，后面改成状态
-                if (document.querySelector('.left-col.show')) return
-                let items = []
-                $imgArr.forEach(($em2, i2) => {
-                    let img = $em2.getAttribute('data-idx', i2)
-                    let src = $em2.getAttribute('data-target') || $em2.getAttribute('src')
-                    let title = $em2.getAttribute('alt')
-                    // 获得原图尺寸
-                    const image = new Image()
-                    image.src = src
-                    items.push({
-                        src: src,
-                        w: image.width || $em2.width,
-                        h: image.height || $em2.height,
-                        title: title
-                    })
-                })
-                var gallery = new PhotoSwipe(pswpElement, PhotoSwipeUI_Default, items, {
-                    index: parseInt(i)
-                });
-                gallery.init()
-            }
-        })
-    }
-    viewer_init()
-</script>
-
-<!-- MathJax -->
-
-<!-- Katex -->
-
-<!-- busuanzi  -->
-
-<script src="/js/busuanzi-2.3.pure.min.js"></script>
-
-<!-- ClickLove -->
-
-<!-- ClickBoom1 -->
-
-<!-- ClickBoom2 -->
-
-<!-- CodeCopy -->
-
-<link rel="stylesheet" href="/css/clipboard.css">
-<script src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js"></script>
-<script>
-  function wait(callback, seconds) {
-    var timelag = null;
-    timelag = window.setTimeout(callback, seconds);
-  }
-  !function (e, t, a) {
-    var initCopyCode = function(){
-      var copyHtml = '';
-      copyHtml += '<button class="btn-copy" data-clipboard-snippet="">';
-      copyHtml += '<i class="ri-file-copy-2-line"></i><span>COPY</span>';
-      copyHtml += '</button>';
-      $(".highlight .code pre").before(copyHtml);
-      $(".article pre code").before(copyHtml);
-      var clipboard = new ClipboardJS('.btn-copy', {
-        target: function(trigger) {
-          return trigger.nextElementSibling;
-        }
-      });
-      clipboard.on('success', function(e) {
-        let $btn = $(e.trigger);
-        $btn.addClass('copied');
-        let $icon = $($btn.find('i'));
-        $icon.removeClass('ri-file-copy-2-line');
-        $icon.addClass('ri-checkbox-circle-line');
-        let $span = $($btn.find('span'));
-        $span[0].innerText = 'COPIED';
-        
-        wait(function () { // 等待两秒钟后恢复
-          $icon.removeClass('ri-checkbox-circle-line');
-          $icon.addClass('ri-file-copy-2-line');
-          $span[0].innerText = 'COPY';
-        }, 2000);
-      });
-      clipboard.on('error', function(e) {
-        e.clearSelection();
-        let $btn = $(e.trigger);
-        $btn.addClass('copy-failed');
-        let $icon = $($btn.find('i'));
-        $icon.removeClass('ri-file-copy-2-line');
-        $icon.addClass('ri-time-line');
-        let $span = $($btn.find('span'));
-        $span[0].innerText = 'COPY FAILED';
-        
-        wait(function () { // 等待两秒钟后恢复
-          $icon.removeClass('ri-time-line');
-          $icon.addClass('ri-file-copy-2-line');
-          $span[0].innerText = 'COPY';
-        }, 2000);
-      });
-    }
-    initCopyCode();
-  }(window, document);
-</script>
-
-
-<!-- CanvasBackground -->
-
-
-    
-  </div>
-</body>
-
-</html>
+<div id="paginator"></div></div><div id="post-footer"><div id="pages"><div class="footer-link" style="width: 50%;text-align:right;border-right:1px #fe2 solid"><a href="/2019/12/06/JavaScript%20%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/">← Next JavaScript 设计模式</a></div><div class="footer-link" style="width: 50%;right:1px;border-left:1px #fe2 solid"><a href="/2019/10/30/%E6%AF%94%E7%89%B9%E5%B8%81%E6%98%AF%E4%BB%80%E4%B9%88/">比特币是什么 Prev →</a></div></div></div><div id="comments"><div class="selector"><button class="gitalk-sel"></button></div><div id="gitalk"></div></div></div><div class="bottom-btn"><div><a id="to-top" onClick="scrolls.scrolltop();" title="To Top" style="opacity: 0; display: none;">∧</a><a id="to-index" href="#toc-div" title="To Catalog">≡</a><a id="color-mode" onClick="colorMode.change()" title="Change Theme"></a></div></div></article><aside><div id="about"><a href="/" id="logo"><img src="https://ak.hypergryph.com/assets/index/images/ak/pc/faction/1.png" alt="Logo"></a><h1 id="Dr"><a href="/">Sicmatr1x</a></h1><div id="description"><p></p></div></div><div id="aside-block"><div id="toc-div"><h1>Catalog</h1><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BC%93%E5%AD%98%E4%B8%AD%E9%97%B4%E4%BB%B6-Memcache%E5%92%8CRedis%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="toc-number">1.</span> <span class="toc-text">缓存中间件 Memcache和Redis的区别</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5"><span class="toc-number">2.</span> <span class="toc-text">基本概念</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9F%BA%E6%9C%AC%E5%91%BD%E4%BB%A4"><span class="toc-number">2.1.</span> <span class="toc-text">基本命令</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6"><span class="toc-number">2.2.</span> <span class="toc-text">配置文件</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%9F%A5%E7%9C%8B%E9%85%8D%E7%BD%AE"><span class="toc-number">2.2.1.</span> <span class="toc-text">查看配置</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%BC%96%E8%BE%91%E9%85%8D%E7%BD%AE"><span class="toc-number">2.2.2.</span> <span class="toc-text">编辑配置</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Q-amp-A"><span class="toc-number">2.3.</span> <span class="toc-text">Q &amp; A</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Q-%E4%BB%8E%E6%B5%B7%E9%87%8FKey%E9%87%8C%E6%9F%A5%E8%AF%A2%E5%87%BA%E6%9F%90%E4%B8%80%E5%9B%BA%E5%AE%9A%E5%89%8D%E7%BC%80%E7%9A%84Key"><span class="toc-number">2.3.1.</span> <span class="toc-text">Q: 从海量Key里查询出某一固定前缀的Key</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Q-%E4%BD%BF%E7%94%A8Redis%E5%AE%9E%E7%8E%B0%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81"><span class="toc-number">2.3.2.</span> <span class="toc-text">Q: 使用Redis实现分布式锁</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Q-%E5%A4%A7%E9%87%8Fkey%E5%90%8C%E6%97%B6%E8%BF%87%E6%9C%9F%E7%9A%84%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9"><span class="toc-number">2.3.3.</span> <span class="toc-text">Q: 大量key同时过期的注意事项</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Q-%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8Redis%E5%81%9A%E5%BC%82%E6%AD%A5%E9%98%9F%E5%88%97"><span class="toc-number">2.3.4.</span> <span class="toc-text">Q: 如何使用Redis做异步队列</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B"><span class="toc-number">3.</span> <span class="toc-text">数据类型</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#String"><span class="toc-number">3.1.</span> <span class="toc-text">String</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Hash"><span class="toc-number">3.2.</span> <span class="toc-text">Hash</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#List"><span class="toc-number">3.3.</span> <span class="toc-text">List</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Set"><span class="toc-number">3.4.</span> <span class="toc-text">Set</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#zset-sorted-set%EF%BC%9A%E6%9C%89%E5%BA%8F%E9%9B%86%E5%90%88"><span class="toc-number">3.5.</span> <span class="toc-text">zset(sorted set：有序集合)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%90%84%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E7%9A%84%E5%BA%94%E7%94%A8%E5%9C%BA%E6%99%AF"><span class="toc-number">3.6.</span> <span class="toc-text">各数据结构的应用场景</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Redis-%E5%91%BD%E4%BB%A4"><span class="toc-number">4.</span> <span class="toc-text">Redis 命令</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Redis-keys-%E5%91%BD%E4%BB%A4"><span class="toc-number">4.1.</span> <span class="toc-text">Redis keys 命令</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Redis-%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%91%BD%E4%BB%A4"><span class="toc-number">4.2.</span> <span class="toc-text">Redis 字符串命令</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Redis-hash-%E5%91%BD%E4%BB%A4"><span class="toc-number">4.3.</span> <span class="toc-text">Redis hash 命令</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Redis-%E5%88%97%E8%A1%A8%E5%91%BD%E4%BB%A4"><span class="toc-number">4.4.</span> <span class="toc-text">Redis 列表命令</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Redis-%E9%9B%86%E5%90%88%E5%91%BD%E4%BB%A4"><span class="toc-number">4.5.</span> <span class="toc-text">Redis 集合命令</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Redis-%E6%9C%89%E5%BA%8F%E9%9B%86%E5%90%88%E5%91%BD%E4%BB%A4"><span class="toc-number">4.6.</span> <span class="toc-text">Redis 有序集合命令</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Redis-HyperLogLog-%E5%91%BD%E4%BB%A4"><span class="toc-number">4.7.</span> <span class="toc-text">Redis HyperLogLog 命令</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Redis-%E5%8F%91%E5%B8%83%E8%AE%A2%E9%98%85"><span class="toc-number">4.8.</span> <span class="toc-text">Redis 发布订阅</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Redis-%E4%BA%8B%E5%8A%A1"><span class="toc-number">4.9.</span> <span class="toc-text">Redis 事务</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Redis-%E8%84%9A%E6%9C%AC%E5%91%BD%E4%BB%A4"><span class="toc-number">4.10.</span> <span class="toc-text">Redis 脚本命令</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Redis-%E8%BF%9E%E6%8E%A5%E5%91%BD%E4%BB%A4"><span class="toc-number">4.11.</span> <span class="toc-text">Redis 连接命令</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Redis-%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%91%BD%E4%BB%A4"><span class="toc-number">4.12.</span> <span class="toc-text">Redis 服务器命令</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Redis-%E6%95%B0%E6%8D%AE%E5%A4%87%E4%BB%BD%E4%B8%8E%E6%81%A2%E5%A4%8D"><span class="toc-number">4.13.</span> <span class="toc-text">Redis 数据备份与恢复</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Redis-%E5%AE%89%E5%85%A8"><span class="toc-number">4.14.</span> <span class="toc-text">Redis 安全</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%80%A7%E8%83%BD%E8%B0%83%E4%BC%98"><span class="toc-number">5.</span> <span class="toc-text">性能调优</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A4%9A%E8%B7%AFI-x2F-O%E5%A4%8D%E7%94%A8%E6%A8%A1%E5%9E%8B"><span class="toc-number">5.1.</span> <span class="toc-text">多路I&#x2F;O复用模型</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BC%A0%E7%BB%9FI-x2F-O%E5%A4%8D%E7%94%A8%E6%A8%A1%E5%9E%8B"><span class="toc-number">5.1.1.</span> <span class="toc-text">传统I&#x2F;O复用模型</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Redis-%E6%8C%81%E4%B9%85%E5%8C%96"><span class="toc-number">6.</span> <span class="toc-text">Redis 持久化</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#RDB-%E5%BF%AB%E7%85%A7-%E6%8C%81%E4%B9%85%E5%8C%96%EF%BC%9A%E4%BF%9D%E5%AD%98%E6%9F%90%E4%B8%AA%E6%97%B6%E9%97%B4%E7%82%B9%E7%9A%84%E5%85%A8%E9%87%8F%E6%95%B0%E6%8D%AE%E5%BF%AB%E7%85%A7"><span class="toc-number">6.1.</span> <span class="toc-text">RDB(快照)持久化：保存某个时间点的全量数据快照</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BC%98%E7%82%B9%EF%BC%9A"><span class="toc-number">6.1.1.</span> <span class="toc-text">优点：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%BC%BA%E7%82%B9%EF%BC%9A"><span class="toc-number">6.1.2.</span> <span class="toc-text">缺点：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#RDB-%E5%BF%AB%E7%85%A7-%E6%8C%81%E4%B9%85%E5%8C%96%E7%AD%96%E7%95%A5%E9%80%9A%E8%BF%87redis-conf%E6%9D%A5%E9%85%8D%E7%BD%AE"><span class="toc-number">6.1.3.</span> <span class="toc-text">RDB(快照)持久化策略通过redis.conf来配置</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#rdb%E6%96%87%E4%BB%B6%E6%93%8D%E4%BD%9C"><span class="toc-number">6.1.4.</span> <span class="toc-text">rdb文件操作</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#AOF-Append-Only-File-%E6%8C%81%E4%B9%85%E5%8C%96%EF%BC%9A%E4%BF%9D%E5%AD%98%E5%86%99%E7%8A%B6%E6%80%81"><span class="toc-number">6.2.</span> <span class="toc-text">AOF(Append-Only-File)持久化：保存写状态</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#AOF%E6%8C%81%E4%B9%85%E5%8C%96%E7%AD%96%E7%95%A5%E9%80%9A%E8%BF%87redis-conf%E6%9D%A5%E9%85%8D%E7%BD%AE"><span class="toc-number">6.2.1.</span> <span class="toc-text">AOF持久化策略通过redis.conf来配置</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#AOF-vs-RDB"><span class="toc-number">6.3.</span> <span class="toc-text">AOF vs RDB</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#RDB-AOF%E6%B7%B7%E5%90%88%E6%8C%81%E4%B9%85%E5%8C%96%E6%96%B9%E5%BC%8F-Redis%E9%BB%98%E8%AE%A4"><span class="toc-number">6.4.</span> <span class="toc-text">RDB-AOF混合持久化方式(Redis默认)</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%80%9A%E8%BF%87redis-conf%E6%9D%A5%E9%85%8D%E7%BD%AE"><span class="toc-number">6.4.1.</span> <span class="toc-text">通过redis.conf来配置</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Pipeline"><span class="toc-number">7.</span> <span class="toc-text">Pipeline</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Redis%E5%90%8C%E6%AD%A5%E6%9C%BA%E5%88%B6"><span class="toc-number">8.</span> <span class="toc-text">Redis同步机制</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%BB%E4%BB%8E%E5%90%8C%E6%AD%A5"><span class="toc-number">8.1.</span> <span class="toc-text">主从同步</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Redis-Sentinel-%E5%93%A8%E5%85%B5%E6%A8%A1%E5%BC%8F"><span class="toc-number">8.2.</span> <span class="toc-text">Redis Sentinel 哨兵模式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B5%81%E8%A8%80%E5%8D%8F%E8%AE%AEGossip"><span class="toc-number">8.3.</span> <span class="toc-text">流言协议Gossip</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Redis%E9%9B%86%E7%BE%A4"><span class="toc-number">9.</span> <span class="toc-text">Redis集群</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8E%9F%E7%90%86"><span class="toc-number">9.1.</span> <span class="toc-text">原理</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%B8%80%E8%87%B4%E6%80%A7%E5%93%88%E5%B8%8C%E7%AE%97%E6%B3%95%EF%BC%9A%E5%AF%B92-32%E5%8F%96%E6%A8%A1%EF%BC%8C%E5%B0%86%E5%93%88%E5%B8%8C%E5%80%BC%E7%A9%BA%E9%97%B4%E7%BB%84%E7%BB%87%E6%88%90%E8%99%9A%E6%8B%9F%E7%9A%84%E5%9C%86%E7%8E%AF"><span class="toc-number">9.1.1.</span> <span class="toc-text">一致性哈希算法：对2^32取模，将哈希值空间组织成虚拟的圆环</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%9B%86%E6%88%90%E5%88%B0%E7%B3%BB%E7%BB%9F"><span class="toc-number">10.</span> <span class="toc-text">集成到系统</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%9B%86%E6%88%90%E5%88%B0-Java"><span class="toc-number">10.1.</span> <span class="toc-text">集成到 Java</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%9B%86%E6%88%90%E5%88%B0%E6%95%B0%E6%8D%AE%E5%BA%93"><span class="toc-number">10.2.</span> <span class="toc-text">集成到数据库</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Redis-%E8%AE%BE%E7%BD%AE%E8%BF%87%E6%9C%9F%E6%97%B6%E9%97%B4"><span class="toc-number">10.2.1.</span> <span class="toc-text">Redis 设置过期时间</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%AF%E8%83%BD%E5%87%BA%E7%8E%B0%E7%9A%84%E9%97%AE%E9%A2%98"><span class="toc-number">11.</span> <span class="toc-text">可能出现的问题</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BC%93%E5%AD%98%E9%9B%AA%E5%B4%A9"><span class="toc-number">11.1.</span> <span class="toc-text">缓存雪崩</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BC%93%E5%AD%98%E7%A9%BF%E9%80%8F"><span class="toc-number">11.2.</span> <span class="toc-text">缓存穿透</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BC%93%E5%AD%98%E5%87%BB%E7%A9%BF"><span class="toc-number">11.3.</span> <span class="toc-text">缓存击穿</span></a></li></ol></li></ol></div></div><footer><nobr>Published with <a target="_blank" rel="noopener" href="http://hexo.io">Hexo</a></nobr><wbr><nobr> Theme <a target="_blank" rel="noopener" href="https://github.com/Yue-plus/hexo-theme-arknights">Arknights</a></nobr><wbr><nobr>by <a target="_blank" rel="noopener" href="https://github.com/Yue-plus">Yue_plus</a></nobr></footer></aside></main><canvas id="canvas-dust"></canvas><script src="/js/search.js"></script><script class="pjax-js">reset=_=>{gitalk = new Gitalk({
+ clientID: '',
+ clientSecret: '',
+ repo: 'blog-comments',
+ owner: 'Sicmatr1x',
+ admin: ['Sicmatr1x'],
+ distractionFreeMode: false,
+ id: 
+});
+if (document.querySelector("#gitalk")) gitalk.render("gitalk");code.findCode();}</script><script src="/js/arknights.js"></script><script src="/js/pjax.js"></script><script>window.addEventListener("load",() => {pjax = new Pjax({
+ cacheBust: false,
+ selectors: ['title','article','#aside-block','.pjax-js'],
+ switches: {'article': Pjax.switches.sideBySide},
+ switchesOptions: {
+   'article': {
+     classNames: {
+       remove: "pjax-out",
+       add: "pjax-in"
+     }
+   }
+ }
+});
+document.addEventListener("pjax:complete", reset);reset()})</script></body></html>

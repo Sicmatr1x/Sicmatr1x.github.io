@@ -1,0 +1,424 @@
+<!DOCTYPE html><html lang="en" theme-mode="dark"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>JVM-5_虚拟机栈 | Sicmatr1x</title><script>var config = {"root":"/","search":{"preload":false,"activeHolder":"Enter here","blurHolder":"Search","noResult":"Data \"$0\" not found"},"code":{"codeInfo":"$0 - $1 lines","copy":"copy","copyFinish":"copied","expand":"expand"}}</script><script src="/js/gitalk.js"></script><script src="//unpkg.com/mermaid@9.2.2/dist/mermaid.min.js"></script><link rel="stylesheet" href="/css/arknights.css"><script>if (window.localStorage.getItem('theme-mode') === 'light') document.documentElement.setAttribute('theme-mode', 'light')
+if (window.localStorage.getItem('theme-mode') === 'dark') document.documentElement.setAttribute('theme-mode', 'dark')</script><style>@font-face {
+ font-family: BenderLight;
+ src: local('Bender'), url("/font/BenderLight.ttf");
+}
+@font-face {
+ font-family: 'JetBrains Mono';
+ src: local('JetBrains Mono'), url('/font/JetBrainsMono-Regular.woff2') format('woff2');
+}</style><meta name="generator" content="Hexo 6.3.0"><link rel="alternate" href="/atom.xml" title="Sicmatr1x" type="application/atom+xml">
+</head><body><div class="loading" style="opacity: 0"><div class="loadingBar left"></div><div class="loadingBar right"></div></div><main><header class="closed"><nav><div class="navBtn hide"><i class="navBtnIcon"><span class="navBtnIconBar"></span><span class="navBtnIconBar"></span><span class="navBtnIconBar"></span></i></div><div class="navItem" id="search-header"><span class="navItemTitle"><input autocomplete="off" autocorrect="off" autocapitalize="none" placeholder="Search" spellcheck="false" maxlength="50" type="text" id="search-input"></span></div><div class="navItem" id="search-holder"></div><div class="search-popup"><div id="search-result"></div></div><ol class="navContent"><li class="navItem"><a class="navBlock" href="/"><span class="navItemTitle">Home</span></a></li><li class="navItem" matchdata="categories,tags"><a class="navBlock" href="/archives/"><span class="navItemTitle">Archives</span></a></li></ol></nav></header><article><div id="post-bg"><div id="post-title"><h1>JVM-5_虚拟机栈</h1><div id="post-info"><span>First Post: <div class="control"><time datetime="2022-05-01T02:25:19.000Z" id="date"> 2022-05-01</time></div></span><br><span>Last Update: <div class="control"><time datetime="2023-03-05T10:43:10.354Z" id="updated"> 2023-03-05</time></div></span></div></div><hr><div id="post-content"><h3 id="堆与栈"><a href="#堆与栈" class="headerlink" title="堆与栈"></a>堆与栈</h3><p>首先栈是运行时的单位，而堆是存储的单位</p>
+<ul>
+<li>栈解决程序的运行问题，即程序如何执行，或者说如何处理数据。</li>
+<li>堆解决的是数据存储的问题，即数据怎么放，放哪里</li>
+</ul>
+<h3 id="虚拟机栈"><a href="#虚拟机栈" class="headerlink" title="虚拟机栈"></a>虚拟机栈</h3><p>Java虚拟机栈（Java Virtual Machine Stack），早期也叫Java栈。每个线程在创建时都会创建一个虚拟机栈，其内部保存一个个的栈帧（Stack Frame），对应着一次次的Java方法调用。</p>
+<ul>
+<li>每个方法执行，伴随着进栈（入栈、压栈）</li>
+<li>执行结束后的出栈工作</li>
+</ul>
+<p>对于栈来说不存在垃圾回收问题（栈存在溢出的情况）</p>
+<p>虚拟机栈包括多个栈帧，每个栈帧包括：</p>
+<ul>
+<li>局部变量表</li>
+<li>操作数栈</li>
+<li>动态链接</li>
+<li>方法返回地址</li>
+</ul>
+<h4 id="栈中可能出现的异常"><a href="#栈中可能出现的异常" class="headerlink" title="栈中可能出现的异常"></a>栈中可能出现的异常</h4><p>Java 虚拟机规范允许Java栈的大小是动态的或者是固定不变的。</p>
+<p>如果采用固定大小的Java虚拟机栈，那每一个线程的Java虚拟机栈容量可以在线程创建的时候独立选定。如果线程请求分配的栈容量超过Java虚拟机栈允许的最大容量，Java虚拟机将会抛出一个<code>StackOverflowError</code> 异常。</p>
+<p>如果Java虚拟机栈可以动态扩展，并且在尝试扩展的时候无法申请到足够的内存，或者在创建新的线程时没有足够的内存去创建对应的虚拟机栈，那Java虚拟机将会抛出一个<code>OutOfMemoryError</code> 异常。</p>
+<h4 id="设置栈内存大小"><a href="#设置栈内存大小" class="headerlink" title="设置栈内存大小"></a>设置栈内存大小</h4><p>我们可以使用参数 -Xss选项来设置线程的最大栈空间，栈的大小直接决定了函数调用的最大可达深度，可以设置到idea的VM Options里面</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs java">-Xss1m<br>-Xss1k<br></code></pre></td></tr></table></figure>
+
+<h3 id="栈的存储单位"><a href="#栈的存储单位" class="headerlink" title="栈的存储单位"></a>栈的存储单位</h3><p>每个线程都有自己的栈，栈中的数据都是以栈帧（Stack Frame）的格式存在。</p>
+<p>在这个线程上正在执行的每个方法都各自对应一个栈帧（Stack Frame）。</p>
+<p>栈帧是一个内存区块，是一个数据集，维系着方法执行过程中的各种数据信息。</p>
+<p>在一条活动线程中，一个时间点上，只会有一个活动的栈帧。即只用当前正在执行方法的栈帧(栈顶栈帧)是有效的，也被称为当前栈帧(Current Frame)，与当前栈帧相对应的方法就是当前方法（Current Method），定义这个方法的类就是当前类（Current Class）</p>
+<p>执行引擎运行的所有字节码指令只针对当前栈帧进行操作。</p>
+<p>如果在该方法中调用了其他方法，对应的新的栈帧会被创建出来，放在栈的顶端，成为新的当前帧。</p>
+<h4 id="栈运行原理"><a href="#栈运行原理" class="headerlink" title="栈运行原理"></a>栈运行原理</h4><p>不同线程中所包含的栈帧是不允许存在相互引用的，即不可能在一个栈帧之中引用另外一个线程的栈帧。</p>
+<p>如果当前方法调用了其他方法，方法返回之际，当前栈帧会传回此方法的执行结果给前一个栈帧，接着，虚拟机会丢弃当前栈帧，使得前一个栈帧重新成为当前栈帧。</p>
+<p>Java方法有两种返回函数的方式，一种是正常的函数返回，使用return指令；另外一种是抛出异常。不管使用哪种方式，都会导致栈帧被弹出。</p>
+<h4 id="栈帧的内部结构"><a href="#栈帧的内部结构" class="headerlink" title="栈帧的内部结构"></a>栈帧的内部结构</h4><p>每个栈帧中存储着：</p>
+<ul>
+<li>局部变量表（Local Variables）</li>
+<li>操作数栈（operand Stack）（或表达式栈）</li>
+<li>动态链接（DynamicLinking）（或指向运行时常量池的方法引用）</li>
+<li>方法返回地址（Return Address）（或方法正常退出或者异常退出的定义）</li>
+<li>一些附加信息</li>
+</ul>
+<img src="image-20200705204836977.png">
+
+<h3 id="局部变量表-Local-Variables"><a href="#局部变量表-Local-Variables" class="headerlink" title="局部变量表(Local Variables)"></a>局部变量表(Local Variables)</h3><p>局部变量表：Local Variables，被称之为局部变量数组或本地变量表</p>
+<p>定义为一个数字数组，主要用于存储方法参数和定义在方法体内的局部变量。这些数据类型包括各类基本数据类型、对象引用（reference），以及returnAddress类型。</p>
+<p>由于局部变量表是建立在线程的栈上，是线程的私有数据，因此不存在数据安全问题</p>
+<p>局部变量表所需的容量大小是在编译期确定下来的，并保存在方法的Code属性的maximum local variables数据项中。在方法运行期间是不会改变局部变量表的大小的。</p>
+<p>方法嵌套调用的次数由栈的大小决定。一般来说，栈越大，方法嵌套调用次数越多。对一个函数而言，它的参数和局部变量越多，使得局部变量表膨胀，它的栈帧就越大，以满足方法调用所需传递的信息增大的需求。进而函数调用就会占用更多的栈空间，导致其嵌套调用次数就会减少。</p>
+<p>局部变量表中的变量只在当前方法调用中有效。在方法执行时，虚拟机通过使用局部变量表完成参数值到参数变量列表的传递过程。当方法调用结束后，随着方法栈帧的销毁，局部变量表也会随之销毁。</p>
+<h4 id="关于Slot的理解"><a href="#关于Slot的理解" class="headerlink" title="关于Slot的理解"></a>关于Slot的理解</h4><p>参数值的存放总是在局部变量数组的index0开始，到数组长度-1的索引结束。</p>
+<p>局部变量表，最基本的存储单元是Slot（变量槽）局部变量表中存放编译期可知的各种基本数据类型（8种），引用类型（reference），returnAddress类型的变量。</p>
+<p>在局部变量表里，32位以内的类型只占用一个slot（包括returnAddress类型），64位的类型（long和double）占用两个slot。</p>
+<blockquote>
+<p>byte、short、char 在存储前被转换为int，boolean也被转换为int，0表示false，非0表示true。<br>long和double则占据两个slot。</p>
+</blockquote>
+<p>JVM会为局部变量表中的每一个Slot都分配一个访问索引，通过这个索引即可成功访问到局部变量表中指定的局部变量值</p>
+<p>当一个实例方法被调用的时候，它的方法参数和方法体内部定义的局部变量将会按照顺序被复制到局部变量表中的每一个slot上</p>
+<p>如果需要访问局部变量表中一个64bit的局部变量值时，只需要使用前一个索引即可。（比如：访问long或double类型变量）</p>
+<p>如果当前帧是由构造方法或者实例方法创建的，那么该对象引用this将会存放在index为0的slot处，其余的参数按照参数表顺序继续排列。</p>
+<img src="image-20200705212454445.png">
+
+<p>栈帧中的局部变量表中的槽位是可以重用的，如果一个局部变量过了其作用域，那么在其作用域之后申明的新的局部变就很有可能会复用过期局部变量的槽位，从而达到节省资源的目的。</p>
+<h4 id="静态变量与局部变量的对比"><a href="#静态变量与局部变量的对比" class="headerlink" title="静态变量与局部变量的对比"></a>静态变量与局部变量的对比</h4><p>变量的分类：</p>
+<ul>
+<li>按数据类型分：基本数据类型、引用数据类型</li>
+<li>按类中声明的位置分：成员变量（类变量，实例变量）、局部变量<ul>
+<li>类变量：linking的paper阶段，给类变量默认赋值，init阶段给类变量显示赋值即静态代码块</li>
+<li>实例变量：随着对象创建，会在堆空间中分配实例变量空间，并进行默认赋值</li>
+<li>局部变量：在使用前必须进行显式赋值，不然编译不通过。</li>
+</ul>
+</li>
+</ul>
+<p>我们知道类变量表有两次初始化的机会，第一次是在“准备阶段”，执行系统初始化，对类变量设置零值，另一次则是在“初始化”阶段，赋予程序员在代码中定义的初始值。</p>
+<p>和类变量初始化不同的是，局部变量表不存在系统初始化的过程，这意味着一旦定义了局部变量则必须人为的初始化，否则无法使用。</p>
+<p>在栈帧中，与性能调优关系最为密切的部分就是前面提到的局部变量表。在方法执行时，虚拟机使用局部变量表完成方法的传递。</p>
+<p>局部变量表中的变量也是重要的垃圾回收根节点，只要被局部变量表中直接或间接引用的对象都不会被回收。</p>
+<h3 id="操作数栈"><a href="#操作数栈" class="headerlink" title="操作数栈"></a>操作数栈</h3><p>操作数栈：Operand Stack</p>
+<p>每一个独立的栈帧除了包含局部变量表以外，还包含一个后进先出（Last - In - First -Out）的 <strong>操作数栈</strong>，也可以称之为 <strong>表达式栈</strong>（Expression Stack）</p>
+<p>操作数栈，在方法执行过程中，根据字节码指令，往栈中写入数据或提取数据，即入栈（push）和 出栈（pop）</p>
+<ul>
+<li>某些字节码指令将值压入操作数栈，其余的字节码指令将操作数取出栈。使用它们后再把结果压入栈</li>
+<li>比如：执行复制、交换、求和等操作</li>
+</ul>
+<img src="image-20200706090618332.png">
+
+<p>操作数栈，主要用于保存计算过程的中间结果，同时作为计算过程中变量临时的存储空间。</p>
+<p>操作数栈就是JVM执行引擎的一个工作区，当一个方法刚开始执行的时候，一个新的栈帧也会随之被创建出来，这个方法的操作数栈是空的。</p>
+<h4 id="反编译字节码解读示例"><a href="#反编译字节码解读示例" class="headerlink" title="反编译字节码解读示例"></a>反编译字节码解读示例</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">package</span> com.sicmatr1x.java;<br><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">OperandStackTest</span> &#123;<br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">testAddOperation</span><span class="hljs-params">()</span> &#123;<br>        <span class="hljs-type">byte</span> <span class="hljs-variable">i</span> <span class="hljs-operator">=</span> <span class="hljs-number">15</span>;<br>        <span class="hljs-type">int</span> <span class="hljs-variable">j</span> <span class="hljs-operator">=</span> <span class="hljs-number">8</span>;<br>        <span class="hljs-type">int</span> <span class="hljs-variable">k</span> <span class="hljs-operator">=</span> i + j;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">  Last modified 2020-8-5; size 459 bytes<br>  MD5 checksum 0c86be65af756c867db277302bedf1fa<br>  Compiled from &quot;OperandStackTest.java&quot;<br>public class com.sicmatr1x.java.OperandStackTest<br>  minor version: 0<br>  major version: 52<br>  flags: ACC_PUBLIC, ACC_SUPER<br>Constant pool:<br>   #1 = Methodref          #3.#19         // java/lang/Object.&quot;&lt;init&gt;&quot;:()V<br>   #2 = Class              #20            // com/sicmatr1x/java/OperandStackTest<br>   #3 = Class              #21            // java/lang/Object<br>   #4 = Utf8               &lt;init&gt;<br>   #5 = Utf8               ()V<br>   #6 = Utf8               Code<br>   #7 = Utf8               LineNumberTable<br>   #8 = Utf8               LocalVariableTable<br>   #9 = Utf8               this<br>  #10 = Utf8               Lcom/sicmatr1x/java/OperandStackTest;<br>  #11 = Utf8               testAddOperation<br>  #12 = Utf8               i<br>  #13 = Utf8               B<br>  #14 = Utf8               j<br>  #15 = Utf8               I<br>  #16 = Utf8               k<br>  #17 = Utf8               SourceFile<br>  #18 = Utf8               OperandStackTest.java<br>  #19 = NameAndType        #4:#5          // &quot;&lt;init&gt;&quot;:()V<br>  #20 = Utf8               com/sicmatr1x/java/OperandStackTest<br>  #21 = Utf8               java/lang/Object<br>&#123;<br>  public com.sicmatr1x.java.OperandStackTest();<br>    descriptor: ()V<br>    flags: ACC_PUBLIC<br>    Code:<br>      stack=1, locals=1, args_size=1<br>         0: aload_0<br>         1: invokespecial #1                  // Method java/lang/Object.&quot;&lt;init&gt;&quot;:()V<br>         4: return<br>      LineNumberTable:<br>        line 3: 0<br>      LocalVariableTable:<br>        Start  Length  Slot  Name   Signature<br>            0       5     0  this   Lcom/sicmatr1x/java/OperandStackTest;<br><br>  public void testAddOperation();<br>    descriptor: ()V<br>    flags: ACC_PUBLIC<br>    Code:<br>      stack=2, locals=4, args_size=1<br>         0: bipush        15<br>         2: istore_1<br>         3: bipush        8<br>         5: istore_2<br>         6: iload_1<br>         7: iload_2<br>         8: iadd<br>         9: istore_3<br>        10: return<br>      LineNumberTable:<br>        line 5: 0<br>        line 6: 3<br>        line 7: 6<br>        line 8: 10<br>      LocalVariableTable:<br>        Start  Length  Slot  Name   Signature<br>            0      11     0  this   Lcom/sicmatr1x/java/OperandStackTest;<br>            3       8     1     i   B<br>            6       5     2     j   I<br>           10       1     3     k   I<br>&#125;<br>SourceFile: &quot;OperandStackTest.java&quot;<br></code></pre></td></tr></table></figure>
+
+<p>常量池：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">Constant pool:<br>   #1 = Methodref          #3.#19         // java/lang/Object.&quot;&lt;init&gt;&quot;:()V<br>   #2 = Class              #20            // com/sicmatr1x/java/<br></code></pre></td></tr></table></figure>
+
+<p>如果操作指令有用到常量池里的常量会出现<code>#2</code>这样的表示调用的是哪个常量</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">Code:<br>  stack=1, locals=1, args_size=1<br></code></pre></td></tr></table></figure>
+
+<p>这里的<code>stack=1</code>表示操作数栈深度为1，<code>locals=4</code>表示本地变量表长度为4</p>
+<p>本地变量表：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">LocalVariableTable:<br>  Start  Length  Slot  Name   Signature<br>      0      11     0  this   Lcom/sicmatr1x/java/OperandStackTest;<br>      3       8     1     i   B<br>      6       5     2     j   I<br>     10       1     3     k   I<br></code></pre></td></tr></table></figure>
+
+<p>这里的start和length指的是该变量的生命周期对应操作指令的地址。这里因为没有double, long所以都是每个变量占用一个slot。byte, short, char, boolean都以int型来保存</p>
+<p>分析操作指令：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">0: bipush        15<br>2: istore_1<br>3: bipush        8<br>5: istore_2<br>6: iload_1<br>7: iload_2<br>8: iadd<br>9: istore_3<br>10: return<br></code></pre></td></tr></table></figure>
+
+<p>手动执行指令，因为局部变量表所需的容量大小是在编译期确定下来的，所以这里没值的用[]来占位，且省略局部变量表第0号元素<code>this</code>：</p>
+<ul>
+<li><code>0: bipush        15</code><ul>
+<li>PC寄存器: 0</li>
+<li>局部变量表: <ol>
+<li>[]</li>
+<li>[]</li>
+<li>[]</li>
+</ol>
+</li>
+<li>操作数栈 : <ul>
+<li>[]</li>
+<li>[15] &lt;-栈顶</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><code>2: istore_1</code>: i指int类型，store存放到局部变量表，_1索引位1的位置<ul>
+<li>PC寄存器: 2</li>
+<li>局部变量表: <ol>
+<li>[15]</li>
+<li>[]</li>
+<li>[]</li>
+</ol>
+</li>
+<li>操作数栈 : <ul>
+<li>[]</li>
+<li>[] &lt;-栈顶</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><code>3: bipush        8</code><ul>
+<li>PC寄存器: 3</li>
+<li>局部变量表: <ol>
+<li>[15]</li>
+<li>[]</li>
+<li>[]</li>
+</ol>
+</li>
+<li>操作数栈 : <ul>
+<li>[]</li>
+<li>[8] &lt;-栈顶</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><code>5: istore_2</code><ul>
+<li>PC寄存器: 2</li>
+<li>局部变量表: <ol>
+<li>[15]</li>
+<li>[8]</li>
+<li>[]</li>
+</ol>
+</li>
+<li>操作数栈 : <ul>
+<li>[]</li>
+<li>[] &lt;-栈顶</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><code>6: iload_1</code>: 从局部比那里表中取索引位1的数据到操作数栈<ul>
+<li>PC寄存器: 6</li>
+<li>局部变量表: <ol>
+<li>[15]</li>
+<li>[8]</li>
+<li>[]</li>
+</ol>
+</li>
+<li>操作数栈 : <ul>
+<li>[]</li>
+<li>[15] &lt;-栈顶</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><code>7: iload_2</code>: 从局部比那里表中取索引位2的数据到操作数栈<ul>
+<li>PC寄存器: 7</li>
+<li>局部变量表: <ol>
+<li>[15]</li>
+<li>[8]</li>
+<li>[]</li>
+</ol>
+</li>
+<li>操作数栈 : <ul>
+<li>[8] &lt;-栈顶</li>
+<li>[15]</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><code>8: iadd</code>: 操作数栈出栈并做加法运算<ul>
+<li>PC寄存器: 8</li>
+<li>局部变量表: <ol>
+<li>[15]</li>
+<li>[8]</li>
+<li>[]</li>
+</ol>
+</li>
+<li>操作数栈 : <ul>
+<li>[]</li>
+<li>[23] &lt;-栈顶</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><code>9: istore_3</code><ul>
+<li>PC寄存器: 9</li>
+<li>局部变量表: <ol>
+<li>[15]</li>
+<li>[8]</li>
+<li>[23]</li>
+</ol>
+</li>
+<li>操作数栈 : <ul>
+<li>[]</li>
+<li>[] &lt;-栈顶</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p>如果被调用的方法带有返回值的话，其返回值将会被压入当前栈帧的操作数栈中，并更新PC寄存器中下一条需要执行的字节码指令。</p>
+<p>操作数栈中元素的数据类型必须与字节码指令的序列严格匹配，这由编译器在编译器期间进行验证，同时在类加载过程中的类检验阶段的数据流分析阶段要再次验证。|</p>
+<p>另外，我们说Java虚拟机的解释引擎是基于栈的执行引擎，其中的栈指的就是操作数栈。</p>
+<p>最后PC寄存器的位置指向10，也就是return方法，则直接退出方法</p>
+<p>i++和++i的区别</p>
+<h3 id="栈顶缓存技术"><a href="#栈顶缓存技术" class="headerlink" title="栈顶缓存技术"></a>栈顶缓存技术</h3><p>栈顶缓存技术：Top Of Stack Cashing</p>
+<p>前面提过，基于栈式架构的虚拟机所使用的零地址指令更加紧凑，但完成一项操作的时候必然需要使用更多的入栈和出栈指令，这同时也就意味着将需要更多的指令分派（instruction dispatch）次数和内存读&#x2F;写次数。</p>
+<p>由于操作数是存储在内存中的，因此频繁地执行内存读&#x2F;写操作必然会影响执行速度。为了解决这个问题，HotSpot JVM的设计者们提出了栈顶缓存（Tos，Top-of-Stack Cashing）技术，将栈顶元素全部缓存在物理CPU的寄存器中，以此降低对内存的读&#x2F;写次数，提升执行引擎的执行效率。</p>
+<blockquote>
+<p>寄存器：指令更少，执行速度快</p>
+</blockquote>
+<h3 id="动态链接-Dynamic-Linking"><a href="#动态链接-Dynamic-Linking" class="headerlink" title="动态链接(Dynamic Linking)"></a>动态链接(Dynamic Linking)</h3><img src="image-20200706100311886.png">
+
+<blockquote>
+<p>动态链接、方法返回地址、附加信息 ： 有些地方被称为帧数据区</p>
+</blockquote>
+<p>每一个栈帧内部都包含一个指向<strong>运行时常量池</strong>中该栈帧所属方法的引用，包含这个引用的目的就是为了支持当前方法的代码能够实现动态链接（Dynamic Linking）。比如：invokedynamic指令</p>
+<p>在Java源文件被编译到字节码文件中时，所有的变量和方法引用都作为符号引用（symbolic Reference）保存在class文件的常量池里。</p>
+<p>比如：描述一个方法调用了另外的其他方法时，就是通过常量池中指向方法的符号引用来表示的，那么动态链接的作用就是为了将这些符号引用转换为调用方法的直接引用。</p>
+<img src="image-20200706101251847.png">
+
+<blockquote>
+<p>为什么需要运行时常量池？</p>
+<p>因为在不同的方法，都可能调用常量或者方法，所以只需要存储一份即可，节省了空间</p>
+<p>常量池的作用：就是为了提供一些符号和常量，便于指令的识别</p>
+</blockquote>
+<h3 id="方法调用：解析与分配"><a href="#方法调用：解析与分配" class="headerlink" title="方法调用：解析与分配"></a>方法调用：解析与分配</h3><p>在JVM中，将符号引用转换为调用方法的直接引用与方法的绑定机制相关</p>
+<h4 id="静态链接"><a href="#静态链接" class="headerlink" title="静态链接"></a>静态链接</h4><p>当一个字节码文件被装载进JVM内部时，如果被调用的目标方法在编译期可知，且运行期保持不变时，这种情况下将调用方法的符号引用转换为直接引用的过程称之为静态链接</p>
+<h4 id="动态链接"><a href="#动态链接" class="headerlink" title="动态链接"></a>动态链接</h4><p>如果被调用的方法在编译期无法被确定下来，也就是说，只能够在程序运行期将调用的方法的符号转换为直接引用，由于这种引用转换过程具备动态性，因此也被称之为动态链接。</p>
+<h3 id="绑定机制"><a href="#绑定机制" class="headerlink" title="绑定机制"></a>绑定机制</h3><p>对应的方法的绑定机制为：早期绑定（Early Binding）或静态绑定和晚期绑定（Late Binding）或动态绑定（auto binding）。绑定是一个字段、方法或者类在符号引用被替换为直接引用的过程，这仅仅发生一次。</p>
+<p>早期绑定：</p>
+<p>早期绑定就是指被调用的目标方法如果在编译期可知，且运行期保持不变时，即可将这个方法与所属的类型进行绑定，这样一来，由于明确了被调用的目标方法究竟是哪一个，因此也就可以使用静态链接的方式将符号引用转换为直接引用。</p>
+<p>晚期绑定：</p>
+<p>如果被调用的方法在编译期无法被确定下来，只能够在程序运行期根据实际的类型绑定相关的方法，这种绑定方式也就被称之为晚期绑定。</p>
+<p>Java中任何一个普通的方法其实都具备虚函数的特征，它们相当于C++语言中的虚函数（C++中则需要使用关键字virtual来显式定义）。如果在Java程序中不希望某个方法拥有虚函数的特征时，则可以使用关键字final来标记这个方法。</p>
+<p>相信大家都知道，java的三大特性：封装，继承和多态，动态绑定就和多态有关。</p>
+<p>由于继承和重写的存在，当方法中的类型为父类的时候，编译的时候不太好判断，方法到底要和哪个类绑定，也就是调用的方法依赖于隐式参数的实际类型。</p>
+<h4 id="虚方法和非虚方法"><a href="#虚方法和非虚方法" class="headerlink" title="虚方法和非虚方法"></a>虚方法和非虚方法</h4><ul>
+<li>如果方法在编译期就确定了具体的调用版本，这个版本在运行时是不可变的。这样的方法称为非虚方法。</li>
+<li>静态方法、私有方法、final方法、实例构造器、父类方法都是非虚方法。</li>
+<li>其他方法称为虚方法。</li>
+</ul>
+<blockquote>
+<p>子类对象的多态的使用前提</p>
+<ul>
+<li>类的继承关系</li>
+<li>方法的重写</li>
+</ul>
+</blockquote>
+<p>虚拟机中提供了以下几条方法调用指令：</p>
+<p>普通调用指令：</p>
+<ul>
+<li>invokestatic：调用静态方法，解析阶段确定唯一方法版本</li>
+<li>invokespecial：调用<code>&lt;init&gt;</code>方法、私有及父类方法，解析阶段确定唯一方法版本</li>
+<li>invokevirtual：调用所有虚方法</li>
+<li>invokeinterface：调用接口方法</li>
+</ul>
+<p>动态调用指令：</p>
+<ul>
+<li>invokedynamic：动态解析出需要调用的方法，然后执行</li>
+</ul>
+<p>前四条指令固化在虚拟机内部，方法的调用执行不可人为干预，而invokedynamic指令则支持由用户确定方法版本。其中invokestatic指令和invokespecial指令调用的方法称为非虚方法，其余的（final修饰的除外）称为虚方法。</p>
+<h4 id="invokednamic指令"><a href="#invokednamic指令" class="headerlink" title="invokednamic指令"></a>invokednamic指令</h4><p>JVM字节码指令集一直比较稳定，一直到Java7中才增加了一个invokedynamic指令，这是Java为了实现动态类型语言】支持而做的一种改进。</p>
+<p>但是在Java7中并没有提供直接生成invokedynamic指令的方法，需要借助ASM这种底层字节码工具来产生invokedynamic指令。直到Java8的Lambda表达式的出现，invokedynamic指令的生成，在Java中才有了直接的生成方式。</p>
+<p>Java7中增加的动态语言类型支持的本质是对Java虚拟机规范的修改，而不是对Java语言规则的修改，这一块相对来讲比较复杂，增加了虚拟机中的方法调用，最直接的受益者就是运行在Java平台的动态语言的编译器。</p>
+<h4 id="动态类型语言和静态类型语言"><a href="#动态类型语言和静态类型语言" class="headerlink" title="动态类型语言和静态类型语言"></a>动态类型语言和静态类型语言</h4><p>动态类型语言和静态类型语言两者的区别就在于对类型的检查是在编译期还是在运行期，满足前者就是静态类型语言，反之是动态类型语言。</p>
+<p>说的再直白一点就是，静态类型语言是判断变量自身的类型信息；动态类型语言是判断变量值的类型信息，变量没有类型信息，变量值才有类型信息，这是动态语言的一个重要特征。</p>
+<blockquote>
+<p>Java：String info &#x3D; “mogu blog”;     (Java是静态类型语言的，会先编译就进行类型检查)</p>
+<p>JS：var name &#x3D; “shkstart”;    var name &#x3D; 10;    （运行时才进行检查）</p>
+</blockquote>
+<h4 id="方法重写的本质"><a href="#方法重写的本质" class="headerlink" title="方法重写的本质"></a>方法重写的本质</h4><p>注意：在调用对象方法前会将这个对象的引用压入操作数栈顶，因为后面需要需到其实际类型</p>
+<p>Java 语言中方法重写的本质：</p>
+<ul>
+<li>找到操作数栈顶的第一个元素所执行的对象的实际类型，记作C。</li>
+<li>如果在类型C中找到与常量中的描述符合简单名称都相符的方法，则进行访问权限校验，如果通过则返回这个方法的直接引用，查找过程结束；如果不通过，则返回java.lang.IllegalAccessError 异常。</li>
+<li>否则，按照继承关系从下往上依次对C的各个父类进行第2步的搜索和验证过程。</li>
+<li>如果始终没有找到合适的方法，则抛出java.lang.AbstractMethodsrror异常。</li>
+</ul>
+<p>IllegalAccessError介绍：<br>程序试图访问或修改一个属性或调用一个方法，这个属性或方法，你没有权限访问。一般的，这个会引起编译器异常。这个错误如果发生在运行时，就说明一个类发生了不兼容的改变</p>
+<h4 id="方法的调用：虚方法表"><a href="#方法的调用：虚方法表" class="headerlink" title="方法的调用：虚方法表"></a>方法的调用：虚方法表</h4><p>在面向对象的编程中，会很频繁的使用到动态分派，如果在每次动态分派的过程中都要重新在类的方法元数据中搜索合适的目标的话就可能影响到执行效率。因此，为了提高性能，JVM采用在类的方法区建立一个虚方法表<br>（virtual method table）（非虚方法不会出现在表中）来实现。使用索引表来代替查找。</p>
+<p>每个类中都有一个虚方法表，表中存放着各个方法的实际入口。</p>
+<p>虚方法表是什么时候被创建的呢？</p>
+<p>虚方法表会在类加载的链接阶段被创建并开始初始化，类的变量初始值准备完成之后，JVM会把该类的方法表也初始化完毕。</p>
+<h4 id="方法返回地址"><a href="#方法返回地址" class="headerlink" title="方法返回地址"></a>方法返回地址</h4><p>存放调用该方法的pc寄存器的值。一个方法的结束，有两种方式：</p>
+<ul>
+<li><p>正常执行完成</p>
+</li>
+<li><p>出现未处理的异常，非正常退出</p>
+</li>
+</ul>
+<p>无论通过哪种方式退出，在方法退出后都返回到该方法被调用的位置。方法正常退出时，调用者的pc计数器的值作为返回地址，即调用该方法的指令的下一条指令的地址。而通过异常退出的，返回地址是要通过异常表来确定，栈帧中一般不会保存这部分信息。</p>
+<p>当一个方法开始执行后，只有两种方式可以退出这个方法：</p>
+<p>执行引擎遇到任意一个方法返回的字节码指令（return），会有返回值传递给上层的方法调用者，简称正常完成出口；</p>
+<ul>
+<li>一个方法在正常调用完成之后，究竟需要使用哪一个返回指令，还需要根据方法返回值的实际数据类型而定。</li>
+<li>在字节码指令中，返回指令包含ireturn（当返回值是boolean，byte，char，short和int类型时使用），lreturn（Long类型），freturn（Float类型），dreturn（Double类型），areturn。另外还有一个return指令声明为void的方法，实例初始化方法，类和接口的初始化方法使用。</li>
+</ul>
+<p>在方法执行过程中遇到异常（Exception），并且这个异常没有在方法内进行处理，也就是只要在本方法的异常表中没有搜索到匹配的异常处理器，就会导致方法退出，简称异常完成出口。</p>
+<p>方法执行过程中，抛出异常时的异常处理，存储在一个异常处理表，方便在发生异常的时候找到处理异常的代码</p>
+<img src="image-20200706154554604.png">
+
+<p>本质上，方法的退出就是当前栈帧出栈的过程。此时，需要恢复上层方法的局部变量表、操作数栈、将返回值压入调用者栈帧的操作数栈、设置PC寄存器值等，让调用者方法继续执行下去。</p>
+<p>正常完成出口和异常完成出口的区别在于：通过异常完成出口退出的不会给他的上层调用者产生任何的返回值。</p>
+<h2 id="一些附加信息"><a href="#一些附加信息" class="headerlink" title="一些附加信息"></a>一些附加信息</h2><p>栈帧中还允许携带与Java虚拟机实现相关的一些附加信息。例如：对程序调试提供支持的信息。</p>
+<h2 id="栈的相关面试题"><a href="#栈的相关面试题" class="headerlink" title="栈的相关面试题"></a>栈的相关面试题</h2><ul>
+<li>举例栈溢出的情况？(StackOverflowError)<ul>
+<li>通过虚拟机参数<code>-Xss</code>设置栈的大小</li>
+<li>Java 虚拟机规范允许Java栈的大小是动态的或者是固定不变的：<ul>
+<li>固定不变的：如果线程请求分配的栈容量超过Java虚拟机栈允许的最大容量，JVM将会抛出一个<code>StackOverflowError</code> 异常。</li>
+<li>动态的：如果Java虚拟机栈可以动态扩展，并且在尝试扩展的时候无法申请到足够的内存，JVM将会抛出一个<code>OutOfMemoryError</code> 异常。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>调整栈大小，就能保证不出现溢出么？<ul>
+<li>不能保证不溢出</li>
+</ul>
+</li>
+<li>分配的栈内存越大越好么？<ul>
+<li>不是，一定时间内降低了OOM概率，但是会挤占其它的线程空间，因为整个空间是有限的。</li>
+</ul>
+</li>
+<li>垃圾回收是否涉及到虚拟机栈？<ul>
+<li>不会</li>
+</ul>
+</li>
+<li>方法中定义的局部变量是否线程安全？<ul>
+<li>具体问题具体分析</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-comment">/**</span><br><span class="hljs-comment"> * 面试题</span><br><span class="hljs-comment"> * 方法中定义局部变量是否线程安全？具体情况具体分析</span><br><span class="hljs-comment"> * 何为线程安全？</span><br><span class="hljs-comment"> *    如果只有一个线程才可以操作此数据，则必是线程安全的</span><br><span class="hljs-comment"> *    如果有多个线程操作，则此数据是共享数据，如果不考虑共享机制，则为线程不安全</span><br><span class="hljs-comment"> */</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">StringBuilderTest</span> &#123;<br><br>    <span class="hljs-comment">// s1的声明方式是线程安全的</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">method01</span><span class="hljs-params">()</span> &#123;<br>        <span class="hljs-comment">// 线程内部创建的，属于局部变量</span><br>        <span class="hljs-type">StringBuilder</span> <span class="hljs-variable">s1</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">StringBuilder</span>();<br>        s1.append(<span class="hljs-string">&quot;a&quot;</span>);<br>        s1.append(<span class="hljs-string">&quot;b&quot;</span>);<br>    &#125;<br><br>    <span class="hljs-comment">// 这个也是线程不安全的，因为有返回值，有可能被其它的程序所调用</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> StringBuilder <span class="hljs-title function_">method04</span><span class="hljs-params">()</span> &#123;<br>        <span class="hljs-type">StringBuilder</span> <span class="hljs-variable">stringBuilder</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">StringBuilder</span>();<br>        stringBuilder.append(<span class="hljs-string">&quot;a&quot;</span>);<br>        stringBuilder.append(<span class="hljs-string">&quot;b&quot;</span>);<br>        <span class="hljs-keyword">return</span> stringBuilder;<br>    &#125;<br><br>    <span class="hljs-comment">// stringBuilder 是线程不安全的，操作的是共享数据</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">method02</span><span class="hljs-params">(StringBuilder stringBuilder)</span> &#123;<br>        stringBuilder.append(<span class="hljs-string">&quot;a&quot;</span>);<br>        stringBuilder.append(<span class="hljs-string">&quot;b&quot;</span>);<br>    &#125;<br><br><br>    <span class="hljs-comment">/**</span><br><span class="hljs-comment">     * 同时并发的执行，会出现线程不安全的问题</span><br><span class="hljs-comment">     */</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">method03</span><span class="hljs-params">()</span> &#123;<br>        <span class="hljs-type">StringBuilder</span> <span class="hljs-variable">stringBuilder</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">StringBuilder</span>();<br>        <span class="hljs-keyword">new</span> <span class="hljs-title class_">Thread</span>(() -&gt; &#123;<br>            stringBuilder.append(<span class="hljs-string">&quot;a&quot;</span>);<br>            stringBuilder.append(<span class="hljs-string">&quot;b&quot;</span>);<br>        &#125;, <span class="hljs-string">&quot;t1&quot;</span>).start();<br><br>        method02(stringBuilder);<br>    &#125;<br><br>    <span class="hljs-comment">// StringBuilder是线程安全的，但是String也可能线程不安全的</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> String <span class="hljs-title function_">method05</span><span class="hljs-params">()</span> &#123;<br>        <span class="hljs-type">StringBuilder</span> <span class="hljs-variable">stringBuilder</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">StringBuilder</span>();<br>        stringBuilder.append(<span class="hljs-string">&quot;a&quot;</span>);<br>        stringBuilder.append(<span class="hljs-string">&quot;b&quot;</span>);<br>        <span class="hljs-keyword">return</span> stringBuilder.toString();<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>总结一句话就是：如果对象是在内部产生，并在内部消亡，没有返回到外部，那么它就是线程安全的，反之则是线程不安全的。</p>
+<p>运行时数据区，是否存在Error和GC？</p>
+<p>运行时数据区各部分是否存在Error与GC：</p>
+<ul>
+<li>程序计数器<ul>
+<li>Error: 不存在</li>
+<li>GC: 不存在，空间小速度快，没必要</li>
+</ul>
+</li>
+<li>虚拟机栈<ul>
+<li>Error: 存在，比如<code>StackOverflowError</code></li>
+<li>GC: 不存在，只有进栈出栈，出栈即可</li>
+</ul>
+</li>
+<li>本地方法栈<ul>
+<li>Error: 存在</li>
+<li>GC: 不存在，空间小速度快，没必要</li>
+</ul>
+</li>
+<li>堆<ul>
+<li>Error: 存在，比如<code>OutOfMemoryError</code></li>
+<li>GC: 存在</li>
+</ul>
+</li>
+<li>方法区<ul>
+<li>Error: 存在</li>
+<li>GC: 存在</li>
+</ul>
+</li>
+</ul>
+<div id="paginator"></div></div><div id="post-footer"><div id="pages"><div class="footer-link" style="width: 50%;text-align:right;border-right:1px #fe2 solid"><a href="/2022/05/16/JVM-6_%E6%9C%AC%E5%9C%B0%E6%96%B9%E6%B3%95%E6%8E%A5%E5%8F%A3/">← Next JVM-6_本地方法接口</a></div><div class="footer-link" style="width: 50%;right:1px;border-left:1px #fe2 solid"><a href="/2022/04/16/JVM-4_%E7%A8%8B%E5%BA%8F%E8%AE%A1%E6%95%B0%E5%99%A8/">JVM-4_程序计数器 Prev →</a></div></div></div><div id="comments"><div class="selector"><button class="gitalk-sel"></button></div><div id="gitalk"></div></div></div><div class="bottom-btn"><div><a id="to-top" onClick="scrolls.scrolltop();" title="To Top" style="opacity: 0; display: none;">∧</a><a id="to-index" href="#toc-div" title="To Catalog">≡</a><a id="color-mode" onClick="colorMode.change()" title="Change Theme"></a></div></div></article><aside><div id="about"><a href="/" id="logo"><img src="https://ak.hypergryph.com/assets/index/images/ak/pc/faction/1.png" alt="Logo"></a><h1 id="Dr"><a href="/">Sicmatr1x</a></h1><div id="description"><p></p></div></div><div id="aside-block"><div id="toc-div"><h1>Catalog</h1><ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A0%86%E4%B8%8E%E6%A0%88"><span class="toc-number">1.</span> <span class="toc-text">堆与栈</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%99%9A%E6%8B%9F%E6%9C%BA%E6%A0%88"><span class="toc-number">2.</span> <span class="toc-text">虚拟机栈</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%A0%88%E4%B8%AD%E5%8F%AF%E8%83%BD%E5%87%BA%E7%8E%B0%E7%9A%84%E5%BC%82%E5%B8%B8"><span class="toc-number">2.1.</span> <span class="toc-text">栈中可能出现的异常</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%AE%BE%E7%BD%AE%E6%A0%88%E5%86%85%E5%AD%98%E5%A4%A7%E5%B0%8F"><span class="toc-number">2.2.</span> <span class="toc-text">设置栈内存大小</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A0%88%E7%9A%84%E5%AD%98%E5%82%A8%E5%8D%95%E4%BD%8D"><span class="toc-number">3.</span> <span class="toc-text">栈的存储单位</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%A0%88%E8%BF%90%E8%A1%8C%E5%8E%9F%E7%90%86"><span class="toc-number">3.1.</span> <span class="toc-text">栈运行原理</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%A0%88%E5%B8%A7%E7%9A%84%E5%86%85%E9%83%A8%E7%BB%93%E6%9E%84"><span class="toc-number">3.2.</span> <span class="toc-text">栈帧的内部结构</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B1%80%E9%83%A8%E5%8F%98%E9%87%8F%E8%A1%A8-Local-Variables"><span class="toc-number">4.</span> <span class="toc-text">局部变量表(Local Variables)</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%85%B3%E4%BA%8ESlot%E7%9A%84%E7%90%86%E8%A7%A3"><span class="toc-number">4.1.</span> <span class="toc-text">关于Slot的理解</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%9D%99%E6%80%81%E5%8F%98%E9%87%8F%E4%B8%8E%E5%B1%80%E9%83%A8%E5%8F%98%E9%87%8F%E7%9A%84%E5%AF%B9%E6%AF%94"><span class="toc-number">4.2.</span> <span class="toc-text">静态变量与局部变量的对比</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%93%8D%E4%BD%9C%E6%95%B0%E6%A0%88"><span class="toc-number">5.</span> <span class="toc-text">操作数栈</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8F%8D%E7%BC%96%E8%AF%91%E5%AD%97%E8%8A%82%E7%A0%81%E8%A7%A3%E8%AF%BB%E7%A4%BA%E4%BE%8B"><span class="toc-number">5.1.</span> <span class="toc-text">反编译字节码解读示例</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A0%88%E9%A1%B6%E7%BC%93%E5%AD%98%E6%8A%80%E6%9C%AF"><span class="toc-number">6.</span> <span class="toc-text">栈顶缓存技术</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8A%A8%E6%80%81%E9%93%BE%E6%8E%A5-Dynamic-Linking"><span class="toc-number">7.</span> <span class="toc-text">动态链接(Dynamic Linking)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%96%B9%E6%B3%95%E8%B0%83%E7%94%A8%EF%BC%9A%E8%A7%A3%E6%9E%90%E4%B8%8E%E5%88%86%E9%85%8D"><span class="toc-number">8.</span> <span class="toc-text">方法调用：解析与分配</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%9D%99%E6%80%81%E9%93%BE%E6%8E%A5"><span class="toc-number">8.1.</span> <span class="toc-text">静态链接</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8A%A8%E6%80%81%E9%93%BE%E6%8E%A5"><span class="toc-number">8.2.</span> <span class="toc-text">动态链接</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BB%91%E5%AE%9A%E6%9C%BA%E5%88%B6"><span class="toc-number">9.</span> <span class="toc-text">绑定机制</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%99%9A%E6%96%B9%E6%B3%95%E5%92%8C%E9%9D%9E%E8%99%9A%E6%96%B9%E6%B3%95"><span class="toc-number">9.1.</span> <span class="toc-text">虚方法和非虚方法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#invokednamic%E6%8C%87%E4%BB%A4"><span class="toc-number">9.2.</span> <span class="toc-text">invokednamic指令</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8A%A8%E6%80%81%E7%B1%BB%E5%9E%8B%E8%AF%AD%E8%A8%80%E5%92%8C%E9%9D%99%E6%80%81%E7%B1%BB%E5%9E%8B%E8%AF%AD%E8%A8%80"><span class="toc-number">9.3.</span> <span class="toc-text">动态类型语言和静态类型语言</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%96%B9%E6%B3%95%E9%87%8D%E5%86%99%E7%9A%84%E6%9C%AC%E8%B4%A8"><span class="toc-number">9.4.</span> <span class="toc-text">方法重写的本质</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%96%B9%E6%B3%95%E7%9A%84%E8%B0%83%E7%94%A8%EF%BC%9A%E8%99%9A%E6%96%B9%E6%B3%95%E8%A1%A8"><span class="toc-number">9.5.</span> <span class="toc-text">方法的调用：虚方法表</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%96%B9%E6%B3%95%E8%BF%94%E5%9B%9E%E5%9C%B0%E5%9D%80"><span class="toc-number">9.6.</span> <span class="toc-text">方法返回地址</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E4%BA%9B%E9%99%84%E5%8A%A0%E4%BF%A1%E6%81%AF"><span class="toc-number"></span> <span class="toc-text">一些附加信息</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A0%88%E7%9A%84%E7%9B%B8%E5%85%B3%E9%9D%A2%E8%AF%95%E9%A2%98"><span class="toc-number"></span> <span class="toc-text">栈的相关面试题</span></a></div></div><footer><nobr>Published with <a target="_blank" rel="noopener" href="http://hexo.io">Hexo</a></nobr><wbr><nobr> Theme <a target="_blank" rel="noopener" href="https://github.com/Yue-plus/hexo-theme-arknights">Arknights</a></nobr><wbr><nobr>by <a target="_blank" rel="noopener" href="https://github.com/Yue-plus">Yue_plus</a></nobr></footer></aside></main><canvas id="canvas-dust"></canvas><script src="/js/search.js"></script><script class="pjax-js">reset=_=>{gitalk = new Gitalk({
+ clientID: '',
+ clientSecret: '',
+ repo: 'blog-comments',
+ owner: 'Sicmatr1x',
+ admin: ['Sicmatr1x'],
+ distractionFreeMode: false,
+ id: 
+});
+if (document.querySelector("#gitalk")) gitalk.render("gitalk");code.findCode();}</script><script src="/js/arknights.js"></script><script src="/js/pjax.js"></script><script>window.addEventListener("load",() => {pjax = new Pjax({
+ cacheBust: false,
+ selectors: ['title','article','#aside-block','.pjax-js'],
+ switches: {'article': Pjax.switches.sideBySide},
+ switchesOptions: {
+   'article': {
+     classNames: {
+       remove: "pjax-out",
+       add: "pjax-in"
+     }
+   }
+ }
+});
+document.addEventListener("pjax:complete", reset);reset()})</script></body></html>

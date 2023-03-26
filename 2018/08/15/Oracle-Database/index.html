@@ -1,103 +1,13 @@
-<!DOCTYPE html>
-
-
-<html lang="en">
-
-
-<head>
-  <meta charset="utf-8" />
-    
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-  <title>
-    Oracle Database |  
-  </title>
-  <meta name="generator" content="hexo-theme-ayer">
-  
-  <link rel="shortcut icon" href="/favicon.ico" />
-  
-  <link rel="stylesheet" href="/dist/main.css">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Shen-Yu/cdn/css/remixicon.min.css">
-  <link rel="stylesheet" href="/css/custom.css">
-  
-  <script src="https://cdn.jsdelivr.net/npm/pace-js@1.0.2/pace.min.js"></script>
-  
-  
-
-  
-
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@latest/build/styles/vs2015.min.css"><!- highlight.js ->
-  <script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@latest/build/highlight.min.js"></script>
-  <script>
-    hljs.initHighlightingOnLoad();
-  </script>
-</head>
-
-</html>
-
-
-<body>
-  <div id="app">
-    
-      
-    <main class="content on">
-      <section class="outer">
-  <article
-  id="post-Oracle-Database"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h1 class="article-title sea-center" style="border-left:0" itemprop="name">
-  Oracle Database
-</h1>
- 
-
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2018/08/15/Oracle-Database/" class="article-date">
-  <time datetime="2018-08-15T14:36:46.000Z" itemprop="datePublished">2018-08-15</time>
-</a> 
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E5%90%8E%E7%AB%AF/">后端</a>
-  </div>
-
-  
-<div class="word_count">
-    <span class="post-time">
-        <span class="post-meta-item-icon">
-            <i class="ri-quill-pen-line"></i>
-            <span class="post-meta-item-text"> Word count:</span>
-            <span class="post-count">5.3k</span>
-        </span>
-    </span>
-
-    <span class="post-time">
-        &nbsp; | &nbsp;
-        <span class="post-meta-item-icon">
-            <i class="ri-book-open-line"></i>
-            <span class="post-meta-item-text"> Reading time≈</span>
-            <span class="post-count">20 min</span>
-        </span>
-    </span>
-</div>
- 
-    </div>
-      
-    <div class="tocbot"></div>
-
-
-
-
-  
-    <div class="article-entry" itemprop="articleBody">
-       
-  <h2 id="数据库文件"><a href="#数据库文件" class="headerlink" title="数据库文件"></a>数据库文件</h2><ol>
+<!DOCTYPE html><html lang="en" theme-mode="dark"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Oracle Database | Sicmatr1x</title><script>var config = {"root":"/","search":{"preload":false,"activeHolder":"Enter here","blurHolder":"Search","noResult":"Data \"$0\" not found"},"code":{"codeInfo":"$0 - $1 lines","copy":"copy","copyFinish":"copied","expand":"expand"}}</script><script src="/js/gitalk.js"></script><script src="//unpkg.com/mermaid@9.2.2/dist/mermaid.min.js"></script><link rel="stylesheet" href="/css/arknights.css"><script>if (window.localStorage.getItem('theme-mode') === 'light') document.documentElement.setAttribute('theme-mode', 'light')
+if (window.localStorage.getItem('theme-mode') === 'dark') document.documentElement.setAttribute('theme-mode', 'dark')</script><style>@font-face {
+ font-family: BenderLight;
+ src: local('Bender'), url("/font/BenderLight.ttf");
+}
+@font-face {
+ font-family: 'JetBrains Mono';
+ src: local('JetBrains Mono'), url('/font/JetBrainsMono-Regular.woff2') format('woff2');
+}</style><meta name="generator" content="Hexo 6.3.0"><link rel="alternate" href="/atom.xml" title="Sicmatr1x" type="application/atom+xml">
+</head><body><div class="loading" style="opacity: 0"><div class="loadingBar left"></div><div class="loadingBar right"></div></div><main><header class="closed"><nav><div class="navBtn hide"><i class="navBtnIcon"><span class="navBtnIconBar"></span><span class="navBtnIconBar"></span><span class="navBtnIconBar"></span></i></div><div class="navItem" id="search-header"><span class="navItemTitle"><input autocomplete="off" autocorrect="off" autocapitalize="none" placeholder="Search" spellcheck="false" maxlength="50" type="text" id="search-input"></span></div><div class="navItem" id="search-holder"></div><div class="search-popup"><div id="search-result"></div></div><ol class="navContent"><li class="navItem"><a class="navBlock" href="/"><span class="navItemTitle">Home</span></a></li><li class="navItem" matchdata="categories,tags"><a class="navBlock" href="/archives/"><span class="navItemTitle">Archives</span></a></li></ol></nav></header><article><div id="post-bg"><div id="post-title"><h1>Oracle Database</h1><div id="post-info"><span>First Post: <div class="control"><time datetime="2018-08-15T14:36:46.000Z" id="date"> 2018-08-15</time></div></span><br><span>Last Update: <div class="control"><time datetime="2020-05-12T07:58:09.000Z" id="updated"> 2020-05-12</time></div></span></div></div><hr><div id="post-content"><h2 id="数据库文件"><a href="#数据库文件" class="headerlink" title="数据库文件"></a>数据库文件</h2><ol>
 <li>Data files</li>
 <li>Control files:记录了当前数据库的结构信息,也包含数据文件及日志文件的信息以及相关的状态,归档信息等等在参数文件中描述其位置</li>
 <li>Online redo log files(联机重做日志):记录了数据的所有变化,提供恢复机制,可以被分组管理</li>
@@ -121,8 +31,8 @@
 <p>专用服务器连接模式，UGA在PGA中分配。</p>
 <p>共享服务器连接模式，UGA在SGA中的Large Pool中分配。</p>
 <h3 id="Program-Global-Area-PGA"><a href="#Program-Global-Area-PGA" class="headerlink" title="Program Global Area(PGA)"></a>Program Global Area(PGA)</h3><p>PGA包含有关单个服务器进程或单个后台进程的数据和控制信息。PGA在创建进程时分配，并在终止进程时回收。与由若干个进程共享的SGA相比，PGA是仅供一个进程使用的区。</p>
-<p>如果采用专用服务器连接模式，PGA中包含UGA，其他区域用来排序，散列和位图合并。<br>PGA=UGA+CGA(call global area 调用全局区=排序区+散列区+位图合并区 )</p>
-<p>UGA=User session+Cursor state(即private SQL区)+SORT_AREA_RETAINED</p>
+<p>如果采用专用服务器连接模式，PGA中包含UGA，其他区域用来排序，散列和位图合并。<br>PGA&#x3D;UGA+CGA(call global area 调用全局区&#x3D;排序区+散列区+位图合并区 )</p>
+<p>UGA&#x3D;User session+Cursor state(即private SQL区)+SORT_AREA_RETAINED</p>
 <p>User session区：会话信息区，存放用户权限，角色，性能统计等信息</p>
 <p>CURSOR（私有SQL 区）就是一个句柄，即指针或引用，指向sql私有区（一个用户的能打开的cursor数由参数open_cursors决定）。然后sql私有区有指针指向共享sql区。私有sql区有两个部分</p>
 <p>固定部分：绑定信息，数据结构信息，指针。随session的创建而创建，结束而释放（pmon）</p>
@@ -133,8 +43,8 @@
 <li>library cache （库高速缓存区）：存储已经解析过的sql的信息。</li>
 <li>dictionary cache（数据字典缓存）：存放系统参数。</li>
 <li>Result Cache （结果高速缓存）：用于存储和检索高速缓存的结果。<ul>
-<li>SQL query result cache :  将SQL语句的查询结果直接存储在 SQL query result cache中，再次执行相同语句的时候会直接调用内存中的结果集，减少I/O的消耗。</li>
-<li>PL/SQL function result cache :  将PL/SQL函数的正确执行的结果存放在  PL/SQL Function Result Cache中，  再次执行相同函数时直接调用内存中的结果集 ，减少IO消耗  。</li>
+<li>SQL query result cache :  将SQL语句的查询结果直接存储在 SQL query result cache中，再次执行相同语句的时候会直接调用内存中的结果集，减少I&#x2F;O的消耗。</li>
+<li>PL&#x2F;SQL function result cache :  将PL&#x2F;SQL函数的正确执行的结果存放在  PL&#x2F;SQL Function Result Cache中，  再次执行相同函数时直接调用内存中的结果集 ，减少IO消耗  。</li>
 </ul>
 </li>
 </ol>
@@ -146,7 +56,7 @@
 <li>每3秒一次</li>
 <li>请求提交 commit</li>
 <li>要求 LGWR 切换日志</li>
-<li>重做缓冲区 1/3 满，或者包含了 1MB的缓存重做日志数据</li>
+<li>重做缓冲区 1&#x2F;3 满，或者包含了 1MB的缓存重做日志数据</li>
 </ol>
 </li>
 <li><p>Block buffer cache（块缓冲区）：将脏数据写入磁盘之前或者从磁盘读取数据块之后，这些数据会存放在Block buffer cache 中。为了根据不同的需求保留数据，oracle把这块内存分成了三个部分</p>
@@ -165,11 +75,11 @@
 </li>
 <li><p>Java pool（Jave 池） ：在运行Java的时候会用到 java pool。</p>
 </li>
-<li><p>Stream pool （流池）：10G版本 引入，用于缓存流进程在数据库间复制/移动数据时使用的队列消息，是 oracle advanced queue（oracle 高级队列）技术的一种拓展应用，需要注意的是，如果stream pool 设置过小，在应用EXPDP技术时，会产生错误信息。</p>
+<li><p>Stream pool （流池）：10G版本 引入，用于缓存流进程在数据库间复制&#x2F;移动数据时使用的队列消息，是 oracle advanced queue（oracle 高级队列）技术的一种拓展应用，需要注意的是，如果stream pool 设置过小，在应用EXPDP技术时，会产生错误信息。</p>
 </li>
 </ol>
 <h3 id="共享池-shared-pool"><a href="#共享池-shared-pool" class="headerlink" title="共享池 shared pool"></a>共享池 shared pool</h3><p>解析的过程是一个相当复杂的过程，它要考虑各种可能的异常情况比如SQL语句涉及到的对象不存在、提交的用户没有权限等等而且还需要考虑如何执行SQL语句采用什么方式去获职数据等解析的最终结果是要产生oracle自己内部的执行计划从而指导SQL的执行过程。可以看到，解析的过程是一个非常消耗资源的过程。因此oracle在解析用户提交的SQL语句的过程中如果对每次出现的新的SQL语句，都按照标准过程完整的从头到尾解析一遍的话效率太低尤其随着并发用户数量的增加、数据量的增加数据库的整体性能将直线下降。</p>
-<p>shared pool = Library cache + dictionay cache</p>
+<p>shared pool &#x3D; Library cache + dictionay cache</p>
 <p>共享池<br>oracle会将用户提交来的SQL语句都缓存在内存中。每次处理新的一条SQL语句时都会先在内存中查看是否有相同的SQL语句如果相同则可以减少最重要的解析工作〔也就是生成执行计划)从而节省了大量的资源：反之如果没有找到相同的SQL语句，则必须重新从头到尾进行完整的解析过程这部分存放SQL语句的内存就叫做共享池( shared pool)当然shared pool里不仅仅是SQL语句，还包括管理shared pool的内存结构以及执行计划、控制信息等等内存结构，oracle通过内存结构管理.</p>
 <h3 id="buffer-catch"><a href="#buffer-catch" class="headerlink" title="buffer catch"></a>buffer catch</h3><img src="buffer memory.png" />
 
@@ -217,12 +127,12 @@
 <p>自动优化查询语句.</p>
 <p>优化器（optimizer）是oracle数据库内置的一个核心子系统。优化器的目的是按照一定的判断原则来得到它认为的目标SQL在当前的情形下的最高效的执行路径，也就是为了得到目标SQL的最佳执行计划。依据所选择执行计划时所用的判断原则，oracle数据库里的优化器又分为RBO（基于原则的优化器）和CBO（基于成本的优化器，SQL的成本根据统计信息算出）两种。</p>
 <p>表上无索引:Full Table Scan<br>Rowid Scan<br>查询表的x%的数据:Sample Table Scan</p>
-<p><a href="https://www.cnblogs.com/wcwen1990/p/6656611.html" target="_blank" rel="noopener">Oracle性能优化之 Oracle里的优化器</a></p>
-<p><a href="https://blog.csdn.net/u010081710/article/details/73733214" target="_blank" rel="noopener">https://blog.csdn.net/u010081710/article/details/73733214</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/wcwen1990/p/6656611.html">Oracle性能优化之 Oracle里的优化器</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/u010081710/article/details/73733214">https://blog.csdn.net/u010081710/article/details/73733214</a></p>
 <h3 id="RBO（基于原则的优化器）"><a href="#RBO（基于原则的优化器）" class="headerlink" title="RBO（基于原则的优化器）"></a>RBO（基于原则的优化器）</h3><p>Oracle会在代码里事先为各种类型的执行路径定一个等级，一共15个等级，从等级1到等级15，oracle认为等级1的执行路径是效率最高的，等级15是执行效率最差的。对于等级相同的执行计划，oracle根据目标对象的在数据字典中缓存的顺序判断选择哪一种执行计划。RBO是一种适合于OLTP类型SQL语句的优化器。相对于CBO而言，RBO有着先天的缺陷，一旦SQL语句的执行计划出现问题，将很难调整。那么RBO执行计划出现问题，怎么调整目标SQL的执行计划呢？一般有如下方法：等价改写目标SQL，比如在where条件对number和date类型的列添加0（deptno+0&gt;100），varchar2或char类型的列可以添加一个“空字符”，例如“||”。对于多表连接的SQL，可以改变from表的连接顺序（RBO会按照从右往左的顺序决定谁是驱动表，谁是被驱动表。）来达到改变目标SQL执行计划的目的。我们也可以改变相关对象在数据字典中缓存的顺序（创建顺序），来改变执行计划。RBO最大的缺点是以oracle内置代码的规则作为判断标准，而并没有考虑到实际目标表的数据量以及数据分布情况。</p>
 <h3 id="CBO（基于成本的优化器，SQL的成本根据统计信息算出）"><a href="#CBO（基于成本的优化器，SQL的成本根据统计信息算出）" class="headerlink" title="CBO（基于成本的优化器，SQL的成本根据统计信息算出）"></a>CBO（基于成本的优化器，SQL的成本根据统计信息算出）</h3><p>CBO选择执行计划时，以目标SQL成本为判断原则，CBO会选择一条执行成本最小的执行计划作为SQL的执行计划，各条执行路径的成本通过目标SQL语句所涉及的表、索引、列等的统计信息算出。这里的成本是oracle通过相关对象的统计信息计算出来的一个值，它实际上代表目标SQL对应执行步骤所消耗的IO、CPU、网络资源（针对于dblink下的分布式数据库系统而言）的消耗量，oracle会把网络资源的消耗量计算在IO成本内，实际上你看到的成本为IO、CPU资源，另外需要注意的是，oracle在未引入系统统计信息之前，CBO所计算的成本值实际全是基于IO计算的。</p>
-<p>//TODO: Optimizer Operators(PPT43-59)</p>
-<h2 id="index-索引"><a href="#index-索引" class="headerlink" title="index 索引"></a>index 索引</h2><p>如果一个数据表中存有海量的数据记录，当对表执行指定条件的查询时。常规的查询方法会将所有的记录都读取出来，然后再把读取的每一条记录与查询条件进行对比，最后返回满足条件的记录。这样进行操作的时间开销和I/O开销都很大。对于这种情况，就可以考虑通过建立索引来减小系统开销。</p>
+<p>&#x2F;&#x2F;TODO: Optimizer Operators(PPT43-59)</p>
+<h2 id="index-索引"><a href="#index-索引" class="headerlink" title="index 索引"></a>index 索引</h2><p>如果一个数据表中存有海量的数据记录，当对表执行指定条件的查询时。常规的查询方法会将所有的记录都读取出来，然后再把读取的每一条记录与查询条件进行对比，最后返回满足条件的记录。这样进行操作的时间开销和I&#x2F;O开销都很大。对于这种情况，就可以考虑通过建立索引来减小系统开销。</p>
 <p>如果要在表中查询指定的记录，在没有索引的情况下，必须遍历整个表，而有了索引之后，只需要在索引中找到符合查询条件的索引字段值，就可以通过保存在索引中的ROWID快速找到表中对应的记录。例如，如果将表看做一本书，索引的作用类似于书中的目录。在没有目录的情况下，要在书中查找指定的内容必须阅读全文，而有了目录之后，只需要通过目录就可以快速找到包含所需内容的页码（相当于ROWID）。</p>
 <p>用户可以在Oracle中创建多种类型的索引，以适应各种表的特点。按照索引数据的存储方式可以将索引分为B树索引、位图索引、反向键索引和基于函数的索引；按照索引列的唯一性可以分为唯一索引和非唯一索引；按照索引列的个数可以分为单列索引和复合索引。</p>
 <h3 id="索引分类"><a href="#索引分类" class="headerlink" title="索引分类"></a>索引分类</h3><ul>
@@ -230,7 +140,7 @@
 <li>反向索引：反转了b*tree索引码中的字节，是索引条目分配更均匀，多用于并行服务器环境下，用于减少索引叶的竞争。</li>
 <li>Descending Index 降序索引：8i中新出现的索引类型，针对逆向排序的查询。</li>
 <li>位图索引：使用位图来管理与数据行的对应关系，多用于OLAP系统。</li>
-<li>函数索引：这种索引中保存了数据列基于function返回的值，在select * from table where function(column)=value这种类型的语句中起作用。</li>
+<li>函数索引：这种索引中保存了数据列基于function返回的值，在select * from table where function(column)&#x3D;value这种类型的语句中起作用。</li>
 </ul>
 <img src="b-tree index.png" />
 
@@ -277,559 +187,34 @@
 </ul>
 </li>
 </ol>
-<p><a href="https://www.jianshu.com/p/ebf56728e087" target="_blank" rel="noopener">https://www.jianshu.com/p/ebf56728e087</a></p>
-<p><a href="https://www.jb51.net/article/50703.htm" target="_blank" rel="noopener">https://www.jb51.net/article/50703.htm</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/ebf56728e087">https://www.jianshu.com/p/ebf56728e087</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.jb51.net/article/50703.htm">https://www.jb51.net/article/50703.htm</a></p>
 <hr>
 <h2 id="Execution-Plans-执行计划"><a href="#Execution-Plans-执行计划" class="headerlink" title="Execution Plans 执行计划"></a>Execution Plans 执行计划</h2><p>什么是Oracle执行计划？</p>
 <p>执行计划是一条查询语句在Oracle中的执行过程或访问路径的描述.</p>
 <hr>
 <h2 id="错误案例"><a href="#错误案例" class="headerlink" title="错误案例"></a>错误案例</h2><p>and 的优先级高于 or 所以导致 or 后面的语句没有做id相等的筛选操作,导致出现巨量数据</p>
-<pre><code class="sql">SELECT  SCAC,
-        CODE,
-        COUNT(*)
-FROM    SSM_VOYAGE v               ,
-        SSM_VOYAGE_STOP s          ,
-        SSM_VOYAGE_STOP_SNAPSHOT ss,
-        CMN_CRR c                  ,
-        SSM_CRR_OP_LOOP op
-WHERE   v.VOYAGE_ID              = s.VOYAGE_ID
-        AND s.LATEST_SNAPSHOT_ID = ss.VOY_STOP_SNAPSHOT_ID
-        AND v.CRR_ID             = c.CRR_ID
-        AND v.LOOP_ID            = op.LOOP_ID
-        AND
-        (
-                ss.ETA_IODT     IS NULL
-                AND ss.ATA_IODT IS NULL
-        )
-        OR
-        (
-                ss.ETD_IODT     IS NULL
-                AND ss.ATD_IODT IS NULL
-        )
-GROUP BY SCAC,
-        CODE
-ORDER BY SCAC,
-        CODE
-
-
-SQL&gt; @plan
-
-PLAN_TABLE_OUTPUT
---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-Plan hash value: 3890023033
-
---------------------------------------------------------------------------------------------------------------
-| Id  | Operation                 | Name                     | Rows  | Bytes |TempSpc| Cost (%CPU)| Time     |
---------------------------------------------------------------------------------------------------------------
-|   0 | SELECT STATEMENT          |                          | 96475 |  9044K|       |    18E  (0)|999:59:59 |
-|   1 |  SORT GROUP BY            |                          | 96475 |  9044K|       |            |          |
-|   2 |   CONCATENATION           |                          |       |       |       |            |          |
-|   3 |    MERGE JOIN CARTESIAN   |                          |    18E|    15E|       |    18E  (0)|999:59:59 |
-|   4 |     MERGE JOIN CARTESIAN  |                          |  6689T|   499P|       |    41T  (1)|999:59:59 |
-|   5 |      MERGE JOIN CARTESIAN |                          |  1463G|    97T|       |    11G  (1)|999:59:59 |
-|   6 |       MERGE JOIN CARTESIAN|                          |    10M|   585M|       |   993K  (1)| 03:18:41 |
-|   7 |        TABLE ACCESS FULL  | CMN_CRR                  |    46 |   414 |       |    15   (0)| 00:00:01 |
-|   8 |        BUFFER SORT        |                          |   226K|    10M|       |   993K  (1)| 03:18:41 |
-|*  9 |         TABLE ACCESS FULL | SSM_VOYAGE_STOP_SNAPSHOT |   226K|    10M|       | 21595   (1)| 00:04:20 |
-|  10 |       BUFFER SORT         |                          |   140K|  1923K|       |    11G  (1)|999:59:59 |
-|  11 |        TABLE ACCESS FULL  | SSM_VOYAGE               |   140K|  1923K|       |  1135   (1)| 00:00:14 |
-|  12 |      BUFFER SORT          |                          |  4570 | 50270 |       |    41T  (1)|999:59:59 |
-|  13 |       TABLE ACCESS FULL   | SSM_CRR_OP_LOOP          |  4570 | 50270 |       |    28   (0)| 00:00:01 |
-|  14 |     BUFFER SORT           |                          |   780K|  9144K|       |    18E  (0)|999:59:59 |
-|  15 |      TABLE ACCESS FULL    | SSM_VOYAGE_STOP          |   780K|  9144K|       |  4134   (1)| 00:00:50 |
-|* 16 |    HASH JOIN              |                          |   162K|    14M|       | 30114   (1)| 00:06:02 |
-|  17 |     TABLE ACCESS FULL     | CMN_CRR                  |    46 |   414 |       |    15   (0)| 00:00:01 |
-|* 18 |     HASH JOIN             |                          |   162K|    13M|       | 30097   (1)| 00:06:02 |
-|  19 |      TABLE ACCESS FULL    | SSM_CRR_OP_LOOP          |  4570 | 50270 |       |    29   (0)| 00:00:01 |
-|* 20 |      HASH JOIN            |                          |   168K|    12M|  3576K| 30067   (1)| 00:06:01 |
-|  21 |       TABLE ACCESS FULL   | SSM_VOYAGE               |   140K|  1923K|       |  1136   (1)| 00:00:14 |
-|* 22 |       HASH JOIN           |                          |   170K|    10M|    10M| 27792   (1)| 00:05:34 |
-|* 23 |        TABLE ACCESS FULL  | SSM_VOYAGE_STOP_SNAPSHOT |   170K|  8306K|       | 21597   (1)| 00:04:20 |
-|  24 |        TABLE ACCESS FULL  | SSM_VOYAGE_STOP          |   780K|  9144K|       |  4135   (1)| 00:00:50 |
---------------------------------------------------------------------------------------------------------------
-
-Predicate Information (identified by operation id):
----------------------------------------------------
-
-   9 - filter(&quot;SS&quot;.&quot;ETD_IODT&quot; IS NULL AND &quot;SS&quot;.&quot;ATD_IODT&quot; IS NULL)
-  16 - access(&quot;V&quot;.&quot;CRR_ID&quot;=&quot;C&quot;.&quot;CRR_ID&quot;)
-  18 - access(&quot;V&quot;.&quot;LOOP_ID&quot;=&quot;OP&quot;.&quot;LOOP_ID&quot;)
-  20 - access(&quot;V&quot;.&quot;VOYAGE_ID&quot;=&quot;S&quot;.&quot;VOYAGE_ID&quot;)
-  22 - access(&quot;S&quot;.&quot;LATEST_SNAPSHOT_ID&quot;=&quot;SS&quot;.&quot;VOY_STOP_SNAPSHOT_ID&quot;)
-  23 - filter(&quot;SS&quot;.&quot;ETA_IODT&quot; IS NULL AND &quot;SS&quot;.&quot;ATA_IODT&quot; IS NULL AND (LNNVL(&quot;SS&quot;.&quot;ETD_IODT&quot; IS NULL)
-              OR LNNVL(&quot;SS&quot;.&quot;ATD_IODT&quot; IS NULL)))
-
-42 rows selected.</code></pre>
- 
-      <!-- reward -->
-      
-      <div id="reword-out">
-        <div id="reward-btn">
-          Donate
-        </div>
-      </div>
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <div class="declare">
-      <ul class="post-copyright">
-        <li>
-          <i class="ri-copyright-line"></i>
-          <strong>Copyright： </strong>
-          Copyright is owned by the author. For commercial reprints, please contact the author for authorization. For non-commercial reprints, please indicate the source.
-        </li>
-      </ul>
-    </div>
-    
-    <footer class="article-footer">
-       
-<div class="share-btn">
-      <span class="share-sns share-outer">
-        <i class="ri-share-forward-line"></i>
-        分享
-      </span>
-      <div class="share-wrap">
-        <i class="arrow"></i>
-        <div class="share-icons">
-          
-          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
-            <i class="ri-weibo-fill"></i>
-          </a>
-          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
-            <i class="ri-wechat-fill"></i>
-          </a>
-          <a class="qq share-sns" href="javascript:;" data-type="qq">
-            <i class="ri-qq-fill"></i>
-          </a>
-          <a class="douban share-sns" href="javascript:;" data-type="douban">
-            <i class="ri-douban-line"></i>
-          </a>
-          <!-- <a class="qzone share-sns" href="javascript:;" data-type="qzone">
-            <i class="icon icon-qzone"></i>
-          </a> -->
-          
-          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
-            <i class="ri-facebook-circle-fill"></i>
-          </a>
-          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
-            <i class="ri-twitter-fill"></i>
-          </a>
-          <a class="google share-sns" href="javascript:;" data-type="google">
-            <i class="ri-google-fill"></i>
-          </a>
-        </div>
-      </div>
-</div>
-
-<div class="wx-share-modal">
-    <a class="modal-close" href="javascript:;"><i class="ri-close-circle-line"></i></a>
-    <p>扫一扫，分享到微信</p>
-    <div class="wx-qrcode">
-      <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data=http://yoursite.com/2018/08/15/Oracle-Database/" alt="微信分享二维码">
-    </div>
-</div>
-
-<div id="share-mask"></div>  
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/OracleDB/" rel="tag">OracleDB</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/" rel="tag">数据库</a></li></ul>
-
-    </footer>
-  </div>
-
-   
-  <nav class="article-nav">
-    
-      <a href="/2018/08/16/(Tor)-Set-up-an-obfs4-bridge/" class="article-nav-link">
-        <strong class="article-nav-caption">上一篇</strong>
-        <div class="article-nav-title">
-          
-            (Tor) Set up an obfs4 bridge
-          
-        </div>
-      </a>
-    
-    
-      <a href="/2018/07/16/Tor-All-about-tor-full-pack/" class="article-nav-link">
-        <strong class="article-nav-caption">下一篇</strong>
-        <div class="article-nav-title">(Tor)-All-about-tor-full-pack</div>
-      </a>
-    
-  </nav>
-
-   
- 
-   
-<div class="gitalk" id="gitalk-container"></div>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.6.2/dist/gitalk.css">
-<script src="https://cdn.jsdelivr.net/npm/gitalk@1.6.2/dist/gitalk.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/blueimp-md5@2.10.0/js/md5.min.js"></script>
-<script type="text/javascript">
-  var gitalk = new Gitalk({
-    clientID: 'db290dc011893521d885',
-    clientSecret: '4cbc64d2114f4963d8090a55b508568b2f26075b',
-    repo: 'blog-comments',
-    owner: 'Sicmatr1x',
-    admin: ['Sicmatr1x'],
-    // id: location.pathname,      // Ensure uniqueness and length less than 50
-    id: md5(location.pathname),
-    distractionFreeMode: false,  // Facebook-like distraction free mode
-    pagerDirection: 'last'
-  })
-
-  gitalk.render('gitalk-container')
-</script>
-  
-</article>
-
-</section>
-      <footer class="footer">
-  <div class="outer">
-    <ul>
-      <li>
-        Copyrights &copy;
-        2015-2022
-        <i class="ri-heart-fill heart_icon"></i> Sicmatr1x
-      </li>
-    </ul>
-    <ul>
-      <li>
-        
-        
-        
-        Powered by <a href="https://hexo.io" target="_blank">Hexo</a>
-        <span class="division">|</span>
-        Theme - <a href="https://github.com/Shen-Yu/hexo-theme-ayer" target="_blank">Ayer</a>
-        
-      </li>
-    </ul>
-    <ul>
-      <li>
-        
-        
-        <span>
-  <span><i class="ri-user-3-fill"></i>Visitors:<span id="busuanzi_value_site_uv"></span></s>
-  <span class="division">|</span>
-  <span><i class="ri-eye-fill"></i>Views:<span id="busuanzi_value_page_pv"></span></span>
-</span>
-        
-      </li>
-    </ul>
-    <ul>
-      
-    </ul>
-    <ul>
-      <li>
-        <!-- cnzz统计 -->
-        
-      </li>
-    </ul>
-  </div>
-</footer>
-      <div class="float_btns">
-        <div class="totop" id="totop">
-  <i class="ri-arrow-up-line"></i>
-</div>
-
-<div class="todark" id="todark">
-  <i class="ri-moon-line"></i>
-</div>
-
-      </div>
-    </main>
-    <aside class="sidebar on">
-      <button class="navbar-toggle"></button>
-<nav class="navbar">
-  
-  <div class="logo">
-    <a href="/"><img src="/images/ayer-side.svg" alt="Sicmatr1x"></a>
-  </div>
-  
-  <ul class="nav nav-main">
-    
-    <li class="nav-item">
-      <a class="nav-item-link" href="/">主页</a>
-    </li>
-    
-    <li class="nav-item">
-      <a class="nav-item-link" href="/archives">归档</a>
-    </li>
-    
-    <li class="nav-item">
-      <a class="nav-item-link" href="/categories">分类</a>
-    </li>
-    
-    <li class="nav-item">
-      <a class="nav-item-link" href="/tags">标签</a>
-    </li>
-    
-    <li class="nav-item">
-      <a class="nav-item-link" href="/about">关于我</a>
-    </li>
-    
-  </ul>
-</nav>
-<nav class="navbar navbar-bottom">
-  <ul class="nav">
-    <li class="nav-item">
-      
-      <a class="nav-item-link nav-item-search"  title="Search">
-        <i class="ri-search-line"></i>
-      </a>
-      
-      
-      <a class="nav-item-link" target="_blank" href="/atom.xml" title="RSS Feed">
-        <i class="ri-rss-line"></i>
-      </a>
-      
-    </li>
-  </ul>
-</nav>
-<div class="search-form-wrap">
-  <div class="local-search local-search-plugin">
-  <input type="search" id="local-search-input" class="local-search-input" placeholder="Search...">
-  <div id="local-search-result" class="local-search-result"></div>
-</div>
-</div>
-    </aside>
-    <script>
-      if (window.matchMedia("(max-width: 768px)").matches) {
-        document.querySelector('.content').classList.remove('on');
-        document.querySelector('.sidebar').classList.remove('on');
-      }
-    </script>
-    <div id="mask"></div>
-
-<!-- #reward -->
-<div id="reward">
-  <span class="close"><i class="ri-close-line"></i></span>
-  <p class="reward-p"><i class="ri-cup-line"></i>请我喝杯咖啡吧~，ETH:0xDF06f28BcdD7DBb25c56f9560E184874d5FC0973</p>
-  <div class="reward-box">
-    
-    <div class="reward-item">
-      <img class="reward-img" src="/images/alipay.png">
-      <span class="reward-type">支付宝</span>
-    </div>
-    
-    
-    <div class="reward-item">
-      <img class="reward-img" src="/images/wechatpay.png">
-      <span class="reward-type">微信</span>
-    </div>
-    
-  </div>
-</div>
-    <script src="/js/jquery-2.0.3.min.js"></script>
-<script src="/js/lazyload.min.js"></script>
-<!-- Tocbot -->
-
-<script src="/js/tocbot.min.js"></script>
-<script>
-  tocbot.init({
-    tocSelector: '.tocbot',
-    contentSelector: '.article-entry',
-    headingSelector: 'h1, h2, h3, h4, h5, h6',
-    hasInnerContainers: true,
-    scrollSmooth: true,
-    scrollContainer: 'main',
-    positionFixedSelector: '.tocbot',
-    positionFixedClass: 'is-position-fixed',
-    fixedSidebarOffset: 'auto'
-  });
-</script>
-
-<script src="https://cdn.jsdelivr.net/npm/jquery-modal@0.9.2/jquery.modal.min.js"></script>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/jquery-modal@0.9.2/jquery.modal.min.css">
-<script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/js/jquery.justifiedGallery.min.js"></script>
-<script src="/dist/main.js"></script>
-<!-- ImageViewer -->
-
-<!-- Root element of PhotoSwipe. Must have class pswp. -->
-<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
-
-    <!-- Background of PhotoSwipe. 
-         It's a separate element as animating opacity is faster than rgba(). -->
-    <div class="pswp__bg"></div>
-
-    <!-- Slides wrapper with overflow:hidden. -->
-    <div class="pswp__scroll-wrap">
-
-        <!-- Container that holds slides. 
-            PhotoSwipe keeps only 3 of them in the DOM to save memory.
-            Don't modify these 3 pswp__item elements, data is added later on. -->
-        <div class="pswp__container">
-            <div class="pswp__item"></div>
-            <div class="pswp__item"></div>
-            <div class="pswp__item"></div>
-        </div>
-
-        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
-        <div class="pswp__ui pswp__ui--hidden">
-
-            <div class="pswp__top-bar">
-
-                <!--  Controls are self-explanatory. Order can be changed. -->
-
-                <div class="pswp__counter"></div>
-
-                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
-
-                <button class="pswp__button pswp__button--share" style="display:none" title="Share"></button>
-
-                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
-
-                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
-
-                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
-                <!-- element will get class pswp__preloader--active when preloader is running -->
-                <div class="pswp__preloader">
-                    <div class="pswp__preloader__icn">
-                        <div class="pswp__preloader__cut">
-                            <div class="pswp__preloader__donut"></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
-                <div class="pswp__share-tooltip"></div>
-            </div>
-
-            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
-            </button>
-
-            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
-            </button>
-
-            <div class="pswp__caption">
-                <div class="pswp__caption__center"></div>
-            </div>
-
-        </div>
-
-    </div>
-
-</div>
-
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css">
-<script src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"></script>
-
-<script>
-    function viewer_init() {
-        let pswpElement = document.querySelectorAll('.pswp')[0];
-        let $imgArr = document.querySelectorAll(('.article-entry img:not(.reward-img)'))
-
-        $imgArr.forEach(($em, i) => {
-            $em.onclick = () => {
-                // slider展开状态
-                // todo: 这样不好，后面改成状态
-                if (document.querySelector('.left-col.show')) return
-                let items = []
-                $imgArr.forEach(($em2, i2) => {
-                    let img = $em2.getAttribute('data-idx', i2)
-                    let src = $em2.getAttribute('data-target') || $em2.getAttribute('src')
-                    let title = $em2.getAttribute('alt')
-                    // 获得原图尺寸
-                    const image = new Image()
-                    image.src = src
-                    items.push({
-                        src: src,
-                        w: image.width || $em2.width,
-                        h: image.height || $em2.height,
-                        title: title
-                    })
-                })
-                var gallery = new PhotoSwipe(pswpElement, PhotoSwipeUI_Default, items, {
-                    index: parseInt(i)
-                });
-                gallery.init()
-            }
-        })
-    }
-    viewer_init()
-</script>
-
-<!-- MathJax -->
-
-<!-- Katex -->
-
-<!-- busuanzi  -->
-
-<script src="/js/busuanzi-2.3.pure.min.js"></script>
-
-<!-- ClickLove -->
-
-<!-- ClickBoom1 -->
-
-<!-- ClickBoom2 -->
-
-<!-- CodeCopy -->
-
-<link rel="stylesheet" href="/css/clipboard.css">
-<script src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js"></script>
-<script>
-  function wait(callback, seconds) {
-    var timelag = null;
-    timelag = window.setTimeout(callback, seconds);
-  }
-  !function (e, t, a) {
-    var initCopyCode = function(){
-      var copyHtml = '';
-      copyHtml += '<button class="btn-copy" data-clipboard-snippet="">';
-      copyHtml += '<i class="ri-file-copy-2-line"></i><span>COPY</span>';
-      copyHtml += '</button>';
-      $(".highlight .code pre").before(copyHtml);
-      $(".article pre code").before(copyHtml);
-      var clipboard = new ClipboardJS('.btn-copy', {
-        target: function(trigger) {
-          return trigger.nextElementSibling;
-        }
-      });
-      clipboard.on('success', function(e) {
-        let $btn = $(e.trigger);
-        $btn.addClass('copied');
-        let $icon = $($btn.find('i'));
-        $icon.removeClass('ri-file-copy-2-line');
-        $icon.addClass('ri-checkbox-circle-line');
-        let $span = $($btn.find('span'));
-        $span[0].innerText = 'COPIED';
-        
-        wait(function () { // 等待两秒钟后恢复
-          $icon.removeClass('ri-checkbox-circle-line');
-          $icon.addClass('ri-file-copy-2-line');
-          $span[0].innerText = 'COPY';
-        }, 2000);
-      });
-      clipboard.on('error', function(e) {
-        e.clearSelection();
-        let $btn = $(e.trigger);
-        $btn.addClass('copy-failed');
-        let $icon = $($btn.find('i'));
-        $icon.removeClass('ri-file-copy-2-line');
-        $icon.addClass('ri-time-line');
-        let $span = $($btn.find('span'));
-        $span[0].innerText = 'COPY FAILED';
-        
-        wait(function () { // 等待两秒钟后恢复
-          $icon.removeClass('ri-time-line');
-          $icon.addClass('ri-file-copy-2-line');
-          $span[0].innerText = 'COPY';
-        }, 2000);
-      });
-    }
-    initCopyCode();
-  }(window, document);
-</script>
-
-
-<!-- CanvasBackground -->
-
-
-    
-  </div>
-</body>
-
-</html>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">SELECT</span>  SCAC,<br>        CODE,<br>        <span class="hljs-built_in">COUNT</span>(<span class="hljs-operator">*</span>)<br><span class="hljs-keyword">FROM</span>    SSM_VOYAGE v               ,<br>        SSM_VOYAGE_STOP s          ,<br>        SSM_VOYAGE_STOP_SNAPSHOT ss,<br>        CMN_CRR c                  ,<br>        SSM_CRR_OP_LOOP op<br><span class="hljs-keyword">WHERE</span>   v.VOYAGE_ID              <span class="hljs-operator">=</span> s.VOYAGE_ID<br>        <span class="hljs-keyword">AND</span> s.LATEST_SNAPSHOT_ID <span class="hljs-operator">=</span> ss.VOY_STOP_SNAPSHOT_ID<br>        <span class="hljs-keyword">AND</span> v.CRR_ID             <span class="hljs-operator">=</span> c.CRR_ID<br>        <span class="hljs-keyword">AND</span> v.LOOP_ID            <span class="hljs-operator">=</span> op.LOOP_ID<br>        <span class="hljs-keyword">AND</span><br>        (<br>                ss.ETA_IODT     <span class="hljs-keyword">IS</span> <span class="hljs-keyword">NULL</span><br>                <span class="hljs-keyword">AND</span> ss.ATA_IODT <span class="hljs-keyword">IS</span> <span class="hljs-keyword">NULL</span><br>        )<br>        <span class="hljs-keyword">OR</span><br>        (<br>                ss.ETD_IODT     <span class="hljs-keyword">IS</span> <span class="hljs-keyword">NULL</span><br>                <span class="hljs-keyword">AND</span> ss.ATD_IODT <span class="hljs-keyword">IS</span> <span class="hljs-keyword">NULL</span><br>        )<br><span class="hljs-keyword">GROUP</span> <span class="hljs-keyword">BY</span> SCAC,<br>        CODE<br><span class="hljs-keyword">ORDER</span> <span class="hljs-keyword">BY</span> SCAC,<br>        CODE<br><br><br><span class="hljs-keyword">SQL</span><span class="hljs-operator">&gt;</span> <span class="hljs-variable">@plan</span><br><br>PLAN_TABLE_OUTPUT<br><span class="hljs-comment">--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------</span><br>Plan hash <span class="hljs-keyword">value</span>: <span class="hljs-number">3890023033</span><br><br><span class="hljs-comment">--------------------------------------------------------------------------------------------------------------</span><br><span class="hljs-operator">|</span> Id  <span class="hljs-operator">|</span> Operation                 <span class="hljs-operator">|</span> Name                     <span class="hljs-operator">|</span> <span class="hljs-keyword">Rows</span>  <span class="hljs-operator">|</span> Bytes <span class="hljs-operator">|</span>TempSpc<span class="hljs-operator">|</span> Cost (<span class="hljs-operator">%</span>CPU)<span class="hljs-operator">|</span> <span class="hljs-type">Time</span>     <span class="hljs-operator">|</span><br><span class="hljs-comment">--------------------------------------------------------------------------------------------------------------</span><br><span class="hljs-operator">|</span>   <span class="hljs-number">0</span> <span class="hljs-operator">|</span> <span class="hljs-keyword">SELECT</span> STATEMENT          <span class="hljs-operator">|</span>                          <span class="hljs-operator">|</span> <span class="hljs-number">96475</span> <span class="hljs-operator">|</span>  <span class="hljs-number">9044</span>K<span class="hljs-operator">|</span>       <span class="hljs-operator">|</span>    <span class="hljs-number">18</span>E  (<span class="hljs-number">0</span>)<span class="hljs-operator">|</span><span class="hljs-number">999</span>:<span class="hljs-number">59</span>:<span class="hljs-number">59</span> <span class="hljs-operator">|</span><br><span class="hljs-operator">|</span>   <span class="hljs-number">1</span> <span class="hljs-operator">|</span>  SORT <span class="hljs-keyword">GROUP</span> <span class="hljs-keyword">BY</span>            <span class="hljs-operator">|</span>                          <span class="hljs-operator">|</span> <span class="hljs-number">96475</span> <span class="hljs-operator">|</span>  <span class="hljs-number">9044</span>K<span class="hljs-operator">|</span>       <span class="hljs-operator">|</span>            <span class="hljs-operator">|</span>          <span class="hljs-operator">|</span><br><span class="hljs-operator">|</span>   <span class="hljs-number">2</span> <span class="hljs-operator">|</span>   CONCATENATION           <span class="hljs-operator">|</span>                          <span class="hljs-operator">|</span>       <span class="hljs-operator">|</span>       <span class="hljs-operator">|</span>       <span class="hljs-operator">|</span>            <span class="hljs-operator">|</span>          <span class="hljs-operator">|</span><br><span class="hljs-operator">|</span>   <span class="hljs-number">3</span> <span class="hljs-operator">|</span>    <span class="hljs-keyword">MERGE</span> <span class="hljs-keyword">JOIN</span> CARTESIAN   <span class="hljs-operator">|</span>                          <span class="hljs-operator">|</span>    <span class="hljs-number">18</span>E<span class="hljs-operator">|</span>    <span class="hljs-number">15</span>E<span class="hljs-operator">|</span>       <span class="hljs-operator">|</span>    <span class="hljs-number">18</span>E  (<span class="hljs-number">0</span>)<span class="hljs-operator">|</span><span class="hljs-number">999</span>:<span class="hljs-number">59</span>:<span class="hljs-number">59</span> <span class="hljs-operator">|</span><br><span class="hljs-operator">|</span>   <span class="hljs-number">4</span> <span class="hljs-operator">|</span>     <span class="hljs-keyword">MERGE</span> <span class="hljs-keyword">JOIN</span> CARTESIAN  <span class="hljs-operator">|</span>                          <span class="hljs-operator">|</span>  <span class="hljs-number">6689</span>T<span class="hljs-operator">|</span>   <span class="hljs-number">499</span>P<span class="hljs-operator">|</span>       <span class="hljs-operator">|</span>    <span class="hljs-number">41</span>T  (<span class="hljs-number">1</span>)<span class="hljs-operator">|</span><span class="hljs-number">999</span>:<span class="hljs-number">59</span>:<span class="hljs-number">59</span> <span class="hljs-operator">|</span><br><span class="hljs-operator">|</span>   <span class="hljs-number">5</span> <span class="hljs-operator">|</span>      <span class="hljs-keyword">MERGE</span> <span class="hljs-keyword">JOIN</span> CARTESIAN <span class="hljs-operator">|</span>                          <span class="hljs-operator">|</span>  <span class="hljs-number">1463</span>G<span class="hljs-operator">|</span>    <span class="hljs-number">97</span>T<span class="hljs-operator">|</span>       <span class="hljs-operator">|</span>    <span class="hljs-number">11</span>G  (<span class="hljs-number">1</span>)<span class="hljs-operator">|</span><span class="hljs-number">999</span>:<span class="hljs-number">59</span>:<span class="hljs-number">59</span> <span class="hljs-operator">|</span><br><span class="hljs-operator">|</span>   <span class="hljs-number">6</span> <span class="hljs-operator">|</span>       <span class="hljs-keyword">MERGE</span> <span class="hljs-keyword">JOIN</span> CARTESIAN<span class="hljs-operator">|</span>                          <span class="hljs-operator">|</span>    <span class="hljs-number">10</span>M<span class="hljs-operator">|</span>   <span class="hljs-number">585</span>M<span class="hljs-operator">|</span>       <span class="hljs-operator">|</span>   <span class="hljs-number">993</span>K  (<span class="hljs-number">1</span>)<span class="hljs-operator">|</span> <span class="hljs-number">03</span>:<span class="hljs-number">18</span>:<span class="hljs-number">41</span> <span class="hljs-operator">|</span><br><span class="hljs-operator">|</span>   <span class="hljs-number">7</span> <span class="hljs-operator">|</span>        <span class="hljs-keyword">TABLE</span> ACCESS <span class="hljs-keyword">FULL</span>  <span class="hljs-operator">|</span> CMN_CRR                  <span class="hljs-operator">|</span>    <span class="hljs-number">46</span> <span class="hljs-operator">|</span>   <span class="hljs-number">414</span> <span class="hljs-operator">|</span>       <span class="hljs-operator">|</span>    <span class="hljs-number">15</span>   (<span class="hljs-number">0</span>)<span class="hljs-operator">|</span> <span class="hljs-number">00</span>:<span class="hljs-number">00</span>:<span class="hljs-number">01</span> <span class="hljs-operator">|</span><br><span class="hljs-operator">|</span>   <span class="hljs-number">8</span> <span class="hljs-operator">|</span>        BUFFER SORT        <span class="hljs-operator">|</span>                          <span class="hljs-operator">|</span>   <span class="hljs-number">226</span>K<span class="hljs-operator">|</span>    <span class="hljs-number">10</span>M<span class="hljs-operator">|</span>       <span class="hljs-operator">|</span>   <span class="hljs-number">993</span>K  (<span class="hljs-number">1</span>)<span class="hljs-operator">|</span> <span class="hljs-number">03</span>:<span class="hljs-number">18</span>:<span class="hljs-number">41</span> <span class="hljs-operator">|</span><br><span class="hljs-operator">|</span><span class="hljs-operator">*</span>  <span class="hljs-number">9</span> <span class="hljs-operator">|</span>         <span class="hljs-keyword">TABLE</span> ACCESS <span class="hljs-keyword">FULL</span> <span class="hljs-operator">|</span> SSM_VOYAGE_STOP_SNAPSHOT <span class="hljs-operator">|</span>   <span class="hljs-number">226</span>K<span class="hljs-operator">|</span>    <span class="hljs-number">10</span>M<span class="hljs-operator">|</span>       <span class="hljs-operator">|</span> <span class="hljs-number">21595</span>   (<span class="hljs-number">1</span>)<span class="hljs-operator">|</span> <span class="hljs-number">00</span>:<span class="hljs-number">04</span>:<span class="hljs-number">20</span> <span class="hljs-operator">|</span><br><span class="hljs-operator">|</span>  <span class="hljs-number">10</span> <span class="hljs-operator">|</span>       BUFFER SORT         <span class="hljs-operator">|</span>                          <span class="hljs-operator">|</span>   <span class="hljs-number">140</span>K<span class="hljs-operator">|</span>  <span class="hljs-number">1923</span>K<span class="hljs-operator">|</span>       <span class="hljs-operator">|</span>    <span class="hljs-number">11</span>G  (<span class="hljs-number">1</span>)<span class="hljs-operator">|</span><span class="hljs-number">999</span>:<span class="hljs-number">59</span>:<span class="hljs-number">59</span> <span class="hljs-operator">|</span><br><span class="hljs-operator">|</span>  <span class="hljs-number">11</span> <span class="hljs-operator">|</span>        <span class="hljs-keyword">TABLE</span> ACCESS <span class="hljs-keyword">FULL</span>  <span class="hljs-operator">|</span> SSM_VOYAGE               <span class="hljs-operator">|</span>   <span class="hljs-number">140</span>K<span class="hljs-operator">|</span>  <span class="hljs-number">1923</span>K<span class="hljs-operator">|</span>       <span class="hljs-operator">|</span>  <span class="hljs-number">1135</span>   (<span class="hljs-number">1</span>)<span class="hljs-operator">|</span> <span class="hljs-number">00</span>:<span class="hljs-number">00</span>:<span class="hljs-number">14</span> <span class="hljs-operator">|</span><br><span class="hljs-operator">|</span>  <span class="hljs-number">12</span> <span class="hljs-operator">|</span>      BUFFER SORT          <span class="hljs-operator">|</span>                          <span class="hljs-operator">|</span>  <span class="hljs-number">4570</span> <span class="hljs-operator">|</span> <span class="hljs-number">50270</span> <span class="hljs-operator">|</span>       <span class="hljs-operator">|</span>    <span class="hljs-number">41</span>T  (<span class="hljs-number">1</span>)<span class="hljs-operator">|</span><span class="hljs-number">999</span>:<span class="hljs-number">59</span>:<span class="hljs-number">59</span> <span class="hljs-operator">|</span><br><span class="hljs-operator">|</span>  <span class="hljs-number">13</span> <span class="hljs-operator">|</span>       <span class="hljs-keyword">TABLE</span> ACCESS <span class="hljs-keyword">FULL</span>   <span class="hljs-operator">|</span> SSM_CRR_OP_LOOP          <span class="hljs-operator">|</span>  <span class="hljs-number">4570</span> <span class="hljs-operator">|</span> <span class="hljs-number">50270</span> <span class="hljs-operator">|</span>       <span class="hljs-operator">|</span>    <span class="hljs-number">28</span>   (<span class="hljs-number">0</span>)<span class="hljs-operator">|</span> <span class="hljs-number">00</span>:<span class="hljs-number">00</span>:<span class="hljs-number">01</span> <span class="hljs-operator">|</span><br><span class="hljs-operator">|</span>  <span class="hljs-number">14</span> <span class="hljs-operator">|</span>     BUFFER SORT           <span class="hljs-operator">|</span>                          <span class="hljs-operator">|</span>   <span class="hljs-number">780</span>K<span class="hljs-operator">|</span>  <span class="hljs-number">9144</span>K<span class="hljs-operator">|</span>       <span class="hljs-operator">|</span>    <span class="hljs-number">18</span>E  (<span class="hljs-number">0</span>)<span class="hljs-operator">|</span><span class="hljs-number">999</span>:<span class="hljs-number">59</span>:<span class="hljs-number">59</span> <span class="hljs-operator">|</span><br><span class="hljs-operator">|</span>  <span class="hljs-number">15</span> <span class="hljs-operator">|</span>      <span class="hljs-keyword">TABLE</span> ACCESS <span class="hljs-keyword">FULL</span>    <span class="hljs-operator">|</span> SSM_VOYAGE_STOP          <span class="hljs-operator">|</span>   <span class="hljs-number">780</span>K<span class="hljs-operator">|</span>  <span class="hljs-number">9144</span>K<span class="hljs-operator">|</span>       <span class="hljs-operator">|</span>  <span class="hljs-number">4134</span>   (<span class="hljs-number">1</span>)<span class="hljs-operator">|</span> <span class="hljs-number">00</span>:<span class="hljs-number">00</span>:<span class="hljs-number">50</span> <span class="hljs-operator">|</span><br><span class="hljs-operator">|</span><span class="hljs-operator">*</span> <span class="hljs-number">16</span> <span class="hljs-operator">|</span>    HASH <span class="hljs-keyword">JOIN</span>              <span class="hljs-operator">|</span>                          <span class="hljs-operator">|</span>   <span class="hljs-number">162</span>K<span class="hljs-operator">|</span>    <span class="hljs-number">14</span>M<span class="hljs-operator">|</span>       <span class="hljs-operator">|</span> <span class="hljs-number">30114</span>   (<span class="hljs-number">1</span>)<span class="hljs-operator">|</span> <span class="hljs-number">00</span>:<span class="hljs-number">06</span>:<span class="hljs-number">02</span> <span class="hljs-operator">|</span><br><span class="hljs-operator">|</span>  <span class="hljs-number">17</span> <span class="hljs-operator">|</span>     <span class="hljs-keyword">TABLE</span> ACCESS <span class="hljs-keyword">FULL</span>     <span class="hljs-operator">|</span> CMN_CRR                  <span class="hljs-operator">|</span>    <span class="hljs-number">46</span> <span class="hljs-operator">|</span>   <span class="hljs-number">414</span> <span class="hljs-operator">|</span>       <span class="hljs-operator">|</span>    <span class="hljs-number">15</span>   (<span class="hljs-number">0</span>)<span class="hljs-operator">|</span> <span class="hljs-number">00</span>:<span class="hljs-number">00</span>:<span class="hljs-number">01</span> <span class="hljs-operator">|</span><br><span class="hljs-operator">|</span><span class="hljs-operator">*</span> <span class="hljs-number">18</span> <span class="hljs-operator">|</span>     HASH <span class="hljs-keyword">JOIN</span>             <span class="hljs-operator">|</span>                          <span class="hljs-operator">|</span>   <span class="hljs-number">162</span>K<span class="hljs-operator">|</span>    <span class="hljs-number">13</span>M<span class="hljs-operator">|</span>       <span class="hljs-operator">|</span> <span class="hljs-number">30097</span>   (<span class="hljs-number">1</span>)<span class="hljs-operator">|</span> <span class="hljs-number">00</span>:<span class="hljs-number">06</span>:<span class="hljs-number">02</span> <span class="hljs-operator">|</span><br><span class="hljs-operator">|</span>  <span class="hljs-number">19</span> <span class="hljs-operator">|</span>      <span class="hljs-keyword">TABLE</span> ACCESS <span class="hljs-keyword">FULL</span>    <span class="hljs-operator">|</span> SSM_CRR_OP_LOOP          <span class="hljs-operator">|</span>  <span class="hljs-number">4570</span> <span class="hljs-operator">|</span> <span class="hljs-number">50270</span> <span class="hljs-operator">|</span>       <span class="hljs-operator">|</span>    <span class="hljs-number">29</span>   (<span class="hljs-number">0</span>)<span class="hljs-operator">|</span> <span class="hljs-number">00</span>:<span class="hljs-number">00</span>:<span class="hljs-number">01</span> <span class="hljs-operator">|</span><br><span class="hljs-operator">|</span><span class="hljs-operator">*</span> <span class="hljs-number">20</span> <span class="hljs-operator">|</span>      HASH <span class="hljs-keyword">JOIN</span>            <span class="hljs-operator">|</span>                          <span class="hljs-operator">|</span>   <span class="hljs-number">168</span>K<span class="hljs-operator">|</span>    <span class="hljs-number">12</span>M<span class="hljs-operator">|</span>  <span class="hljs-number">3576</span>K<span class="hljs-operator">|</span> <span class="hljs-number">30067</span>   (<span class="hljs-number">1</span>)<span class="hljs-operator">|</span> <span class="hljs-number">00</span>:<span class="hljs-number">06</span>:<span class="hljs-number">01</span> <span class="hljs-operator">|</span><br><span class="hljs-operator">|</span>  <span class="hljs-number">21</span> <span class="hljs-operator">|</span>       <span class="hljs-keyword">TABLE</span> ACCESS <span class="hljs-keyword">FULL</span>   <span class="hljs-operator">|</span> SSM_VOYAGE               <span class="hljs-operator">|</span>   <span class="hljs-number">140</span>K<span class="hljs-operator">|</span>  <span class="hljs-number">1923</span>K<span class="hljs-operator">|</span>       <span class="hljs-operator">|</span>  <span class="hljs-number">1136</span>   (<span class="hljs-number">1</span>)<span class="hljs-operator">|</span> <span class="hljs-number">00</span>:<span class="hljs-number">00</span>:<span class="hljs-number">14</span> <span class="hljs-operator">|</span><br><span class="hljs-operator">|</span><span class="hljs-operator">*</span> <span class="hljs-number">22</span> <span class="hljs-operator">|</span>       HASH <span class="hljs-keyword">JOIN</span>           <span class="hljs-operator">|</span>                          <span class="hljs-operator">|</span>   <span class="hljs-number">170</span>K<span class="hljs-operator">|</span>    <span class="hljs-number">10</span>M<span class="hljs-operator">|</span>    <span class="hljs-number">10</span>M<span class="hljs-operator">|</span> <span class="hljs-number">27792</span>   (<span class="hljs-number">1</span>)<span class="hljs-operator">|</span> <span class="hljs-number">00</span>:<span class="hljs-number">05</span>:<span class="hljs-number">34</span> <span class="hljs-operator">|</span><br><span class="hljs-operator">|</span><span class="hljs-operator">*</span> <span class="hljs-number">23</span> <span class="hljs-operator">|</span>        <span class="hljs-keyword">TABLE</span> ACCESS <span class="hljs-keyword">FULL</span>  <span class="hljs-operator">|</span> SSM_VOYAGE_STOP_SNAPSHOT <span class="hljs-operator">|</span>   <span class="hljs-number">170</span>K<span class="hljs-operator">|</span>  <span class="hljs-number">8306</span>K<span class="hljs-operator">|</span>       <span class="hljs-operator">|</span> <span class="hljs-number">21597</span>   (<span class="hljs-number">1</span>)<span class="hljs-operator">|</span> <span class="hljs-number">00</span>:<span class="hljs-number">04</span>:<span class="hljs-number">20</span> <span class="hljs-operator">|</span><br><span class="hljs-operator">|</span>  <span class="hljs-number">24</span> <span class="hljs-operator">|</span>        <span class="hljs-keyword">TABLE</span> ACCESS <span class="hljs-keyword">FULL</span>  <span class="hljs-operator">|</span> SSM_VOYAGE_STOP          <span class="hljs-operator">|</span>   <span class="hljs-number">780</span>K<span class="hljs-operator">|</span>  <span class="hljs-number">9144</span>K<span class="hljs-operator">|</span>       <span class="hljs-operator">|</span>  <span class="hljs-number">4135</span>   (<span class="hljs-number">1</span>)<span class="hljs-operator">|</span> <span class="hljs-number">00</span>:<span class="hljs-number">00</span>:<span class="hljs-number">50</span> <span class="hljs-operator">|</span><br><span class="hljs-comment">--------------------------------------------------------------------------------------------------------------</span><br><br>Predicate Information (identified <span class="hljs-keyword">by</span> operation id):<br><span class="hljs-comment">---------------------------------------------------</span><br><br>   <span class="hljs-number">9</span> <span class="hljs-operator">-</span> <span class="hljs-keyword">filter</span>(&quot;SS&quot;.&quot;ETD_IODT&quot; <span class="hljs-keyword">IS</span> <span class="hljs-keyword">NULL</span> <span class="hljs-keyword">AND</span> &quot;SS&quot;.&quot;ATD_IODT&quot; <span class="hljs-keyword">IS</span> <span class="hljs-keyword">NULL</span>)<br>  <span class="hljs-number">16</span> <span class="hljs-operator">-</span> access(&quot;V&quot;.&quot;CRR_ID&quot;<span class="hljs-operator">=</span>&quot;C&quot;.&quot;CRR_ID&quot;)<br>  <span class="hljs-number">18</span> <span class="hljs-operator">-</span> access(&quot;V&quot;.&quot;LOOP_ID&quot;<span class="hljs-operator">=</span>&quot;OP&quot;.&quot;LOOP_ID&quot;)<br>  <span class="hljs-number">20</span> <span class="hljs-operator">-</span> access(&quot;V&quot;.&quot;VOYAGE_ID&quot;<span class="hljs-operator">=</span>&quot;S&quot;.&quot;VOYAGE_ID&quot;)<br>  <span class="hljs-number">22</span> <span class="hljs-operator">-</span> access(&quot;S&quot;.&quot;LATEST_SNAPSHOT_ID&quot;<span class="hljs-operator">=</span>&quot;SS&quot;.&quot;VOY_STOP_SNAPSHOT_ID&quot;)<br>  <span class="hljs-number">23</span> <span class="hljs-operator">-</span> <span class="hljs-keyword">filter</span>(&quot;SS&quot;.&quot;ETA_IODT&quot; <span class="hljs-keyword">IS</span> <span class="hljs-keyword">NULL</span> <span class="hljs-keyword">AND</span> &quot;SS&quot;.&quot;ATA_IODT&quot; <span class="hljs-keyword">IS</span> <span class="hljs-keyword">NULL</span> <span class="hljs-keyword">AND</span> (LNNVL(&quot;SS&quot;.&quot;ETD_IODT&quot; <span class="hljs-keyword">IS</span> <span class="hljs-keyword">NULL</span>)<br>              <span class="hljs-keyword">OR</span> LNNVL(&quot;SS&quot;.&quot;ATD_IODT&quot; <span class="hljs-keyword">IS</span> <span class="hljs-keyword">NULL</span>)))<br><br><span class="hljs-number">42</span> <span class="hljs-keyword">rows</span> selected.<br></code></pre></td></tr></table></figure>
+<div id="paginator"></div></div><div id="post-footer"><div id="pages"><div class="footer-link" style="width: 50%;text-align:right;border-right:1px #fe2 solid"><a href="/2018/08/16/(Tor)-Set-up-an-obfs4-bridge/">← Next (Tor) Set up an obfs4 bridge</a></div><div class="footer-link" style="width: 50%;right:1px;border-left:1px #fe2 solid"><a href="/2018/07/16/Tor-All-about-tor-full-pack/">(Tor)-All-about-tor-full-pack Prev →</a></div></div></div><div id="comments"><div class="selector"><button class="gitalk-sel"></button></div><div id="gitalk"></div></div></div><div class="bottom-btn"><div><a id="to-top" onClick="scrolls.scrolltop();" title="To Top" style="opacity: 0; display: none;">∧</a><a id="to-index" href="#toc-div" title="To Catalog">≡</a><a id="color-mode" onClick="colorMode.change()" title="Change Theme"></a></div></div></article><aside><div id="about"><a href="/" id="logo"><img src="https://ak.hypergryph.com/assets/index/images/ak/pc/faction/1.png" alt="Logo"></a><h1 id="Dr"><a href="/">Sicmatr1x</a></h1><div id="description"><p></p></div></div><div id="aside-block"><div id="toc-div"><h1>Catalog</h1><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E5%BA%93%E6%96%87%E4%BB%B6"><span class="toc-number">1.</span> <span class="toc-text">数据库文件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Oracle-Memory-Structures"><span class="toc-number">2.</span> <span class="toc-text">Oracle Memory Structures</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Program-Global-Area-PGA"><span class="toc-number">2.1.</span> <span class="toc-text">Program Global Area(PGA)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#System-Global-area-SGA-%E7%B3%BB%E7%BB%9F%E5%85%A8%E5%B1%80%E5%8C%BA"><span class="toc-number">2.2.</span> <span class="toc-text">System Global area(SGA)系统全局区</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%B1%E4%BA%AB%E6%B1%A0-shared-pool"><span class="toc-number">2.3.</span> <span class="toc-text">共享池 shared pool</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#buffer-catch"><span class="toc-number">2.4.</span> <span class="toc-text">buffer catch</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Redo-log-Buffer-%E6%97%A5%E5%BF%97%E7%BC%93%E5%86%B2%E5%8C%BA"><span class="toc-number">3.</span> <span class="toc-text">Redo log Buffer 日志缓冲区</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Log-Writer-LGWR"><span class="toc-number">4.</span> <span class="toc-text">Log Writer(LGWR)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Background-Processes"><span class="toc-number">5.</span> <span class="toc-text">Background Processes</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Database-Writer-DBWrn"><span class="toc-number">6.</span> <span class="toc-text">Database Writer(DBWrn)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#System-monitor"><span class="toc-number">7.</span> <span class="toc-text">System monitor</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Process-monitor"><span class="toc-number">8.</span> <span class="toc-text">Process monitor</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Checkpoint-CKPT"><span class="toc-number">9.</span> <span class="toc-text">Checkpoint(CKPT)</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Read-Consistency"><span class="toc-number">9.1.</span> <span class="toc-text">Read Consistency</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Oracle-Storage-Hierarchy"><span class="toc-number">10.</span> <span class="toc-text">Oracle Storage Hierarchy</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Recovery"><span class="toc-number">11.</span> <span class="toc-text">Recovery</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Optimizer-%E4%BC%98%E5%8C%96%E5%99%A8"><span class="toc-number">12.</span> <span class="toc-text">Optimizer(优化器)</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#RBO%EF%BC%88%E5%9F%BA%E4%BA%8E%E5%8E%9F%E5%88%99%E7%9A%84%E4%BC%98%E5%8C%96%E5%99%A8%EF%BC%89"><span class="toc-number">12.1.</span> <span class="toc-text">RBO（基于原则的优化器）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#CBO%EF%BC%88%E5%9F%BA%E4%BA%8E%E6%88%90%E6%9C%AC%E7%9A%84%E4%BC%98%E5%8C%96%E5%99%A8%EF%BC%8CSQL%E7%9A%84%E6%88%90%E6%9C%AC%E6%A0%B9%E6%8D%AE%E7%BB%9F%E8%AE%A1%E4%BF%A1%E6%81%AF%E7%AE%97%E5%87%BA%EF%BC%89"><span class="toc-number">12.2.</span> <span class="toc-text">CBO（基于成本的优化器，SQL的成本根据统计信息算出）</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#index-%E7%B4%A2%E5%BC%95"><span class="toc-number">13.</span> <span class="toc-text">index 索引</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%B4%A2%E5%BC%95%E5%88%86%E7%B1%BB"><span class="toc-number">13.1.</span> <span class="toc-text">索引分类</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Execution-Plans-%E6%89%A7%E8%A1%8C%E8%AE%A1%E5%88%92"><span class="toc-number">14.</span> <span class="toc-text">Execution Plans 执行计划</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%94%99%E8%AF%AF%E6%A1%88%E4%BE%8B"><span class="toc-number">15.</span> <span class="toc-text">错误案例</span></a></li></ol></div></div><footer><nobr>Published with <a target="_blank" rel="noopener" href="http://hexo.io">Hexo</a></nobr><wbr><nobr> Theme <a target="_blank" rel="noopener" href="https://github.com/Yue-plus/hexo-theme-arknights">Arknights</a></nobr><wbr><nobr>by <a target="_blank" rel="noopener" href="https://github.com/Yue-plus">Yue_plus</a></nobr></footer></aside></main><canvas id="canvas-dust"></canvas><script src="/js/search.js"></script><script class="pjax-js">reset=_=>{gitalk = new Gitalk({
+ clientID: '',
+ clientSecret: '',
+ repo: 'blog-comments',
+ owner: 'Sicmatr1x',
+ admin: ['Sicmatr1x'],
+ distractionFreeMode: false,
+ id: 
+});
+if (document.querySelector("#gitalk")) gitalk.render("gitalk");code.findCode();}</script><script src="/js/arknights.js"></script><script src="/js/pjax.js"></script><script>window.addEventListener("load",() => {pjax = new Pjax({
+ cacheBust: false,
+ selectors: ['title','article','#aside-block','.pjax-js'],
+ switches: {'article': Pjax.switches.sideBySide},
+ switchesOptions: {
+   'article': {
+     classNames: {
+       remove: "pjax-out",
+       add: "pjax-in"
+     }
+   }
+ }
+});
+document.addEventListener("pjax:complete", reset);reset()})</script></body></html>
