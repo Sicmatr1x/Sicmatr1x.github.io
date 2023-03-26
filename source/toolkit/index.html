@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>ToolKit</title>
+  <style type="text/css">
+    /* .my-input {
+      background-color: #303133;
+    } */
+    /deep/ .el-input__inner {
+      height: 47px;
+      background-color: rgba(255, 255, 255, 0.247);
+    }
+    /deep/ .el-input input {
+      color: #fff !important;
+    }
+  </style>
+</head>
+<body>
+  <h1>ToolKit</h1>
+  <!-- 网易云音乐 -->
+  <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=86 src="//music.163.com/outchain/player?type=2&id=440357173&auto=1&height=66"></iframe>
+  <div id="app">
+
+    <h3>Base64 encode & decode</h3>
+    <el-row :gutter="24">
+      <el-col :span="16" style="margin-top: 10px;">
+        <!-- 明文输入框 -->
+        <label for="text">text:</label>
+        <el-input class="my-input" type="textarea" :autosize="{ minRows: 2, maxRows: 10}" placeholder="text" v-model="text"></el-input>
+      </el-col>
+
+      <el-col :span="16" style="margin-top: 10px;">
+        <!-- 密文输入框 -->
+        <label for="base64Str">Base64:</label>
+        <el-input type="textarea" :autosize="{ minRows: 2, maxRows: 10}" placeholder="base64Str" v-model="base64Str" style="background-color: #303133;"></el-input>
+      </el-col>
+
+      <el-col :span="16">
+        <el-button plain @click="encodeBase64" style="margin-top: 10px;">Encode</el-button>
+        <el-button plain @click="decodeBase64" style="margin-top: 10px;">Decode</el-button>
+      </el-col>
+    </el-row>
+
+
+    <h3>AES encrypt & decrypt</h3>
+    <el-row :gutter="24">
+      <el-col :span="16" style="margin-top: 10px;">
+        <!-- 明文输入框 -->
+        <label for="plaintext">Plaintext:</label>
+        <el-input class="my-input" type="textarea" :autosize="{ minRows: 2, maxRows: 10}" placeholder="plaintext" v-model="plaintext"></el-input>
+      </el-col>
+
+      <el-col :span="16" style="margin-top: 10px;">
+        <!-- 密钥输入框 -->
+        <label for="key">Key:</label>
+        <el-input type="textarea" :rows="2" placeholder="key" v-model="key" show-password></el-input>
+      </el-col>
+
+      <el-col :span="16" style="margin-top: 10px;">
+        <!-- 密文输入框 -->
+        <label for="ciphertext">Ciphertext:</label>
+        <el-input type="textarea" :autosize="{ minRows: 2, maxRows: 10}" placeholder="ciphertext" v-model="ciphertext" style="background-color: #303133;"></el-input>
+      </el-col>
+
+      <el-col :span="16">
+        <el-button plain @click="encrypt" style="margin-top: 10px;">Encrypt</el-button>
+        <el-button plain @click="decrypt" style="margin-top: 10px;">Decrypt</el-button>
+      </el-col>
+    </el-row>
+    
+  </div><!-- app -->
+  
+
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/crypto-js@4.1.1/crypto-js.js"></script>
+  <!-- 引入样式 -->
+  <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+  <!-- 引入组件库 -->
+  <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+  <script>
+    new Vue({
+      el: '#app',
+      data: {
+        text: '',
+        base64Str: '',
+        plaintext: '',
+        key: '',
+        ciphertext: ''
+      },
+      methods: {
+        encrypt: function () {
+          this.ciphertext = CryptoJS.AES.encrypt(this.plaintext, this.key).toString();
+        },
+        decrypt: function () {
+          this.plaintext = CryptoJS.AES.decrypt(this.ciphertext, this.key).toString(CryptoJS.enc.Utf8);
+        },
+        encodeBase64: function () {
+          let wordArray = CryptoJS.enc.Utf8.parse(this.text);
+          this.base64Str = CryptoJS.enc.Base64.stringify(wordArray);
+        },
+        decodeBase64: function () {
+          let parsedWordArray = CryptoJS.enc.Base64.parse(this.base64Str);
+          this.text = parsedWordArray.toString(CryptoJS.enc.Utf8);
+        }
+      }
+    });
+  </script>
+  
+</body>
+</html>
