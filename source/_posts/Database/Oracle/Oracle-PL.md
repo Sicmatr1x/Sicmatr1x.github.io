@@ -2,10 +2,10 @@
 title: Oracle PL
 date: 2017-07-30 21:31:43
 categories:
-    - Back-end
-tags: 
-    - OracleDB
     - Database
+tags: 
+    - Oracle
+    - Back-end
 ---
 
 ## 基础概念

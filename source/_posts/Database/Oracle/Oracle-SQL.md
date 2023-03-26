@@ -2,10 +2,10 @@
 title: Oracle SQL
 date: 2017-07-30 21:31:43
 categories:
-    - Back-end
-tags: 
-    - OracleDB
     - Database
+tags: 
+    - Oracle
+    - Back-end
 ---
 
 ## Oracle 服务器配置

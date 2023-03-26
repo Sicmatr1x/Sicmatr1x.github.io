@@ -2,10 +2,10 @@
 title: Oracle Database
 date: 2018-08-15 22:36:46
 categories:
-    - Back-end
-tags: 
-    - OracleDB
     - Database
+tags: 
+    - Oracle
+    - Back-end
 ---
 
 ## 数据库文件
