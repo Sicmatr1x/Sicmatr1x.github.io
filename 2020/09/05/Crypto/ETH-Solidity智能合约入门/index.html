@@ -1,0 +1,118 @@
+<!DOCTYPE html><html lang="en" theme-mode="dark"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>ETH Solidity智能合约入门 | Sicmatr1x's Blog</title><script>var config = {"root":"/","search":{"preload":false,"activeHolder":"键入以继续","blurHolder":"数据检索","noResult":"无 $0 相关数据"},"code":{"codeInfo":"$0 - 共 $1 行","copy":"复制","copyFinish":"复制成功","expand":"展开"}}</script><script src="/js/gitalk.js"></script><script src="//unpkg.com/mermaid@9.2.2/dist/mermaid.min.js"></script><link rel="stylesheet" href="/css/arknights.css"><script>if (window.localStorage.getItem('theme-mode') === 'light') document.documentElement.setAttribute('theme-mode', 'light')
+if (window.localStorage.getItem('theme-mode') === 'dark') document.documentElement.setAttribute('theme-mode', 'dark')</script><style>@font-face {
+ font-family: BenderLight;
+ src: local('Bender'), url("/font/BenderLight.ttf");
+}
+@font-face {
+ font-family: 'JetBrains Mono';
+ src: local('JetBrains Mono'), url('/font/JetBrainsMono-Regular.woff2') format('woff2');
+}</style><meta name="generator" content="Hexo 6.3.0"><link rel="alternate" href="/atom.xml" title="Sicmatr1x's Blog" type="application/atom+xml">
+</head><body><div class="loading" style="opacity: 0"><div class="loadingBar left"></div><div class="loadingBar right"></div></div><main><header class="closed"><nav><div class="navBtn hide"><i class="navBtnIcon"><span class="navBtnIconBar"></span><span class="navBtnIconBar"></span><span class="navBtnIconBar"></span></i></div><div class="navItem" id="search-header"><span class="navItemTitle"><input autocomplete="off" autocorrect="off" autocapitalize="none" placeholder="数据检索" spellcheck="false" maxlength="50" type="text" id="search-input"></span></div><div class="navItem" id="search-holder"></div><div class="search-popup"><div id="search-result"></div></div><ol class="navContent"><li class="navItem"><a class="navBlock" href="/"><span class="navItemTitle">Home</span></a></li><li class="navItem" matchdata="categories,tags"><a class="navBlock" href="/archives/"><span class="navItemTitle">Archives</span></a></li><li class="navItem"><a class="navBlock" href="/toolkit/"><span class="navItemTitle">Toolkit</span></a></li><li class="navItem"><a class="navBlock" href="/about/"><span class="navItemTitle">About</span></a></li></ol></nav></header><article><div id="post-bg"><div id="post-title"><h1>ETH Solidity智能合约入门</h1><div id="post-info"><span>文章发布时间: <div class="control"><time datetime="2020-09-05T02:45:38.000Z" id="date"> 2020-09-05</time></div></span><br><span>最后更新时间: <div class="control"><time datetime="2023-03-05T10:40:07.457Z" id="updated"> 2023-03-05</time></div></span></div></div><hr><div id="post-content"><p>Solidity 是一门面向合约的、为实现智能合约而创建的高级编程语言。这门语言受到了 C++，Python 和 Javascript 语言的影响，设计的目的是能在以太坊虚拟机（EVM）上运行。</p>
+<p>Solidity 是静态类型语言，支持继承、库和复杂的用户定义类型等特性。</p>
+<p>目前尝试 Solidity 编程的最好的方式是使用 <a target="_blank" rel="noopener" href="https://remix.ethereum.org/">Remix</a> （需要时间加载，请耐心等待）。Remix 是一个基于 Web 浏览器的 IDE，它可以让你编写 Solidity 智能合约，然后部署并运行该智能合约。</p>
+<p>Solidity Doc: <a target="_blank" rel="noopener" href="https://solidity-cn.readthedocs.io/zh/develop/">https://solidity-cn.readthedocs.io/zh/develop/</a></p>
+<h3 id="Solidity源码和智能合约"><a href="#Solidity源码和智能合约" class="headerlink" title="Solidity源码和智能合约"></a>Solidity源码和智能合约</h3><p>Solidity源代码要成为可以运行在以太坊上的智能合约需要经历如下的步骤：</p>
+<ol>
+<li>用Solidity编写的智能合约源代码需要先使用编译器编译为字节码（Bytecode)，编译过程中会同时产生智能合约的二进制接口规范（Application Binary Interface，简称为ABl）；</li>
+<li>通过交易（Transaction)的方式将字节码部署到以太坊网络，每次成功部署都会产生一个新的智能合约账户；</li>
+<li>使用Javascript编写的DApp通常通过web3.js+ABI去调用智能合约中的函数来实现数据的读取和修改。</li>
+</ol>
+<img src="./slidity编译流程.png">
+
+<h2 id="安装Solidity编译器"><a href="#安装Solidity编译器" class="headerlink" title="安装Solidity编译器"></a>安装Solidity编译器</h2><h3 id="Remix"><a href="#Remix" class="headerlink" title="Remix"></a>Remix</h3><p><a target="_blank" rel="noopener" href="https://remix.ethereum.org/">Remix</a> 可在线使用，而无需安装任何东西。如果你想离线使用，可按 <a target="_blank" rel="noopener" href="https://github.com/ethereum/browser-solidity/tree/gh-pages">https://github.com/ethereum/browser-solidity/tree/gh-pages</a> 的页面说明下载 zip 文件来使用。 该页面有进一步详细说明如何安装 Solidity 命令行编译器到你计算机上。如果你刚好要处理大型合约，或者需要更多的编译选项，那么你应该选择使用命令行编译器 solc。</p>
+<h3 id="solcjs"><a href="#solcjs" class="headerlink" title="solcjs"></a>solcjs</h3><p>solc是Solidity源码库的构建目标之一，它是Solidity的命令行编译器</p>
+<p>使用npm可以便捷地安装Solidity编译器solcjs</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">npm install -g solc<br></code></pre></td></tr></table></figure>
+
+<h3 id="根据例子学习Solidity"><a href="#根据例子学习Solidity" class="headerlink" title="根据例子学习Solidity"></a>根据例子学习Solidity</h3><h4 id="创建水龙头合约"><a href="#创建水龙头合约" class="headerlink" title="创建水龙头合约"></a>创建水龙头合约</h4><p><strong>打开remix在线开发环境：</strong></p>
+<p>选择new file创建Fucet.sol文件</p>
+<img src="./20200905105632.png">
+
+<p>输入代码</p>
+<p><strong>编译合约：</strong></p>
+<p>选择solidity compiler tab，点击compile Faucet.sol按钮编译代码为字节码文件</p>
+<img src="./20200905105759.png">
+
+<p>编译完成后solidity compiler tab上面的旋转箭头会变成一个成功的绿色小勾</p>
+<p><strong>发布合约：</strong></p>
+<p>需要浏览器安装MetaMask插件并登录ETH钱包</p>
+<img src="./20200905110105.png">
+
+<p>这里选择Ropsten测试环境</p>
+<p>选择Deploy &amp; Run Transactions tab，Environment选择Injected Web3，当你选择成功之后metamask会自动提示是否授权网页访问metamask钱包，选择同意你的钱包地址就会出现在Account下面的选项卡里，如选图所示：</p>
+<img src="./20200905110222.png">
+
+<p>点击deploy，metamask会弹出是否支付一定的gas来创建合约，点确定，等一下，等待时间取决于你的网络状况</p>
+<p>如果deploy成功会这个tab里出现如上图所示的Deployed Contracts一栏且内容为部署成功之后的合约的地址</p>
+<p>本例中为：<code>0x3280EB0E28d1715C6fBfFb18952fB4D8A548B93d</code></p>
+<p>使用Etherscan查询deploy合约的transaction：<a target="_blank" rel="noopener" href="https://ropsten.etherscan.io/tx/0x1b0a4f6223a539870cc216c98d70742fc550879648ae2235bbc77cf222f24ba7">https://ropsten.etherscan.io/tx/0x1b0a4f6223a539870cc216c98d70742fc550879648ae2235bbc77cf222f24ba7</a></p>
+<img src="./20200905110829.png">
+
+<p>使用Etherscan查询deploy合约的地址：<a target="_blank" rel="noopener" href="https://ropsten.etherscan.io/address/0x3280eb0e28d1715c6fbffb18952fb4d8a548b93d">https://ropsten.etherscan.io/address/0x3280eb0e28d1715c6fbffb18952fb4d8a548b93d</a></p>
+<img src="./20200905110903.png">
+
+<p>这个案例合约的作用是任何人可以提供一个amount参数然后该合约会给你发对应的币，但是当前合约里面没有ETH。所以需要添加一个接受ETH币的函数。重新deploy不是在旧的合约上面修改而是部署一个新的合约，因为合约一旦部署到区块链上就无法修改了。</p>
+<p><code>pragma solidity ^0.4.17;</code>引入solidity的版本，<code>^</code>表示高于0.4.17但小于0.5这个大版本，<code>&gt;</code>表示大于当前版本</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs solidity">pragma solidity ^0.4.17;<br><br>contract Fucet &#123;<br>    function withdraw(uint amount) public &#123;<br>        require(amount &lt;= 100000000000000000);<br>        msg.sender.transfer(amount); // wei<br>    &#125;<br>    <br>    <br>    function () public payable &#123;<br>        <br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>重新deploy，使用Etherscan查询deploy合约的地址：<a target="_blank" rel="noopener" href="https://ropsten.etherscan.io/address/0x7124eA18277f9a7764848470733F1aD98aFF9154">https://ropsten.etherscan.io/address/0x7124eA18277f9a7764848470733F1aD98aFF9154</a></p>
+<img src="./20200905150141.png">
+
+<p>使用metamask发送1个ETH到新的合约地址：<a target="_blank" rel="noopener" href="https://ropsten.etherscan.io/tx/0xff2c7d0568ab8b994ef1e0feeb779b2be19367186ba2a0e23c1014915dd5fe38">https://ropsten.etherscan.io/tx/0xff2c7d0568ab8b994ef1e0feeb779b2be19367186ba2a0e23c1014915dd5fe38</a></p>
+<img src="./20200905150231.png">
+
+<p>可以看到发送成功之后新的合约上的交易就从1个变成2个了，第一个transaction是合约创建的transaction，第二个是我们转了1个ETH到这个合约的transaction</p>
+<img src="./20200905150317.png">
+
+<p>好了终于可以测试水龙头的代码了：我们输入<code>100000000000000000</code>到amount参数框里，尝试从水龙头获取0.1个ETH</p>
+<img src="./20200905150523.png">
+
+<p>交易成功，看下transaction详情：</p>
+<img src="./20200905151148.png">
+
+<p>再看下水龙头合约的transaction记录：</p>
+<img src="./20200905150857.png">
+
+<p>注意：这里第三个transaction的value怎么是0，我们不是从合约得到了0.1个ETH吗，合约不是把ETH直接从一个账户转到另外一个账户而是走内部交易</p>
+<img src="./20200905151804.png">
+
+<p>那么我们的测试钱包是否也有一个对应的内部交易呢？是的</p>
+<img src="./20200905152006.png">
+
+<p>到这里就宣布水龙头合约大功告成啦！！！</p>
+<h4 id="简单数据存储合约"><a href="#简单数据存储合约" class="headerlink" title="简单数据存储合约"></a>简单数据存储合约</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs sol">pragma solidity &gt;0.4.22;<br><br>contract SimpleStorage &#123;<br>    uint myData;<br>    function setData(uint newData) public &#123;<br>        myData = newData;<br>    &#125;<br>    // view表明该function只读取数据不修改数据<br>    function getData() public view returns(uint) &#123;<br>        return myData;<br>    &#125;<br>&#125;<br><br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>Deploy success at: 0x3280eb0e28d1715c6fbffb18952fb4d8a548b93d</li>
+<li>Etherscan: <a target="_blank" rel="noopener" href="https://rinkeby.etherscan.io/address/0x3280eb0e28d1715c6fbffb18952fb4d8a548b93d">https://rinkeby.etherscan.io/address/0x3280eb0e28d1715c6fbffb18952fb4d8a548b93d</a></li>
+</ul>
+<p>与合约交互测试一下效果：</p>
+<img src="./20200916113754.png">
+
+<p>这里设置值需要消耗gas但是获取值getData不需要消耗gas</p>
+<img src="./202009161137.png">
+
+
+<div id="paginator"></div></div><div id="post-footer"><div id="pages"><div class="footer-link" style="width: 50%;text-align:right;border-right:1px #fe2 solid"><a href="/2020/09/16/Crypto/ETH-Solidity%E6%99%BA%E8%83%BD%E5%90%88%E7%BA%A6%E8%BF%9B%E9%98%B6/">← Next ETH Solidity智能合约进阶</a></div><div class="footer-link" style="width: 50%;right:1px;border-left:1px #fe2 solid"><a href="/2020/07/13/SpringBoot/SpringCloud-Alibaba/">SpringCloud Alibaba Prev →</a></div></div></div><div id="comments"><div class="selector"><button class="gitalk-sel"></button></div><div id="gitalk"></div></div></div><div class="bottom-btn"><div><a id="to-top" onClick="scrolls.scrolltop();" title="回到顶部" style="opacity: 0; display: none;">∧</a><a id="to-index" href="#toc-div" title="文章目录">≡</a><a id="color-mode" onClick="colorMode.change()" title="切换主题"></a></div></div></article><aside><div id="about"><a href="/" id="logo"><img src="https://ak.hypergryph.com/assets/index/images/ak/pc/faction/1.png" alt="Logo"></a><h1 id="Dr"><a href="/">Sicmatr1x</a></h1><div id="description"><p>INTP/Traveller/Stoicism/Crypto-anarchism/Minimalism/Cosmopolitanism/English learner/Crypto/Java Engineer</p></div></div><div id="aside-block"><div id="toc-div"><h1>目录</h1><ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#Solidity%E6%BA%90%E7%A0%81%E5%92%8C%E6%99%BA%E8%83%BD%E5%90%88%E7%BA%A6"><span class="toc-number">1.</span> <span class="toc-text">Solidity源码和智能合约</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%89%E8%A3%85Solidity%E7%BC%96%E8%AF%91%E5%99%A8"><span class="toc-number"></span> <span class="toc-text">安装Solidity编译器</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Remix"><span class="toc-number">1.</span> <span class="toc-text">Remix</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#solcjs"><span class="toc-number">2.</span> <span class="toc-text">solcjs</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A0%B9%E6%8D%AE%E4%BE%8B%E5%AD%90%E5%AD%A6%E4%B9%A0Solidity"><span class="toc-number">3.</span> <span class="toc-text">根据例子学习Solidity</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%88%9B%E5%BB%BA%E6%B0%B4%E9%BE%99%E5%A4%B4%E5%90%88%E7%BA%A6"><span class="toc-number">3.1.</span> <span class="toc-text">创建水龙头合约</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%AE%80%E5%8D%95%E6%95%B0%E6%8D%AE%E5%AD%98%E5%82%A8%E5%90%88%E7%BA%A6"><span class="toc-number">3.2.</span> <span class="toc-text">简单数据存储合约</span></a></li></ol></li></ol></div></div><footer><nobr>构建自 <a target="_blank" rel="noopener" href="http://hexo.io">Hexo</a></nobr><wbr><nobr> 使用主题 <a target="_blank" rel="noopener" href="https://github.com/Yue-plus/hexo-theme-arknights">Arknights</a></nobr><wbr><nobr>主题作者 <a target="_blank" rel="noopener" href="https://github.com/Yue-plus">Yue_plus</a></nobr></footer></aside></main><canvas id="canvas-dust"></canvas><script src="/js/search.js"></script><script class="pjax-js">reset=_=>{gitalk = new Gitalk({
+ clientID: '',
+ clientSecret: '',
+ repo: 'blog-comments',
+ owner: 'Sicmatr1x',
+ admin: ['Sicmatr1x'],
+ distractionFreeMode: false,
+ id: 
+});
+if (document.querySelector("#gitalk")) gitalk.render("gitalk");code.findCode();}</script><script src="/js/arknights.js"></script><script src="/js/pjax.js"></script><script>window.addEventListener("load",() => {pjax = new Pjax({
+ cacheBust: false,
+ selectors: ['title','article','#aside-block','.pjax-js'],
+ switches: {'article': Pjax.switches.sideBySide},
+ switchesOptions: {
+   'article': {
+     classNames: {
+       remove: "pjax-out",
+       add: "pjax-in"
+     }
+   }
+ }
+});
+document.addEventListener("pjax:complete", reset);reset()})</script></body></html>

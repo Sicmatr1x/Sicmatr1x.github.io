@@ -1,0 +1,86 @@
+<!DOCTYPE html><html lang="en" theme-mode="dark"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>我是如何使用frp内网穿透来访问局域网web服务的 | Sicmatr1x's Blog</title><script>var config = {"root":"/","search":{"preload":false,"activeHolder":"键入以继续","blurHolder":"数据检索","noResult":"无 $0 相关数据"},"code":{"codeInfo":"$0 - 共 $1 行","copy":"复制","copyFinish":"复制成功","expand":"展开"}}</script><script src="/js/gitalk.js"></script><script src="//unpkg.com/mermaid@9.2.2/dist/mermaid.min.js"></script><link rel="stylesheet" href="/css/arknights.css"><script>if (window.localStorage.getItem('theme-mode') === 'light') document.documentElement.setAttribute('theme-mode', 'light')
+if (window.localStorage.getItem('theme-mode') === 'dark') document.documentElement.setAttribute('theme-mode', 'dark')</script><style>@font-face {
+ font-family: BenderLight;
+ src: local('Bender'), url("/font/BenderLight.ttf");
+}
+@font-face {
+ font-family: 'JetBrains Mono';
+ src: local('JetBrains Mono'), url('/font/JetBrainsMono-Regular.woff2') format('woff2');
+}</style><meta name="generator" content="Hexo 6.3.0"><link rel="alternate" href="/atom.xml" title="Sicmatr1x's Blog" type="application/atom+xml">
+</head><body><div class="loading" style="opacity: 0"><div class="loadingBar left"></div><div class="loadingBar right"></div></div><main><header class="closed"><nav><div class="navBtn hide"><i class="navBtnIcon"><span class="navBtnIconBar"></span><span class="navBtnIconBar"></span><span class="navBtnIconBar"></span></i></div><div class="navItem" id="search-header"><span class="navItemTitle"><input autocomplete="off" autocorrect="off" autocapitalize="none" placeholder="数据检索" spellcheck="false" maxlength="50" type="text" id="search-input"></span></div><div class="navItem" id="search-holder"></div><div class="search-popup"><div id="search-result"></div></div><ol class="navContent"><li class="navItem"><a class="navBlock" href="/"><span class="navItemTitle">Home</span></a></li><li class="navItem" matchdata="categories,tags"><a class="navBlock" href="/archives/"><span class="navItemTitle">Archives</span></a></li><li class="navItem"><a class="navBlock" href="/toolkit/"><span class="navItemTitle">Toolkit</span></a></li><li class="navItem"><a class="navBlock" href="/about/"><span class="navItemTitle">About</span></a></li></ol></nav></header><article><div id="post-bg"><div id="post-title"><h1>我是如何使用frp内网穿透来访问局域网web服务的</h1><div id="post-info"><span>文章发布时间: <div class="control"><time datetime="2020-06-08T02:52:03.000Z" id="date"> 2020-06-08</time></div></span><br><span>最后更新时间: <div class="control"><time datetime="2023-03-26T08:11:44.323Z" id="updated"> 2023-03-26</time></div></span></div></div><hr><div id="post-content"><p>想从公网访问家里PC上的web服务，但是运营商又不给公网IP？VPS服务器+frp+web服务器</p>
+<h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><p>局域网有一台MAC已经配置了静态IP和DMZ</p>
+<p>IP: 192.168.2.104</p>
+<p>已经启动了一台web服务器，这里使用的是Spring Boot，端口为8090</p>
+<p>提供一个测试用的接口：<code>http://localhost:8090/notebook/version</code></p>
+<h2 id="frp"><a href="#frp" class="headerlink" title="frp"></a>frp</h2><h3 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h3><blockquote>
+<p>A fast reverse proxy to help you expose a local server behind a NAT or firewall to the internet.</p>
+</blockquote>
+<p>Frp是go写的免费开源的内网穿透软件，可以在windows&#x2F;linux&#x2F;mac下运行，:Github链接。其支持 TCP、UDP、HTTP、HTTPS等协议的网络连接，尝试性地支持了点对点穿透。部署时，需要在本地（内网服务器）和公网服务器同时部署，内网是frp客户端、公网是frp服务端，客户端之间通过ssh连接。当用户访问公网frp服务器时，服务器通过ssh连接到内网服务器上的端口，将本地客户端上对应端口的内容转发给用户，即反向代理。</p>
+<h3 id="开始配置前注意"><a href="#开始配置前注意" class="headerlink" title="开始配置前注意"></a>开始配置前注意</h3><p>frp需要启动服务端与客户端，服务端运行在你位于公网的VPS上，客户端运行在你家的局域网下</p>
+<ul>
+<li>服务端对应的配置文件为: <code>frps.ini</code></li>
+<li>客户端对应的配置文件为: <code>frpc.ini</code></li>
+</ul>
+<h3 id="服务端配置"><a href="#服务端配置" class="headerlink" title="服务端配置"></a>服务端配置</h3><p>查看系统信息</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs plaintext"># uname -a<br>Linux VM_0_3_centos 3.10.0-1062.9.1.el7.x86_64 #1 SMP Fri Dec 6 15:49:49 UTC 2019 x86_64 x86_64 x86_64 GNU/Linux<br></code></pre></td></tr></table></figure>
+
+<p>下载frp对应的包</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs plaintext"># wget https://github.com/fatedier/frp/releases/download/v0.33.0/frp_0.33.0_linux_amd64.tar.gz<br>2020-06-08 09:47:05 (3.53 MB/s) - ‘frp_0.33.0_linux_amd64.tar.gz’ saved [9028588/9028588]<br></code></pre></td></tr></table></figure>
+
+<p>解压缩</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">sudo tar -xzvf frp_0.33.0_linux_amd64.tar.gz<br>cd frp_0.33.0_linux_amd64<br></code></pre></td></tr></table></figure>
+
+<p>查看配置文件<code>frps.ini</code></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs plaintext"># cat frps.ini<br>[common]<br>bind_port = 7000<br></code></pre></td></tr></table></figure>
+
+<p>使用vim修改配置文件<code>frps.ini</code></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs plaintext"># sudo vim frps.ini<br>[common]<br>bind_port = 7000<br>token = password<br>vhost_http_port = 8090<br></code></pre></td></tr></table></figure>
+
+<p>按i进入insert模式，然后增加修改成如上，按ESC退出insert模式，然后输入<code>:</code>进入命令模式，<code>wq</code>保持并退出</p>
+<p>启动服务端</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs plaintext"># ./frps -c ./frps.ini<br>2020/06/08 10:16:18 [I] [service.go:178] frps tcp listen on 0.0.0.0:7000<br>2020/06/08 10:16:18 [I] [service.go:220] http service listen on 0.0.0.0:8090<br>2020/06/08 10:16:18 [I] [root.go:209] start frps success<br></code></pre></td></tr></table></figure>
+
+<p>启动frp服务器并后台运行,启动完成后可通过lsof -i :7000查看端口占用情况</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">nohup ./frps -c ./frps.ini &amp;<br></code></pre></td></tr></table></figure>
+
+<p>需要重启的话可以先：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs plaintext"># lsof -i :7000<br>COMMAND  PID USER   FD   TYPE    DEVICE SIZE/OFF NODE NAME<br>frps    1817 root    3u  IPv6  16887360      0t0  TCP *:afs3-fileserver (LISTEN)<br># kill 1817<br># nohup ./frps -c ./frps.ini &amp;<br></code></pre></td></tr></table></figure>
+
+<h3 id="客户端配置"><a href="#客户端配置" class="headerlink" title="客户端配置"></a>客户端配置</h3><p>查看系统信息</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs plaintext"># uname -a<br>Darwin sicmatr1xMacBook-Pro.local 19.4.0 Darwin Kernel Version 19.4.0: Wed Mar  4 22:28:40 PST 2020; root:xnu-6153.101.6~15/RELEASE_X86_64 x86_64<br></code></pre></td></tr></table></figure>
+
+<p>下载frp对应的包: <a target="_blank" rel="noopener" href="https://github.com/fatedier/frp/releases/download/v0.33.0/frp_0.33.0_darwin_amd64.tar.gz">https://github.com/fatedier/frp/releases/download/v0.33.0/frp_0.33.0_darwin_amd64.tar.gz</a></p>
+<p>解压缩并修改配置文件<code>frpc.ini</code></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">[common]<br>server_addr = 45.**.**.**9<br>server_port = 7000<br>token = password<br><br>[web]<br>#配置类型为tcp协议<br>type = http<br>#内网需要监听的端口,即本地运行的服务所使用的端口<br>local_port = 8090<br>#公网服务器的IP或者已解析的域名<br>custom_domains=45.**.**.**9<br></code></pre></td></tr></table></figure>
+
+<p>实际上这里要是还想开放4000端口可以不需要修改服务器文件只用在<code>frpc.ini</code>里增加如下的test_tcp部分就行</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">[common]<br>server_addr = 45.**.**.**9<br>server_port = 7000<br>token = password<br><br>[web]<br>#配置类型为tcp协议<br>type = http<br>#内网需要监听的端口,即本地运行的服务所使用的端口<br>local_port = 8090<br>#公网服务器的IP或者已解析的域名<br>custom_domains=45.**.**.**9<br><br>[test_tcp]<br>type = tcp<br>local_ip = 127.0.0.1<br>local_port = 4000<br>remote_port = 4000<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">cd /Users/sicmatr1x/Develop/frp_0.33.0_darwin_amd64<br>./frpc -c ./frpc.ini<br></code></pre></td></tr></table></figure>
+
+<p>连接成功的话服务端会提示</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">2020/06/08 10:16:20 [I] [service.go:432] [97bed4f24fba649a] client login info: ip [119.**.**.**:26698] version [0.33.0] hostname [] os [darwin] arch [amd64]<br></code></pre></td></tr></table></figure>
+
+<div id="paginator"></div></div><div id="post-footer"><div id="pages"><div class="footer-link" style="width: 50%;text-align:right;border-right:1px #fe2 solid"><a href="/2020/07/08/Buffer/%E8%99%9A%E6%8B%9F%E6%9C%BA%E7%9B%B8%E5%85%B3/">← Next 虚拟机相关</a></div><div class="footer-link" style="width: 50%;right:1px;border-left:1px #fe2 solid"><a href="/2020/05/12/SpringBoot/Spring%E6%B3%A8%E8%A7%A3%E9%A9%B1%E5%8A%A8%E5%BC%80%E5%8F%91/">Spring注解驱动开发 Prev →</a></div></div></div><div id="comments"><div class="selector"><button class="gitalk-sel"></button></div><div id="gitalk"></div></div></div><div class="bottom-btn"><div><a id="to-top" onClick="scrolls.scrolltop();" title="回到顶部" style="opacity: 0; display: none;">∧</a><a id="to-index" href="#toc-div" title="文章目录">≡</a><a id="color-mode" onClick="colorMode.change()" title="切换主题"></a></div></div></article><aside><div id="about"><a href="/" id="logo"><img src="https://ak.hypergryph.com/assets/index/images/ak/pc/faction/1.png" alt="Logo"></a><h1 id="Dr"><a href="/">Sicmatr1x</a></h1><div id="description"><p>INTP/Traveller/Stoicism/Crypto-anarchism/Minimalism/Cosmopolitanism/English learner/Crypto/Java Engineer</p></div></div><div id="aside-block"><div id="toc-div"><h1>目录</h1><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%83%8C%E6%99%AF"><span class="toc-number">1.</span> <span class="toc-text">背景</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#frp"><span class="toc-number">2.</span> <span class="toc-text">frp</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AE%80%E4%BB%8B"><span class="toc-number">2.1.</span> <span class="toc-text">简介</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BC%80%E5%A7%8B%E9%85%8D%E7%BD%AE%E5%89%8D%E6%B3%A8%E6%84%8F"><span class="toc-number">2.2.</span> <span class="toc-text">开始配置前注意</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9C%8D%E5%8A%A1%E7%AB%AF%E9%85%8D%E7%BD%AE"><span class="toc-number">2.3.</span> <span class="toc-text">服务端配置</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%A2%E6%88%B7%E7%AB%AF%E9%85%8D%E7%BD%AE"><span class="toc-number">2.4.</span> <span class="toc-text">客户端配置</span></a></li></ol></li></ol></div></div><footer><nobr>构建自 <a target="_blank" rel="noopener" href="http://hexo.io">Hexo</a></nobr><wbr><nobr> 使用主题 <a target="_blank" rel="noopener" href="https://github.com/Yue-plus/hexo-theme-arknights">Arknights</a></nobr><wbr><nobr>主题作者 <a target="_blank" rel="noopener" href="https://github.com/Yue-plus">Yue_plus</a></nobr></footer></aside></main><canvas id="canvas-dust"></canvas><script src="/js/search.js"></script><script class="pjax-js">reset=_=>{gitalk = new Gitalk({
+ clientID: '',
+ clientSecret: '',
+ repo: 'blog-comments',
+ owner: 'Sicmatr1x',
+ admin: ['Sicmatr1x'],
+ distractionFreeMode: false,
+ id: 
+});
+if (document.querySelector("#gitalk")) gitalk.render("gitalk");code.findCode();}</script><script src="/js/arknights.js"></script><script src="/js/pjax.js"></script><script>window.addEventListener("load",() => {pjax = new Pjax({
+ cacheBust: false,
+ selectors: ['title','article','#aside-block','.pjax-js'],
+ switches: {'article': Pjax.switches.sideBySide},
+ switchesOptions: {
+   'article': {
+     classNames: {
+       remove: "pjax-out",
+       add: "pjax-in"
+     }
+   }
+ }
+});
+document.addEventListener("pjax:complete", reset);reset()})</script></body></html>

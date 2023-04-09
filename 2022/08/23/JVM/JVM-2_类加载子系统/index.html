@@ -1,0 +1,196 @@
+<!DOCTYPE html><html lang="en" theme-mode="dark"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>JVM-2_类加载子系统 | Sicmatr1x's Blog</title><script>var config = {"root":"/","search":{"preload":false,"activeHolder":"键入以继续","blurHolder":"数据检索","noResult":"无 $0 相关数据"},"code":{"codeInfo":"$0 - 共 $1 行","copy":"复制","copyFinish":"复制成功","expand":"展开"}}</script><script src="/js/gitalk.js"></script><script src="//unpkg.com/mermaid@9.2.2/dist/mermaid.min.js"></script><link rel="stylesheet" href="/css/arknights.css"><script>if (window.localStorage.getItem('theme-mode') === 'light') document.documentElement.setAttribute('theme-mode', 'light')
+if (window.localStorage.getItem('theme-mode') === 'dark') document.documentElement.setAttribute('theme-mode', 'dark')</script><style>@font-face {
+ font-family: BenderLight;
+ src: local('Bender'), url("/font/BenderLight.ttf");
+}
+@font-face {
+ font-family: 'JetBrains Mono';
+ src: local('JetBrains Mono'), url('/font/JetBrainsMono-Regular.woff2') format('woff2');
+}</style><meta name="generator" content="Hexo 6.3.0"><link rel="alternate" href="/atom.xml" title="Sicmatr1x's Blog" type="application/atom+xml">
+</head><body><div class="loading" style="opacity: 0"><div class="loadingBar left"></div><div class="loadingBar right"></div></div><main><header class="closed"><nav><div class="navBtn hide"><i class="navBtnIcon"><span class="navBtnIconBar"></span><span class="navBtnIconBar"></span><span class="navBtnIconBar"></span></i></div><div class="navItem" id="search-header"><span class="navItemTitle"><input autocomplete="off" autocorrect="off" autocapitalize="none" placeholder="数据检索" spellcheck="false" maxlength="50" type="text" id="search-input"></span></div><div class="navItem" id="search-holder"></div><div class="search-popup"><div id="search-result"></div></div><ol class="navContent"><li class="navItem"><a class="navBlock" href="/"><span class="navItemTitle">Home</span></a></li><li class="navItem" matchdata="categories,tags"><a class="navBlock" href="/archives/"><span class="navItemTitle">Archives</span></a></li><li class="navItem"><a class="navBlock" href="/toolkit/"><span class="navItemTitle">Toolkit</span></a></li><li class="navItem"><a class="navBlock" href="/about/"><span class="navItemTitle">About</span></a></li></ol></nav></header><article><div id="post-bg"><div id="post-title"><h1>JVM-2_类加载子系统</h1><div id="post-info"><span>文章发布时间: <div class="control"><time datetime="2022-08-23T02:06:24.000Z" id="date"> 2022-08-23</time></div></span><br><span>最后更新时间: <div class="control"><time datetime="2023-03-26T08:32:13.354Z" id="updated"> 2023-03-26</time></div></span></div></div><hr><div id="post-content"><h1 id="内存与垃圾回收"><a href="#内存与垃圾回收" class="headerlink" title="内存与垃圾回收"></a>内存与垃圾回收</h1><h2 id="内存结构概述"><a href="#内存结构概述" class="headerlink" title="内存结构概述"></a>内存结构概述</h2><img src="./内存结构概述.png">
+
+<img src="./内存结构.png">
+
+
+<p>类加载子系统负责从文件系统或网络中加载class文件，class文件在文件开头有特定的文件标识</p>
+<p>ClassLoader只负责class文件的加载，至于它是否可以运行，则由Execution Engine决定</p>
+<p>加载的类信息存放在叫做方法区的内存空间。除了类信息外，方法区还存放运行时常量池信息，可能还有字符串和数字常量</p>
+<p>class file加载到JVM中被称为DNA元数据模板，放在方法区</p>
+<h3 id="字节码文件-class"><a href="#字节码文件-class" class="headerlink" title="字节码文件.class"></a>字节码文件.class</h3><p>使用二进制查看器打开任意字节码文件可以观察到期开头4个字节用十六进制表示为<code>CA FE BA BE</code>(可记为咖啡宝贝)，这是字节码文件固定头部</p>
+<h3 id="1-加载-Loading"><a href="#1-加载-Loading" class="headerlink" title="1. 加载 Loading"></a>1. 加载 Loading</h3><ol>
+<li>通过一个类的全限定名获取定义此类的二进制字节流</li>
+<li>将这个字节流所代表的今天存储结构转化为方法区的运行时数据结构</li>
+<li>在内存中生成一个代表这个类的java.lang.Class对象，作为方法区这个类的各种数据的访问入口</li>
+</ol>
+<p>可以从哪些地方加载.class文件呢：</p>
+<ul>
+<li>本地文件加载</li>
+<li>网络获取，典型场景：web Applet</li>
+<li>zip压缩包中读取</li>
+<li>运行时计算生成，使用最多的是：动态代理技术</li>
+<li>其它文件生成，例如：JSP应用</li>
+<li>专有数据库提取.class文件，少见</li>
+<li>加密文件中获取，可防止class文件被反编译</li>
+</ul>
+<h3 id="2-链接-Linking"><a href="#2-链接-Linking" class="headerlink" title="2. 链接 Linking"></a>2. 链接 Linking</h3><p>该阶段分为以下几步：</p>
+<ol>
+<li>验证(Verify)</li>
+</ol>
+<ul>
+<li>目的在于确保class文件的字节流中包含信息符合当前虚拟机的要求，保证被加载类的正确性，不会危害虚拟机自身安全</li>
+<li>主要包括四种验证：<ol>
+<li>文件格式验证</li>
+<li>元数据验证</li>
+<li>字节码验证</li>
+<li>符号引用验证</li>
+</ol>
+</li>
+</ul>
+<ol start="2">
+<li>准备(Prepare)</li>
+</ol>
+<ul>
+<li>为变量分配内存并且设置该类变量的默认初始值，即零值</li>
+<li>这里不包含用final修饰的static，因为final在编译的时候就会分配了，准备阶段会显示初始化</li>
+<li>这里不会为实例变量分配初始化，类变量会分配在方法区中，而实例变量会随着对象一起分配到java堆中</li>
+</ul>
+<ol start="3">
+<li>解析(Resolve)</li>
+</ol>
+<ul>
+<li>将常量池内的符号引用转换为直接引用的过程</li>
+<li>解析操作往往伴随JVM在执行完初始化之后再执行</li>
+<li>符号引用就是一组符号来描述所引用的目标。</li>
+<li>解析动作主要针对类或接口、字段、类方法、接口方法、方法类型等。</li>
+</ul>
+<h3 id="3-初始化-Initialization"><a href="#3-初始化-Initialization" class="headerlink" title="3. 初始化 Initialization"></a>3. 初始化 Initialization</h3><ul>
+<li>初始化阶段就是执行类构造器方法<code>&lt;clinit&gt;()</code>的过程</li>
+<li>此方法不需定义，是由javac编译器自动收集类中的所有类变量的赋值动作和静态代码块中的语句合并而来</li>
+<li>构造器方法中指令按语句在源文件中出现的顺序执行</li>
+<li><code>&lt;clinit&gt;()</code>不同于类的构造器<code>&lt;init&gt;()</code>，若一个类中没有静态变量和静态代码块则字节码文件中无<code>&lt;clinit&gt;()</code>方法</li>
+<li>虚拟机必须保证一个类的<code>&lt;clinit&gt;()</code>方法在多线程下被同步加锁</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">package</span> com.sicmatr1x.java;<br><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">ClinitTest</span> &#123;<br>    <span class="hljs-keyword">private</span> <span class="hljs-type">int</span> <span class="hljs-variable">a</span> <span class="hljs-operator">=</span> <span class="hljs-number">1</span>;<br>    <span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> <span class="hljs-type">int</span> <span class="hljs-variable">c</span> <span class="hljs-operator">=</span> <span class="hljs-number">3</span>;<br><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">main</span><span class="hljs-params">(String[] args)</span> &#123;<br>        <span class="hljs-type">int</span> <span class="hljs-variable">b</span> <span class="hljs-operator">=</span> <span class="hljs-number">2</span>;<br>    &#125;<br><br>    <span class="hljs-keyword">public</span> <span class="hljs-title function_">ClinitTest</span><span class="hljs-params">()</span> &#123;<br>        a = <span class="hljs-number">10</span>;<br>        <span class="hljs-type">int</span> <span class="hljs-variable">d</span> <span class="hljs-operator">=</span> <span class="hljs-number">20</span>;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>反编译字节码文件可以看到存在<code>&lt;clinit&gt;()</code>和<code>&lt;init&gt;()</code></p>
+<p><code>&lt;init&gt;</code>如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs plaintext"> 0 aload_0<br> 1 invokespecial #1 &lt;java/lang/Object.&lt;init&gt;&gt;<br> 4 aload_0<br> 5 iconst_1<br> 6 putfield #2 &lt;com/sicmatr1x/java/ClinitTest.a&gt;<br> 9 aload_0<br>10 bipush 10<br>12 putfield #2 &lt;com/sicmatr1x/java/ClinitTest.a&gt;<br>15 bipush 20<br>17 istore_1<br>18 return<br></code></pre></td></tr></table></figure>
+
+<p>可以看到先给a赋值10再给d赋值20</p>
+<h2 id="类的加载过程"><a href="#类的加载过程" class="headerlink" title="类的加载过程"></a>类的加载过程</h2><h3 id="类加载器的分类"><a href="#类加载器的分类" class="headerlink" title="类加载器的分类"></a>类加载器的分类</h3><p>JVM支持两种类型的类加载器：</p>
+<ol>
+<li>引导类加载器(Bootstrap ClassLoader)</li>
+<li>自定义类加载器(User-Defined ClassLoader)：所有派生于抽象类ClassLoader的类加载器都可划分为自定义类加载器</li>
+</ol>
+<p>启动类加载器(引导类加载器, Bootstrap ClassLoader)：</p>
+<ul>
+<li>使用C&#x2F;C++语言实现，嵌套在JVM内部</li>
+<li>用于加载Java的核心库(JAVA_HOME&#x2F;jre&#x2F;lib&#x2F;rt.jar, resources.jar或sun.boot.class.path路径下的内容)</li>
+<li>不继承于java.lang.ClassLoader，没有父加载器</li>
+<li>加载扩展类和应用程序类加载器，并制定为他们的父类加载器</li>
+<li>处于安全考虑，Bootstrap启动类加载器只加载包名为java, javax, sun等开头的类</li>
+</ul>
+<p>扩展类加载器(Extension ClassLoader)</p>
+<ul>
+<li>Java语言编写，由sun.misc.Launcher$ExtClassLoader实现</li>
+<li>派生于ClassLoader类</li>
+<li>父类加载器为启动类加载器</li>
+<li>从java.ext.dirs系统属性所指定的目录中加载类库，或从JDK的安装目录的jre&#x2F;lib&#x2F;ext子目录下加载类库。如果用户创建的JAR放在此目录，也会自动由扩展类加载器加载。</li>
+</ul>
+<p>应用程序类加载器(系统类加载器, AppClassLoader)</p>
+<ul>
+<li>Java语言编写，由sun.misc.Launcher$AppClassLoader实现</li>
+<li>派生于ClassLoader类</li>
+<li>父类加载器为扩展类加载器</li>
+<li>负责加载环境变量classpath或系统属性java.class.path指定路径下的类库</li>
+<li>该类加载器是程序中默认的类加载器，通常Java应用的类都由它来加载</li>
+<li>通过<code>ClassLoader#getSystemClassLoader()</code>方法可以获取到该类加载器</li>
+</ul>
+<p>获取Bootstrap ClassLoader类加载器和Extension ClassLoader类加载器可以加载的路径和jar包</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">package</span> com.sicmatr1x.java;<br><br><span class="hljs-keyword">import</span> sun.misc.Launcher;<br><span class="hljs-keyword">import</span> sun.misc.URLClassPath;<br><br><span class="hljs-keyword">import</span> java.net.URL;<br><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">ClassLoaderTest1</span> &#123;<br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">main</span><span class="hljs-params">(String[] args)</span> &#123;<br>        System.out.println(<span class="hljs-string">&quot;引导类加载器：&quot;</span>);<br>        <span class="hljs-type">URLClassPath</span> <span class="hljs-variable">urlClassPath</span> <span class="hljs-operator">=</span> Launcher.getBootstrapClassPath();<br>        URL[] urls = urlClassPath.getURLs();<br>        <span class="hljs-keyword">for</span> (URL url : urls) &#123;<br>            System.out.println(url.toExternalForm());<br>        &#125;<br>        System.out.println(<span class="hljs-string">&quot;扩展类加载器：&quot;</span>);<br>        <span class="hljs-type">String</span> <span class="hljs-variable">extDirs</span> <span class="hljs-operator">=</span> System.getProperty(<span class="hljs-string">&quot;java.ext.dirs&quot;</span>);<br>        <span class="hljs-keyword">for</span> (String dir : extDirs.split(<span class="hljs-string">&quot;;&quot;</span>)) &#123;<br>            System.out.println(dir);<br>        &#125;<br>    &#125;<br>&#125;<br><br></code></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">引导类加载器：<br>file:/C:/Program%20Files/Java/jdk1.8.0_231/jre/lib/resources.jar<br>file:/C:/Program%20Files/Java/jdk1.8.0_231/jre/lib/rt.jar<br>file:/C:/Program%20Files/Java/jdk1.8.0_231/jre/lib/sunrsasign.jar<br>file:/C:/Program%20Files/Java/jdk1.8.0_231/jre/lib/jsse.jar<br>file:/C:/Program%20Files/Java/jdk1.8.0_231/jre/lib/jce.jar<br>file:/C:/Program%20Files/Java/jdk1.8.0_231/jre/lib/charsets.jar<br>file:/C:/Program%20Files/Java/jdk1.8.0_231/jre/lib/jfr.jar<br>file:/C:/Program%20Files/Java/jdk1.8.0_231/jre/classes<br>扩展类加载器：<br>C:\Program Files\Java\jdk1.8.0_231\jre\lib\ext<br>C:\Windows\Sun\Java\lib\ext<br></code></pre></td></tr></table></figure>
+
+<p>用户自定义类加载器：</p>
+<ul>
+<li>什么时候需要用户自定义类加载器：<ul>
+<li>隔离加载类：例如：确保应用中引用的jar包与中间件引用的第三方jar包不冲突</li>
+<li>修改类加载方式：例如：需要时候动态加载</li>
+<li>扩展加载源：例如：从数据库中加载</li>
+<li>防止源码泄露</li>
+</ul>
+</li>
+<li>用户自定义类加载器实现步骤：<ol>
+<li>开发人员可以通过继承抽象类java.lang.ClassLoader类的方式实现自己的类加载器</li>
+<li>在JDK1.2之前，自定义类加载器需要继承ClassLoader类并重写loadClass()方法，从而实现自定义的类加载器。JDK1.2之后不建议用户覆盖loadClass()方法，建议把自定义的类加载逻辑写在findClass()方法中</li>
+<li>编写自定义类加载器时若无过于复杂的需求建议直接继承URLClassLoader类，这样可以避免自己去编写findClass()方法及获取字节码流的方式，是自定义类加载器编写更加简洁</li>
+</ol>
+</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">package</span> com.sicmatr1x.java;<br><br><span class="hljs-keyword">import</span> java.io.FileNotFoundException;<br><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">CustomClassLoader</span> <span class="hljs-keyword">extends</span> <span class="hljs-title class_">ClassLoader</span>&#123;<br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-keyword">protected</span> Class&lt;?&gt; findClass(String name) <span class="hljs-keyword">throws</span> ClassNotFoundException &#123;<br><br>        <span class="hljs-keyword">try</span> &#123;<br>            <span class="hljs-type">byte</span>[] result = getClassFromCustomPath(name);<br>            <span class="hljs-keyword">if</span>(result == <span class="hljs-literal">null</span>)&#123;<br>                <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">FileNotFoundException</span>();<br>            &#125;<span class="hljs-keyword">else</span>&#123;<br>                <span class="hljs-keyword">return</span> defineClass(name,result,<span class="hljs-number">0</span>,result.length);<br>            &#125;<br>        &#125; <span class="hljs-keyword">catch</span> (FileNotFoundException e) &#123;<br>            e.printStackTrace();<br>        &#125;<br><br>        <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">ClassNotFoundException</span>(name);<br>    &#125;<br><br>    <span class="hljs-keyword">private</span> <span class="hljs-type">byte</span>[] getClassFromCustomPath(String name)&#123;<br>        <span class="hljs-comment">//从自定义路径中加载指定类:细节略</span><br>        <span class="hljs-comment">//如果指定路径的字节码文件进行了加密，则需要在此方法中进行解密操作。</span><br>        <span class="hljs-keyword">return</span> <span class="hljs-literal">null</span>;<br>    &#125;<br><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">main</span><span class="hljs-params">(String[] args)</span> &#123;<br>        <span class="hljs-type">CustomClassLoader</span> <span class="hljs-variable">customClassLoader</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">CustomClassLoader</span>();<br>        <span class="hljs-keyword">try</span> &#123;<br>            Class&lt;?&gt; clazz = Class.forName(<span class="hljs-string">&quot;One&quot;</span>,<span class="hljs-literal">true</span>,customClassLoader);<br>            <span class="hljs-type">Object</span> <span class="hljs-variable">obj</span> <span class="hljs-operator">=</span> clazz.newInstance();<br>            System.out.println(obj.getClass().getClassLoader());<br>        &#125; <span class="hljs-keyword">catch</span> (Exception e) &#123;<br>            e.printStackTrace();<br>        &#125;<br>    &#125;<br>&#125;<br><br></code></pre></td></tr></table></figure>
+
+<h3 id="关于ClassLoader"><a href="#关于ClassLoader" class="headerlink" title="关于ClassLoader"></a>关于ClassLoader</h3><p>常用方法：</p>
+<ul>
+<li>getParent(): 返回该类加载器的超类加载器</li>
+<li>loadClass(String name): 加载名称为name的类，返回结果为java.lang.Class类的实例</li>
+<li>findClass(String name): 查找名称为name的类，返回结果为java.lang.Class类的实例</li>
+<li>findLoadedClass(String name): 查找名称为name的已经被加载过的类，返回结果为java.lang.Class类的实例</li>
+<li>defineClass(String name, byte[] b, int off, int len): 把字节数组b中的内容转换为一个Java类，返回结果为java.lang.Class类的实例</li>
+<li>resolveClass(Class&lt;?&gt; c): 连接指定的一个Java类</li>
+</ul>
+<h3 id="双亲委派机制"><a href="#双亲委派机制" class="headerlink" title="双亲委派机制"></a>双亲委派机制</h3><p>JVM对class文件采用按需加载的方式，即需要使用到该类时才会把class文件加载到内存生成class对象。而且在加载时JVM采用的是双亲委派机制，即把请求交由父类处理，它是一种任务委派模式。</p>
+<ol>
+<li>如果一个类加载器收到了类加载请求，它并不会自己先去加载，而是把这个请求委托给父类的加载器去执行</li>
+<li>如果父类加载器还存在其父类加载器，则进一步向上委托，一次递归，请求最终将到达顶层的启动类加载器</li>
+<li>如果父类加载器可以完成类加载任务，就成功返回，若无法完成，子类加载器才会去加载。</li>
+</ol>
+<p>优点：</p>
+<ul>
+<li>避免类的重复加载：一旦一个类被父加载器加载则不会再被子加载器加载</li>
+<li>保护程序安全，防止核心API被篡改：比如你自己定义一个java.lang.String就不会被AppClassLoader加载而是Bootstrap ClassLoader加载java的String</li>
+</ul>
+<p>沙箱安全机制：<br>自定义String类在加载的时候回率先使用引导类加载器加载，而引导类加载器会先加载JDK自带的文件rt.jar包中的java\lang\String.class，这样可以保证对java核心源代码的保护</p>
+<h3 id="其它"><a href="#其它" class="headerlink" title="其它"></a>其它</h3><p>JVM中表示两个class对象是否为同一个类存在的两个必要条件：</p>
+<ol>
+<li>类的完整类名必须一致，包括包名</li>
+<li>加载这个类的ClassLoader(指ClassLoader实例对象)必须相同</li>
+</ol>
+<h3 id="对类加载器的引用"><a href="#对类加载器的引用" class="headerlink" title="对类加载器的引用"></a>对类加载器的引用</h3><p>JVM知道一个类时由启动类加载器加载器加载的还是由用户类加载器加载的。若是由用户类加载器加载的，JVM会将这个类加载器的一个引用作为类型信息的一部分保存在方法区中。当解析一个类到另一个类的时候，JVM需要保证这两个类的类加载器是相同的。</p>
+<h3 id="类的主动使用与被动使用"><a href="#类的主动使用与被动使用" class="headerlink" title="类的主动使用与被动使用"></a>类的主动使用与被动使用</h3><p>主动使用的七种情况：</p>
+<ol>
+<li>创建类的实例</li>
+<li>访问某个类或接口的静态变量，或对该静态变量赋值</li>
+<li>调用类的静态方法</li>
+<li>反射</li>
+<li>初始化一个类的子类</li>
+<li>Java虚拟机启动时被标明为启动类的类</li>
+<li>JDK7开始提供动态语言支持：</li>
+</ol>
+<ul>
+<li>java.lang,invoke.MethodHandle实例的解析结果</li>
+<li>REF_getStatic, REF_putStatic, REF_invokeStatic句柄对应的类没有初始化，则初始化</li>
+</ul>
+<p>除了主动使用的七种情况外都算被动使用</p>
+<div id="paginator"></div></div><div id="post-footer"><div id="pages"><div class="footer-link" style="width: 50%;text-align:right;border-right:1px #fe2 solid"><a href="/2022/08/24/JVM/JVM-12-%E6%89%A7%E8%A1%8C%E5%BC%95%E6%93%8E/">← Next JVM-12_执行引擎</a></div><div class="footer-link" style="width: 50%;right:1px;border-left:1px #fe2 solid"><a href="/2022/08/19/BigData/Hadoop/">Hadoop Prev →</a></div></div></div><div id="comments"><div class="selector"><button class="gitalk-sel"></button></div><div id="gitalk"></div></div></div><div class="bottom-btn"><div><a id="to-top" onClick="scrolls.scrolltop();" title="回到顶部" style="opacity: 0; display: none;">∧</a><a id="to-index" href="#toc-div" title="文章目录">≡</a><a id="color-mode" onClick="colorMode.change()" title="切换主题"></a></div></div></article><aside><div id="about"><a href="/" id="logo"><img src="https://ak.hypergryph.com/assets/index/images/ak/pc/faction/1.png" alt="Logo"></a><h1 id="Dr"><a href="/">Sicmatr1x</a></h1><div id="description"><p>INTP/Traveller/Stoicism/Crypto-anarchism/Minimalism/Cosmopolitanism/English learner/Crypto/Java Engineer</p></div></div><div id="aside-block"><div id="toc-div"><h1>目录</h1><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%86%85%E5%AD%98%E4%B8%8E%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6"><span class="toc-number">1.</span> <span class="toc-text">内存与垃圾回收</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%86%85%E5%AD%98%E7%BB%93%E6%9E%84%E6%A6%82%E8%BF%B0"><span class="toc-number">1.1.</span> <span class="toc-text">内存结构概述</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AD%97%E8%8A%82%E7%A0%81%E6%96%87%E4%BB%B6-class"><span class="toc-number">1.1.1.</span> <span class="toc-text">字节码文件.class</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E5%8A%A0%E8%BD%BD-Loading"><span class="toc-number">1.1.2.</span> <span class="toc-text">1. 加载 Loading</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E9%93%BE%E6%8E%A5-Linking"><span class="toc-number">1.1.3.</span> <span class="toc-text">2. 链接 Linking</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-%E5%88%9D%E5%A7%8B%E5%8C%96-Initialization"><span class="toc-number">1.1.4.</span> <span class="toc-text">3. 初始化 Initialization</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%B1%BB%E7%9A%84%E5%8A%A0%E8%BD%BD%E8%BF%87%E7%A8%8B"><span class="toc-number">1.2.</span> <span class="toc-text">类的加载过程</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%B1%BB%E5%8A%A0%E8%BD%BD%E5%99%A8%E7%9A%84%E5%88%86%E7%B1%BB"><span class="toc-number">1.2.1.</span> <span class="toc-text">类加载器的分类</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%B3%E4%BA%8EClassLoader"><span class="toc-number">1.2.2.</span> <span class="toc-text">关于ClassLoader</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%8C%E4%BA%B2%E5%A7%94%E6%B4%BE%E6%9C%BA%E5%88%B6"><span class="toc-number">1.2.3.</span> <span class="toc-text">双亲委派机制</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%B6%E5%AE%83"><span class="toc-number">1.2.4.</span> <span class="toc-text">其它</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AF%B9%E7%B1%BB%E5%8A%A0%E8%BD%BD%E5%99%A8%E7%9A%84%E5%BC%95%E7%94%A8"><span class="toc-number">1.2.5.</span> <span class="toc-text">对类加载器的引用</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%B1%BB%E7%9A%84%E4%B8%BB%E5%8A%A8%E4%BD%BF%E7%94%A8%E4%B8%8E%E8%A2%AB%E5%8A%A8%E4%BD%BF%E7%94%A8"><span class="toc-number">1.2.6.</span> <span class="toc-text">类的主动使用与被动使用</span></a></li></ol></li></ol></li></ol></div></div><footer><nobr>构建自 <a target="_blank" rel="noopener" href="http://hexo.io">Hexo</a></nobr><wbr><nobr> 使用主题 <a target="_blank" rel="noopener" href="https://github.com/Yue-plus/hexo-theme-arknights">Arknights</a></nobr><wbr><nobr>主题作者 <a target="_blank" rel="noopener" href="https://github.com/Yue-plus">Yue_plus</a></nobr></footer></aside></main><canvas id="canvas-dust"></canvas><script src="/js/search.js"></script><script class="pjax-js">reset=_=>{gitalk = new Gitalk({
+ clientID: '',
+ clientSecret: '',
+ repo: 'blog-comments',
+ owner: 'Sicmatr1x',
+ admin: ['Sicmatr1x'],
+ distractionFreeMode: false,
+ id: 
+});
+if (document.querySelector("#gitalk")) gitalk.render("gitalk");code.findCode();}</script><script src="/js/arknights.js"></script><script src="/js/pjax.js"></script><script>window.addEventListener("load",() => {pjax = new Pjax({
+ cacheBust: false,
+ selectors: ['title','article','#aside-block','.pjax-js'],
+ switches: {'article': Pjax.switches.sideBySide},
+ switchesOptions: {
+   'article': {
+     classNames: {
+       remove: "pjax-out",
+       add: "pjax-in"
+     }
+   }
+ }
+});
+document.addEventListener("pjax:complete", reset);reset()})</script></body></html>

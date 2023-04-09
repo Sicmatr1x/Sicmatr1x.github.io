@@ -1,0 +1,245 @@
+<!DOCTYPE html><html lang="en" theme-mode="dark"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>ETH Solidity智能合约进阶 | Sicmatr1x's Blog</title><script>var config = {"root":"/","search":{"preload":false,"activeHolder":"键入以继续","blurHolder":"数据检索","noResult":"无 $0 相关数据"},"code":{"codeInfo":"$0 - 共 $1 行","copy":"复制","copyFinish":"复制成功","expand":"展开"}}</script><script src="/js/gitalk.js"></script><script src="//unpkg.com/mermaid@9.2.2/dist/mermaid.min.js"></script><link rel="stylesheet" href="/css/arknights.css"><script>if (window.localStorage.getItem('theme-mode') === 'light') document.documentElement.setAttribute('theme-mode', 'light')
+if (window.localStorage.getItem('theme-mode') === 'dark') document.documentElement.setAttribute('theme-mode', 'dark')</script><style>@font-face {
+ font-family: BenderLight;
+ src: local('Bender'), url("/font/BenderLight.ttf");
+}
+@font-face {
+ font-family: 'JetBrains Mono';
+ src: local('JetBrains Mono'), url('/font/JetBrainsMono-Regular.woff2') format('woff2');
+}</style><meta name="generator" content="Hexo 6.3.0"><link rel="alternate" href="/atom.xml" title="Sicmatr1x's Blog" type="application/atom+xml">
+</head><body><div class="loading" style="opacity: 0"><div class="loadingBar left"></div><div class="loadingBar right"></div></div><main><header class="closed"><nav><div class="navBtn hide"><i class="navBtnIcon"><span class="navBtnIconBar"></span><span class="navBtnIconBar"></span><span class="navBtnIconBar"></span></i></div><div class="navItem" id="search-header"><span class="navItemTitle"><input autocomplete="off" autocorrect="off" autocapitalize="none" placeholder="数据检索" spellcheck="false" maxlength="50" type="text" id="search-input"></span></div><div class="navItem" id="search-holder"></div><div class="search-popup"><div id="search-result"></div></div><ol class="navContent"><li class="navItem"><a class="navBlock" href="/"><span class="navItemTitle">Home</span></a></li><li class="navItem" matchdata="categories,tags"><a class="navBlock" href="/archives/"><span class="navItemTitle">Archives</span></a></li><li class="navItem"><a class="navBlock" href="/toolkit/"><span class="navItemTitle">Toolkit</span></a></li><li class="navItem"><a class="navBlock" href="/about/"><span class="navItemTitle">About</span></a></li></ol></nav></header><article><div id="post-bg"><div id="post-title"><h1>ETH Solidity智能合约进阶</h1><div id="post-info"><span>文章发布时间: <div class="control"><time datetime="2020-09-16T08:10:47.000Z" id="date"> 2020-09-16</time></div></span><br><span>最后更新时间: <div class="control"><time datetime="2023-03-05T10:40:04.731Z" id="updated"> 2023-03-05</time></div></span></div></div><hr><div id="post-content"><h3 id="根据例子学习Solidity"><a href="#根据例子学习Solidity" class="headerlink" title="根据例子学习Solidity"></a>根据例子学习Solidity</h3><h4 id="创建一个简单的发行代币的合约"><a href="#创建一个简单的发行代币的合约" class="headerlink" title="创建一个简单的发行代币的合约"></a>创建一个简单的发行代币的合约</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><code class="hljs sol">pragma solidity &gt;0.4.22 &lt;0.6.0;<br><br>contract Coin &#123;<br>    address public minter;<br>    mapping(address =&gt; uint) public balances;<br><br>    event Sent(address from, address to, uint amount);<br><br>    constructor() public &#123;<br>        minter = msg.sender;<br>    &#125;<br><br>    function mint(address receiver, uint amount) public &#123;<br>        require(msg.sender == minter);<br>        balances[receiver] += amount;<br>    &#125;<br>    <br>    function send(address receiver, uint amount) public &#123;<br>        require(amount &lt;= balances[msg.sender]);<br>        balances[msg.sender] -= amount;<br>        balances[receiver] += amount;<br>        emit Sent(msg.sender, receiver, amount);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>以上代码就是一个合约创建人可以无限发币的中心化代币合约</p>
+<p>下面这个就是一个规定了发行代币总量的简单代币模型：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><code class="hljs sol">pragma solidity &gt;0.4.22 &lt;0.6.0;<br><br>contract Token &#123;<br>    <br>    mapping(address =&gt; uint) public balances;<br><br>    event Sent(address from, address to, uint amount);<br><br>    constructor(uint initalSupply) public &#123;<br>        balances[msg.sender] = initalSupply;<br>    &#125;<br>    <br>    function send(address receiver, uint amount) public returns(bool success)&#123;<br>        require(amount &lt;= balances[msg.sender]);<br>        require(balances[receiver] + amount &gt;= balances[receiver]);<br>        balances[msg.sender] -= amount;<br>        balances[receiver] += amount;<br>        return true;<br><br>        emit Sent(msg.sender, receiver, amount);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>将以上代币模型抽象出来增加细节就成了<a target="_blank" rel="noopener" href="https://eips.ethereum.org/EIPS/eip-20">ERC20</a></p>
+<p>这里使用<a target="_blank" rel="noopener" href="https://github.com/ConsenSys/Tokens/blob/fdf687c69d998266a95f15216b1955a4965a0a6d/contracts/eip20/EIP20.sol">ConsenSys implementation</a>对ERC20的实现来讲解</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br></pre></td><td class="code"><pre><code class="hljs sol">/*<br>Implements EIP20 token standard: https://github.com/ethereum/EIPs/blob/master/EIPS/eip-20.md<br>.*/<br><br><br>pragma solidity ^0.4.21;<br><br>import &quot;./EIP20Interface.sol&quot;;<br><br><br>contract EIP20 is EIP20Interface &#123;<br><br>    uint256 constant private MAX_UINT256 = 2**256 - 1;<br>    mapping (address =&gt; uint256) public balances;<br>    //  允许别人用你的地址转币的映射<br>    mapping (address =&gt; mapping (address =&gt; uint256)) public allowed;<br>    /*<br>    NOTE:<br>    The following variables are OPTIONAL vanities. One does not have to include them.<br>    They allow one to customise the token contract &amp; in no way influences the core functionality.<br>    Some wallets/interfaces might not even bother to look at this information.<br>    */<br>    string public name;                   //fancy name: eg Simon Bucks<br>    uint8 public decimals;                //How many decimals to show.<br>    string public symbol;                 //An identifier: eg SBX<br><br>    function EIP20(<br>        uint256 _initialAmount,<br>        string _tokenName,<br>        uint8 _decimalUnits,<br>        string _tokenSymbol<br>    ) public &#123;<br>        balances[msg.sender] = _initialAmount;               // Give the creator all initial tokens<br>        totalSupply = _initialAmount;                        // Update total supply<br>        name = _tokenName;                                   // Set the name for display purposes<br>        decimals = _decimalUnits;                            // Amount of decimals for display purposes<br>        symbol = _tokenSymbol;                               // Set the symbol for display purposes<br>    &#125;<br><br>    function transfer(address _to, uint256 _value) public returns (bool success) &#123;<br>        require(balances[msg.sender] &gt;= _value);<br>        balances[msg.sender] -= _value;<br>        balances[_to] += _value;<br>        emit Transfer(msg.sender, _to, _value); //solhint-disable-line indent, no-unused-vars<br>        return true;<br>    &#125;<br><br>    function transferFrom(address _from, address _to, uint256 _value) public returns (bool success) &#123;<br>        uint256 allowance = allowed[_from][msg.sender];<br>        require(balances[_from] &gt;= _value &amp;&amp; allowance &gt;= _value);<br>        balances[_to] += _value;<br>        balances[_from] -= _value;<br>        if (allowance &lt; MAX_UINT256) &#123;<br>            allowed[_from][msg.sender] -= _value;<br>        &#125;<br>        emit Transfer(_from, _to, _value); //solhint-disable-line indent, no-unused-vars<br>        return true;<br>    &#125;<br><br>    function balanceOf(address _owner) public view returns (uint256 balance) &#123;<br>        return balances[_owner];<br>    &#125;<br><br>    function approve(address _spender, uint256 _value) public returns (bool success) &#123;<br>        allowed[msg.sender][_spender] = _value;<br>        emit Approval(msg.sender, _spender, _value); //solhint-disable-line indent, no-unused-vars<br>        return true;<br>    &#125;<br><br>    //  允许别人用你的地址转币<br>    function allowance(address _owner, address _spender) public view returns (uint256 remaining) &#123;<br>        return allowed[_owner][_spender];<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h4 id="创建一个简单的投票合约"><a href="#创建一个简单的投票合约" class="headerlink" title="创建一个简单的投票合约"></a>创建一个简单的投票合约</h4><ul>
+<li>电子投票的主要问题是如何将投票权分配给正确的人员以及如何防止被操纵。这个合约展示了如何进行委托投票，同时，计票又是自动和完全透明的</li>
+<li>为每个（投票）表决创建一份合约，然后作为合约的创造者——即主席，将给予每个独立的地址以投票权</li>
+<li>地址后面的人可以选择自己投票，或者委托给他们信任的人来投票</li>
+<li>在投票时间结束时，<code>winningProposal()</code>将返回获得最多投票的提案</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br></pre></td><td class="code"><pre><code class="hljs sol">pragma solidity &gt;=0.4.22 &lt;0.7.0;<br><br>/** <br> * @title Ballot<br> * @dev Implements voting process along with vote delegation<br> */<br>contract Ballot &#123;<br>   <br>    struct Voter &#123;<br>        uint weight; // weight is accumulated by delegation<br>        bool voted;  // if true, that person already voted<br>        address delegate; // person delegated to<br>        uint vote;   // index of the voted proposal<br>    &#125;<br><br>    struct Proposal &#123;<br>        // If you can limit the length to a certain number of bytes, <br>        // always use one of bytes1 to bytes32 because they are much cheaper<br>        bytes32 name;   // short name (up to 32 bytes)<br>        uint voteCount; // number of accumulated votes<br>    &#125;<br><br>    address public chairperson;<br><br>    mapping(address =&gt; Voter) public voters;<br><br>    Proposal[] public proposals;<br><br>    /** <br>     * @dev Create a new ballot to choose one of &#x27;proposalNames&#x27;.<br>     * @param proposalNames names of proposals<br>     */<br>    constructor(bytes32[] memory proposalNames) public &#123;<br>        chairperson = msg.sender;<br>        voters[chairperson].weight = 1;<br><br>        for (uint i = 0; i &lt; proposalNames.length; i++) &#123;<br>            // &#x27;Proposal(&#123;...&#125;)&#x27; creates a temporary<br>            // Proposal object and &#x27;proposals.push(...)&#x27;<br>            // appends it to the end of &#x27;proposals&#x27;.<br>            proposals.push(Proposal(&#123;<br>                name: proposalNames[i],<br>                voteCount: 0<br>            &#125;));<br>        &#125;<br>    &#125;<br>    <br>    /** <br>     * @dev Give &#x27;voter&#x27; the right to vote on this ballot. May only be called by &#x27;chairperson&#x27;.<br>     * @param voter address of voter<br>     */<br>    function giveRightToVote(address voter) public &#123;<br>        require(<br>            msg.sender == chairperson,<br>            &quot;Only chairperson can give right to vote.&quot;<br>        );<br>        require(<br>            !voters[voter].voted,<br>            &quot;The voter already voted.&quot;<br>        );<br>        require(voters[voter].weight == 0);<br>        voters[voter].weight = 1;<br>    &#125;<br><br>    /**<br>     * @dev Delegate your vote to the voter &#x27;to&#x27;.<br>     * @param to address to which vote is delegated<br>     */<br>    function delegate(address to) public &#123;<br>        Voter storage sender = voters[msg.sender];<br>        require(!sender.voted, &quot;You already voted.&quot;);<br>        require(to != msg.sender, &quot;Self-delegation is disallowed.&quot;);<br><br>        while (voters[to].delegate != address(0)) &#123;<br>            to = voters[to].delegate;<br><br>            // We found a loop in the delegation, not allowed.<br>            require(to != msg.sender, &quot;Found loop in delegation.&quot;);<br>        &#125;<br>        sender.voted = true;<br>        sender.delegate = to;<br>        Voter storage delegate_ = voters[to];<br>        if (delegate_.voted) &#123;<br>            // If the delegate already voted,<br>            // directly add to the number of votes<br>            proposals[delegate_.vote].voteCount += sender.weight;<br>        &#125; else &#123;<br>            // If the delegate did not vote yet,<br>            // add to her weight.<br>            delegate_.weight += sender.weight;<br>        &#125;<br>    &#125;<br><br>    /**<br>     * @dev Give your vote (including votes delegated to you) to proposal &#x27;proposals[proposal].name&#x27;.<br>     * @param proposal index of proposal in the proposals array<br>     */<br>    function vote(uint proposal) public &#123;<br>        Voter storage sender = voters[msg.sender];<br>        require(sender.weight != 0, &quot;Has no right to vote&quot;);<br>        require(!sender.voted, &quot;Already voted.&quot;);<br>        sender.voted = true;<br>        sender.vote = proposal;<br><br>        // If &#x27;proposal&#x27; is out of the range of the array,<br>        // this will throw automatically and revert all<br>        // changes.<br>        proposals[proposal].voteCount += sender.weight;<br>    &#125;<br><br>    /** <br>     * @dev Computes the winning proposal taking all previous votes into account.<br>     * @return winningProposal_ index of winning proposal in the proposals array<br>     */<br>    function winningProposal() public view<br>            returns (uint winningProposal_)<br>    &#123;<br>        uint winningVoteCount = 0;<br>        for (uint p = 0; p &lt; proposals.length; p++) &#123;<br>            if (proposals[p].voteCount &gt; winningVoteCount) &#123;<br>                winningVoteCount = proposals[p].voteCount;<br>                winningProposal_ = p;<br>            &#125;<br>        &#125;<br>    &#125;<br><br>    /** <br>     * @dev Calls winningProposal() function to get the index of the winner contained in the proposals array and then<br>     * @return winnerName_ the name of the winner<br>     */<br>    function winnerName() public view<br>            returns (bytes32 winnerName_)<br>    &#123;<br>        winnerName_ = proposals[winningProposal()].name;<br>    &#125;<br>&#125;<br><br></code></pre></td></tr></table></figure>
+
+<h2 id="Solidity源文件布局"><a href="#Solidity源文件布局" class="headerlink" title="Solidity源文件布局"></a>Solidity源文件布局</h2><ul>
+<li>源文件可以被版本杂注pragma所注解，表明要求的编译器版本</li>
+<li>例如：pragma solidity A0.4.0；</li>
+<li>源文件将既不允许低于0.4.0版本的编译器编译，也不允许高于（包含）0.5.0版本的编译器编译（第二个条件因使用A被添加）import（导入其它源文件）</li>
+<li>Solidity所支持的导入语句import，语法同JavaScript（从ES6起）非常类似</li>
+</ul>
+<h3 id="import"><a href="#import" class="headerlink" title="import"></a>import</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">import &quot;filename&quot;;<br></code></pre></td></tr></table></figure>
+
+<p>从“filename”中导入所有的全局符号到当前全局作用域中 </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">import * as symbolName from &quot;filename&quot;;<br></code></pre></td></tr></table></figure>
+
+<p>创建一个新的全局符号symbolName，其成员均来自“filename”中全局符号 </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">import &#123;symbol1 as alias,symbol2&#125;from &quot;filename&quot;;<br></code></pre></td></tr></table></figure>
+
+<p>创建新的全局符号alias和symbol2，分别从”filename”引 用symbol1和symbol2</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">import &quot;filename&quot;as symbolName;<br></code></pre></td></tr></table></figure>
+
+<p>这条语句等同于import * as symbolName from “filename”;</p>
+<h3 id="基本数据类型"><a href="#基本数据类型" class="headerlink" title="基本数据类型"></a>基本数据类型</h3><ul>
+<li>布尔（bool）：可能的取值为字符常量值true或false</li>
+<li>整型（int&#x2F;uint)：分别表示有符号和无符号的不同位数的整型变量；支持关键字uint8到uint256（无符号，从8位到256位）以及int8到int256，以8位为步长递增</li>
+<li>定长浮点型（fixed&#x2F;ufixed)：表示各种大小的有符号和无符号的定长浮点型；在关键字ufixedMxN和fixedMxN中，M表示该类型占用的位数，N表示可用的小数位数</li>
+<li>地址（address)：存储一个20字节的值（以太坊地址大小）</li>
+<li>定长字节数组：关键字有bytes1,bytes2,bytes3,…,bytes32</li>
+<li>枚举（enum)：一种用户可以定义类型的方法，与C语言类似，默认从0开始递增，一般用来模拟合约的状态</li>
+<li>函数（function)：一种表示函数的类型</li>
+</ul>
+<p>数组（Array)</p>
+<ul>
+<li>数组可以在声明时指定长度（定长数组），也可以动态调整大小（变长数组、动态数组）</li>
+<li>对于存储型（storage）的数组来说，元素类型可以是任意的（即元素也可以是数组类型，映射类型或者结构体）；对于内存型(memory)的数组来说，元素类型不能是映射（mapping)类型</li>
+</ul>
+<p>结构（Struct)</p>
+<ul>
+<li>Solidity支持通过构造结构体的形式定义新的类型</li>
+</ul>
+<p>映射（Mapping)</p>
+<ul>
+<li>映射可以视作哈希表，在实际的初始化过程中创建每个可能的key，并将其映射到字节形式全是零的值（类型默认值）</li>
+</ul>
+<p>address</p>
+<ul>
+<li>地址类型存储一个20字节的值（以太坊地址的大小）；地址类型也有成员变量，并作为所有合约的基础</li>
+</ul>
+<p>address payable(v0.5.0引入)</p>
+<ul>
+<li>与地址类型基本相同，不过多出了transfer和send两个成员变量</li>
+</ul>
+<p>两者区别和转换</p>
+<ul>
+<li>Payable地址是可以发送ether的地址，而普通address不能</li>
+<li>允许从payable address到address的隐式转换，而反过来的直接转换是不可能的（唯一方法是通过uint160来进行中间转换）</li>
+<li>从0.5.0版本起，合约不再是从地址类型派生而来，但如果它有payable的回退函数，那同样可以显式转换为address或者address payable类型</li>
+</ul>
+<p><code>&lt;address&gt;.balance(uint256)</code></p>
+<ul>
+<li>该地址的ether余额，以Wei为单位</li>
+</ul>
+<p><code>&lt;address payable&gt;.transfer(uint256 amount)</code></p>
+<ul>
+<li>向指定地址发送数量为amount的ether（以Wei为单位），失败时抛出异常，发 送2300gas的矿工费，不可调节</li>
+</ul>
+<p><code>&lt;address payable&gt;.send(uint256 amount)returns(bool)</code></p>
+<ul>
+<li>向指定地址发送数量为amount的 ether（以Wei为单位），失败时返回false，发 送2300gas的矿工费用，不可调节</li>
+</ul>
+<p><code>&lt;address&gt;.call(bytes memory)returns(bool,bytes memory)</code></p>
+<ul>
+<li>发出底层函数CALL，失败时返回false，发送所有可用gas，可调节</li>
+</ul>
+<p><code>&lt;address&gt;.delegatecall(bytes memory)returns(bool,bytes memory)</code></p>
+<ul>
+<li>发出底层函数DELEGATECALL，失败时返回false，发送所有可用gas，可调节</li>
+</ul>
+<p><code>&lt;address&gt;.staticcall(bytes memory)returns(bool,bytes memory)</code></p>
+<ul>
+<li>发出底层函数STATICCALL，失败时返回false，发送所有可用gas，可调节</li>
+</ul>
+<h3 id="Solidity数据位置"><a href="#Solidity数据位置" class="headerlink" title="Solidity数据位置"></a>Solidity数据位置</h3><ul>
+<li>所有的复杂类型，即数组、结构和映射类型，都有一个额外属性，“数据位置”，用来说明数据是保存在内存memory中还是存储storage中</li>
+<li>根据上下文不同，大多数时候数据有默认的位置，但也可以通过在类型名后增加关键字storage或memory进行修改</li>
+<li>函数参数（包括返回的参数）的数据位置默认是memory，局部变量的数据位置默认是storage，状态变量的数据位置强制是storage</li>
+<li>另外还存在第三种数据位置，calldata，这是一块只读的，且不会永久存储的位置，用来存储函数参数。外部函数的参数（非返回参数）的数据位置被强制指定为calldata，效果跟memory差不多</li>
+</ul>
+<p>强制指定的数据位置</p>
+<ul>
+<li>外部函数的参数（不包括返回参数）：calldata；</li>
+<li>状态变量：storage</li>
+</ul>
+<p>默认数据位置</p>
+<ul>
+<li>函数参数（包括返回参数）：memory；</li>
+<li>引用类型的局部变量：storage</li>
+<li>值类型的局部变量：栈（stack)</li>
+</ul>
+<p>特别要求</p>
+<ul>
+<li>公开可见（publicly visible)的函数参数一定是memory类型，如果要求是storage类型则必须是private或者internal函数，这是为了防止随意的公开调用占用资源</li>
+</ul>
+<h3 id="未初始化的storage类型指针会指向第一个状态变量"><a href="#未初始化的storage类型指针会指向第一个状态变量" class="headerlink" title="未初始化的storage类型指针会指向第一个状态变量"></a>未初始化的storage类型指针会指向第一个状态变量</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><code class="hljs sol">pragma solidity ^0.4.0;<br>/**<br>这个案例涉及到solidity的一个坑<br>a, b, data和x都是storge的<br>x是一个可变长度的数组的引用，默认指向该合约空间的头部<br>合约空间大致如下：<br>a-b-data<br>^<br>|<br>x<br><br>而一个可变数组的指针指向的空间默认存储该可变数组的长度，所以每调一次f()就会导致变量a++<br>而又因为solidity的可变数组的内容是采用hash表的形式存储的，<br>所以b的值大概率不变，真正push进去的值不知道存到哪里去了<br> */<br>contract C &#123;<br>    uint public a;<br>    uint public b;<br>    uint[] public data;<br>    function f() public &#123;<br>        uint[] x;<br>        x.push(2);<br>        data = x;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>接下来看一个更加真实的例子：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><code class="hljs sol">pragma solidity ^0.4.17;<br><br>/**<br>这里你即使猜52合约也不会返还你给的value*2的ETH，因为这个newGuess是sorage类型的指针<br>未初始化导致其指向此合约第一个状态变量即luckyNumber，导致会把address类型的值赋给luckyNumber覆盖掉原本的值<br> */<br>contract Honeypot &#123;<br>    uint luckyNumber = 52;<br>    struct Guess &#123;<br>        address player;<br>        uint number;<br>    &#125;<br>    Guess[] public guessHistory;<br>    address owner = msg.sender;<br>    function guess(uint _num) public payable &#123;<br>        Guess newGuess;<br>        newGuess.player = msg.sender;<br>        newGuess.number = _num;<br>        guessHistory.push(newGuess);<br>        if (_num == luckyNumber) &#123;<br>            msg.sender.transfer(msg.value * 2);<br>        &#125;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h3 id="solidity函数的可见性"><a href="#solidity函数的可见性" class="headerlink" title="solidity函数的可见性"></a>solidity函数的可见性</h3><p>函数的可见性可以指定为external，public，internal 或者private；对于状态变量，不能设置为external，默认是internal。</p>
+<ul>
+<li><p>external：外部函数作为合约接口的一部分，意味着我们可以从其他合约和交易中调用。一个外部函数f不能从内部调用（即f不起作用，但this.f()可以）。当收到大量数据的时候，外部函数有时候会更有效率。</p>
+</li>
+<li><p>puhlic：public函数是合约接口的一部分，可以在内部或通过消息调用。<br>对于public状态变量，会自动生成一个getter函数。</p>
+</li>
+<li><p>internal：这些函数和状态变量只能是内部访问（即从当前合约内部或从它派生的合约访问），不使用this调用。</p>
+</li>
+<li><p>private：private函数和状态变量仅在当前定义它们的合约中使用，并且不能被派生合约使用。</p>
+</li>
+<li><p>pure：纯函数，不允许修改或访问状态</p>
+</li>
+<li><p>view：不允许修改状态</p>
+</li>
+<li><p>payable：允许从消息调用中接收以太币Ether。</p>
+</li>
+<li><p>constant：与view相同，一般只修饰状态变量，不允许赋值（除初始化以外）</p>
+</li>
+</ul>
+<p>以下情况被认为是修改状态：</p>
+<ul>
+<li>修改状态变量。</li>
+<li>产生事件。</li>
+<li>创建其它合约。</li>
+<li>使用<code>selfdestruct</code>。</li>
+<li>通过调用发送以太币。</li>
+<li>调用任何没有标记为view或者pure的函数。</li>
+<li>使用低级调用。</li>
+<li>使用包含特定操作码的内联汇编。</li>
+</ul>
+<p>以下被认为是从状态中进行读取：</p>
+<ul>
+<li>读取状态变量。</li>
+<li>访问<code>this.balance</code>或者<code>&lt;address&gt;.balance</code>。</li>
+<li>访问block，tx，msg中任意成员（除msg.sig和msg.data之外）。</li>
+<li>调用任何未标记为pure的函数。</li>
+<li>使用包含某些操作码的内联汇编。</li>
+</ul>
+<h3 id="函数修饰器-modifier"><a href="#函数修饰器-modifier" class="headerlink" title="函数修饰器(modifier)"></a>函数修饰器(modifier)</h3><p>使用修饰器modifier可以轻松改变函数的行为。例如，它们可以在执行函数之前自动检查某个条件。修饰器modifier是合约的可继承属性，并可能被派生合约覆盖</p>
+<p>如果同一个函数有多个修饰器modifier，它们之间以空格隔开，修饰器modifier会依次检查执行。</p>
+<h3 id="回退函数-fallback"><a href="#回退函数-fallback" class="headerlink" title="回退函数(fallback)"></a>回退函数(fallback)</h3><ul>
+<li>回退函数（fallback function)是合约中的特殊函数；没有名字，不能有参数也不能有返回值</li>
+<li>如果在一个到合约的调用中，没有其他函数与给定的函数标识符匹配（或没有提供调用数据），那么这个函数（fallback函数）会被执行</li>
+<li>每当合约收到以太币（没有任何数据），回退函数就会执行。此外，为了接收以太币，fallback函数必须标记为payable。如果不存在这样的函数，则合约不能通过常规交易接收以太币</li>
+<li>在上下文中通常只有很少的gas可以用来完成回退函数的调用，所以使fallback函数的调用尽量廉价很重要</li>
+</ul>
+<h3 id="事件-event"><a href="#事件-event" class="headerlink" title="事件(event)"></a>事件(event)</h3><p>事件是以太坊EVM提供的一种日志基础设施。事件可以用来做操作记录，存储为日志。也可以用来实现一些交互功能，比如通知UI，返回函数调用结果等</p>
+<p>当定义的事件触发时，我们可以将事件存储到EVM的交易日志中，日志是区块链中的一种特殊数据结构；日志与合约关联，与合约的存储合并存入区块链中；只要某个区块可以访问，其相关的日志就可以访问；但在合约中，我们不能直接访问日志和事件数据</p>
+<p>可以通过日志实现简单支付验证SPV（Simplified PaymentVerification)如果一个外部实体提供了一个带有这种证明的合约，它可以检查日志是否真实存在于区块链中</p>
+<h3 id="solidity异常处理"><a href="#solidity异常处理" class="headerlink" title="solidity异常处理"></a>solidity异常处理</h3><p>Solidity使用“状态恢复异常”来处理异常。这样的异常将撤消对当前调用（及其所有子调用）中的状态所做的所有更改，并且向调用者返回错误。</p>
+<p>函数assert和require可用于判断条件，并在不满足条件时抛出异常</p>
+<ul>
+<li><code>assert()</code>一般只应用于测试内部错误，并检查常量</li>
+<li><code>require()</code>应用于确保满足有效条件《如输入或合约状态变量），或验证调用外部合约的返回值</li>
+<li><code>revert()</code>用于抛出异常，它可以标记一个错误并将当前调用回退</li>
+</ul>
+<h2 id="web3-js"><a href="#web3-js" class="headerlink" title="web3.js"></a>web3.js</h2><ul>
+<li>Web3 JavaScript app API</li>
+<li>web3.js是一个JavaScriptAPI库。要使DApp在以太坊上运行，我们可以使用web3.js库提供的web3对象</li>
+<li>web3.js通过RPC调用与本地节点通信，它可以用于任何暴露了RPC层的以太坊节点</li>
+<li>web3包含eth对象-web3.eth（专门与以太坊区块链交互）和shh对象-web3.shh（用于与Whisper交互）</li>
+</ul>
+<h3 id="web3模块加载"><a href="#web3模块加载" class="headerlink" title="web3模块加载"></a>web3模块加载</h3><p>首先需要将web3模块安装在项目中：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">npm install web3@0.20.1 <br></code></pre></td></tr></table></figure>
+
+<p>然后创建一个web3实例，设置一个“provider”</p>
+<p>为了保证我们的MetaMask设置好的provider不被覆盖掉，在引入 web3之前我们一般要做当前环境检查（以v0.20.1为例）：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">if</span> (<span class="hljs-keyword">typeof</span> web3!==<span class="hljs-literal">undefined</span>) &#123;<br>    web3 = <span class="hljs-keyword">new</span> <span class="hljs-title class_">Web3</span>(web3.<span class="hljs-property">currentProvider</span>); <br>&#125; <span class="hljs-keyword">else</span> &#123; <br>    web3 = <span class="hljs-keyword">new</span> <span class="hljs-title class_">Web3</span>(<span class="hljs-keyword">new</span> <span class="hljs-title class_">Web3</span>.<span class="hljs-property">providers</span> .<span class="hljs-title class_">HttpProvider</span>(<span class="hljs-string">&quot;http://localhost:8545&quot;</span>);<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h3 id="异步回调-callback"><a href="#异步回调-callback" class="headerlink" title="异步回调(callback)"></a>异步回调(callback)</h3><p>web3jsAPI设计的最初目的，主要是为了和本地RPC节点共同使用，所以默认情况下发送的是同步HTTP请求</p>
+<p>如果要发送异步请求，可以在函数的最后一个参数位置上，传入一个回调函数。回调函数是可选（optioanl)的</p>
+<p>我们一般采用的回调风格是所谓的“错误优先”，例如：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs js">web3.<span class="hljs-property">eth</span>.<span class="hljs-title function_">getBlock</span>(<span class="hljs-number">48</span>,<span class="hljs-keyword">function</span>(<span class="hljs-params">error,result</span>)&#123; <br>    <span class="hljs-keyword">if</span> (!error) &#123;<br>        <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-title class_">JSON</span>.<span class="hljs-title function_">stringify</span>(result));<br>    &#125; <span class="hljs-keyword">else</span> &#123;<br>        <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">error</span>(error);<br>    &#125;<br>&#125;);<br></code></pre></td></tr></table></figure>
+
+<h3 id="回调Prmise事件-v1-0-0"><a href="#回调Prmise事件-v1-0-0" class="headerlink" title="回调Prmise事件(v1.0.0)"></a>回调Prmise事件(v1.0.0)</h3><p>为了帮助web3集成到不同标准的所有类型项目中，1.0.0版本提供了多种方式来处理异步函数。大多数的web3对象允许将一个回调函数作为最后一个函数参数传入，同时会返回一个promise用于链式函数调用。</p>
+<p>以太坊作为一个区块链系统，一次请求具有不同的结束阶段。为了满足这样的要求，1.0.0版本将这类函数调用的返回值包成一个“承诺事件”（promiEwent)，这是一个promise和EventEmitter的结合体。</p>
+<p>PromiEvent的用法就像promise一样，另外还加入了.on，.once和.off方法</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs js">web3.<span class="hljs-property">eth</span>.<span class="hljs-title function_">sendTransaction</span>(&#123;<span class="hljs-attr">from</span>:<span class="hljs-string">&#x27;Ox123...&#x27;</span>,<span class="hljs-attr">data</span>:<span class="hljs-string">&#x27;Ox432..&#x27;</span>&#125;)<br>.<span class="hljs-title function_">once</span>(<span class="hljs-string">&#x27;transactionHash&#x27;</span>, <span class="hljs-keyword">function</span>(<span class="hljs-params">hash</span>)&#123;...&#125;) <br>.<span class="hljs-title function_">once</span>(<span class="hljs-string">&#x27;receipt&#x27;</span>, <span class="hljs-keyword">function</span>(<span class="hljs-params">receipt</span>)&#123;..&#125;)<br>.<span class="hljs-title function_">on</span>(<span class="hljs-string">&#x27;confirmation&#x27;</span>, <span class="hljs-keyword">function</span>(<span class="hljs-params">confNumber,receipt</span>)&#123;...&#125;)<br>.<span class="hljs-title function_">on</span>(<span class="hljs-string">&#x27;error&#x27;</span>, <span class="hljs-keyword">function</span>(<span class="hljs-params">error</span>)&#123;...&#125;)<br>.<span class="hljs-title function_">then</span>(<span class="hljs-keyword">function</span>(<span class="hljs-params">receipt</span>)(<span class="hljs-params">&#123;</span><br><span class="hljs-params">    //will be fired once the receipt is mined </span><br><span class="hljs-params">&#125;</span>);<br></code></pre></td></tr></table></figure>
+
+<h3 id="应用二进制接口-ABI"><a href="#应用二进制接口-ABI" class="headerlink" title="应用二进制接口(ABI)"></a>应用二进制接口(ABI)</h3><p>web3.js通过以太坊智能合约的json接口（Application Binary Interface,ABl)创建一个JavaScript对象，用来在js 代码中描述 </p>
+<p>函数(functions) </p>
+<ul>
+<li>type:函数类型，默认<code>function</code>，也可能是<code>constructor</code></li>
+<li>constant, payable, stateMutability:函数的状态可变性 </li>
+<li>inputs,outputs:函数输入、输出参数描述列表</li>
+</ul>
+<p>事件(events) </p>
+<ul>
+<li>type：类型，总是<code>event</code></li>
+<li>inputs：输入对象列表，包括name、type、indexed</li>
+</ul>
+<div id="paginator"></div></div><div id="post-footer"><div id="pages"><div class="footer-link" style="width: 50%;text-align:right;border-right:1px #fe2 solid"><a href="/2020/09/16/Crypto/EIP-20-ERC-20-Token-Standard/">← Next EIP-20: ERC-20 Token Standard</a></div><div class="footer-link" style="width: 50%;right:1px;border-left:1px #fe2 solid"><a href="/2020/09/05/Crypto/ETH-Solidity%E6%99%BA%E8%83%BD%E5%90%88%E7%BA%A6%E5%85%A5%E9%97%A8/">ETH Solidity智能合约入门 Prev →</a></div></div></div><div id="comments"><div class="selector"><button class="gitalk-sel"></button></div><div id="gitalk"></div></div></div><div class="bottom-btn"><div><a id="to-top" onClick="scrolls.scrolltop();" title="回到顶部" style="opacity: 0; display: none;">∧</a><a id="to-index" href="#toc-div" title="文章目录">≡</a><a id="color-mode" onClick="colorMode.change()" title="切换主题"></a></div></div></article><aside><div id="about"><a href="/" id="logo"><img src="https://ak.hypergryph.com/assets/index/images/ak/pc/faction/1.png" alt="Logo"></a><h1 id="Dr"><a href="/">Sicmatr1x</a></h1><div id="description"><p>INTP/Traveller/Stoicism/Crypto-anarchism/Minimalism/Cosmopolitanism/English learner/Crypto/Java Engineer</p></div></div><div id="aside-block"><div id="toc-div"><h1>目录</h1><ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A0%B9%E6%8D%AE%E4%BE%8B%E5%AD%90%E5%AD%A6%E4%B9%A0Solidity"><span class="toc-number">1.</span> <span class="toc-text">根据例子学习Solidity</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%88%9B%E5%BB%BA%E4%B8%80%E4%B8%AA%E7%AE%80%E5%8D%95%E7%9A%84%E5%8F%91%E8%A1%8C%E4%BB%A3%E5%B8%81%E7%9A%84%E5%90%88%E7%BA%A6"><span class="toc-number">1.1.</span> <span class="toc-text">创建一个简单的发行代币的合约</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%88%9B%E5%BB%BA%E4%B8%80%E4%B8%AA%E7%AE%80%E5%8D%95%E7%9A%84%E6%8A%95%E7%A5%A8%E5%90%88%E7%BA%A6"><span class="toc-number">1.2.</span> <span class="toc-text">创建一个简单的投票合约</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Solidity%E6%BA%90%E6%96%87%E4%BB%B6%E5%B8%83%E5%B1%80"><span class="toc-number"></span> <span class="toc-text">Solidity源文件布局</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#import"><span class="toc-number">1.</span> <span class="toc-text">import</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9F%BA%E6%9C%AC%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B"><span class="toc-number">2.</span> <span class="toc-text">基本数据类型</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Solidity%E6%95%B0%E6%8D%AE%E4%BD%8D%E7%BD%AE"><span class="toc-number">3.</span> <span class="toc-text">Solidity数据位置</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9C%AA%E5%88%9D%E5%A7%8B%E5%8C%96%E7%9A%84storage%E7%B1%BB%E5%9E%8B%E6%8C%87%E9%92%88%E4%BC%9A%E6%8C%87%E5%90%91%E7%AC%AC%E4%B8%80%E4%B8%AA%E7%8A%B6%E6%80%81%E5%8F%98%E9%87%8F"><span class="toc-number">4.</span> <span class="toc-text">未初始化的storage类型指针会指向第一个状态变量</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#solidity%E5%87%BD%E6%95%B0%E7%9A%84%E5%8F%AF%E8%A7%81%E6%80%A7"><span class="toc-number">5.</span> <span class="toc-text">solidity函数的可见性</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%87%BD%E6%95%B0%E4%BF%AE%E9%A5%B0%E5%99%A8-modifier"><span class="toc-number">6.</span> <span class="toc-text">函数修饰器(modifier)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9B%9E%E9%80%80%E5%87%BD%E6%95%B0-fallback"><span class="toc-number">7.</span> <span class="toc-text">回退函数(fallback)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BA%8B%E4%BB%B6-event"><span class="toc-number">8.</span> <span class="toc-text">事件(event)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#solidity%E5%BC%82%E5%B8%B8%E5%A4%84%E7%90%86"><span class="toc-number">9.</span> <span class="toc-text">solidity异常处理</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#web3-js"><span class="toc-number"></span> <span class="toc-text">web3.js</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#web3%E6%A8%A1%E5%9D%97%E5%8A%A0%E8%BD%BD"><span class="toc-number">1.</span> <span class="toc-text">web3模块加载</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BC%82%E6%AD%A5%E5%9B%9E%E8%B0%83-callback"><span class="toc-number">2.</span> <span class="toc-text">异步回调(callback)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9B%9E%E8%B0%83Prmise%E4%BA%8B%E4%BB%B6-v1-0-0"><span class="toc-number">3.</span> <span class="toc-text">回调Prmise事件(v1.0.0)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BA%94%E7%94%A8%E4%BA%8C%E8%BF%9B%E5%88%B6%E6%8E%A5%E5%8F%A3-ABI"><span class="toc-number">4.</span> <span class="toc-text">应用二进制接口(ABI)</span></a></li></ol></div></div><footer><nobr>构建自 <a target="_blank" rel="noopener" href="http://hexo.io">Hexo</a></nobr><wbr><nobr> 使用主题 <a target="_blank" rel="noopener" href="https://github.com/Yue-plus/hexo-theme-arknights">Arknights</a></nobr><wbr><nobr>主题作者 <a target="_blank" rel="noopener" href="https://github.com/Yue-plus">Yue_plus</a></nobr></footer></aside></main><canvas id="canvas-dust"></canvas><script src="/js/search.js"></script><script class="pjax-js">reset=_=>{gitalk = new Gitalk({
+ clientID: '',
+ clientSecret: '',
+ repo: 'blog-comments',
+ owner: 'Sicmatr1x',
+ admin: ['Sicmatr1x'],
+ distractionFreeMode: false,
+ id: 
+});
+if (document.querySelector("#gitalk")) gitalk.render("gitalk");code.findCode();}</script><script src="/js/arknights.js"></script><script src="/js/pjax.js"></script><script>window.addEventListener("load",() => {pjax = new Pjax({
+ cacheBust: false,
+ selectors: ['title','article','#aside-block','.pjax-js'],
+ switches: {'article': Pjax.switches.sideBySide},
+ switchesOptions: {
+   'article': {
+     classNames: {
+       remove: "pjax-out",
+       add: "pjax-in"
+     }
+   }
+ }
+});
+document.addEventListener("pjax:complete", reset);reset()})</script></body></html>

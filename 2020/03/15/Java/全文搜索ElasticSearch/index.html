@@ -1,0 +1,94 @@
+<!DOCTYPE html><html lang="en" theme-mode="dark"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>全文搜索ElasticSearch | Sicmatr1x's Blog</title><script>var config = {"root":"/","search":{"preload":false,"activeHolder":"键入以继续","blurHolder":"数据检索","noResult":"无 $0 相关数据"},"code":{"codeInfo":"$0 - 共 $1 行","copy":"复制","copyFinish":"复制成功","expand":"展开"}}</script><script src="/js/gitalk.js"></script><script src="//unpkg.com/mermaid@9.2.2/dist/mermaid.min.js"></script><link rel="stylesheet" href="/css/arknights.css"><script>if (window.localStorage.getItem('theme-mode') === 'light') document.documentElement.setAttribute('theme-mode', 'light')
+if (window.localStorage.getItem('theme-mode') === 'dark') document.documentElement.setAttribute('theme-mode', 'dark')</script><style>@font-face {
+ font-family: BenderLight;
+ src: local('Bender'), url("/font/BenderLight.ttf");
+}
+@font-face {
+ font-family: 'JetBrains Mono';
+ src: local('JetBrains Mono'), url('/font/JetBrainsMono-Regular.woff2') format('woff2');
+}</style><meta name="generator" content="Hexo 6.3.0"><link rel="alternate" href="/atom.xml" title="Sicmatr1x's Blog" type="application/atom+xml">
+</head><body><div class="loading" style="opacity: 0"><div class="loadingBar left"></div><div class="loadingBar right"></div></div><main><header class="closed"><nav><div class="navBtn hide"><i class="navBtnIcon"><span class="navBtnIconBar"></span><span class="navBtnIconBar"></span><span class="navBtnIconBar"></span></i></div><div class="navItem" id="search-header"><span class="navItemTitle"><input autocomplete="off" autocorrect="off" autocapitalize="none" placeholder="数据检索" spellcheck="false" maxlength="50" type="text" id="search-input"></span></div><div class="navItem" id="search-holder"></div><div class="search-popup"><div id="search-result"></div></div><ol class="navContent"><li class="navItem"><a class="navBlock" href="/"><span class="navItemTitle">Home</span></a></li><li class="navItem" matchdata="categories,tags"><a class="navBlock" href="/archives/"><span class="navItemTitle">Archives</span></a></li><li class="navItem"><a class="navBlock" href="/toolkit/"><span class="navItemTitle">Toolkit</span></a></li><li class="navItem"><a class="navBlock" href="/about/"><span class="navItemTitle">About</span></a></li></ol></nav></header><article><div id="post-bg"><div id="post-title"><h1>全文搜索ElasticSearch</h1><div id="post-info"><span>文章发布时间: <div class="control"><time datetime="2020-03-15T03:52:04.000Z" id="date"> 2020-03-15</time></div></span><br><span>最后更新时间: <div class="control"><time datetime="2023-03-26T08:12:23.643Z" id="updated"> 2023-03-26</time></div></span></div></div><hr><div id="post-content"><p>ElasticSearch是高度可扩展的开源全文搜索和分析引擎，可以快速的、近实时的对大数据进行存储、搜索和分析。</p>
+<h2 id="全文搜索方法"><a href="#全文搜索方法" class="headerlink" title="全文搜索方法"></a>全文搜索方法</h2><h3 id="非结构化数据的检索"><a href="#非结构化数据的检索" class="headerlink" title="非结构化数据的检索"></a>非结构化数据的检索</h3><ol>
+<li>顺序扫描法(Serial Scanning): 操作系统搜索文件、linux gurp命令</li>
+<li>全文搜索(Full-text Search): 将非结构化数据转化为结构化数据，建立索引</li>
+</ol>
+<h3 id="全文搜索-Full-text-Search"><a href="#全文搜索-Full-text-Search" class="headerlink" title="全文搜索(Full-text Search)"></a>全文搜索(Full-text Search)</h3><ol>
+<li>建立文本库</li>
+<li>建立索引</li>
+<li>执行搜索</li>
+<li>过滤结果</li>
+</ol>
+<h3 id="基于Java的开源全文搜索引擎"><a href="#基于Java的开源全文搜索引擎" class="headerlink" title="基于Java的开源全文搜索引擎"></a>基于Java的开源全文搜索引擎</h3><ol>
+<li>Lucene: 全文搜索引擎</li>
+<li>ElasticSearch: 基于Lucene，使用内建的协调分布系统。只支持json格式</li>
+<li>Solr: 使用了ZooKeeper的协调分布系统</li>
+</ol>
+<h3 id="ElasticSearch的特点"><a href="#ElasticSearch的特点" class="headerlink" title="ElasticSearch的特点"></a>ElasticSearch的特点</h3><ul>
+<li>分布式：每个索引使用可配置数量的一个分片，每个分片可以有多个副本，在任何一个副本上执行读取和搜索操作。</li>
+<li>高可用</li>
+<li>多类型</li>
+<li>多API：支持HTTP RESTFUL、支持Java</li>
+<li>面向文档：不需要定义模式，NoSQL</li>
+<li>异步写入：写入性能更好</li>
+<li>近实时</li>
+<li>基于Lucenne</li>
+<li>开源：Apache协议</li>
+</ul>
+<p>重要概念：</p>
+<ul>
+<li>近实时：如果要做到真实时需要牺牲索引的效率，因为每次搜索之后都需要刷新数据，或者牺牲查询的效率。每隔n秒进行刷新，索引不写入磁盘，根据刷新策略来写入磁盘</li>
+<li>集群：多个节点的集合，用来保存应用的全部数据并提供基于全部节点集成的索引的搜索功能，每个节点都有唯一的名称</li>
+<li>节点</li>
+<li>索引：在ElasticSearch中，索引为相似文档的集合，索引的内容与文档相关</li>
+<li>类型：对索引中包含文档的进一步细分，一般根据文档的公共属性来划分</li>
+<li>文档：是进行索引的基本单位，与索引中的类型是相对应的，使用json来表示</li>
+<li>分片：对于分片中的数据需要建立一个副本，每个索引可以建成多个分片。主要用于水平分割内容，分布在多个节点上可以提高性能</li>
+<li>副本：分片可以设置副本，分布在不同的节点上。</li>
+</ul>
+<h2 id="MAC下环境配置"><a href="#MAC下环境配置" class="headerlink" title="MAC下环境配置"></a>MAC下环境配置</h2><h3 id="下载ElasticSearch"><a href="#下载ElasticSearch" class="headerlink" title="下载ElasticSearch"></a>下载ElasticSearch</h3><p><a target="_blank" rel="noopener" href="https://www.elastic.co/cn/downloads/elasticsearch">https://www.elastic.co/cn/downloads/elasticsearch</a></p>
+<h3 id="解压ElasticSearch"><a href="#解压ElasticSearch" class="headerlink" title="解压ElasticSearch"></a>解压ElasticSearch</h3><p>&#x2F;Users&#x2F;sicmatr1x&#x2F;Develop&#x2F;elasticsearch-7.6.1</p>
+<h3 id="配置环境变量"><a href="#配置环境变量" class="headerlink" title="配置环境变量"></a>配置环境变量</h3><p>使用管理员权限打开<code>/Users/sicmatr1x/.bash_profile</code></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">export PATH=$PATH:/Users/sicmatr1x/Develop/elasticsearch-7.6.1/bin<br></code></pre></td></tr></table></figure>
+
+<h3 id="运行ElasticSearch"><a href="#运行ElasticSearch" class="headerlink" title="运行ElasticSearch"></a>运行ElasticSearch</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">elasticsearch<br></code></pre></td></tr></table></figure>
+
+<h3 id="测试ElasticSearch服务器"><a href="#测试ElasticSearch服务器" class="headerlink" title="测试ElasticSearch服务器"></a>测试ElasticSearch服务器</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">sicmatr1xMacBook-Pro:~ sicmatr1x$ curl http://localhost:9200<br>&#123;<br>  &quot;name&quot; : &quot;sicmatr1xMacBook-Pro.local&quot;,<br>  &quot;cluster_name&quot; : &quot;elasticsearch&quot;,<br>  &quot;cluster_uuid&quot; : &quot;mIhriR4FTWquZLqg_7UBiA&quot;,<br>  &quot;version&quot; : &#123;<br>    &quot;number&quot; : &quot;7.6.1&quot;,<br>    &quot;build_flavor&quot; : &quot;default&quot;,<br>    &quot;build_type&quot; : &quot;tar&quot;,<br>    &quot;build_hash&quot; : &quot;aa751e09be0a5072e8570670309b1f12348f023b&quot;,<br>    &quot;build_date&quot; : &quot;2020-02-29T00:15:25.529771Z&quot;,<br>    &quot;build_snapshot&quot; : false,<br>    &quot;lucene_version&quot; : &quot;8.4.0&quot;,<br>    &quot;minimum_wire_compatibility_version&quot; : &quot;6.8.0&quot;,<br>    &quot;minimum_index_compatibility_version&quot; : &quot;6.0.0-beta1&quot;<br>  &#125;,<br>  &quot;tagline&quot; : &quot;You Know, for Search&quot;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h2 id="ElasticSearch与Spring-Boot集成"><a href="#ElasticSearch与Spring-Boot集成" class="headerlink" title="ElasticSearch与Spring Boot集成"></a>ElasticSearch与Spring Boot集成</h2><ul>
+<li>ElasticSearch 2.4.4</li>
+<li>Spring Data ElasticSearch 2.1.3.RELEASE</li>
+<li>JNA 4.0.3 用于访问操作系统原生应用</li>
+</ul>
+<p>build.gradle</p>
+<figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs gradle"><span class="hljs-comment">// 添加  Spring Data Elasticsearch 的依赖</span><br><span class="hljs-keyword">compile</span>(<span class="hljs-string">&#x27;org.springframework.boot:spring-boot-starter-data-elasticsearch&#x27;</span>)<br><br><span class="hljs-comment">// 添加  JNA 的依赖</span><br><span class="hljs-keyword">compile</span>(<span class="hljs-string">&#x27;net.java.dev.jna:jna:4.3.0&#x27;</span>)<br></code></pre></td></tr></table></figure>
+
+<p>application.properties</p>
+<figure class="highlight properties"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs properties"><span class="hljs-comment"># Elasticsearch 服务地址</span><br><span class="hljs-attr">spring.data.elasticsearch.cluster-nodes</span>=<span class="hljs-string">localhost:9300</span><br><span class="hljs-comment"># 设置连接超时时间</span><br><span class="hljs-attr">spring.data.elasticsearch.properties.transport.tcp.connect_timeout</span>=<span class="hljs-string">120s</span><br></code></pre></td></tr></table></figure>
+
+<h2 id="Q-amp-A"><a href="#Q-amp-A" class="headerlink" title="Q &amp; A"></a>Q &amp; A</h2><h3 id="Received-message-from-unsupported-version-2-0-0-minimal-compatible-version-is-6-8-0"><a href="#Received-message-from-unsupported-version-2-0-0-minimal-compatible-version-is-6-8-0" class="headerlink" title="Received message from unsupported version: [2.0.0] minimal compatible version is: [6.8.0]"></a>Received message from unsupported version: [2.0.0] minimal compatible version is: [6.8.0]</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">java.lang.IllegalStateException: Received message from unsupported version: [2.0.0] minimal compatible version is: [6.8.0]<br>	at org.elasticsearch.transport.InboundMessage.ensureVersionCompatibility(InboundMessage.java:152) ~[elasticsearch-7.6.1.jar:7.6.1]<br>	at org.elasticsearch.transport.InboundMessage.access$000(InboundMessage.java:37) ~[elasticsearch-7.6.1.jar:7.6.1]<br>	at org.elasticsearch.transport.InboundMessage$Reader.deserialize(InboundMessage.java:70) ~[elasticsearch-7.6.1.jar:7.6.1]<br>	at org.elasticsearch.transport.InboundHandler.messageReceived(InboundHandler.java:114) ~[elasticsearch-7.6.1.jar:7.6.1]<br>	at org.elasticsearch.transport.InboundHandler.inboundMessage(InboundHandler.java:103) ~[elasticsearch-7.6.1.jar:7.6.1]<br>	at org.elasticsearch.transport.TcpTransport.inboundMessage(TcpTransport.java:667) [elasticsearch-7.6.1.jar:7.6.1]<br></code></pre></td></tr></table></figure>
+
+<p>原因：spring boot是1.3.x版本，而es采用了2.x版本。在es的2.x版本去除了一些类，而这些类在spring boot的1.3.x版本中仍然被使用，导致此错误。</p>
+<p>解决：依照问题1中的版本对应关系，启动特定版本的es即可。</p>
+<div id="paginator"></div></div><div id="post-footer"><div id="pages"><div class="footer-link" style="width: 50%;text-align:right;border-right:1px #fe2 solid"><a href="/2020/03/23/Buffer/Microservices%E5%BE%AE%E6%9C%8D%E5%8A%A1%E5%AD%A6%E4%B9%A0/">← Next Microservices 微服务学习</a></div><div class="footer-link" style="width: 50%;right:1px;border-left:1px #fe2 solid"><a href="/2020/02/10/SpringBoot/SpringBoot-%E8%B8%A9%E5%9D%91/">SpringBoot-踩坑 Prev →</a></div></div></div><div id="comments"><div class="selector"><button class="gitalk-sel"></button></div><div id="gitalk"></div></div></div><div class="bottom-btn"><div><a id="to-top" onClick="scrolls.scrolltop();" title="回到顶部" style="opacity: 0; display: none;">∧</a><a id="to-index" href="#toc-div" title="文章目录">≡</a><a id="color-mode" onClick="colorMode.change()" title="切换主题"></a></div></div></article><aside><div id="about"><a href="/" id="logo"><img src="https://ak.hypergryph.com/assets/index/images/ak/pc/faction/1.png" alt="Logo"></a><h1 id="Dr"><a href="/">Sicmatr1x</a></h1><div id="description"><p>INTP/Traveller/Stoicism/Crypto-anarchism/Minimalism/Cosmopolitanism/English learner/Crypto/Java Engineer</p></div></div><div id="aside-block"><div id="toc-div"><h1>目录</h1><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%A8%E6%96%87%E6%90%9C%E7%B4%A2%E6%96%B9%E6%B3%95"><span class="toc-number">1.</span> <span class="toc-text">全文搜索方法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%9D%9E%E7%BB%93%E6%9E%84%E5%8C%96%E6%95%B0%E6%8D%AE%E7%9A%84%E6%A3%80%E7%B4%A2"><span class="toc-number">1.1.</span> <span class="toc-text">非结构化数据的检索</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%A8%E6%96%87%E6%90%9C%E7%B4%A2-Full-text-Search"><span class="toc-number">1.2.</span> <span class="toc-text">全文搜索(Full-text Search)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9F%BA%E4%BA%8EJava%E7%9A%84%E5%BC%80%E6%BA%90%E5%85%A8%E6%96%87%E6%90%9C%E7%B4%A2%E5%BC%95%E6%93%8E"><span class="toc-number">1.3.</span> <span class="toc-text">基于Java的开源全文搜索引擎</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ElasticSearch%E7%9A%84%E7%89%B9%E7%82%B9"><span class="toc-number">1.4.</span> <span class="toc-text">ElasticSearch的特点</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#MAC%E4%B8%8B%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE"><span class="toc-number">2.</span> <span class="toc-text">MAC下环境配置</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%8B%E8%BD%BDElasticSearch"><span class="toc-number">2.1.</span> <span class="toc-text">下载ElasticSearch</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A7%A3%E5%8E%8BElasticSearch"><span class="toc-number">2.2.</span> <span class="toc-text">解压ElasticSearch</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%85%8D%E7%BD%AE%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F"><span class="toc-number">2.3.</span> <span class="toc-text">配置环境变量</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BF%90%E8%A1%8CElasticSearch"><span class="toc-number">2.4.</span> <span class="toc-text">运行ElasticSearch</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B5%8B%E8%AF%95ElasticSearch%E6%9C%8D%E5%8A%A1%E5%99%A8"><span class="toc-number">2.5.</span> <span class="toc-text">测试ElasticSearch服务器</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ElasticSearch%E4%B8%8ESpring-Boot%E9%9B%86%E6%88%90"><span class="toc-number">3.</span> <span class="toc-text">ElasticSearch与Spring Boot集成</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Q-amp-A"><span class="toc-number">4.</span> <span class="toc-text">Q &amp; A</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Received-message-from-unsupported-version-2-0-0-minimal-compatible-version-is-6-8-0"><span class="toc-number">4.1.</span> <span class="toc-text">Received message from unsupported version: [2.0.0] minimal compatible version is: [6.8.0]</span></a></li></ol></li></ol></div></div><footer><nobr>构建自 <a target="_blank" rel="noopener" href="http://hexo.io">Hexo</a></nobr><wbr><nobr> 使用主题 <a target="_blank" rel="noopener" href="https://github.com/Yue-plus/hexo-theme-arknights">Arknights</a></nobr><wbr><nobr>主题作者 <a target="_blank" rel="noopener" href="https://github.com/Yue-plus">Yue_plus</a></nobr></footer></aside></main><canvas id="canvas-dust"></canvas><script src="/js/search.js"></script><script class="pjax-js">reset=_=>{gitalk = new Gitalk({
+ clientID: '',
+ clientSecret: '',
+ repo: 'blog-comments',
+ owner: 'Sicmatr1x',
+ admin: ['Sicmatr1x'],
+ distractionFreeMode: false,
+ id: 
+});
+if (document.querySelector("#gitalk")) gitalk.render("gitalk");code.findCode();}</script><script src="/js/arknights.js"></script><script src="/js/pjax.js"></script><script>window.addEventListener("load",() => {pjax = new Pjax({
+ cacheBust: false,
+ selectors: ['title','article','#aside-block','.pjax-js'],
+ switches: {'article': Pjax.switches.sideBySide},
+ switchesOptions: {
+   'article': {
+     classNames: {
+       remove: "pjax-out",
+       add: "pjax-in"
+     }
+   }
+ }
+});
+document.addEventListener("pjax:complete", reset);reset()})</script></body></html>

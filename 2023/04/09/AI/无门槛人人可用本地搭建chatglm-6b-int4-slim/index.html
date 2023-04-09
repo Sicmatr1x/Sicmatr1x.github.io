@@ -1,0 +1,96 @@
+<!DOCTYPE html><html lang="en" theme-mode="dark"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>无门槛人人可用本地搭建chatglm-6b-int4-slim | Sicmatr1x's Blog</title><script>var config = {"root":"/","search":{"preload":false,"activeHolder":"键入以继续","blurHolder":"数据检索","noResult":"无 $0 相关数据"},"code":{"codeInfo":"$0 - 共 $1 行","copy":"复制","copyFinish":"复制成功","expand":"展开"}}</script><script src="/js/gitalk.js"></script><script src="//unpkg.com/mermaid@9.2.2/dist/mermaid.min.js"></script><link rel="stylesheet" href="/css/arknights.css"><script>if (window.localStorage.getItem('theme-mode') === 'light') document.documentElement.setAttribute('theme-mode', 'light')
+if (window.localStorage.getItem('theme-mode') === 'dark') document.documentElement.setAttribute('theme-mode', 'dark')</script><style>@font-face {
+ font-family: BenderLight;
+ src: local('Bender'), url("/font/BenderLight.ttf");
+}
+@font-face {
+ font-family: 'JetBrains Mono';
+ src: local('JetBrains Mono'), url('/font/JetBrainsMono-Regular.woff2') format('woff2');
+}</style><meta name="generator" content="Hexo 6.3.0"><link rel="alternate" href="/atom.xml" title="Sicmatr1x's Blog" type="application/atom+xml">
+</head><body><div class="loading" style="opacity: 0"><div class="loadingBar left"></div><div class="loadingBar right"></div></div><main><header class="closed"><nav><div class="navBtn hide"><i class="navBtnIcon"><span class="navBtnIconBar"></span><span class="navBtnIconBar"></span><span class="navBtnIconBar"></span></i></div><div class="navItem" id="search-header"><span class="navItemTitle"><input autocomplete="off" autocorrect="off" autocapitalize="none" placeholder="数据检索" spellcheck="false" maxlength="50" type="text" id="search-input"></span></div><div class="navItem" id="search-holder"></div><div class="search-popup"><div id="search-result"></div></div><ol class="navContent"><li class="navItem"><a class="navBlock" href="/"><span class="navItemTitle">Home</span></a></li><li class="navItem" matchdata="categories,tags"><a class="navBlock" href="/archives/"><span class="navItemTitle">Archives</span></a></li><li class="navItem"><a class="navBlock" href="/toolkit/"><span class="navItemTitle">Toolkit</span></a></li><li class="navItem"><a class="navBlock" href="/about/"><span class="navItemTitle">About</span></a></li></ol></nav></header><article><div id="post-bg"><div id="post-title"><h1>无门槛人人可用本地搭建chatglm-6b-int4-slim</h1><div id="post-info"><span>文章发布时间: <div class="control"><time datetime="2023-04-09T01:22:00.000Z" id="date"> 2023-04-09</time></div></span><br><span>最后更新时间: <div class="control"><time datetime="2023-04-09T03:36:58.187Z" id="updated"> 2023-04-09</time></div></span></div></div><hr><div id="post-content"><h2 id="涉及项目"><a href="#涉及项目" class="headerlink" title="涉及项目"></a>涉及项目</h2><ul>
+<li>josStorer&#x2F;selfhostedAI: <a target="_blank" rel="noopener" href="https://github.com/josStorer/selfhostedAI">https://github.com/josStorer/selfhostedAI</a><ul>
+<li>本地搭建懒人包，搭建完成后启动本地服务会启动一个本地服务器</li>
+</ul>
+</li>
+<li>josStorer&#x2F;chatGPTBox: <a target="_blank" rel="noopener" href="https://github.com/josStorer/chatGPTBox">https://github.com/josStorer/chatGPTBox</a><ul>
+<li>Chrome插件: 可以发送请求到本地服务器，实现与本地模型进行交互</li>
+</ul>
+</li>
+</ul>
+<h2 id="搭建步骤"><a href="#搭建步骤" class="headerlink" title="搭建步骤"></a>搭建步骤</h2><h3 id="1-下载项目与模型文件"><a href="#1-下载项目与模型文件" class="headerlink" title="1. 下载项目与模型文件"></a>1. 下载项目与模型文件</h3><p>josStorer&#x2F;selfhostedAI项目里面包含2个模型</p>
+<ol>
+<li>ChatGLM 6B Int4: 该包基于ChatGLM, 遵循Apache-2.0协议开源, 内置模型为 <a target="_blank" rel="noopener" href="https://huggingface.co/silver/chatglm-6b-int4-slim">https://huggingface.co/silver/chatglm-6b-int4-slim</a> 的裁切版</li>
+<li>lama.cpp: 该包基于llama.cpp, 内置命令行交互示例为josStorer修改的版本, 以支持windows的unicode输入, 内置模型来自Chinese-LLaMA-Alpaca</li>
+</ol>
+<p>下载地址:</p>
+<ul>
+<li>百度网盘: <a target="_blank" rel="noopener" href="https://pan.baidu.com/s/1wchIUHgne3gncIiLIeKBEQ?pwd=1111#list/path=%2F">https://pan.baidu.com/s/1wchIUHgne3gncIiLIeKBEQ?pwd=1111#list/path=%2F</a></li>
+<li>GitHub Releases: <a target="_blank" rel="noopener" href="https://github.com/josStorer/selfhostedAI/releases">https://github.com/josStorer/selfhostedAI/releases</a></li>
+</ul>
+<p>下载文件: <code>selfhostedAI-chatglm-6b-int4-windows-nvidia.7z</code></p>
+<h3 id="2-解压缩与运行"><a href="#2-解压缩与运行" class="headerlink" title="2. 解压缩与运行"></a>2. 解压缩与运行</h3><p>解压缩到文件夹，文件结构如下图<br><img src="20230409093142.png" style="height: 300px"/></p>
+<p>双击<code>chatglm-6b-int4.bat</code>运行</p>
+<img src="20230409094335.png" style="height: 600px"/>
+
+<p>由运行输出可知，运行需要 python3 环境和 C++ 环境。<br>这里报错<code>&#39;gcc&#39; 不是内部或外部命令，也不是可运行的程序或批处理文件。</code>是需要gcc编译器，但是我没有配置到系统变量<code>Path</code>里，但是并不影响程序的运行</p>
+<h3 id="3-安装-Chrome-Extension-chatGPTBox"><a href="#3-安装-Chrome-Extension-chatGPTBox" class="headerlink" title="3. 安装 Chrome Extension: chatGPTBox"></a>3. 安装 Chrome Extension: chatGPTBox</h3><p>不一定要用 Chrome ，其它支持的浏览器也可以，支持的浏览器的插件地址如下:</p>
+<ul>
+<li>Chrome: <a target="_blank" rel="noopener" href="https://chrome.google.com/webstore/detail/chatgptbox/eobbhoofkanlmddnplfhnmkfbnlhpbbo">https://chrome.google.com/webstore/detail/chatgptbox/eobbhoofkanlmddnplfhnmkfbnlhpbbo</a></li>
+<li>Edge: <a target="_blank" rel="noopener" href="https://microsoftedge.microsoft.com/addons/detail/fission-chatbox-best/enjmfilpkbbabhgeoadmdpjjpnahkogf">https://microsoftedge.microsoft.com/addons/detail/fission-chatbox-best/enjmfilpkbbabhgeoadmdpjjpnahkogf</a></li>
+<li>Safari: <a target="_blank" rel="noopener" href="https://apps.apple.com/app/fission-chatbox/id6446611121">https://apps.apple.com/app/fission-chatbox/id6446611121</a></li>
+<li>Firefox: <a target="_blank" rel="noopener" href="https://addons.mozilla.org/zh-CN/firefox/addon/chatgptbox/">https://addons.mozilla.org/zh-CN/firefox/addon/chatgptbox/</a></li>
+</ul>
+<p>安装完成后点开插件，如下图，需要修改以下配置项</p>
+<ol>
+<li>API模式: 改为自定义模型</li>
+<li>模型名称填写为: <code>chatglm-6b-int4</code></li>
+<li>本地服务地址默认为: <code>http://localhost:8000/chat/completions</code></li>
+</ol>
+<img src="20230409094956.png" style="height: 400px"/>
+
+<h2 id="使用体验"><a href="#使用体验" class="headerlink" title="使用体验"></a>使用体验</h2><h3 id="单词解释"><a href="#单词解释" class="headerlink" title="单词解释"></a>单词解释</h3><img src="20230409113619.png" />
+
+<h3 id="冒泡排序"><a href="#冒泡排序" class="headerlink" title="冒泡排序"></a>冒泡排序</h3><p>然后就可以愉快的开始聊天了！<br>以下为聊天截图：</p>
+<img src="20230409095649.png" style="height: 600px"/>
+
+<p>注：在浏览器的插件中发送一句话给模型之后对应的在命令行上会打印接收到请求的日志，如下图：</p>
+<img src="20230409095904.png" style="height: 100px"/>
+
+<h3 id="求解算法题"><a href="#求解算法题" class="headerlink" title="求解算法题"></a>求解算法题</h3><img src="20230409102133.png" style="height: 600px"/>
+
+<p>显然01背包问题解错了，我们尝试提示下看能不能解对</p>
+<img src="20230409102258.png" />
+
+<p>直接无响应了，查看后台日志，好家伙爆显存了</p>
+<img src="20230409102357.png" />
+
+<p>我的显卡是 NVIDIA GeForce RTX2060 显存6G<br>已经申请了5.07 G，然后又尝试申请116.00 MB空间申请不到了</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">Tried to allocate 116.00 MiB (GPU 0; 6.00 GiB total capacity; 5.07 GiB already allocated; 0 bytes free; 5.31 GiB reserved in total by PyTorch)<br></code></pre></td></tr></table></figure>
+<img src="20230409103609.png" />
+
+<p>重启后再次尝试：</p>
+<img src="20230409104138.png" />
+
+<div id="paginator"></div></div><div id="post-footer"><div id="pages" style="justify-content: flex-end"><div class="footer-link" style="width: 50%;right:1px;border-left:1px #fe2 solid"><a href="/2023/03/26/LeetCode/BackPackII/">BackPackII Prev →</a></div></div></div><div id="comments"><div class="selector"><button class="gitalk-sel"></button></div><div id="gitalk"></div></div></div><div class="bottom-btn"><div><a id="to-top" onClick="scrolls.scrolltop();" title="回到顶部" style="opacity: 0; display: none;">∧</a><a id="to-index" href="#toc-div" title="文章目录">≡</a><a id="color-mode" onClick="colorMode.change()" title="切换主题"></a></div></div></article><aside><div id="about"><a href="/" id="logo"><img src="https://ak.hypergryph.com/assets/index/images/ak/pc/faction/1.png" alt="Logo"></a><h1 id="Dr"><a href="/">Sicmatr1x</a></h1><div id="description"><p>INTP/Traveller/Stoicism/Crypto-anarchism/Minimalism/Cosmopolitanism/English learner/Crypto/Java Engineer</p></div></div><div id="aside-block"><div id="toc-div"><h1>目录</h1><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B6%89%E5%8F%8A%E9%A1%B9%E7%9B%AE"><span class="toc-number">1.</span> <span class="toc-text">涉及项目</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%90%AD%E5%BB%BA%E6%AD%A5%E9%AA%A4"><span class="toc-number">2.</span> <span class="toc-text">搭建步骤</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E4%B8%8B%E8%BD%BD%E9%A1%B9%E7%9B%AE%E4%B8%8E%E6%A8%A1%E5%9E%8B%E6%96%87%E4%BB%B6"><span class="toc-number">2.1.</span> <span class="toc-text">1. 下载项目与模型文件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E8%A7%A3%E5%8E%8B%E7%BC%A9%E4%B8%8E%E8%BF%90%E8%A1%8C"><span class="toc-number">2.2.</span> <span class="toc-text">2. 解压缩与运行</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-%E5%AE%89%E8%A3%85-Chrome-Extension-chatGPTBox"><span class="toc-number">2.3.</span> <span class="toc-text">3. 安装 Chrome Extension: chatGPTBox</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8%E4%BD%93%E9%AA%8C"><span class="toc-number">3.</span> <span class="toc-text">使用体验</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8D%95%E8%AF%8D%E8%A7%A3%E9%87%8A"><span class="toc-number">3.1.</span> <span class="toc-text">单词解释</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%86%92%E6%B3%A1%E6%8E%92%E5%BA%8F"><span class="toc-number">3.2.</span> <span class="toc-text">冒泡排序</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B1%82%E8%A7%A3%E7%AE%97%E6%B3%95%E9%A2%98"><span class="toc-number">3.3.</span> <span class="toc-text">求解算法题</span></a></li></ol></li></ol></div></div><footer><nobr>构建自 <a target="_blank" rel="noopener" href="http://hexo.io">Hexo</a></nobr><wbr><nobr> 使用主题 <a target="_blank" rel="noopener" href="https://github.com/Yue-plus/hexo-theme-arknights">Arknights</a></nobr><wbr><nobr>主题作者 <a target="_blank" rel="noopener" href="https://github.com/Yue-plus">Yue_plus</a></nobr></footer></aside></main><canvas id="canvas-dust"></canvas><script src="/js/search.js"></script><script class="pjax-js">reset=_=>{gitalk = new Gitalk({
+ clientID: '',
+ clientSecret: '',
+ repo: 'blog-comments',
+ owner: 'Sicmatr1x',
+ admin: ['Sicmatr1x'],
+ distractionFreeMode: false,
+ id: 
+});
+if (document.querySelector("#gitalk")) gitalk.render("gitalk");code.findCode();}</script><script src="/js/arknights.js"></script><script src="/js/pjax.js"></script><script>window.addEventListener("load",() => {pjax = new Pjax({
+ cacheBust: false,
+ selectors: ['title','article','#aside-block','.pjax-js'],
+ switches: {'article': Pjax.switches.sideBySide},
+ switchesOptions: {
+   'article': {
+     classNames: {
+       remove: "pjax-out",
+       add: "pjax-in"
+     }
+   }
+ }
+});
+document.addEventListener("pjax:complete", reset);reset()})</script></body></html>
