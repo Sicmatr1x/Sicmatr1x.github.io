@@ -1,3 +1,4 @@
+http://yoursite.com/2023/05/07/AI/ChatGPT-%E7%9B%B8%E5%85%B3%E8%B5%84%E6%BA%90/
 http://yoursite.com/2023/04/09/AI/%E6%97%A0%E9%97%A8%E6%A7%9B%E4%BA%BA%E4%BA%BA%E5%8F%AF%E7%94%A8%E6%9C%AC%E5%9C%B0%E6%90%AD%E5%BB%BAchatglm-6b-int4-slim/
 http://yoursite.com/2017/07/30/Database/Oracle/Oracle-SQL/
 http://yoursite.com/2017/07/30/Database/Oracle/Oracle-PL/
@@ -108,6 +109,7 @@ http://yoursite.com/tags/SpringCloud/
 http://yoursite.com/tags/Spring-Boot/
 http://yoursite.com/tags/Oracle/
 http://yoursite.com/tags/Redis/
+http://yoursite.com/tags/AI/
 http://yoursite.com/categories/Big-Data/
 http://yoursite.com/categories/AI/
 http://yoursite.com/categories/Java/
@@ -122,3 +124,4 @@ http://yoursite.com/categories/Solidity/
 http://yoursite.com/categories/Back-end/
 http://yoursite.com/categories/LeetCode/
 http://yoursite.com/categories/Database/
+http://yoursite.com/categories/ChatGPT/
