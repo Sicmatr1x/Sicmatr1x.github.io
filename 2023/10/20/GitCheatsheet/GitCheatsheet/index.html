@@ -1,0 +1,381 @@
+<!DOCTYPE html><html lang="en" theme-mode="dark"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Git Cheetsheet | Sicmatr1x's Blog</title><script>var config = {"root":"/","search":{"preload":false,"activeHolder":"键入以继续","blurHolder":"数据检索","noResult":"无 $0 相关数据"},"code":{"codeInfo":"$0 - 共 $1 行","copy":"复制","copyFinish":"复制成功","expand":"展开"}}</script><script src="/js/gitalk.js"></script><script src="//unpkg.com/mermaid@9.2.2/dist/mermaid.min.js"></script><link rel="stylesheet" href="/css/arknights.css"><script>if (window.localStorage.getItem('theme-mode') === 'light') document.documentElement.setAttribute('theme-mode', 'light')
+if (window.localStorage.getItem('theme-mode') === 'dark') document.documentElement.setAttribute('theme-mode', 'dark')</script><style>@font-face {
+ font-family: BenderLight;
+ src: local('Bender'), url("/font/BenderLight.ttf");
+}
+@font-face {
+ font-family: 'JetBrains Mono';
+ src: local('JetBrains Mono'), url('/font/JetBrainsMono-Regular.woff2') format('woff2');
+}</style><meta name="generator" content="Hexo 6.3.0"><link rel="alternate" href="/atom.xml" title="Sicmatr1x's Blog" type="application/atom+xml">
+</head><body><div class="loading" style="opacity: 0"><div class="loadingBar left"></div><div class="loadingBar right"></div></div><main><header class="closed"><nav><div class="navBtn hide"><i class="navBtnIcon"><span class="navBtnIconBar"></span><span class="navBtnIconBar"></span><span class="navBtnIconBar"></span></i></div><div class="navItem" id="search-header"><span class="navItemTitle"><input autocomplete="off" autocorrect="off" autocapitalize="none" placeholder="数据检索" spellcheck="false" maxlength="50" type="text" id="search-input"></span></div><div class="navItem" id="search-holder"></div><div class="search-popup"><div id="search-result"></div></div><ol class="navContent"><li class="navItem"><a class="navBlock" href="/"><span class="navItemTitle">Home</span></a></li><li class="navItem" matchdata="categories,tags"><a class="navBlock" href="/archives/"><span class="navItemTitle">Archives</span></a></li><li class="navItem"><a class="navBlock" href="/toolkit/"><span class="navItemTitle">Toolkit</span></a></li><li class="navItem"><a class="navBlock" href="/about/"><span class="navItemTitle">About</span></a></li></ol></nav></header><article><div id="post-bg"><div id="post-title"><h1>Git Cheetsheet</h1><div id="post-info"><span>文章发布时间: <div class="control"><time datetime="2023-10-20T02:04:40.000Z" id="date"> 2023-10-20</time></div></span><br><span>最后更新时间: <div class="control"><time datetime="2023-11-14T13:37:03.830Z" id="updated"> 2023-11-14</time></div></span></div></div><hr><div id="post-content"><h1 id="Git"><a href="#Git" class="headerlink" title="Git"></a>Git</h1><p>Reference:</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://book.git-scm.com/book/en/v2">Pro Git</a></li>
+<li><a target="_blank" rel="noopener" href="https://rogerdudler.github.io/git-guide/index.zh.html">git - 简明指南</a></li>
+</ul>
+<h3 id="Dictionary"><a href="#Dictionary" class="headerlink" title="Dictionary"></a>Dictionary</h3><ol>
+<li>VCS: Version Control Systems</li>
+<li>CVCS: Centralized Version Control System</li>
+<li>DVCS: Distributed Version Control System</li>
+</ol>
+<h2 id="basic-knowladge"><a href="#basic-knowladge" class="headerlink" title="basic knowladge"></a>basic knowladge</h2><h4 id="The-Three-States-modified-staged-and-committed"><a href="#The-Three-States-modified-staged-and-committed" class="headerlink" title="The Three States: modified, staged, and committed"></a>The Three States: modified, staged, and committed</h4><ol>
+<li>Modified means that you have changed the file but have not committed it to your database yet.</li>
+<li>Staged means that you have marked a modified file in its current version to go into your next commit snapshot.</li>
+<li>Committed means that the data is safely stored in your local database.</li>
+</ol>
+<h4 id="The-basic-Git-workflow-goes-something-like-this"><a href="#The-basic-Git-workflow-goes-something-like-this" class="headerlink" title="The basic Git workflow goes something like this:"></a>The basic Git workflow goes something like this:</h4><ol>
+<li>You modify files in your working tree.</li>
+<li>You selectively stage just those changes you want to be part of your next commit, which adds only those changes to the staging area.</li>
+<li>You do a commit, which takes the files as they are in the staging area and stores that snapshot permanently to your Git directory.</li>
+</ol>
+<p>工作目录下的每一个文件都存在两种状态：已跟踪 或 未跟踪 tracked or untracked</p>
+<p>工作目录中除已跟踪文件外的其它所有文件都属于未跟踪(untracked)文件，它们既不存在于上次快照(snapshot)的记录中，也没有被放入暂存区(staging area)。</p>
+<h3 id="git-branch"><a href="#git-branch" class="headerlink" title="git branch"></a>git branch</h3><p>Git 保存的不是文件的变化或者差异，而是一系列不同时刻的 快照(snapshot)</p>
+<p>在进行提交操作时，Git 会保存一个提交对象（commit object）。 知道了 Git 保存数据的方式，我们可以很自然的想到——该提交对象会包含一个指向暂存内容快照的指针。 但不仅仅是这样，该提交对象还包含了作者的姓名和邮箱、提交时输入的信息以及指向它的父对象的指针。 首次提交产生的提交对象没有父对象，普通提交操作产生的提交对象有一个父对象， 而由多个分支合并产生的提交对象有多个父对象</p>
+<ol>
+<li>暂存操作会为每一个文件计算校验和（使用我们在 起步 中提到的 SHA-1 哈希算法）</li>
+<li>然后会把当前版本的文件快照保存到 Git 仓库中 （Git 使用 blob 对象来保存它们）</li>
+<li>最终将校验和加入到暂存区域等待提交</li>
+</ol>
+<p>由于 Git 的分支实质上是指向commit对象的指针，而这个指针仅是包含所指对象校验和（长度为 40 的 SHA-1 值字符串）的文件，所以它的创建和销毁都异常高效。 创建一个新分支就相当于往一个文件中写入 41 个字节（40 个字符和 1 个换行符）</p>
+<h4 id="git-branch-1"><a href="#git-branch-1" class="headerlink" title="git branch"></a><code>git branch</code></h4><p>展示当前所有分支的一个列表<br><code>git branch -v</code> 会在每个分支后带上对应分支最新的一个commit的简短信息</p>
+<h4 id="git-branch-lt-branchName-gt"><a href="#git-branch-lt-branchName-gt" class="headerlink" title="git branch &lt;branchName&gt;"></a><code>git branch &lt;branchName&gt;</code></h4><p>分支创建:<br>分支创建的本质是为你在当前的提交对象上创建了一个可以移动的新的指针</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">$ git branch testing<br></code></pre></td></tr></table></figure>
+
+<p><strong>注: git branch 命令仅仅 创建 一个新分支，并不会自动切换到新分支中去</strong></p>
+<p>如果要创建的同时切换过去可以用<code>git checkout -b &lt;newbranchname&gt;</code></p>
+<p>Git 又是怎么知道当前在哪一个分支上呢？ 也很简单，它有一个名为 HEAD 的特殊指针。且该指针指向当前所在的本地分支</p>
+<h4 id="git-log-oneline-decorate"><a href="#git-log-oneline-decorate" class="headerlink" title="git log --oneline --decorate"></a><code>git log --oneline --decorate</code></h4><p>可以使用 <code>git log --oneline --decorate</code> 命令查看各个分支当前所指的对象</p>
+<h4 id="git-log-oneline-decorate-graph-all"><a href="#git-log-oneline-decorate-graph-all" class="headerlink" title="git log --oneline --decorate --graph --all"></a><code>git log --oneline --decorate --graph --all</code></h4><p>它会输出你的提交历史、各个分支的指向以及项目的分支分叉情况</p>
+<h4 id="git-checkout-lt-branchName-gt"><a href="#git-checkout-lt-branchName-gt" class="headerlink" title="git checkout &lt;branchName&gt;"></a><code>git checkout &lt;branchName&gt;</code></h4><p>分支切换:<br>本质是更改HEAD指针指向的分支指针指向的commit对象</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">$ git checkout testing<br></code></pre></td></tr></table></figure>
+
+<h4 id="git-merge-lt-branchName-gt"><a href="#git-merge-lt-branchName-gt" class="headerlink" title="git merge &lt;branchName&gt;"></a><code>git merge &lt;branchName&gt;</code></h4><p>合并<code>&lt;branchName&gt;</code>分支到当前分支:<br>eg: 合并<code>hotfix</code>分支到<code>master</code>分支: </p>
+<ol>
+<li>检出(checkout)到你想合并入的分支，即<code>master</code>分支</li>
+<li>运行 <code>git merge</code> 命令<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">$ git checkout master<br>$ git merge hotfix<br></code></pre></td></tr></table></figure></li>
+</ol>
+<p>注: 若这里的<code>hotfix</code>分支所指向的提交 <code>C4</code> 是当前<code>master</code>分支指针所指向的提交 <code>C2</code> 的直接后继，那么 Git 会直接将指针最新的commit方向移动，换句话说，当你试图合并两个分支<br>时， 如果顺着一个分支走下去能够到达另一个分支，那么 Git 在合并两者的时候， 只会简单的将指针向最新的commit方向移动，因为这种情况下的合并操作没有需要解决的分歧——这就叫做 快进(fast-forward)</p>
+<h2 id="set-up-environment"><a href="#set-up-environment" class="headerlink" title="set-up environment"></a>set-up environment</h2><h3 id="git-config"><a href="#git-config" class="headerlink" title="git config"></a>git config</h3><p>lets you get and set configuration variables that control all aspects of how Git looks and operates.<br>location:</p>
+<ol>
+<li><code>[path]/etc/gitconfig</code> file: Contains values applied to every user on the system and all their repositories. If you pass the option <code>--system</code> to git config, it reads and writes from this file specifically. Because this is a system configuration file, you would need administrative or superuser privilege to make changes to it.</li>
+<li><code>~/.gitconfig</code> or <code>~/.config/git/config</code> file: Values specific personally to you, the user. You can make Git read and write to this file specifically by passing the <code>--global</code> option, and this affects all of the repositories you work with on your system.</li>
+<li><code>config</code> file in the Git directory (that is, <code>.git/config</code>) of whatever repository you’re currently using: Specific to that single repository. You can force Git to read from and write to this file with the <code>--local</code> option, but that is in fact the default. Unsurprisingly, you need to be located somewhere in a Git repository for this option to work properly.</li>
+</ol>
+<p>在 Windows 系统中，Git 会查找 $HOME 目录下（一般情况下是 C:\Users$USER ）的 .gitconfig 文件。 如果你在 Windows 上使用 Git 2.x 以后的版本，那么还有一个系统级的配置文件，Windows XP 上在 C:\Documents and Settings\All Users\Application Data\Git\config ，Windows Vista 及更新的版本在 C:\ProgramData\Git\config 。此文件只能以管理员权限通过 <code>git config -f &lt;file&gt;</code> 来修改。</p>
+<p>查看所有的配置以及它们所在的文件: <code>git config --list --show-origin</code></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">file:C:/Program Files/Git/etc/gitconfig diff.astextplain.textconv=astextplain<br>file:C:/Program Files/Git/etc/gitconfig filter.lfs.clean=git-lfs clean -- %f<br>file:C:/Program Files/Git/etc/gitconfig filter.lfs.smudge=git-lfs smudge -- %f<br>file:C:/Program Files/Git/etc/gitconfig filter.lfs.process=git-lfs filter-process<br>file:C:/Program Files/Git/etc/gitconfig filter.lfs.required=true<br>file:C:/Program Files/Git/etc/gitconfig http.sslbackend=openssl<br>file:C:/Program Files/Git/etc/gitconfig http.sslcainfo=C:/Program Files/Git/mingw64/ssl/certs/ca-bundle.crt<br>file:C:/Program Files/Git/etc/gitconfig core.autocrlf=true<br>file:C:/Program Files/Git/etc/gitconfig core.fscache=true<br>file:C:/Program Files/Git/etc/gitconfig core.symlinks=false<br>file:C:/Program Files/Git/etc/gitconfig credential.helper=manager<br>file:D:/Users/GUOYAN708/.gitconfig      user.name=GUOYAN708<br>file:D:/Users/GUOYAN708/.gitconfig      user.email=GUOYAN708@pingan.com.cn<br>file:D:/Users/GUOYAN708/.gitconfig      credential.helper=store<br>file:D:/Users/GUOYAN708/.gitconfig      http.https://github.com.proxy=45.40.234.179:3128<br>file:D:/Users/GUOYAN708/.gitconfig      http.https://android.googlesource.com.proxy=socks5://127.0.0.1:1080<br></code></pre></td></tr></table></figure>
+
+<p>设置你的用户名和邮件地址:<br>如果使用了 –global 选项，</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">$ git config --global user.name &quot;John Doe&quot;<br>$ git config --global user.email johndoe@example.com<br></code></pre></td></tr></table></figure>
+
+<p>检查 Git 的某一项配置: <code>git config &lt;key&gt;</code></p>
+<p>git config 命令的手册: <code>git help config</code></p>
+<h4 id="Git-别名"><a href="#Git-别名" class="headerlink" title="Git 别名"></a>Git 别名</h4><p>如果不想每次都输入完整的 Git 命令，可以通过 git config 文件来轻松地为每一个命令设置一个别名</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">$ git config --global alias.co checkout<br>$ git config --global alias.br branch<br>$ git config --global alias.ci commit<br>$ git config --global alias.st status<br></code></pre></td></tr></table></figure>
+
+<p>即: 当要输入 git commit 时，只需要输入 git ci</p>
+<p>eg: 取消暂存别名：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">$ git config --global alias.unstage &#x27;reset HEAD --&#x27;<br><br>等价于以下两条命令<br><br>$ git unstage fileA<br>$ git reset HEAD -- fileA<br></code></pre></td></tr></table></figure>
+
+<p>eg: 轻松查看最后一次提交信息<code>git last</code></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">$ git config --global alias.last &#x27;log -1 HEAD&#x27;<br></code></pre></td></tr></table></figure>
+
+<h3 id="登录与凭证存储"><a href="#登录与凭证存储" class="headerlink" title="登录与凭证存储"></a>登录与凭证存储</h3><p>如果你正在使用 HTTPS URL 来推送，Git 服务器会询问用户名与密码。 默认情况下它会在终端中提示服务器是否允许你进行推送。<br>如果不想在每一次推送时都输入用户名与密码，你可以设置一个 <code>credential cache</code>。 最简单的方式就是将其保存在内存中几分钟，可以简单地运行 <code>git config --global credential.helper cache</code> 来设置它。</p>
+<p>Git 的凭证系统</p>
+<ul>
+<li>默认所有都不缓存。 每一次连接都会询问你的用户名和密码</li>
+<li><code>cache</code> 模式会将凭证存放在内存中一段时间。 密码永远不会被存储在磁盘中，并且在15分钟后从内存中清除<ul>
+<li><code>--timeout &lt;seconds&gt;</code> 参数，可以设置后台进程的存活时间（默认是 “900”，也就是 15 分钟）</li>
+</ul>
+</li>
+<li><code>store</code> 模式会将凭证用明文的形式存放在磁盘中，并且永不过期。 这意味着除非你修改了你在 Git 服务器上的密码，否则你永远不需要再次输入你的凭证信息。 这种方式的缺点是你的<strong>密码是用明文的方式</strong>存放在你的 <code>home</code> 目录下<ul>
+<li><code>--file &lt;path&gt;</code> 参数，可以自定义存放密码的文件路径（默认是 <code>~/.git-credentials</code> ）</li>
+</ul>
+</li>
+<li>如果你使用的是 Mac，Git 还有一种 <code>osxkeychain</code> 模式，它会将凭证缓存到你系统用户的<code>钥匙串</code>中。这种方式将凭证存放在磁盘中，并且永不过期，但是是被加密的，这种加密方式与存放 HTTPS 凭证以及 Safari 的自动填写是相同的</li>
+<li>如果你使用的是 Windows，你可以安装一个叫做 <a target="_blank" rel="noopener" href="https://github.com/Microsoft/Git-Credential-Manager-for-Windows">Git Credential Manager for Windows</a> 的辅助工具。这和上面说的 <code>osxkeychain</code> 十分类似，但是是使用 <code>Windows Credential Store</code> 来控制敏感信息</li>
+</ul>
+<p>可以设置 Git 的配置来选择上述的一种方式</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">$ git config --global credential.helper cache<br></code></pre></td></tr></table></figure>
+
+<p><code>store</code> 模式自定义路径的例子：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">$ git config --global credential.helper &#x27;store --file ~/.my-credentials&#x27;<br></code></pre></td></tr></table></figure>
+
+<p>Git 甚至允许你配置多个辅助工具。 当查找特定服务器的凭证时，Git 会按顺序查询，并且在找到第一个回答时停止查询。 当保存凭证时，Git 会将用户名和密码发送给 所有 配置列表中的辅助工具，它们会按自己的方式处理用户名和密码。 如果你在闪存上有一个凭证文件，但又希望在该闪存被拔出的情况下使用内存缓存来保存用户名密码，<code>.gitconfig</code> 配置文件如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">[credential]<br>  helper = store --file /mnt/thumbdrive/.git-credentials<br>  helper = cache --timeout 30000<br></code></pre></td></tr></table></figure>
+
+<h3 id="Git-凭证辅助工具"><a href="#Git-凭证辅助工具" class="headerlink" title="Git 凭证辅助工具"></a>Git 凭证辅助工具</h3><h3 id="git-credential"><a href="#git-credential" class="headerlink" title=" git credential"></a><code> git credential</code></h3><p>这个命令接收一个参数，并通过标准输入获取更多的参数</p>
+<h3 id="gitignore-忽略文件"><a href="#gitignore-忽略文件" class="headerlink" title=".gitignore 忽略文件"></a>.gitignore 忽略文件</h3><p><code>.gitignore</code>用于列出要忽略的文件的模式</p>
+<p>格式规范如下：</p>
+<ul>
+<li>所有空行或者以 <code>#</code> 开头的行都会被 Git 忽略。</li>
+<li>可以使用标准的 glob 模式匹配，它会递归地应用在整个工作区中。</li>
+<li>匹配模式可以以（<code>/</code>）开头防止递归。</li>
+<li>匹配模式可以以（<code>/</code>）结尾指定目录。</li>
+<li>要忽略指定模式以外的文件或目录，可以在模式前加上叹号（<code>!</code>）取反。</li>
+</ul>
+<p>glob 模式是指 shell 所使用的简化了的正则表达式</p>
+<ul>
+<li>星号（<code>*</code>）匹配零个或多个任意字符；</li>
+<li><code>[abc]</code> 匹配任何一个列在方括号中的字符 （这个例子要么匹配一个 a，要么匹配一个 b，要么匹配一个 c）； </li>
+<li>问号（<code>?</code>）只匹配一个任意字符；</li>
+<li>如果在方括号中使用短划线分隔两个字符， 表示所有在这两个字符范围内的都可以匹配（比如 <code>[0-9]</code> 表示匹配所有 0 到 9 的数字）。 </li>
+<li>使用两个星号（<code>**</code>）表示匹配任意中间目录，比如 <code>a/**/z</code> 可以匹配 <code>a/z</code> 、 <code>a/b/z</code> 或 <code>a/b/c/z</code> 等</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs plaintext"># 忽略所有的 .a 文件<br>*.a<br># 但跟踪所有的 lib.a，即便你在前面忽略了 .a 文件<br>!lib.a<br># 只忽略当前目录下的 TODO 文件，而不忽略 subdir/TODO<br>/TODO<br># 忽略任何目录下名为 build 的文件夹<br>build/<br># 忽略 doc/notes.txt，但不忽略 doc/server/arch.txt<br>doc/*.txt<br># 忽略 doc/ 目录及其所有子目录下的 .pdf 文件<br>doc/**/*.pdf<br></code></pre></td></tr></table></figure>
+
+<h2 id="常用git命令"><a href="#常用git命令" class="headerlink" title="常用git命令"></a>常用git命令</h2><h3 id="本地git命令"><a href="#本地git命令" class="headerlink" title="本地git命令"></a>本地git命令</h3><h4 id="git-clone-lt-url-gt"><a href="#git-clone-lt-url-gt" class="headerlink" title="git clone &lt;url&gt;"></a><code>git clone &lt;url&gt;</code></h4><p>克隆已经存在于远程的仓库<code>git clone &lt;url&gt;</code></p>
+<p>eg: <code>git clone https://github.com/libgit2/libgit2</code></p>
+<h4 id="git-status"><a href="#git-status" class="headerlink" title="git status"></a><code>git status</code></h4><p>检查当前文件状态<code>git status</code></p>
+<h4 id="git-add-文件名"><a href="#git-add-文件名" class="headerlink" title="git add 文件名"></a><code>git add 文件名</code></h4><p>跟踪新文件<code> git add 文件名</code><br>这是个多功能命令：可以用它开始跟踪新文件，或者把已跟踪的文件放到暂存区，还能用于合并时把有冲突的文件标记为已解决状态等<br>其作用是:精确地将内容添加到下一次提交中</p>
+<h4 id="git-reset-HEAD-lt-file-gt"><a href="#git-reset-HEAD-lt-file-gt" class="headerlink" title="git reset HEAD &lt;file&gt;"></a><code>git reset HEAD &lt;file&gt;</code></h4><p>取消暂存的文件<br>eg:取消暂存 CONTRIBUTING.md 文件：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">git reset HEAD CONTRIBUTING.md<br></code></pre></td></tr></table></figure>
+
+<p><strong>注: <code>git reset</code> 是个危险的命令，如果加上了 <code>--hard</code> 选项则更是如此。 然而在上述场景中，工作目录中的文件尚未修改，因此相对安全一些</strong></p>
+<h4 id="git-checkout-lt-file-gt"><a href="#git-checkout-lt-file-gt" class="headerlink" title="git checkout -- &lt;file&gt;"></a><code>git checkout -- &lt;file&gt;</code></h4><p>撤消对文件的修改，将这个文件回滚到上个提交了的版本，相当于idea里的revent<br>eg:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">git checkout -- CONTRIBUTING.md<br></code></pre></td></tr></table></figure>
+
+<p><strong>注: <code> git checkout -- &lt;file&gt;</code> 是个危险的命令， 你对那个文件在本地的任何修改都会消失——Git 会用最近提交的版本覆盖掉它。 除非你确实清楚不想要对那个文件的本地修改了，否则请不要使用这个命令。</strong></p>
+<h4 id="git-diff"><a href="#git-diff" class="headerlink" title="git diff"></a><code>git diff</code></h4><p>查看尚未暂存的文件更新了哪些部分，不加参数直接输入 <code>git diff</code><br>此命令比较的是工作目录中当前文件和暂存区域快照之间的差异。</p>
+<p>若要查看已暂存的将要添加到下次提交里的内容，可以用 <code>git diff --staged</code>(和<code> git diff --cached</code>是同义词) 命令。 这条命令将比对已暂存文件与最后一次提交的文件差异</p>
+<h4 id="git-commit"><a href="#git-commit" class="headerlink" title="git commit"></a><code>git commit</code></h4><p>提交更新<br>这样会启动你选择的文本编辑器来输入提交说明。<br>注: 启动的编辑器是通过 Shell 的环境变量 EDITOR 指定的，一般为 vim 或 emacs。 当然也可以使用 <code>git config --global core.editor</code> 命令设置你喜欢的编辑器</p>
+<p>以在 commit 命令后添加 -m 选项，将提交信息与命令放在同一行: <code> git commit -m &quot;Story 182: Fix benchmarks for speed&quot;</code></p>
+<p>提交时记录的是放在暂存区域的快照</p>
+<p>跳过使用暂存区域: Git 提供了一个跳过使用暂存区域的方式， 只要在提交的时候使用<code>git commit -a</code>，Git 就会自动把所有已经跟踪过的文件暂存起来一并提交</p>
+<h4 id="git-commit-amend"><a href="#git-commit-amend" class="headerlink" title="git commit --amend"></a><code>git commit --amend</code></h4><p>撤消操作<br>这个命令会将暂存区中的文件提交。 如果自上次提交以来你还未做任何修改（例如，在上次提交后马上执行了此命令）， 那么快照会保持不变，而你所修改的只是提交信息<br>eg:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">$ git commit -m &#x27;initial commit&#x27;<br>$ git add forgotten_file<br>$ git commit --amend<br></code></pre></td></tr></table></figure>
+
+<h4 id="git-rm-文件名"><a href="#git-rm-文件名" class="headerlink" title="git rm 文件名"></a><code>git rm 文件名</code></h4><p>暂存区域移除特定文件<br>如果只是简单地从工作目录中手工删除文件，运行 git status 时就会在 <code>Changes not staged for commit</code> 部分（也就是 未暂存清单）看到<br>下一次提交时，该文件就不再纳入版本管理了</p>
+<p><strong>注: 如果要删除之前修改过或已经放到暂存区的文件，则必须使用强制删除选项 -f（译注：即 force 的首字母）。 这是一种安全特性，用于防止误删尚未添加到快照的数据，这样的数据不能被 Git 恢复。</strong></p>
+<h4 id="git-mv-file-from-file-to"><a href="#git-mv-file-from-file-to" class="headerlink" title="git mv file_from file_to"></a><code>git mv file_from file_to</code></h4><p>移动文件<br>Git 并不显式跟踪文件移动操作，如果在 Git 中重命名了某个文件，仓库中存储的元数据并不会体现出这是一次改名操作。不过 Git 非常聪明，会自动进行推断<br>以下2条命令等价:<br><code>$ mv README.md README</code></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">$ git rm README.md<br>$ git add README<br></code></pre></td></tr></table></figure>
+
+<h4 id="git-log"><a href="#git-log" class="headerlink" title="git log"></a><code>git log</code></h4><p>查看提交历史<br>不传入任何参数的默认情况下，git log 会按时间先后顺序列出所有的提交(SHA-1 校验和, 作者的名字和电子邮件地址, 提交时间, 提交说明)  </p>
+<table>
+<thead>
+<tr>
+<th>选项</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>-p</td>
+<td>按补丁格式显示每个提交引入的差异。</td>
+</tr>
+<tr>
+<td>–stat</td>
+<td>显示每次提交的文件修改统计信息。</td>
+</tr>
+<tr>
+<td>–shortstat</td>
+<td>只显示 –stat 中最后的行数修改添加移除统计。</td>
+</tr>
+<tr>
+<td>–name-only</td>
+<td>仅在提交信息后显示已修改的文件清单。</td>
+</tr>
+<tr>
+<td>–name-status</td>
+<td>显示新增、修改、删除的文件清单。</td>
+</tr>
+<tr>
+<td>–abbrev-commit</td>
+<td>仅显示 SHA-1 校验和所有 40 个字符中的前几个字符。</td>
+</tr>
+<tr>
+<td>–relative-date</td>
+<td>使用较短的相对时间而不是完整格式显示日期（比如“2 weeks ago”）。</td>
+</tr>
+<tr>
+<td>–graph</td>
+<td>在日志旁以 ASCII 图形显示分支与合并历史。</td>
+</tr>
+<tr>
+<td>–pretty</td>
+<td>使用其他格式显示历史提交信息。可用的选项包括 oneline、short、full、fuller 和format（用来定义自己的格式）。</td>
+</tr>
+<tr>
+<td>–oneline</td>
+<td>–pretty&#x3D;oneline –abbrev-commit 合用的简写。</td>
+</tr>
+</tbody></table>
+<p><code>-p</code> 或 <code>--patch</code>: 它会显示每次提交所引入的差异，或使用 <code>-数字</code> 例如 <code>-2</code> 选项来只显示最近的两次提交</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">git log -p -2<br></code></pre></td></tr></table></figure>
+
+<p>看每次提交的简略统计信息: <code>--stat</code></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">git log --stat<br></code></pre></td></tr></table></figure>
+
+<p>使用不同于默认格式的方式展示提交历史: <code>--pretty</code></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">git log --pretty=oneline<br></code></pre></td></tr></table></figure>
+
+<p>git log –pretty&#x3D;format 常用的选项</p>
+<table>
+<thead>
+<tr>
+<th>选项</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>%H</td>
+<td>提交的完整哈希值</td>
+</tr>
+<tr>
+<td>%h</td>
+<td>提交的简写哈希值</td>
+</tr>
+<tr>
+<td>%T</td>
+<td>树的完整哈希值</td>
+</tr>
+<tr>
+<td>%t</td>
+<td>树的简写哈希值</td>
+</tr>
+<tr>
+<td>%P</td>
+<td>父提交的完整哈希值</td>
+</tr>
+<tr>
+<td>%p</td>
+<td>父提交的简写哈希值</td>
+</tr>
+<tr>
+<td>%an</td>
+<td>作者名字</td>
+</tr>
+<tr>
+<td>%ae</td>
+<td>作者的电子邮件地址</td>
+</tr>
+<tr>
+<td>%ad</td>
+<td>作者修订日期（可以用 –date&#x3D;选项来定制格式）</td>
+</tr>
+<tr>
+<td>%ar</td>
+<td>作者修订日期，按多久以前的方式显示</td>
+</tr>
+<tr>
+<td>%cn</td>
+<td>提交者的名字</td>
+</tr>
+<tr>
+<td>%ce</td>
+<td>提交者的电子邮件地址</td>
+</tr>
+<tr>
+<td>%cd</td>
+<td>提交日期</td>
+</tr>
+<tr>
+<td>%cr</td>
+<td>提交日期（距今多长时间）</td>
+</tr>
+<tr>
+<td>%s</td>
+<td>提交说明</td>
+</tr>
+</tbody></table>
+<p>使用ASCII 字符串来图形化展示你的分支、合并历史：<code>git log --pretty=format:&quot;%h %s&quot; --graph</code></p>
+<h3 id="远程仓库相关git命令"><a href="#远程仓库相关git命令" class="headerlink" title="远程仓库相关git命令"></a>远程仓库相关git命令</h3><p>远程跟踪分支(Remote-tracking branches)是远程分支状态的引用。它们是你无法移动的本地引用(local references)。一旦你进行了网络通信， Git 就会为你移动它们以精确反映远程仓库的状态。<br>一般以 <code>&lt;remote&gt;/&lt;branch&gt;</code> 的形式命名，例如：<code>origin/master</code><br>你的同事有分支<code>iss53</code>，那对应的远程为<code>origin/iss53</code></p>
+<p>注: 远程仓库名字 <code>origin</code> 与分支名字 <code>master</code> 一样，在 Git 中并没有任何特别的含义。<code>origin</code> 是当你运行 <code>git clone</code> 时默认的远程仓库名字。 如果你运行 <code>git clone -o booyah</code>，那么你默认的远程分支名字将会是 <code>booyah/master</code></p>
+<h4 id="git-clone-lt-url-gt-1"><a href="#git-clone-lt-url-gt-1" class="headerlink" title="git clone &lt;url&gt;"></a><code>git clone &lt;url&gt;</code></h4><p>克隆仓库到本地</p>
+<h4 id="git-remote"><a href="#git-remote" class="headerlink" title="git remote"></a><code>git remote</code></h4><p>查看远程仓库<br>eg: <code>-v</code>: 显示详细的URL</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">$ git remote -v<br>origin https://github.com/schacon/ticgit (fetch)<br>origin https://github.com/schacon/ticgit (push)<br></code></pre></td></tr></table></figure>
+
+<h4 id="git-ls-remote-lt-remote-gt"><a href="#git-ls-remote-lt-remote-gt" class="headerlink" title="git ls-remote &lt;remote&gt;"></a><code>git ls-remote &lt;remote&gt;</code></h4><p>显式地获得远程引用的完整列表</p>
+<h4 id="git-remote-show-lt-remote-gt"><a href="#git-remote-show-lt-remote-gt" class="headerlink" title="git remote show &lt;remote&gt;"></a><code>git remote show &lt;remote&gt;</code></h4><p>获得远程分支的更多信息</p>
+<h4 id="git-remote-add-lt-shortname-gt-lt-url-gt"><a href="#git-remote-add-lt-shortname-gt-lt-url-gt" class="headerlink" title="git remote add &lt;shortname&gt; &lt;url&gt;"></a><code>git remote add &lt;shortname&gt; &lt;url&gt;</code></h4><p>添加远程仓库<br>添加一个新的远程 Git 仓库，同时指定一个方便使用的简写：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">$ git remote add pb https://github.com/paulboone/ticgit<br>$ git remote -v<br>origin https://github.com/schacon/ticgit (fetch)<br>origin https://github.com/schacon/ticgit (push)<br>pb https://github.com/paulboone/ticgit (fetch)<br>pb https://github.com/paulboone/ticgit (push)<br></code></pre></td></tr></table></figure>
+
+<h4 id="git-fetch-lt-remote-gt"><a href="#git-fetch-lt-remote-gt" class="headerlink" title="git fetch &lt;remote&gt;"></a><code>git fetch &lt;remote&gt;</code></h4><p>从远程仓库中抓取与拉取分支信息: 这个命令会访问远程仓库，从中拉取所有你还没有的数据。 执行完成后，你将会拥有那个远程仓库中所有分支的引用，可以随时合并或查看<br>eg: </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">git fetch origin<br></code></pre></td></tr></table></figure>
+
+<h4 id="git-push-lt-remote-gt-lt-branch-gt"><a href="#git-push-lt-remote-gt-lt-branch-gt" class="headerlink" title="git push &lt;remote&gt; &lt;branch&gt;"></a><code>git push &lt;remote&gt; &lt;branch&gt;</code></h4><p>推送到远程仓库:<br>只有当你有所克隆服务器的写入权限，并且之前没有人推送过时，这条命令才能生效。 当你和其他人在同一时间克隆，他们先推送到上游然后你再推送到上游，你的推送就会毫无疑问地被拒绝。 你必须先抓取他们的工作并将其合并进你的工作后才能推送。 </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">$ git push origin master<br></code></pre></td></tr></table></figure>
+
+<h4 id="git-remote-show-lt-remote-gt-1"><a href="#git-remote-show-lt-remote-gt-1" class="headerlink" title="git remote show &lt;remote&gt;"></a><code>git remote show &lt;remote&gt;</code></h4><p>查看某个远程仓库: 查看某一个远程仓库的更多信息(会列出远程仓库的 URL 与跟踪分支的信息)</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">$ git remote show origin<br></code></pre></td></tr></table></figure>
+
+<h4 id="git-remote-rename-lt-branch-gt"><a href="#git-remote-rename-lt-branch-gt" class="headerlink" title="git remote rename &lt;branch&gt;"></a><code>git remote rename &lt;branch&gt;</code></h4><p>远程仓库的重命名: 来修改一个远程仓库的简写名</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">$ git remote rename pb paul<br>$ git remote<br>origin<br>paul<br></code></pre></td></tr></table></figure>
+
+<h4 id="git-remote-remove-lt-branch-gt"><a href="#git-remote-remove-lt-branch-gt" class="headerlink" title="git remote remove &lt;branch&gt;"></a><code>git remote remove &lt;branch&gt;</code></h4><p>远程仓库的移除: 如果因为一些原因想要移除一个远程仓库——你已经从服务器上搬走了或不再想使用某一个特定的镜像了， 又或者某一个贡献者不再贡献了——可以使用 <code>git remote remove</code> 或 <code>git remote rm</code></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">$ git remote remove paul<br>$ git remote<br>origin<br></code></pre></td></tr></table></figure>
+
+<p><strong>注: 一旦你使用这种方式删除了一个远程仓库，那么所有和这个远程仓库相关的远程跟踪分支以及配置信息也会一起被删除。</strong></p>
+<h4 id="git-push-lt-remote-gt-lt-branch-gt-1"><a href="#git-push-lt-remote-gt-lt-branch-gt-1" class="headerlink" title=" git push &lt;remote&gt; &lt;branch&gt;"></a><code> git push &lt;remote&gt; &lt;branch&gt;</code></h4><p>推送本地分支的commit到有写入权限的远程仓库上<br>eg: 推送到 serverfix 的分支上:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">$ git push origin serverfix<br></code></pre></td></tr></table></figure>
+
+<p>等价于</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">git push origin serverfix:serverfix<br></code></pre></td></tr></table></figure>
+
+<p>其含义是推送本地的 <code>serverfix</code> 分支，将其作为远程仓库的 <code>serverfix</code> 分支</p>
+<h3 id="标签-Tag"><a href="#标签-Tag" class="headerlink" title="标签(Tag)"></a>标签(Tag)</h3><p>Git 可以给仓库历史中的某一个提交(commit)打上标签(tag)，通常用于标记发布结点(v1.0 、 v2.0 等等)</p>
+<p><strong>注： 默认情况下，git push 命令并不会传送标签到远程仓库服务器上。</strong></p>
+<p>标签分为两种</p>
+<ol>
+<li>轻量标签(lightweight): 轻量标签很像一个不会改变的分支——它只是某个特定提交的引用</li>
+<li>附注标签(annotated): 而附注标签是存储在 Git 数据库中的一个完整对象， 它们是可以被校验的，其中包含打标签者的名字、电子邮件地址、日期时间， 此外还有一个标签信息，并且可以使用 GNU Privacy Guard(GPG)签名并验证。 通常会建议创建附注标签，这样你可以拥有以上所有信息。但是如果你只是想用一个临时的标签， 或者因为某些原因不想要保存这些信息，那么也可以用轻量标签</li>
+</ol>
+<h4 id="git-tag"><a href="#git-tag" class="headerlink" title="git tag"></a><code>git tag</code></h4><p>列出已有的标签: 可带上可选的 <code>-l</code> 选项 <code>--list</code></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">$ git tag<br>v1.0<br>v2.0<br></code></pre></td></tr></table></figure>
+
+<p>模糊搜索特定的tag:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">$ git tag -l &quot;v1.8.5*&quot;<br>v1.8.5<br>v1.8.5-rc0<br>v1.8.5-rc1<br>v1.8.5-rc2<br>v1.8.5-rc3<br>v1.8.5.1<br>v1.8.5.2<br>v1.8.5.3<br>v1.8.5.4<br>v1.8.5.5<br></code></pre></td></tr></table></figure>
+
+<h4 id="git-tag-lt-tag-gt"><a href="#git-tag-lt-tag-gt" class="headerlink" title="git tag &lt;tag&gt;"></a><code>git tag &lt;tag&gt;</code></h4><p>轻量标签:<br>轻量标签本质上是将提交校验和存储到一个文件中——没有保存任何其他信息</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">$ git tag v1.4-lw<br></code></pre></td></tr></table></figure>
+
+<h4 id="git-tag-a-lt-tag-gt-m-quot-lt-message-gt-quot"><a href="#git-tag-a-lt-tag-gt-m-quot-lt-message-gt-quot" class="headerlink" title="git tag -a &lt;tag&gt; -m &quot;&lt;message&gt;&quot;"></a><code>git tag -a &lt;tag&gt; -m &quot;&lt;message&gt;&quot;</code></h4><p>创建附注标签:<br>-m 选项指定了一条将会存储在标签中的信息。 如果没有为附注标签指定一条信息，Git 会启动编辑器要求你输<br>入信息。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">$ git tag -a v1.4 -m &quot;my version 1.4&quot;<br>$ git tag<br>v0.1<br>v1.3<br>v1.4<br></code></pre></td></tr></table></figure>
+
+<h4 id="git-tag-a-lt-tag-gt-lt-shortHash-gt"><a href="#git-tag-a-lt-tag-gt-lt-shortHash-gt" class="headerlink" title="git tag -a &lt;tag&gt; &lt;shortHash&gt;"></a><code>git tag -a &lt;tag&gt; &lt;shortHash&gt;</code></h4><p>补打标签:<br>给历史提交打标签<br>eg: 给&#96;updated rakefile&#96;&#96; 这个提交补打标签</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">$ git log --pretty=oneline<br>15027957951b64cf874c3557a0f3547bd83b3ff6 Merge branch &#x27;experiment&#x27;<br>a6b4c97498bd301d84096da251c98a07c7723e65 beginning write support<br>0d52aaab4479697da7686c15f77a3d64d9165190 one more thing<br>6d52a271eda8725415634dd79daabbc4d9b6008e Merge branch &#x27;experiment&#x27;<br>0b7434d86859cc7b8c3d5e1dddfed66ff742fcbc added a commit function<br>4682c3261057305bdd616e23b64b0857d832627b added a todo file<br>166ae0c4d3f420721acbb115cc33848dfcc2121a started write support<br>9fceb02d0ae598e95dc970b74767f19372d61af8 updated rakefile<br>964f16d36dfccde844893cac5b347e7b3d44abbc commit the todo<br><br>$ git tag -a v1.2 9fceb02<br></code></pre></td></tr></table></figure>
+
+<h4 id="git-show"><a href="#git-show" class="headerlink" title=" git show"></a><code> git show</code></h4><p>看到标签信息和与之对应的提交信息:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">$ git show v1.4<br></code></pre></td></tr></table></figure>
+
+<h4 id="git-push-origin-lt-tagname-gt"><a href="#git-push-origin-lt-tagname-gt" class="headerlink" title="git push origin &lt;tagname&gt;"></a><code>git push origin &lt;tagname&gt;</code></h4><p>共享标签:<br>push标签信息到远程分支</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">$ git push origin v1.5<br></code></pre></td></tr></table></figure>
+
+<p>如果想要一次性推送很多标签，也可以使用带有 –tags 选项的 git push 命令。 这将会把所有不在远程仓库服务器上的标签全部传送到那里。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">$ git push origin --tags<br></code></pre></td></tr></table></figure>
+
+<h4 id="git-tag-d-lt-tagname-gt"><a href="#git-tag-d-lt-tagname-gt" class="headerlink" title="git tag -d &lt;tagname&gt;"></a><code>git tag -d &lt;tagname&gt;</code></h4><p>删除标签:<br>eg: 删除一个轻量标签</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">$ git tag -d v1.4-lw<br></code></pre></td></tr></table></figure>
+
+<p>注意上述命令并不会从任何远程仓库中移除这个标签，你必须用 <code>git push &lt;remote&gt;:refs/tags/&lt;tagname&gt;</code> 或 <code> git push &lt;remote&gt; :refs/tags/&lt;tagname&gt;</code>(将冒号前面的空值推送到远程标签名，效果等同于删除) 来更新你的远程仓库</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">$ git push origin :refs/tags/v1.4-lw<br></code></pre></td></tr></table></figure>
+
+<p>或者直接删:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">$ git push origin --delete &lt;tagname&gt;<br></code></pre></td></tr></table></figure>
+
+<h4 id="git-checkout"><a href="#git-checkout" class="headerlink" title="git checkout"></a><code>git checkout</code></h4><p>检出标签:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">$ git checkout 2.0.0<br></code></pre></td></tr></table></figure>
+
+<p><strong>注: 该命令会使你的仓库处于分离头指针(detached HEAD)的状态——这个状态有些不好的副作用(果你做了某些更改然后提交它们，标签不会发生变化， 但你的新提交将不属于任何分支，并且将无法访问，除非通过确切的提交哈希才能访问。 因此，如果你需要进行更改，比如你要修复旧版本中的错误，那么通常需要创建一个新分支)</strong></p>
+<div id="paginator"></div></div><div id="post-footer"><div id="pages"><div class="footer-link" style="width: 50%;text-align:right;border-right:1px #fe2 solid"><a href="/2023/11/18/Java/Java%E5%90%8E%E7%AB%AF%E9%80%9F%E6%9F%A5%E8%A1%A8/">← Next Java 后端速查表</a></div><div class="footer-link" style="width: 50%;right:1px;border-left:1px #fe2 solid"><a href="/2023/05/07/AI/ChatGPT-%E7%9B%B8%E5%85%B3%E8%B5%84%E6%BA%90/">ChatGPT 相关资源 Prev →</a></div></div></div><div id="comments"><div class="selector"><button class="gitalk-sel"></button></div><div id="gitalk"></div></div></div><div class="bottom-btn"><div><a id="to-top" onClick="scrolls.scrolltop();" title="回到顶部" style="opacity: 0; display: none;">∧</a><a id="to-index" href="#toc-div" title="文章目录">≡</a><a id="color-mode" onClick="colorMode.change()" title="切换主题"></a></div></div></article><aside><div id="about"><a href="/" id="logo"><img src="https://ak.hypergryph.com/assets/index/images/ak/pc/faction/1.png" alt="Logo"></a><h1 id="Dr"><a href="/">Sicmatr1x</a></h1><div id="description"><p>INTP/Traveller/Stoicism/Crypto-anarchism/Minimalism/Cosmopolitanism/English learner/Crypto/Java Engineer</p></div></div><div id="aside-block"><div id="toc-div"><h1>目录</h1><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Git"><span class="toc-number">1.</span> <span class="toc-text">Git</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Dictionary"><span class="toc-number">1.0.1.</span> <span class="toc-text">Dictionary</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#basic-knowladge"><span class="toc-number">1.1.</span> <span class="toc-text">basic knowladge</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#The-Three-States-modified-staged-and-committed"><span class="toc-number">1.1.0.1.</span> <span class="toc-text">The Three States: modified, staged, and committed</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#The-basic-Git-workflow-goes-something-like-this"><span class="toc-number">1.1.0.2.</span> <span class="toc-text">The basic Git workflow goes something like this:</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#git-branch"><span class="toc-number">1.1.1.</span> <span class="toc-text">git branch</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#git-branch-1"><span class="toc-number">1.1.1.1.</span> <span class="toc-text">git branch</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#git-branch-lt-branchName-gt"><span class="toc-number">1.1.1.2.</span> <span class="toc-text">git branch &lt;branchName&gt;</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#git-log-oneline-decorate"><span class="toc-number">1.1.1.3.</span> <span class="toc-text">git log --oneline --decorate</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#git-log-oneline-decorate-graph-all"><span class="toc-number">1.1.1.4.</span> <span class="toc-text">git log --oneline --decorate --graph --all</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#git-checkout-lt-branchName-gt"><span class="toc-number">1.1.1.5.</span> <span class="toc-text">git checkout &lt;branchName&gt;</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#git-merge-lt-branchName-gt"><span class="toc-number">1.1.1.6.</span> <span class="toc-text">git merge &lt;branchName&gt;</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#set-up-environment"><span class="toc-number">1.2.</span> <span class="toc-text">set-up environment</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#git-config"><span class="toc-number">1.2.1.</span> <span class="toc-text">git config</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Git-%E5%88%AB%E5%90%8D"><span class="toc-number">1.2.1.1.</span> <span class="toc-text">Git 别名</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%99%BB%E5%BD%95%E4%B8%8E%E5%87%AD%E8%AF%81%E5%AD%98%E5%82%A8"><span class="toc-number">1.2.2.</span> <span class="toc-text">登录与凭证存储</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Git-%E5%87%AD%E8%AF%81%E8%BE%85%E5%8A%A9%E5%B7%A5%E5%85%B7"><span class="toc-number">1.2.3.</span> <span class="toc-text">Git 凭证辅助工具</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#git-credential"><span class="toc-number">1.2.4.</span> <span class="toc-text"> git credential</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#gitignore-%E5%BF%BD%E7%95%A5%E6%96%87%E4%BB%B6"><span class="toc-number">1.2.5.</span> <span class="toc-text">.gitignore 忽略文件</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B8%B8%E7%94%A8git%E5%91%BD%E4%BB%A4"><span class="toc-number">1.3.</span> <span class="toc-text">常用git命令</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9C%AC%E5%9C%B0git%E5%91%BD%E4%BB%A4"><span class="toc-number">1.3.1.</span> <span class="toc-text">本地git命令</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#git-clone-lt-url-gt"><span class="toc-number">1.3.1.1.</span> <span class="toc-text">git clone &lt;url&gt;</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#git-status"><span class="toc-number">1.3.1.2.</span> <span class="toc-text">git status</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#git-add-%E6%96%87%E4%BB%B6%E5%90%8D"><span class="toc-number">1.3.1.3.</span> <span class="toc-text">git add 文件名</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#git-reset-HEAD-lt-file-gt"><span class="toc-number">1.3.1.4.</span> <span class="toc-text">git reset HEAD &lt;file&gt;</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#git-checkout-lt-file-gt"><span class="toc-number">1.3.1.5.</span> <span class="toc-text">git checkout -- &lt;file&gt;</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#git-diff"><span class="toc-number">1.3.1.6.</span> <span class="toc-text">git diff</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#git-commit"><span class="toc-number">1.3.1.7.</span> <span class="toc-text">git commit</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#git-commit-amend"><span class="toc-number">1.3.1.8.</span> <span class="toc-text">git commit --amend</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#git-rm-%E6%96%87%E4%BB%B6%E5%90%8D"><span class="toc-number">1.3.1.9.</span> <span class="toc-text">git rm 文件名</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#git-mv-file-from-file-to"><span class="toc-number">1.3.1.10.</span> <span class="toc-text">git mv file_from file_to</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#git-log"><span class="toc-number">1.3.1.11.</span> <span class="toc-text">git log</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BF%9C%E7%A8%8B%E4%BB%93%E5%BA%93%E7%9B%B8%E5%85%B3git%E5%91%BD%E4%BB%A4"><span class="toc-number">1.3.2.</span> <span class="toc-text">远程仓库相关git命令</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#git-clone-lt-url-gt-1"><span class="toc-number">1.3.2.1.</span> <span class="toc-text">git clone &lt;url&gt;</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#git-remote"><span class="toc-number">1.3.2.2.</span> <span class="toc-text">git remote</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#git-ls-remote-lt-remote-gt"><span class="toc-number">1.3.2.3.</span> <span class="toc-text">git ls-remote &lt;remote&gt;</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#git-remote-show-lt-remote-gt"><span class="toc-number">1.3.2.4.</span> <span class="toc-text">git remote show &lt;remote&gt;</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#git-remote-add-lt-shortname-gt-lt-url-gt"><span class="toc-number">1.3.2.5.</span> <span class="toc-text">git remote add &lt;shortname&gt; &lt;url&gt;</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#git-fetch-lt-remote-gt"><span class="toc-number">1.3.2.6.</span> <span class="toc-text">git fetch &lt;remote&gt;</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#git-push-lt-remote-gt-lt-branch-gt"><span class="toc-number">1.3.2.7.</span> <span class="toc-text">git push &lt;remote&gt; &lt;branch&gt;</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#git-remote-show-lt-remote-gt-1"><span class="toc-number">1.3.2.8.</span> <span class="toc-text">git remote show &lt;remote&gt;</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#git-remote-rename-lt-branch-gt"><span class="toc-number">1.3.2.9.</span> <span class="toc-text">git remote rename &lt;branch&gt;</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#git-remote-remove-lt-branch-gt"><span class="toc-number">1.3.2.10.</span> <span class="toc-text">git remote remove &lt;branch&gt;</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#git-push-lt-remote-gt-lt-branch-gt-1"><span class="toc-number">1.3.2.11.</span> <span class="toc-text"> git push &lt;remote&gt; &lt;branch&gt;</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A0%87%E7%AD%BE-Tag"><span class="toc-number">1.3.3.</span> <span class="toc-text">标签(Tag)</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#git-tag"><span class="toc-number">1.3.3.1.</span> <span class="toc-text">git tag</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#git-tag-lt-tag-gt"><span class="toc-number">1.3.3.2.</span> <span class="toc-text">git tag &lt;tag&gt;</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#git-tag-a-lt-tag-gt-m-quot-lt-message-gt-quot"><span class="toc-number">1.3.3.3.</span> <span class="toc-text">git tag -a &lt;tag&gt; -m &quot;&lt;message&gt;&quot;</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#git-tag-a-lt-tag-gt-lt-shortHash-gt"><span class="toc-number">1.3.3.4.</span> <span class="toc-text">git tag -a &lt;tag&gt; &lt;shortHash&gt;</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#git-show"><span class="toc-number">1.3.3.5.</span> <span class="toc-text"> git show</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#git-push-origin-lt-tagname-gt"><span class="toc-number">1.3.3.6.</span> <span class="toc-text">git push origin &lt;tagname&gt;</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#git-tag-d-lt-tagname-gt"><span class="toc-number">1.3.3.7.</span> <span class="toc-text">git tag -d &lt;tagname&gt;</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#git-checkout"><span class="toc-number">1.3.3.8.</span> <span class="toc-text">git checkout</span></a></li></ol></li></ol></li></ol></li></ol></div></div><footer><nobr>构建自 <a target="_blank" rel="noopener" href="http://hexo.io">Hexo</a></nobr><wbr><nobr> 使用主题 <a target="_blank" rel="noopener" href="https://github.com/Yue-plus/hexo-theme-arknights">Arknights</a></nobr><wbr><nobr>主题作者 <a target="_blank" rel="noopener" href="https://github.com/Yue-plus">Yue_plus</a></nobr></footer></aside></main><canvas id="canvas-dust"></canvas><script src="/js/search.js"></script><script class="pjax-js">reset=_=>{gitalk = new Gitalk({
+ clientID: '',
+ clientSecret: '',
+ repo: 'blog-comments',
+ owner: 'Sicmatr1x',
+ admin: ['Sicmatr1x'],
+ distractionFreeMode: false,
+ id: 
+});
+if (document.querySelector("#gitalk")) gitalk.render("gitalk");code.findCode();}</script><script src="/js/arknights.js"></script><script src="/js/pjax.js"></script><script>window.addEventListener("load",() => {pjax = new Pjax({
+ cacheBust: false,
+ selectors: ['title','article','#aside-block','.pjax-js'],
+ switches: {'article': Pjax.switches.sideBySide},
+ switchesOptions: {
+   'article': {
+     classNames: {
+       remove: "pjax-out",
+       add: "pjax-in"
+     }
+   }
+ }
+});
+document.addEventListener("pjax:complete", reset);reset()})</script></body></html>
